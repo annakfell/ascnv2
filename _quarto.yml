@@ -10,9 +10,14 @@ book:
 #  site-url: "https://openscapes.github.io/quarto-website-tutorial" 
 #  repo-url: https://github.com/openscapes/quarto-website-tutorial 
 #  repo-actions: [edit, issue]
+
   chapters: 
     - href: index.qmd
-    - href: explore.qmd
+    - part: "Preparing Data for Analysis"
+      chapters: 
+        - href: dataprep.qmd
+        - href: data_viz.qmd
+  
   page-footer:
     right: "This page is built with ❤️ and [Quarto](https://quarto.org/)."
     left: "&copy; CC-By Openscapes, 2024"
