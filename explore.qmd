@@ -1,4 +1,4 @@
-# (PART) Preparing Data for Analysis {-}
+# Preparing Data for Analysis {-}
 
 # Workflow and Data Cleaning {#data_prep}
 
