@@ -1,5 +1,8 @@
 ---
 title: "Applied Statistics"
+author: "Robin Donatello, Edward Roualdes"
+date: "Last Updated 2023-08-05"
+description: "Course notes for Applied Statistics courses at CSU Chico"
 ---
 
 ## Preface
