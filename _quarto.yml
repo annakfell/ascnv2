@@ -1,48 +1,23 @@
 project: 
-  type: website
+  type: book
   
-website: 
+book: 
   page-navigation: true
-  title: "Making sharable documents with Quarto" 
-  site-url: "https://openscapes.github.io/quarto-website-tutorial" 
-  repo-url: https://github.com/openscapes/quarto-website-tutorial 
-  repo-actions: [edit, issue]
-  
+  title: "Applied Statistics course notes"
+  author: "Robin Donatello, Edward Roualdes"
+  date: last-modified
+  description: "Course notes for Applied Statistics courses at CSU Chico"
+#  site-url: "https://openscapes.github.io/quarto-website-tutorial" 
+#  repo-url: https://github.com/openscapes/quarto-website-tutorial 
+#  repo-actions: [edit, issue]
+  chapters: 
+    - href: index.qmd
+    - href: explore.qmd
   page-footer:
     right: "This page is built with ❤️ and [Quarto](https://quarto.org/)."
     left: "&copy; CC-By Openscapes, 2024"
-    
-  sidebar:
-    logo: "images/openscapes_hex.png"
-    pinned: true
-    align: center
-    tools: 
-      - icon: globe
-        href: https://openscapes.org
-        text: "Openscapes.org"
-      - icon: github
-        href: https://github.com/openscapes/quarto-website-tutorial
-        text: "Quarto website tutorial"
-      - icon: twitter
-        href: https://twitter.com/openscapes
-        text: "Openscapes Twitter"         
 
-    style: "docked"
-    search: true
-    collapse-level: 1
-    contents:
-      - href: index.qmd
-        text: Welcome
-      - explore.qmd
-      - section: quarto-workflows/index.qmd
-        contents: 
-          - quarto-workflows/browser.md
-          - quarto-workflows/rstudio.qmd
-          - quarto-workflows/jupyter.md 
-      - learning-more.qmd
-      - href: transition-from-rmarkdown.qmd
-        text: Transition from Rmd
-
+#bibliography 
 
 format:
   html:
@@ -52,7 +27,6 @@ format:
     code-copy: true
     code-overflow: wrap
     toc: true
-
 
 filters:
   - include-files.lua
