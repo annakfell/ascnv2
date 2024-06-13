@@ -1,533 +1,192 @@
 [
   {
-    "objectID": "learning-more.html",
-    "href": "learning-more.html",
-    "title": "Learning more",
-    "section": "",
-    "text": "An excellent overview: Reproducible authoring with Quarto - Mine Çetinkaya-Rundel, Feb 2022 - slides, youtube\nA Quarto tip a day in June 2022, from Mine Çetinkaya-Rundel.\n\n\n\nOpenscapes Champions Lessons Series\nOpenscapes Approach Guide\n\nNASA Earthdata Cloud Cookbook\n\nSee many more examples at the quarto gallery!\n\n\n\nAre you making onboarding documentation? Check out The Fay Lab Manual (now in Quarto!) for inspiration on structure - you could also start there and make it your own.",
-    "crumbs": [
-      "Learning more"
-    ]
-  },
-  {
-    "objectID": "learning-more.html#learn-more",
-    "href": "learning-more.html#learn-more",
-    "title": "Learning more",
-    "section": "",
-    "text": "An excellent overview: Reproducible authoring with Quarto - Mine Çetinkaya-Rundel, Feb 2022 - slides, youtube\nA Quarto tip a day in June 2022, from Mine Çetinkaya-Rundel.\n\n\n\nOpenscapes Champions Lessons Series\nOpenscapes Approach Guide\n\nNASA Earthdata Cloud Cookbook\n\nSee many more examples at the quarto gallery!\n\n\n\nAre you making onboarding documentation? Check out The Fay Lab Manual (now in Quarto!) for inspiration on structure - you could also start there and make it your own.",
-    "crumbs": [
-      "Learning more"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/jupyter.html",
-    "href": "quarto-workflows/jupyter.html",
-    "title": "From Jupyter",
-    "section": "",
-    "text": "You can interact with Quarto through JupyterLab or JupyterHub. Your Jupyter setup will involve .ipynb notebooks and the command line. Quarto’s JupyterLab tutorials has great instructions on getting started with JupyterLab, including computations and authoring.\nHere we will demonstrate how to work with this Quarto tutorial site in JupyterHub and add a Jupyter Notebook (.ipynb file). This example uses the NASA-Openscapes JupyterHub that already has all python environments as well as Quarto installed.",
-    "crumbs": [
-      "Quarto workflows",
-      "From Jupyter"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/jupyter.html#setup",
-    "href": "quarto-workflows/jupyter.html#setup",
-    "title": "From Jupyter",
-    "section": "Setup",
-    "text": "Setup\n\nJupyterHub\nOur JupyterHub is already setup with python environments as well as Quarto (through nasa-openscapes/corn), so there is no further installation required.\n\n\nClone your repo\nYou’ll start by cloning your repository into JupyterHub. Do this by opening a terminal (File &gt; New &gt; Terminal). In the Terminal, git clone your repository and cd into it:\ngit clone https://github.com/openscapes/quarto-website-tutorial\ncd quarto-website-tutorial\n\n\nInstall Quarto\nNot needed - Quarto is already installed on the NASA-Openscapes JupyterHub! But to install elsewhere you would do so from https://quarto.org/docs/get-started/.\nQuarto is a Command Line Interface (CLI), like git. Once download is complete, follow the installation prompts on your computer like you do for other software. You won’t see an application to click on when it is installed.\nNote for Mac users: If you do not have administrative privileges, please select “Install for me only” during the Destination Selection installation step (you will first click on “Change Install Location” at the Installation Type step).\nYou can check to confirm that Quarto is installed properly from the command line:\nquarto check install\n\n\n\n\n\n\nAdditional checks\n\n\n\n\n\nYou can also run:\n\nquarto check knitr to locate R, verify we have the rmarkdown package, and do a basic render\nquarto check jupyter to locate Python, verify we have Jupyter, and do a basic render\nquarto check to run all of these checks together\n\n\n\n\n\n\n\n\n\n\nHistorical aside: Install Quarto in a docker container\n\n\n\n\n\nIn Summer 2021 some NASA Mentors trying to install quarto locally was not an option, but they were able to install it inside a container using the following Dockerfile:\n#| fold: true\n#| summary: \"Show the Dockerfile\"\n\n##############################\n# This Dockerfile installs quarto and then runs quarto serve against the\n# internal /home/quarto/to_serve.\n#\n# BUILD\n# -----\n# To build this container, run\n#\n#     docker build -t quarto_serve .\n#\n# Add the --no-cache option to force docker to build fresh and get the most\n# recent version of quarto.\n#\n#\n# RUN\n# ---\n# 1. Find the directory you want quarto to serve. Let's call this /PATH/TO/earthdata-cloud-cookbook.\n# 2. Run docker:\n#\n#     docker run --rm -it -p 4848:4848 -v /PATH/TO/earthdata-cloud-cookbook:/home/quarto/to_serve quarto_serve\n#\n# 3. Open your browser and go to http://127.0.0.1:4848/\n#\n##############################\n\nFROM ubuntu:hirsute\n\n######\n# Install some command line tools we'll need\n######\nRUN apt-get update\nRUN apt-get -y install wget\nRUN apt-get -y install gdebi-core\nRUN apt-get -y install git\n\n\n######\n# Install quarto (https://quarto.org/)\n######\n\n# This is a quick and dirty way of getting the newest version number from\n# https://github.com/quarto-dev/quarto-cli/releases/latest. What's happening is\n# we're pulling the version number out of the redirect URL. This will end up\n# with QVER set to something like 0.2.11.\nRUN QVER=`wget --max-redirect 0 https://github.com/quarto-dev/quarto-cli/releases/latest 2&gt;&1 | grep \"Location\" | sed 's/L.*tag\\/v//' | sed 's/ .*//'` \\\n    && wget -O quarto.deb \"https://github.com/quarto-dev/quarto-cli/releases/download/v$QVER/quarto-$QVER-amd64.deb\"\nRUN gdebi -n quarto.deb\n\n# Run this to make sure quarto installed correctly\nRUN quarto check install\n\n\n######\n# Create a non-root user called quarto\n######\nRUN useradd -ms /bin/bash quarto\nUSER quarto\nRUN mkdir /home/quarto/to_serve\nWORKDIR /home/quarto/to_serve\n\n\n######\n# Start quarto serve\n######\n\nCMD quarto serve --no-browse --host 0.0.0.0 --port 4848",
-    "crumbs": [
-      "Quarto workflows",
-      "From Jupyter"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/jupyter.html#quarto-preview",
-    "href": "quarto-workflows/jupyter.html#quarto-preview",
-    "title": "From Jupyter",
-    "section": "Quarto preview",
-    "text": "Quarto preview\nLet’s start off by previewing our quarto site locally. In Terminal, type quarto preview, which will provide a URL with a preview of our site!\nquarto preview\n# Preparing to preview\n# Watching files for changes\n# Browse at https://openscapes.2i2c.cloud/user/jules32/proxy/4593/\nCopy this URL into another browser window; and arrange them so you can see them both. I make a bit more space in Jupyter by collapsing the left file menu by clicking on the file icon at the top of the left sidebar.\n\n\n\n\n\n\nMake a small change and preview it\nNow we’ll be able to see live changes in the preview as we edit in our .md files. Let’s try it: Change the date in index.md by opening it from the file directory. Change to today’s date, and save. Your preview window will refresh automatically! If it does not, you can also refresh the page manually. The refreshed previewed site will now display your changes!",
-    "crumbs": [
-      "Quarto workflows",
-      "From Jupyter"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/jupyter.html#create-a-new-.ipynb-page",
-    "href": "quarto-workflows/jupyter.html#create-a-new-.ipynb-page",
-    "title": "From Jupyter",
-    "section": "Create a new .ipynb page",
-    "text": "Create a new .ipynb page\nLet’s add a new page to our site. Instead of an .md file like the others, let’s add a .ipynb file.\nFile &gt; New &gt; Notebook. Accept the default kernel by clicking Select.\n\nFirst chunk: raw yaml\nBy default, this Notebook will give us a first chunk that is code. Let’s change it to raw so that we can write our yaml at the top.\n\n\n\n\n\nIn our Raw code chunk, let’s write the title of this document. We need three dashes --- on separate lines preceding and following the title:, which you can name as you’d like.\n---\ntitle: Python Example\n---\n\n\nSecond chunk: Markdown\nLet’s add a new chunk that is Markdown so we can write some description of what this page will be.\nClick the + symbol at the top of the document, and this will add a new chunk, which by default again is a Code chunk. Change it to a Markdown Chunk following the steps we did above when switching to Raw.\nHere, write a little bit of text in Markdown. Since your title is effectively a level-1 header, avoid using level-1 headers in the rest of your document. Here is some example text I wrote:\n## Introduction\n\nThis example has some Python code that will be a part of our Quarto site.\n\n\nThird chunk: Code\nNow let’s create a new chunk with the default Code setting.\nPaste the following code (or write some of your own to test):\n#| label: fig-polar\n#| fig-cap: \"A line plot on a polar axis\"\nimport numpy as np\nimport matplotlib.pyplot as plt\nr = np.arange(0, 2, 0.01)\ntheta = 2 * np.pi * r\nfig, ax = plt.subplots(\n  subplot_kw = {'projection': 'polar'} \n)\nax.plot(theta, r)\nax.set_rticks([0.5, 1, 1.5, 2])\nax.grid(True)\nplt.show()\nNow, go ahead and execute this code chunk like you normally would, by clicking the cursor in a code block and clicking the sideways “play” triangle to run the selected cells (and advance to the next cell). This code produces a plot.\nNote that the code runs as it normally would; the code options in the comments are just comments.\n\n\nSave your file\nSave your document - I’ll call mine python-example.ipynb in the main repository.",
-    "crumbs": [
-      "Quarto workflows",
-      "From Jupyter"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/jupyter.html#update-_quarto.yml",
-    "href": "quarto-workflows/jupyter.html#update-_quarto.yml",
-    "title": "From Jupyter",
-    "section": "Update _quarto.yml",
-    "text": "Update _quarto.yml\nNow we’ll add python-example.ipynb to our _quarto.yml file; this is where we register of all files to include in our site. Let’s add it after the section called “Basic Workflows”.\nOpen _quarto.yml by clicking on it from the file directory.\nScroll down to review the current contents in the sidebar: section. It’s there we see all the file arrangement that we see in the previewed site.\nAdd - python-example.ipynb to line 46, making sure that your indentation aligns with the other pages.\n\n\n\n\n\nYou’ll see that our new page shows up in our Preview, and the code is executed since we did that in the Jupyter Notebook itself. By default, Quarto will not execute code chunks since your computations will likely become more complex and you will want to control when they are executed (or “run”).\nSince Quarto is still previewing our website and the python-example.ipynb, the plot also displays in the notebook after the code is run and the file is saved, as shown below.\n\n\n\n\n\nSo, your normal workflow for creating and running code blocks in your Jupyter Notebook is the same one you’ll use as Quarto displays the preview.",
-    "crumbs": [
-      "Quarto workflows",
-      "From Jupyter"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/jupyter.html#quarto-render",
-    "href": "quarto-workflows/jupyter.html#quarto-render",
-    "title": "From Jupyter",
-    "section": "Quarto render",
-    "text": "Quarto render\nSo far we have used Quarto preview to view our website as we develop it. Quarto render will build the html elements of the website that we can see when we preview. Rendering will format the markdown text and code nicely as a website (or however is indicated in the _quarto.yml).\nBy default, Quarto render does not execute code in a Jupyter notebook. It will never run .ipynb files unless you tell it to.\n\nRender whole notebook\nIf you would like it to specifically execute code in a Jupyter notebook, you can do so in Terminal.\nOur Terminal is still busy previewing our website, so let’s open a new Terminal.\nFile &gt; New &gt; Terminal. Then type:\ncd quarto-website-tutorial\nquarto render python-example.ipynb --execute",
-    "crumbs": [
-      "Quarto workflows",
-      "From Jupyter"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/jupyter.html#authoring-tips",
-    "href": "quarto-workflows/jupyter.html#authoring-tips",
-    "title": "From Jupyter",
-    "section": "Authoring tips",
-    "text": "Authoring tips\nQuarto.org has details about authoring, including specific instructions about authoring in Jupyter: quarto.org/docs/reference/cells/cells-jupyter.",
-    "crumbs": [
-      "Quarto workflows",
-      "From Jupyter"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/jupyter.html#commit-and-push",
-    "href": "quarto-workflows/jupyter.html#commit-and-push",
-    "title": "From Jupyter",
-    "section": "Commit and push!",
-    "text": "Commit and push!\nCommitting and pushing will make the changes you see locally live on your website (using the GitHub Action we set up earlier).",
-    "crumbs": [
-      "Quarto workflows",
-      "From Jupyter"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/jupyter.html#troubleshooting",
-    "href": "quarto-workflows/jupyter.html#troubleshooting",
-    "title": "From Jupyter",
-    "section": "Troubleshooting",
-    "text": "Troubleshooting\n\nMy changes don’t show up in preview\nMake sure you’ve saved your file! There might be a slight delay depending on your JupyterHub/Lab setup.\n\n\nQuarto render hangs / does not complete\nCheck the specific notebook, are there any `—` throughout to denote line breaks rather than yaml? They might be causing the issue; consider deleting those.\nAlso check how long the first raw cell is. Are there level-1 headers (#)? Try removing them.",
-    "crumbs": [
-      "Quarto workflows",
-      "From Jupyter"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/rstudio.html",
-    "href": "quarto-workflows/rstudio.html",
-    "title": "From RStudio",
-    "section": "",
-    "text": "The RStudio software (called an IDE, integrated development environment) is an excellent way to edit files and interface with GitHub. Plus, as it is made by the same folks who make Quarto, it has many integrated features for streamlining your workflow with Quarto, including how it previews your edits and provides debugging support for yaml! Quarto's RStudio tutorials has great instructions on getting started with RStudio, including computations and authoring.\nHere is what you’ll need to do to set up and use RStudio with Quarto.",
-    "crumbs": [
-      "Quarto workflows",
-      "From RStudio"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/rstudio.html#setup",
-    "href": "quarto-workflows/rstudio.html#setup",
-    "title": "From RStudio",
-    "section": "Setup",
-    "text": "Setup\n\nRStudio and GitHub\nFor a workflow with RStudio and GitHub on your local computer, you will need four things:\n\nR\nRStudio\nGit\nGitHub\n\nFollow the UCSB MEDS Installation Guide for detailed instructions on how to create accounts, download, install, and configure on Mac and Windows. This takes about 20 minutes. (For an even more detailed walk-through, see Allison Horst’s ESM 206 Google Doc).\n\n\nClone your repo\nYou’ll start by cloning your repository into RStudio.\nFile &gt; New Project &gt; Version Control &gt; Git &gt; paste your repository name.\nR for Excel Users: Clone your repository using RStudio has detailed instructions and screenshots of these steps.\n\n\nInstall Quarto\nNext, you’ll install Quarto: https://quarto.org/docs/get-started/. After downloading, follow the installation wizard on your computer. When it is complete, you won’t see an application or any new software, but it is now available to RStudio (as well as all other applications on your computer, including the command line).\n\n\nRStudio orientation\nNow let’s take a moment to get oriented. This is an RStudio project, which is indicated in the top-right. The bottom right pane shows all the files in your project; everything we’ve cloned from GitHub. We can open any RStudio project by opening its .Rproj file, or from RStudio File &gt; Open Project ….\n\n\n\nRStudio IDE highlighting the project name and files pane\n\n\n\n\nVisual Editor\nThe RStudio Visual Editor is quite new and has features that improve your writing experience. Working in the Visual Editor feels a bit like working in a Google Doc.\nHere’s an example showing the same file in the original Source Editor with content in markdown format and in the Visual Editor with content that looks more like it will appear in a live site. You can switch freely between these modes.\n\n\n\n\n\n\n\n\n\nRStudio IDE highlighting the Source Editor\n\n\n\n\n\n\n\nRStudio IDE highlighting the Visual Editor\n\n\n\n\n\nAlready have some content formatted in a Google Doc? You can copy-paste it into the Visual Editor and most formatting will be retained.\nThe editing bar provides familiar point and click access to text formatting options like bulleted or numbered lists.\n\n\n\nRStudio IDE highlighting the point and click editing bar\n\n\n\nKeyboard shortcuts\nThe Visual Editor also lets you use many keyboard shortcuts that might be familiar for adding boldface (command-b), italics (command-i), or headers. On a Mac, option-command-2 will make a level 2 header. Try it with option-command-1, or option-command-0 for normal text!\n\n\nInsert an image or figure\nTo insert an image (called a figure in Quarto), click the image icon. This brings up a window in which we can select the image, set its alignment, give it a caption and alt text, hyperlink it, or edit other metadata.\n\n\n\nInsert image or figure using the Visual Editor\n\n\nOnce an image is added, clicking on that image gives us editing options. We can resize it dynamically by clicking in the image and dragging a corner or side to resize. When an image is selected, its dimensions are displayed for editing. Clicking on the gray ellipsis to the right of the dimensions opens the pop-up window to access more metadata edits.\n\n\nInsert a table\nSimilar to adding an image, to insert a table, we click the Table dropdown.",
-    "crumbs": [
-      "Quarto workflows",
-      "From RStudio"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/rstudio.html#quarto-render",
-    "href": "quarto-workflows/rstudio.html#quarto-render",
-    "title": "From RStudio",
-    "section": "Quarto render",
-    "text": "Quarto render\nIn the Build tab in the top-right pane, click “Render Website”. This will build the .html files and preview your website. It’s equivalent to “knitting” in RMarkdown.\nNote that you can also click “Preview Website”. With “Render Website” in RStudio, Quarto is able to render and preview in one step.\nIf you’d ever like to stop the preview, in the bottom-left, click on the Jobs tab and then the red Stop button.\n\nMake a small change and render it\nClick on index.md. This will open this markdown file in a fourth pane; the editor pane. Make a small change, for example change to today’s date on Line 4. Then, save your file; there is a disc icon at the top of the file.\nThen, render this file: press “Render” which is to the right of the disc icon that saves the file. This will render only this single file, as opposed to rerendering the whole website like when we clicked “Render Website” in the top right pane. Checking Render on Save (between the disc icon and the Render button) is a great strategy for doing this in one step.",
-    "crumbs": [
-      "Quarto workflows",
-      "From RStudio"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/rstudio.html#create-a-new-.rmd-page",
-    "href": "quarto-workflows/rstudio.html#create-a-new-.rmd-page",
-    "title": "From RStudio",
-    "section": "Create a new .Rmd page",
-    "text": "Create a new .Rmd page\nNew &gt; RMarkdown document &gt; OK\nThe starter RMarkdown document has some R code inside: it displays a summary of the cars dataset that is pre-loaded into R (summary(cars)) and plots the pressure data that is also pre-loaded (plot(pressure)).\nSave this document as r-example.rmd.",
-    "crumbs": [
-      "Quarto workflows",
-      "From RStudio"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/rstudio.html#update-_quarto.yml",
-    "href": "quarto-workflows/rstudio.html#update-_quarto.yml",
-    "title": "From RStudio",
-    "section": "Update _quarto.yml",
-    "text": "Update _quarto.yml\nNow we’ll add r-example.rmd to our _quarto.yml file; this is where we register all files to include in our site. Let’s add it after the section called “Quarto Workflows”.\nOpen _quarto.yml by clicking on it from the file directory.\nScroll down to review the current contents in the sidebar: section under contents:. It’s there we see all the file arrangement that we see in the previewed site.\nAdd - r-example.rmd in its own line, making sure that your indentation aligns with the other pages.\nFrom the Build tab, clicking Preview Website will recreate your website!",
-    "crumbs": [
-      "Quarto workflows",
-      "From RStudio"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/rstudio.html#authoring-tips",
-    "href": "quarto-workflows/rstudio.html#authoring-tips",
-    "title": "From RStudio",
-    "section": "Authoring tips",
-    "text": "Authoring tips\nChecking “Render on Save” is really helpful when iterating quickly on a document.\nIf the document is very code-heavy, consider using freeze that will not run the code each time.\nQuarto.org has details about authoring, including specific instructions about authoring in RStudio.",
-    "crumbs": [
-      "Quarto workflows",
-      "From RStudio"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/rstudio.html#commit-and-push",
-    "href": "quarto-workflows/rstudio.html#commit-and-push",
-    "title": "From RStudio",
-    "section": "Commit and push!",
-    "text": "Commit and push!\nCommitting and pushing will make the changes you see locally live on your website (using the GitHub Action we set up earlier).",
-    "crumbs": [
-      "Quarto workflows",
-      "From RStudio"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/rstudio.html#troubleshooting",
-    "href": "quarto-workflows/rstudio.html#troubleshooting",
-    "title": "From RStudio",
-    "section": "Troubleshooting",
-    "text": "Troubleshooting\nIf you have trouble rendering your website after for example changing the extenstion of a file from .md to .qmd, refreshing your RStudio often helps. Do this by clicking the project name at the upper right of the RStudio window (in this case, quarto-website-tutorial), and underneath the “close project” section, click the same name of your project: quarto-website-tutorial. This will relaunch your whole project afresh.",
-    "crumbs": [
-      "Quarto workflows",
-      "From RStudio"
-    ]
-  },
-  {
-    "objectID": "transition-from-rmarkdown.html",
-    "href": "transition-from-rmarkdown.html",
-    "title": "Transition from RMarkdown",
-    "section": "",
-    "text": "You may already have workflows in RMarkdown and are interested in transitioning to Quarto. There’s no hurry to migrate to Quarto. Keep using Rmarkdown and when you’re ready the migration will be fine.\nHere are some notes as we migrate RMarkdown sites and books.\nTODO: translating R code chunks",
-    "crumbs": [
-      "Transition from Rmd"
-    ]
-  },
-  {
-    "objectID": "transition-from-rmarkdown.html#bookdown-to-quarto",
-    "href": "transition-from-rmarkdown.html#bookdown-to-quarto",
-    "title": "Transition from RMarkdown",
-    "section": "Bookdown to Quarto",
-    "text": "Bookdown to Quarto\nConverting a Bookdown book to Quarto is slightly more involved than converting a website. A book has chapters whose order must be defined, and likely has citations and cross-refs. Still, conversion is not that hard.\nWe got some practice converting from Bookdown to Quarto by helping Gavin Fay convert his lab’s fantastic onboarding documentation, the Faylab Lab Manual. Here’s the GitHub view before and after.\nOur best first reference material for this was Nick Tierney’s Notes on Changing from Rmarkdown/Bookdown to Quarto. Nick shares some scripts in that post to automate some changes. In our case, the book was small enough that we made all changes manually. Quarto documentation was indispensable.\n\nExperimenting in a low-risk environment\nWe forked a copy of the Faylab Lab manual to the Openscapes organization, and worked in a branch so we could make changes relatively risk-free. We could always fork a new copy of the original if we “broke” something. (Caution: the default when making a pull request from a fork is to push changes to the original upstream repo, not your fork and it does this without warning if you have write-access to that repo.) With local previews it’s easy to test / play with settings to see what they do. We tended to make a change, Preview, then compare the look and functionality of the book to the original. It was helpful to comment out some elements of the configuration file _output.yml after their counterparts had been added to the Quarto configuration file _quarto.yml, or to confirm they were no longer needed, before making the drastic move of deleting them.\n\n\nThe conversion\nHere are the main steps to convert the Faylab Lab manual from Bookdown to Quarto.\nCreate new empty file called _quarto.yml and add book metadata there. The screenshots below\nSet project type as book.\nMove metadata out of index.qmd and into _quarto.yml. Title, author, and publication date were in index.qmd with date set using date: \"Last updated:r Sys.Date()\". Now these are in _quarto.yml with date set using date: last-modified. Note that having R code would require you to adjust code chunk options in the Quarto style (#|). This tripped us up a bit; see GitHub Actions.\nMove chapters listing out of _bookdown.yml and into _quarto.yml.\nAdd page footer to _quarto.yml.\nHere’s what ours looked like when we finished the steps above (_quarto.yml).\n\n\n\n\n\n\n\n\n\n_quarto.yml contents\n\n\n\n\n\n\n\nFaylab Lab Manual\n\n\n\n\n\nChange insertion of images from html style to Quarto style. (Note Quarto calls them “figures”, not “images”.) The following snippet will insert the GitHub octocat logo in a page:\n![](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png){fig-align=\"left\" width=\"35px\"}\nChange all filename extensions .Rmd -&gt; .qmd (you could Preview after this change and see that the book looks the same). Note that Quarto works with .Rmd files just as well as it does .qmd, so this change is not urgent. In fact, if you have a lot of R code in your .Rmds (unlike the Faylab Lab Manual), there will be additional tinkering needed to make the code chunks happy.\n\n\nCitations\nThe Faylab Lab Manual cited two papers, presenting us with an opportunity to see how easy it is to add references to a Quarto book. Briefly, in the Visual Editor, Insert &gt; Citation &gt; DOI. Pasting the DOI or its full URL, we can insert the citation. This automatically creates a references.bib file and adds the full citations at the bottom of the chapter page (watch demo). In July 2022, we had to manually add a ## References heading, but this may not be necessary in future Quarto updates.\n\n\n\n\n\n\n\n\n\nInsert citation via its DOI using RStudio Visual Editor\n\n\n\n\n\n\n\n\n\n\nPublishing notes\nIf the book’s output is strictly html, there’s no need to specify output-dir in _quarto.yml. The output directory default is _book/, which is what we’d like. If we wanted other types of output like like PDF or EPUB, etc. those single file outputs are also written to the output-dir (Quarto docs).\nIf you currently have a docs/ folder, delete it.\nUpdate .gitignore to ignore _book/. At the same time, we have it ignore caches and a .quarto file:\n/.quarto/\n*_cache/\n_book/\nOnce all is settled, delete _output.yml.\nOnce the Openscapes fork was fully reviewed, we made a pull request from that to the main branch of the book’s repo. Once that was merged, we set up GitHub Actions to render the book. (TODO: instructions for GitHub Actions)\n\n\nGitHub Actions\nThis book was mostly prose and screenshots without any R code. This made the conversion from RMarkdown to Quarto likely more straightforward than if you also needed to adjust code chunk options in the quarto style (#|). Our initial GitHub Action to render the converted Faylab Lab Manual failed because we had a piece of R code - even though the code was commented out! This was resolved when we deleted the line.",
-    "crumbs": [
-      "Transition from Rmd"
-    ]
-  },
-  {
-    "objectID": "transition-from-rmarkdown.html#distill-to-quarto",
-    "href": "transition-from-rmarkdown.html#distill-to-quarto",
-    "title": "Transition from RMarkdown",
-    "section": "Distill to quarto",
-    "text": "Distill to quarto\nWe transitioned our events site from distill to quarto in May 2022 (github view before and after). We followed excellent notes and examples from Nick Tierney and Danielle Navarro.\nAfter we had changed all the files, the Build tab in the RStudio IDE still showed “Build website” rather then “Render Website” and “Preview Website”, and would error when we pushed them (because that button was expecting a distill site, not a quarto site). To fix this, we updated the .Rproj file. Clicking on the .Rproj file in the RStudio IDE will open a dialog box where you can click things you want (you can also open these in a text editor or from the GitHub website to see the actual text). To fix this situation with the Build tab: Project Options &gt; Build Tools &gt; Project Build Tools &gt; None.\nLooking at files /posts/_metadata.yml and _quarto.yml helps see where things are defined. For example, to make event post citations appear, we added citation: true to /posts/_metadata.yml and in _quarto.yml under the website key we set site-url: https://openscapes.github.io/events. We deleted footer.html used with distill because footer is now defined in quarto.yml.\n\nPublishing notes\n\nBackground: Our distill site had been set up to output to a docs folder, and had GitHub Settings &gt; Pages set to look there rather gh-pages branch. (Julie note: this was a new-to-me capability when we set up the events distill site in Spring 2021 so I had forgotten that was an option). We’ve inititally kept this same set-up for now with our events page in _quarto.yml: output-dir: docs. However, this is sub-optimal; better to not have to commit and push these files but to instead have a GitHub Action generate them upon a commit. So the following is what we did -\n\nDon’t specify output-dir in _quarto.yml. The output directory default is _site/, which is what we’d like.\nIf you currently have a docs/ folder (like we did as we were experimenting), delete it.\nUpdate .gitignore to ignore _site/. At the same time, we have it ignore caches and a .quarto file:\n/.quarto/\n*_cache/\n_site/\nPush these changes, merge into main.\nOn GitHub.com, in your repo, set up GitHub publishing\nFollow instructions from the explore and setup chapter.",
-    "crumbs": [
-      "Transition from Rmd"
-    ]
-  },
-  {
-    "objectID": "transition-from-rmarkdown.html#troubleshooting",
-    "href": "transition-from-rmarkdown.html#troubleshooting",
-    "title": "Transition from RMarkdown",
-    "section": "Troubleshooting",
-    "text": "Troubleshooting\n\nGitHub Action fails, says you need RMarkdown but you don’t have R code!\nAnd you changed all .Rmds to .qmds!\nYou likely have a few setup code chunks from RMarkdown, that look like this:\n{r setup, include=FALSE}\nknitr::opts_chunk$set(echo = FALSE)\nYou can find them by opening each of your files and having a look, or use GitHub’s search for the keyword knitr",
-    "crumbs": [
-      "Transition from Rmd"
-    ]
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Applied Statistics",
+    "title": "Applied Statistics course notes",
     "section": "",
-    "text": "This document is a set of course notes for several Applied Statistics courses at California State University, Chico. This is not a textbook replacement, and topics covered will vary depending on the instructor. To make this clear we use the term notebook to refer to this document so as not to be confused with a traditional textbook.\nSome data and examples in this notebook are drawn from Practical Multivariate Analysis, 6tth ed, Afifi, May, Donatello, Clark and used with permission by the authors.\nThis work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.",
+    "text": "0.1 Preface\nThis document is a set of course notes for several Applied Statistics courses at California State University, Chico. This is not a textbook replacement, and topics covered will vary depending on the instructor. To make this clear we use the term notebook to refer to this document so as not to be confused with a traditional textbook.\nSome data and examples in this notebook are drawn from Practical Multivariate Analysis, 6tth ed, Afifi, May, Donatello, Clark and used with permission by the authors.\nThis work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.",
     "crumbs": [
-      "Welcome"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Applied Statistics</span>"
     ]
   },
   {
-    "objectID": "index.html#preface",
-    "href": "index.html#preface",
-    "title": "Applied Statistics",
+    "objectID": "explore.html",
+    "href": "explore.html",
+    "title": "2  Workflow and Data Cleaning",
     "section": "",
-    "text": "This document is a set of course notes for several Applied Statistics courses at California State University, Chico. This is not a textbook replacement, and topics covered will vary depending on the instructor. To make this clear we use the term notebook to refer to this document so as not to be confused with a traditional textbook.\nSome data and examples in this notebook are drawn from Practical Multivariate Analysis, 6tth ed, Afifi, May, Donatello, Clark and used with permission by the authors.\nThis work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.",
+    "text": "3 Workflow and Data Cleaning\nOnce the data are available from a study there are still a number of steps that must be undertaken to get them into shape for analysis.\nOne of the most misunderstood parts of the analysis process is the data preparation stage. To say that 70% of any analysis is spent on the data management stage is not an understatement.\nThis chapter provides information on topics related to data processing and corresponds to PMA6 Chapter 3.",
     "crumbs": [
-      "Welcome"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Workflow and Data Cleaning</span>"
     ]
   },
   {
     "objectID": "explore.html#reproducible-workflows",
     "href": "explore.html#reproducible-workflows",
-    "title": "Preparing Data for Analysis",
-    "section": "Reproducible workflows",
-    "text": "Reproducible workflows\nReproducibility is the ability for any researcher to take the same data set and run the same set of software program instructions as another researcher and achieve the same results.\nThe goal is to create an exact record of what was done to a data set to produce a specific result. To achieve reproducibility, we believe that three things must be present:\n\nThe un-processed data are connected directly to software code file(s) that perform data preparation techniques.\nThe processed data are connected directly to other software code file(s) that perform the analyses.\nAll data and code files are self-contained such that they could be given to another researcher to execute the code commands on a separate computer and achieve the same results as the original author.\n\n\n\n\nPrepareData\n\n\n Why do we need a codebook?\n\nYou are your own collaborator 6 months from now. Make sure you will be able to understand what you were doing.\nInvesting the time to do things clearly and in a reproducible manner will make your future self happy.\nComment your code with explanations and instructions.\n\nHow did you get from point A to B?\nWhy did you recode this variable in this manner?\n\nWe need to record those steps (not just for posterity).\nThis means your code must be saved in a script file.\n\nInclude sufficient notes to yourself describing what you are doing and why.\nFor R, this can be in a .R, .Rmd or .qmd file. I always prefer the latter.\nFor SPSS you can specify to paste the syntax and copy into a .sps script file.\nFor SAS you’ll use a .sas file\nFor STATA this will be a .do file\n\n\n\n\n\nRepro\n\n\nFigure Credits: Roger Peng\n\nLiterate programming\n\nProgramming paradigm introduced by Knuth (1984)\nExplain the logic of the program or analysis process in a natural language,\nSmall code snippets included at each step act as a full set of instructions that can be executed to reproduce the result/analysis being discussed.\n\nLiterate programming tools are integrated into most common statistical packages\n\nMarkdown (R, Stata), Quarto (R, Python, others)\n\\(\\LaTeX\\) (R, SAS, Stata)\n\n\n\nThe current gold standard for writing reproducible literate documents in R is to use Quarto. This works with Python, julia and other code editing platforms.\n\nPracticing reproducible research techniques using literate programming tools allows such major updates to be a simple matter of re-compiling all coded instructions using the updated data set.\nThe effort then is reduced to a careful review and update of any written results.\nUsing literate programming tools create formatted documents\n\nsection headers\nbold and italicized words\ntables and graphics with built-in captions\n\nin a streamlined manner that is fully synchronized with the code itself.\nThe author writes the text explanations, interpretations, and code in the statistical software program itself, and the program will execute all commands and combine the text, code and output all together into a final dynamic document.\n What stages of the pipeline shown above can we conduct using literate programming tools?",
+    "title": "2  Workflow and Data Cleaning",
+    "section": "3.1 Reproducible workflows",
+    "text": "3.1 Reproducible workflows\nReproducibility is the ability for any researcher to take the same data set and run the same set of software program instructions as another researcher and achieve the same results.\nThe goal is to create an exact record of what was done to a data set to produce a specific result. To achieve reproducibility, we believe that three things must be present:\n\nThe un-processed data are connected directly to software code file(s) that perform data preparation techniques.\nThe processed data are connected directly to other software code file(s) that perform the analyses.\nAll data and code files are self-contained such that they could be given to another researcher to execute the code commands on a separate computer and achieve the same results as the original author.\n\n\n\n\nPrepareData\n\n\n Why do we need a codebook?\n\nYou are your own collaborator 6 months from now. Make sure you will be able to understand what you were doing.\nInvesting the time to do things clearly and in a reproducible manner will make your future self happy.\nComment your code with explanations and instructions.\n\nHow did you get from point A to B?\nWhy did you recode this variable in this manner?\n\nWe need to record those steps (not just for posterity).\nThis means your code must be saved in a script file.\n\nInclude sufficient notes to yourself describing what you are doing and why.\nFor R, this can be in a .R, .Rmd or .qmd file. I always prefer the latter.\nFor SPSS you can specify to paste the syntax and copy into a .sps script file.\nFor SAS you’ll use a .sas file\nFor STATA this will be a .do file\n\n\n\n\n\nRepro\n\n\nFigure Credits: Roger Peng\n\n3.1.1 Literate programming\n\nProgramming paradigm introduced by Knuth (1984)\nExplain the logic of the program or analysis process in a natural language,\nSmall code snippets included at each step act as a full set of instructions that can be executed to reproduce the result/analysis being discussed.\n\nLiterate programming tools are integrated into most common statistical packages\n\nMarkdown (R, Stata), Quarto (R, Python, others)\n\\(\\LaTeX\\) (R, SAS, Stata)\n\n\n\nThe current gold standard for writing reproducible literate documents in R is to use Quarto. This works with Python, julia and other code editing platforms.\n\nPracticing reproducible research techniques using literate programming tools allows such major updates to be a simple matter of re-compiling all coded instructions using the updated data set.\nThe effort then is reduced to a careful review and update of any written results.\nUsing literate programming tools create formatted documents\n\nsection headers\nbold and italicized words\ntables and graphics with built-in captions\n\nin a streamlined manner that is fully synchronized with the code itself.\nThe author writes the text explanations, interpretations, and code in the statistical software program itself, and the program will execute all commands and combine the text, code and output all together into a final dynamic document.\n What stages of the pipeline shown above can we conduct using literate programming tools?",
     "crumbs": [
-      "Preparing Data for Analysis"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Workflow and Data Cleaning</span>"
     ]
   },
   {
     "objectID": "explore.html#import-data",
     "href": "explore.html#import-data",
-    "title": "Preparing Data for Analysis",
-    "section": "Import data",
-    "text": "Import data\nThis section uses the raw depression data set from the Afifi et.al. textbook. This is a tab-delimited data set, so we opt to use read.table here. We include arguments sep=\"\\t\" to indicate columns are separated with tabs and header=TRUE to indicate the first row of the data is the variable names.\nlibrary(ggplot2)  \ndepress_raw &lt;- read.table(\"https://norcalbiostat.netlify.com/data/Depress.txt\", \n                      sep=\"\\t\", header=TRUE)  \n\n\nLearn more See R for Data Science 2nd edit for more instruction on importing different types of data and ways you can streamline your data import. https://r4ds.hadley.nz/data-import\n\nThe absolute first thing you should do is to look at your raw data table. Are the column headers variable names? Did all the rows get read in? Are there any extra columns or rows included?",
+    "title": "2  Workflow and Data Cleaning",
+    "section": "3.2 Import data",
+    "text": "3.2 Import data\nThis section uses the raw depression data set from the Afifi et.al. textbook. This is a tab-delimited data set, so we opt to use read.table here. We include arguments sep=\"\\t\" to indicate columns are separated with tabs and header=TRUE to indicate the first row of the data is the variable names.\nlibrary(ggplot2)  \ndepress_raw &lt;- read.table(\"https://norcalbiostat.netlify.com/data/Depress.txt\", \n                      sep=\"\\t\", header=TRUE)  \n\n\nLearn more See R for Data Science 2nd edit for more instruction on importing different types of data and ways you can streamline your data import. https://r4ds.hadley.nz/data-import\n\nThe absolute first thing you should do is to look at your raw data table. Are the column headers variable names? Did all the rows get read in? Are there any extra columns or rows included?",
     "crumbs": [
-      "Preparing Data for Analysis"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Workflow and Data Cleaning</span>"
     ]
   },
   {
     "objectID": "explore.html#data-management",
     "href": "explore.html#data-management",
-    "title": "Preparing Data for Analysis",
-    "section": "Data Management",
-    "text": "Data Management\nQuestions to ask yourself while reviewing the codebook to choose variables to be used in an analysis.\n\nAre there codes that indicate missing? E.g. MISSING or -99?\nDo you need to make response codes more logical?\n\nSome systems will record 1=YES and 2=NO. This should be changed to 0=NO.\n\nDo you need to recode numerical variables to categorical?\n\nSometimes categorical data will be recorded as 1, 2, 3 etc when those numbers represent named categories.\n\nDo you need to create secondary variables such as an average across measures to create a score.\nAre the variable names user friendly? Mixtures of CAPS and lower case, names with spaces or special characters should all be changed.\n\nSome of these answers will come only after you look at your data. This can be looking at the raw data itself but also looking at tables and charts generated from the data. Often when you try to create a plot or table you will encounter an error or something odd looking that will be the notification that something has to be adjusted.\nThe next sections go over a few of the common data management processes, but is not comprehensive, and may only show one method for cleaning. There are always different ways to accomplish tasks.",
+    "title": "2  Workflow and Data Cleaning",
+    "section": "3.3 Data Management",
+    "text": "3.3 Data Management\nQuestions to ask yourself while reviewing the codebook to choose variables to be used in an analysis.\n\nAre there codes that indicate missing? E.g. MISSING or -99?\nDo you need to make response codes more logical?\n\nSome systems will record 1=YES and 2=NO. This should be changed to 0=NO.\n\nDo you need to recode numerical variables to categorical?\n\nSometimes categorical data will be recorded as 1, 2, 3 etc when those numbers represent named categories.\n\nDo you need to create secondary variables such as an average across measures to create a score.\nAre the variable names user friendly? Mixtures of CAPS and lower case, names with spaces or special characters should all be changed.\n\nSome of these answers will come only after you look at your data. This can be looking at the raw data itself but also looking at tables and charts generated from the data. Often when you try to create a plot or table you will encounter an error or something odd looking that will be the notification that something has to be adjusted.\nThe next sections go over a few of the common data management processes, but is not comprehensive, and may only show one method for cleaning. There are always different ways to accomplish tasks.",
     "crumbs": [
-      "Preparing Data for Analysis"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Workflow and Data Cleaning</span>"
     ]
   },
   {
     "objectID": "explore.html#renaming-variable-names-for-sanity-sake",
     "href": "explore.html#renaming-variable-names-for-sanity-sake",
-    "title": "Preparing Data for Analysis",
-    "section": "Renaming variable names for sanity sake",
-    "text": "Renaming variable names for sanity sake\nThe best method is to use the clean_names() function from the janitor package.\ndepress &lt;- depress_raw %&gt;% janitor::clean_names()\nA base R soluion is to use `tolower() to turn all variable names to lower case.\n## names(depress) &lt;- tolower(names(depress))\ntolower(\"ThIs MIXTure of CAPS and lowercase WILL alL be conVERteD to LoWeR CAsE\")\n## [1] \"this mixture of caps and lowercase will all be converted to lower case\"",
+    "title": "2  Workflow and Data Cleaning",
+    "section": "3.4 Renaming variable names for sanity sake",
+    "text": "3.4 Renaming variable names for sanity sake\nThe best method is to use the clean_names() function from the janitor package.\ndepress &lt;- depress_raw %&gt;% janitor::clean_names()\nA base R soluion is to use `tolower() to turn all variable names to lower case.\n## names(depress) &lt;- tolower(names(depress))\ntolower(\"ThIs MIXTure of CAPS and lowercase WILL alL be conVERteD to LoWeR CAsE\")\n## [1] \"this mixture of caps and lowercase will all be converted to lower case\"",
     "crumbs": [
-      "Preparing Data for Analysis"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Workflow and Data Cleaning</span>"
     ]
   },
   {
     "objectID": "explore.html#identifying-variable-types",
     "href": "explore.html#identifying-variable-types",
-    "title": "Preparing Data for Analysis",
-    "section": "Identifying Variable Types",
-    "text": "Identifying Variable Types\nThe str function is short for structure. This shows you the variable names, what data types R thinks each variable are, and some of the raw data.\nstr(depress)\n## 'data.frame':    294 obs. of  37 variables:\n##  $ id      : int  1 2 3 4 5 6 7 8 9 10 ...\n##  $ sex     : int  2 1 2 2 2 1 2 1 2 1 ...\n##  $ age     : int  68 58 45 50 33 24 58 22 47 30 ...\n##  $ marital : int  5 3 2 3 4 2 2 1 2 2 ...\n##  $ educat  : int  2 4 3 3 3 3 2 3 3 2 ...\n##  $ employ  : int  4 1 1 3 1 1 5 1 4 1 ...\n##  $ income  : int  4 15 28 9 35 11 11 9 23 35 ...\n##  $ relig   : int  1 1 1 1 1 1 1 1 2 4 ...\n##  $ c1      : int  0 0 0 0 0 0 2 0 0 0 ...\n##  $ c2      : int  0 0 0 0 0 0 1 1 1 0 ...\n##  $ c3      : int  0 1 0 0 0 0 1 2 1 0 ...\n##  $ c4      : int  0 0 0 0 0 0 2 0 0 0 ...\n##  $ c5      : int  0 0 1 1 0 0 1 2 0 0 ...\n##  $ c6      : int  0 0 0 1 0 0 0 1 3 0 ...\n##  $ c7      : int  0 0 0 0 0 0 0 0 0 0 ...\n##  $ c8      : int  0 0 0 3 3 0 2 0 0 0 ...\n##  $ c9      : int  0 0 0 0 3 1 2 0 0 0 ...\n##  $ c10     : int  0 0 0 0 0 0 0 0 0 0 ...\n##  $ c11     : int  0 0 0 0 0 0 0 0 0 0 ...\n##  $ c12     : int  0 1 0 0 0 1 0 0 3 0 ...\n##  $ c13     : int  0 0 0 0 0 2 0 0 0 0 ...\n##  $ c14     : int  0 0 1 0 0 0 0 0 3 0 ...\n##  $ c15     : int  0 1 1 0 0 0 3 0 2 0 ...\n##  $ c16     : int  0 0 1 0 0 2 0 1 3 0 ...\n##  $ c17     : int  0 1 0 0 0 1 0 1 0 0 ...\n##  $ c18     : int  0 0 0 0 0 0 0 1 0 0 ...\n##  $ c19     : int  0 0 0 0 0 0 0 1 0 0 ...\n##  $ c20     : int  0 0 0 0 0 0 1 0 0 0 ...\n##  $ cesd    : int  0 4 4 5 6 7 15 10 16 0 ...\n##  $ cases   : int  0 0 0 0 0 0 0 0 1 0 ...\n##  $ drink   : int  2 1 1 2 1 1 2 2 1 1 ...\n##  $ health  : int  2 1 2 1 1 1 3 1 4 1 ...\n##  $ regdoc  : int  1 1 1 1 1 1 1 2 1 1 ...\n##  $ treat   : int  1 1 1 2 1 1 1 2 1 2 ...\n##  $ beddays : int  0 0 0 0 1 0 0 0 1 0 ...\n##  $ acuteill: int  0 0 0 0 1 1 1 1 0 0 ...\n##  $ chronill: int  1 1 0 1 0 1 1 0 1 0 ...\nA tidyverse alternative is glimpse()\nglimpse(depress)\n## Rows: 294\n## Columns: 37\n## $ id       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18…\n## $ sex      &lt;int&gt; 2, 1, 2, 2, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1, 2…\n## $ age      &lt;int&gt; 68, 58, 45, 50, 33, 24, 58, 22, 47, 30, 20, 57, 39, 61, 23, 2…\n## $ marital  &lt;int&gt; 5, 3, 2, 3, 4, 2, 2, 1, 2, 2, 1, 2, 2, 5, 2, 1, 1, 4, 1, 5, 1…\n## $ educat   &lt;int&gt; 2, 4, 3, 3, 3, 3, 2, 3, 3, 2, 2, 3, 2, 3, 3, 2, 4, 2, 6, 2, 3…\n## $ employ   &lt;int&gt; 4, 1, 1, 3, 1, 1, 5, 1, 4, 1, 3, 2, 1, 4, 1, 1, 1, 3, 1, 4, 1…\n## $ income   &lt;int&gt; 4, 15, 28, 9, 35, 11, 11, 9, 23, 35, 25, 24, 28, 13, 15, 6, 8…\n## $ relig    &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 4, 4, 1, 1, 1, 2, 1, 1, 1, 1, 4, 2…\n## $ c1       &lt;int&gt; 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 1, 0, 0, 1, 3, 1, 0, 0, 0…\n## $ c2       &lt;int&gt; 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 3, 0, 0, 0, 0…\n## $ c3       &lt;int&gt; 0, 1, 0, 0, 0, 0, 1, 2, 1, 0, 1, 0, 0, 0, 0, 2, 2, 1, 0, 0, 0…\n## $ c4       &lt;int&gt; 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 0, 0, 0…\n## $ c5       &lt;int&gt; 0, 0, 1, 1, 0, 0, 1, 2, 0, 0, 1, 0, 0, 1, 0, 1, 3, 1, 0, 0, 0…\n## $ c6       &lt;int&gt; 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 2, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0…\n## $ c7       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0…\n## $ c8       &lt;int&gt; 0, 0, 0, 3, 3, 0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 1, 2, 0, 0, 3, 0…\n## $ c9       &lt;int&gt; 0, 0, 0, 0, 3, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0, 3…\n## $ c10      &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0…\n## $ c11      &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0…\n## $ c12      &lt;int&gt; 0, 1, 0, 0, 0, 1, 0, 0, 3, 0, 1, 0, 1, 1, 0, 1, 2, 0, 0, 0, 0…\n## $ c13      &lt;int&gt; 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0…\n## $ c14      &lt;int&gt; 0, 0, 1, 0, 0, 0, 0, 0, 3, 0, 2, 0, 2, 0, 0, 2, 2, 0, 0, 0, 0…\n## $ c15      &lt;int&gt; 0, 1, 1, 0, 0, 0, 3, 0, 2, 0, 1, 2, 0, 0, 1, 1, 3, 0, 0, 0, 0…\n## $ c16      &lt;int&gt; 0, 0, 1, 0, 0, 2, 0, 1, 3, 0, 1, 2, 1, 0, 3, 1, 2, 0, 0, 0, 0…\n## $ c17      &lt;int&gt; 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0…\n## $ c18      &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 3, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0…\n## $ c19      &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0…\n## $ c20      &lt;int&gt; 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 3, 0, 0, 0, 0…\n## $ cesd     &lt;int&gt; 0, 4, 4, 5, 6, 7, 15, 10, 16, 0, 18, 4, 8, 4, 8, 21, 42, 6, 0…\n## $ cases    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0…\n## $ drink    &lt;int&gt; 2, 1, 1, 2, 1, 1, 2, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 2, 1, 1…\n## $ health   &lt;int&gt; 2, 1, 2, 1, 1, 1, 3, 1, 4, 1, 2, 2, 3, 1, 1, 3, 1, 3, 2, 2, 1…\n## $ regdoc   &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1…\n## $ treat    &lt;int&gt; 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 2, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1…\n## $ beddays  &lt;int&gt; 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0…\n## $ acuteill &lt;int&gt; 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0…\n## $ chronill &lt;int&gt; 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1…\nRight away this tells me that R thinks all variables are numeric integers, not categorical variables. Many of these will have to be changed. We’ll get to that in a moment.\nJust check the data type of one variable\ntypeof(depress$marital)\n## [1] \"integer\"\nclass(depress$age)\n## [1] \"integer\"",
+    "title": "2  Workflow and Data Cleaning",
+    "section": "3.5 Identifying Variable Types",
+    "text": "3.5 Identifying Variable Types\nThe str function is short for structure. This shows you the variable names, what data types R thinks each variable are, and some of the raw data.\nstr(depress)\n## 'data.frame':    294 obs. of  37 variables:\n##  $ id      : int  1 2 3 4 5 6 7 8 9 10 ...\n##  $ sex     : int  2 1 2 2 2 1 2 1 2 1 ...\n##  $ age     : int  68 58 45 50 33 24 58 22 47 30 ...\n##  $ marital : int  5 3 2 3 4 2 2 1 2 2 ...\n##  $ educat  : int  2 4 3 3 3 3 2 3 3 2 ...\n##  $ employ  : int  4 1 1 3 1 1 5 1 4 1 ...\n##  $ income  : int  4 15 28 9 35 11 11 9 23 35 ...\n##  $ relig   : int  1 1 1 1 1 1 1 1 2 4 ...\n##  $ c1      : int  0 0 0 0 0 0 2 0 0 0 ...\n##  $ c2      : int  0 0 0 0 0 0 1 1 1 0 ...\n##  $ c3      : int  0 1 0 0 0 0 1 2 1 0 ...\n##  $ c4      : int  0 0 0 0 0 0 2 0 0 0 ...\n##  $ c5      : int  0 0 1 1 0 0 1 2 0 0 ...\n##  $ c6      : int  0 0 0 1 0 0 0 1 3 0 ...\n##  $ c7      : int  0 0 0 0 0 0 0 0 0 0 ...\n##  $ c8      : int  0 0 0 3 3 0 2 0 0 0 ...\n##  $ c9      : int  0 0 0 0 3 1 2 0 0 0 ...\n##  $ c10     : int  0 0 0 0 0 0 0 0 0 0 ...\n##  $ c11     : int  0 0 0 0 0 0 0 0 0 0 ...\n##  $ c12     : int  0 1 0 0 0 1 0 0 3 0 ...\n##  $ c13     : int  0 0 0 0 0 2 0 0 0 0 ...\n##  $ c14     : int  0 0 1 0 0 0 0 0 3 0 ...\n##  $ c15     : int  0 1 1 0 0 0 3 0 2 0 ...\n##  $ c16     : int  0 0 1 0 0 2 0 1 3 0 ...\n##  $ c17     : int  0 1 0 0 0 1 0 1 0 0 ...\n##  $ c18     : int  0 0 0 0 0 0 0 1 0 0 ...\n##  $ c19     : int  0 0 0 0 0 0 0 1 0 0 ...\n##  $ c20     : int  0 0 0 0 0 0 1 0 0 0 ...\n##  $ cesd    : int  0 4 4 5 6 7 15 10 16 0 ...\n##  $ cases   : int  0 0 0 0 0 0 0 0 1 0 ...\n##  $ drink   : int  2 1 1 2 1 1 2 2 1 1 ...\n##  $ health  : int  2 1 2 1 1 1 3 1 4 1 ...\n##  $ regdoc  : int  1 1 1 1 1 1 1 2 1 1 ...\n##  $ treat   : int  1 1 1 2 1 1 1 2 1 2 ...\n##  $ beddays : int  0 0 0 0 1 0 0 0 1 0 ...\n##  $ acuteill: int  0 0 0 0 1 1 1 1 0 0 ...\n##  $ chronill: int  1 1 0 1 0 1 1 0 1 0 ...\nA tidyverse alternative is glimpse()\nglimpse(depress)\n## Rows: 294\n## Columns: 37\n## $ id       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18…\n## $ sex      &lt;int&gt; 2, 1, 2, 2, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1, 2…\n## $ age      &lt;int&gt; 68, 58, 45, 50, 33, 24, 58, 22, 47, 30, 20, 57, 39, 61, 23, 2…\n## $ marital  &lt;int&gt; 5, 3, 2, 3, 4, 2, 2, 1, 2, 2, 1, 2, 2, 5, 2, 1, 1, 4, 1, 5, 1…\n## $ educat   &lt;int&gt; 2, 4, 3, 3, 3, 3, 2, 3, 3, 2, 2, 3, 2, 3, 3, 2, 4, 2, 6, 2, 3…\n## $ employ   &lt;int&gt; 4, 1, 1, 3, 1, 1, 5, 1, 4, 1, 3, 2, 1, 4, 1, 1, 1, 3, 1, 4, 1…\n## $ income   &lt;int&gt; 4, 15, 28, 9, 35, 11, 11, 9, 23, 35, 25, 24, 28, 13, 15, 6, 8…\n## $ relig    &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 4, 4, 1, 1, 1, 2, 1, 1, 1, 1, 4, 2…\n## $ c1       &lt;int&gt; 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 1, 0, 0, 1, 3, 1, 0, 0, 0…\n## $ c2       &lt;int&gt; 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 3, 0, 0, 0, 0…\n## $ c3       &lt;int&gt; 0, 1, 0, 0, 0, 0, 1, 2, 1, 0, 1, 0, 0, 0, 0, 2, 2, 1, 0, 0, 0…\n## $ c4       &lt;int&gt; 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 0, 0, 0…\n## $ c5       &lt;int&gt; 0, 0, 1, 1, 0, 0, 1, 2, 0, 0, 1, 0, 0, 1, 0, 1, 3, 1, 0, 0, 0…\n## $ c6       &lt;int&gt; 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 2, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0…\n## $ c7       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0…\n## $ c8       &lt;int&gt; 0, 0, 0, 3, 3, 0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 1, 2, 0, 0, 3, 0…\n## $ c9       &lt;int&gt; 0, 0, 0, 0, 3, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0, 3…\n## $ c10      &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0…\n## $ c11      &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0…\n## $ c12      &lt;int&gt; 0, 1, 0, 0, 0, 1, 0, 0, 3, 0, 1, 0, 1, 1, 0, 1, 2, 0, 0, 0, 0…\n## $ c13      &lt;int&gt; 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0…\n## $ c14      &lt;int&gt; 0, 0, 1, 0, 0, 0, 0, 0, 3, 0, 2, 0, 2, 0, 0, 2, 2, 0, 0, 0, 0…\n## $ c15      &lt;int&gt; 0, 1, 1, 0, 0, 0, 3, 0, 2, 0, 1, 2, 0, 0, 1, 1, 3, 0, 0, 0, 0…\n## $ c16      &lt;int&gt; 0, 0, 1, 0, 0, 2, 0, 1, 3, 0, 1, 2, 1, 0, 3, 1, 2, 0, 0, 0, 0…\n## $ c17      &lt;int&gt; 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0…\n## $ c18      &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 3, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0…\n## $ c19      &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0…\n## $ c20      &lt;int&gt; 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 3, 0, 0, 0, 0…\n## $ cesd     &lt;int&gt; 0, 4, 4, 5, 6, 7, 15, 10, 16, 0, 18, 4, 8, 4, 8, 21, 42, 6, 0…\n## $ cases    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0…\n## $ drink    &lt;int&gt; 2, 1, 1, 2, 1, 1, 2, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 2, 1, 1…\n## $ health   &lt;int&gt; 2, 1, 2, 1, 1, 1, 3, 1, 4, 1, 2, 2, 3, 1, 1, 3, 1, 3, 2, 2, 1…\n## $ regdoc   &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1…\n## $ treat    &lt;int&gt; 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 2, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1…\n## $ beddays  &lt;int&gt; 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0…\n## $ acuteill &lt;int&gt; 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0…\n## $ chronill &lt;int&gt; 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1…\nRight away this tells me that R thinks all variables are numeric integers, not categorical variables. Many of these will have to be changed. We’ll get to that in a moment.\nJust check the data type of one variable\ntypeof(depress$marital)\n## [1] \"integer\"\nclass(depress$age)\n## [1] \"integer\"",
     "crumbs": [
-      "Preparing Data for Analysis"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Workflow and Data Cleaning</span>"
     ]
   },
   {
     "objectID": "explore.html#convert-number-to-factor",
     "href": "explore.html#convert-number-to-factor",
-    "title": "Preparing Data for Analysis",
-    "section": "Convert number to factor",
-    "text": "Convert number to factor\nWhen variables have numerical levels it is necessary to ensure that the program knows it is a factor variable.\nThe following code uses the factor() function to take the marital status variable and convert it into a factor variable with specified labels that match the codebook.\ndepress$marital &lt;- factor(depress$marital, \n      labels = c(\"Never Married\", \"Married\", \"Divorced\", \"Separated\", \"Widowed\"))\nIt is important to confirm the recode worked. If it did not you will have to re-read in the raw data set again since the variable marital was replaced.\ntable(depress$marital)\n## \n## Never Married       Married      Divorced     Separated       Widowed \n##            73           127            43            13            38\nclass(depress$marital)\n## [1] \"factor\"\nSee more examples on Math 130 Lesson 06",
+    "title": "2  Workflow and Data Cleaning",
+    "section": "3.6 Convert number to factor",
+    "text": "3.6 Convert number to factor\nWhen variables have numerical levels it is necessary to ensure that the program knows it is a factor variable.\nThe following code uses the factor() function to take the marital status variable and convert it into a factor variable with specified labels that match the codebook.\ndepress$marital &lt;- factor(depress$marital, \n      labels = c(\"Never Married\", \"Married\", \"Divorced\", \"Separated\", \"Widowed\"))\nIt is important to confirm the recode worked. If it did not you will have to re-read in the raw data set again since the variable marital was replaced.\ntable(depress$marital)\n## \n## Never Married       Married      Divorced     Separated       Widowed \n##            73           127            43            13            38\nclass(depress$marital)\n## [1] \"factor\"\nSee more examples on Math 130 Lesson 06",
     "crumbs": [
-      "Preparing Data for Analysis"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Workflow and Data Cleaning</span>"
     ]
   },
   {
     "objectID": "explore.html#identifying-outliers",
     "href": "explore.html#identifying-outliers",
-    "title": "Preparing Data for Analysis",
-    "section": "Identifying Outliers",
-    "text": "Identifying Outliers\nLet’s look at the age variable in the depression data set.\npar(mfrow=c(1,2))\nboxplot(depress$age)\nhist(depress$age)\n\nJust looking at the data graphically raises no red flags. The boxplot shows no outlying values and the histogram does not look wildly skewed. This is where knowledge about the data set is essential. The codebook does not provide a valid range for the data, but the description of the data starting on page 3 in the textbook clarifies that this data set is on adults. In the research world, this specifies 18 years or older.\nNow look back at the graphics. See anything odd? It appears as if the data go pretty far below 20, possibly below 18. Let’s check the numerical summary to get more details.\nsummary(depress$age)\n##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n##    9.00   28.00   42.50   44.38   59.00   89.00\nThe minimum value is a 9, which is outside the range of valid values for this variable. This is where you, as a statistician, data analyst or researcher goes back to the PI and asks for advice. Should this data be set to missing, or edited in a way that changes this data point into a valid piece of data.\nAnother example\nboxplot(depress$income)\n\nWhile there is at least one potential outliers (denoted by the dots), there are none so far away from the rest of the group (or at values such as 99 or -99 that may indicate missing codes) that we need to be concerned about.",
+    "title": "2  Workflow and Data Cleaning",
+    "section": "3.7 Identifying Outliers",
+    "text": "3.7 Identifying Outliers\nLet’s look at the age variable in the depression data set.\npar(mfrow=c(1,2))\nboxplot(depress$age)\nhist(depress$age)\n\nJust looking at the data graphically raises no red flags. The boxplot shows no outlying values and the histogram does not look wildly skewed. This is where knowledge about the data set is essential. The codebook does not provide a valid range for the data, but the description of the data starting on page 3 in the textbook clarifies that this data set is on adults. In the research world, this specifies 18 years or older.\nNow look back at the graphics. See anything odd? It appears as if the data go pretty far below 20, possibly below 18. Let’s check the numerical summary to get more details.\nsummary(depress$age)\n##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n##    9.00   28.00   42.50   44.38   59.00   89.00\nThe minimum value is a 9, which is outside the range of valid values for this variable. This is where you, as a statistician, data analyst or researcher goes back to the PI and asks for advice. Should this data be set to missing, or edited in a way that changes this data point into a valid piece of data.\nAnother example\nboxplot(depress$income)\n\nWhile there is at least one potential outliers (denoted by the dots), there are none so far away from the rest of the group (or at values such as 99 or -99 that may indicate missing codes) that we need to be concerned about.",
     "crumbs": [
-      "Preparing Data for Analysis"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Workflow and Data Cleaning</span>"
     ]
   },
   {
     "objectID": "explore.html#changing-numeric-values",
     "href": "explore.html#changing-numeric-values",
-    "title": "Preparing Data for Analysis",
-    "section": "Changing numeric values",
-    "text": "Changing numeric values\nAs an example of a common data entry error, and for demonstration purposes, I went in and changed a 19 to a 9. So the correct thing to do here is to change that 9, back to a 19. This is a very good use of the ifelse() function.\ndepress$age &lt;- ifelse(depress$age==9, 19, depress$age)\nThe logical statement is depress$age9. Wherever this is true, replace the value of depress$age with 19, wherever this is false then keep the value of depress$age unchanged (by “replacing” the new value with the same old value).\nAlternatively, you can change that one value using bracket notation. Here you are specifying that you only want the rows where age==9, and directly assign a value of 19 to those rows.\ndepress$age[depress$age==9] &lt;- 19\nConfirm the recode.\nsummary(depress$age)\n##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n##   18.00   28.00   42.50   44.41   59.00   89.00\nLooks like it worked.",
+    "title": "2  Workflow and Data Cleaning",
+    "section": "3.8 Changing numeric values",
+    "text": "3.8 Changing numeric values\nAs an example of a common data entry error, and for demonstration purposes, I went in and changed a 19 to a 9. So the correct thing to do here is to change that 9, back to a 19. This is a very good use of the ifelse() function.\ndepress$age &lt;- ifelse(depress$age==9, 19, depress$age)\nThe logical statement is depress$age9. Wherever this is true, replace the value of depress$age with 19, wherever this is false then keep the value of depress$age unchanged (by “replacing” the new value with the same old value).\nAlternatively, you can change that one value using bracket notation. Here you are specifying that you only want the rows where age==9, and directly assign a value of 19 to those rows.\ndepress$age[depress$age==9] &lt;- 19\nConfirm the recode.\nsummary(depress$age)\n##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n##   18.00   28.00   42.50   44.41   59.00   89.00\nLooks like it worked.",
     "crumbs": [
-      "Preparing Data for Analysis"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Workflow and Data Cleaning</span>"
     ]
   },
   {
     "objectID": "explore.html#creating-secondary-variables",
     "href": "explore.html#creating-secondary-variables",
-    "title": "Preparing Data for Analysis",
-    "section": "Creating secondary variables",
-    "text": "Creating secondary variables\nSee Math 130 lesson 05 for now.",
+    "title": "2  Workflow and Data Cleaning",
+    "section": "3.9 Creating secondary variables",
+    "text": "3.9 Creating secondary variables\nSee Math 130 lesson 05 for now.",
     "crumbs": [
-      "Preparing Data for Analysis"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Workflow and Data Cleaning</span>"
     ]
   },
   {
     "objectID": "explore.html#wrangling-factors",
     "href": "explore.html#wrangling-factors",
-    "title": "Preparing Data for Analysis",
-    "section": "Wrangling Factors",
-    "text": "Wrangling Factors\nFor more help on renaming, releveling, lumping, and removing levels see Math 130 lesson 06 for now. Also the forcats vignette.\n\nCollapsing categorical variables into fewer categories\nFor unbiased and accurate results of a statistical analysis, sufficient data has to be present. Often times once you start slicing and dicing the data to only look at certain groups, or if you are interested in the behavior of certain variables across levels of another variable, sometimes you start to run into small sample size problems.\nFor example, consider marital status again. There are only 13 people who report being separated. This could potentially be too small of a group size for valid statistical analysis. One way to deal with insufficient data within a certain category is to collapse categories. The following code uses the recode() function from the car package to create a new variable that I am calling marital2 that combines the Divorced and Separated levels.\n\n⚠️ Note: See Math 130 lesson 06 for a better method using forcats\n\nlibrary(car)\nmarital2 &lt;- recode(depress$marital, \"'Divorced' = 'Sep/Div'; 'Separated' = 'Sep/Div'\")\nAlways confirm your recodes. Check a table of the old variable (marital) against the new one marital2.\ntable(depress$marital, marital2, useNA=\"always\")\n##                marital2\n##                 Married Never Married Sep/Div Widowed &lt;NA&gt;\n##   Never Married       0            73       0       0    0\n##   Married           127             0       0       0    0\n##   Divorced            0             0      43       0    0\n##   Separated           0             0      13       0    0\n##   Widowed             0             0       0      38    0\n##   &lt;NA&gt;                0             0       0       0    0\nThis confirms that records where marital (rows) is Divorced or Separated have the value of Sep/Div for marital2 (columns). And that no missing data crept up in the process. Now I can drop the temporary marital2 variable and actually fix marital. (keeping it clean)\ndepress$marital &lt;- recode(depress$marital, \"'Divorced' = 'Sep/Div'; 'Separated' = 'Sep/Div'\")\nrm(marital2)",
+    "title": "2  Workflow and Data Cleaning",
+    "section": "3.10 Wrangling Factors",
+    "text": "3.10 Wrangling Factors\nFor more help on renaming, releveling, lumping, and removing levels see Math 130 lesson 06 for now. Also the forcats vignette.\n\n3.10.1 Collapsing categorical variables into fewer categories\nFor unbiased and accurate results of a statistical analysis, sufficient data has to be present. Often times once you start slicing and dicing the data to only look at certain groups, or if you are interested in the behavior of certain variables across levels of another variable, sometimes you start to run into small sample size problems.\nFor example, consider marital status again. There are only 13 people who report being separated. This could potentially be too small of a group size for valid statistical analysis. One way to deal with insufficient data within a certain category is to collapse categories. The following code uses the recode() function from the car package to create a new variable that I am calling marital2 that combines the Divorced and Separated levels.\n\n⚠️ Note: See Math 130 lesson 06 for a better method using forcats\n\nlibrary(car)\nmarital2 &lt;- recode(depress$marital, \"'Divorced' = 'Sep/Div'; 'Separated' = 'Sep/Div'\")\nAlways confirm your recodes. Check a table of the old variable (marital) against the new one marital2.\ntable(depress$marital, marital2, useNA=\"always\")\n##                marital2\n##                 Married Never Married Sep/Div Widowed &lt;NA&gt;\n##   Never Married       0            73       0       0    0\n##   Married           127             0       0       0    0\n##   Divorced            0             0      43       0    0\n##   Separated           0             0      13       0    0\n##   Widowed             0             0       0      38    0\n##   &lt;NA&gt;                0             0       0       0    0\nThis confirms that records where marital (rows) is Divorced or Separated have the value of Sep/Div for marital2 (columns). And that no missing data crept up in the process. Now I can drop the temporary marital2 variable and actually fix marital. (keeping it clean)\ndepress$marital &lt;- recode(depress$marital, \"'Divorced' = 'Sep/Div'; 'Separated' = 'Sep/Div'\")\nrm(marital2)",
     "crumbs": [
-      "Preparing Data for Analysis"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Workflow and Data Cleaning</span>"
     ]
   },
   {
     "objectID": "explore.html#binning-a-continuous-variable-into-categorical-ranges.",
     "href": "explore.html#binning-a-continuous-variable-into-categorical-ranges.",
-    "title": "Preparing Data for Analysis",
-    "section": "Binning a continuous variable into categorical ranges.",
-    "text": "Binning a continuous variable into categorical ranges.\nWe can use the cut function to create a new variable that categorizes income into the following ranges: &lt;30, [30, 40), [40,50), [50, 60), 60+.\ndepress$inc_cut &lt;- cut(depress$income, breaks=c(0, 30,40,50,60, 100))\ntable(depress$inc_cut)\n## \n##   (0,30]  (30,40]  (40,50]  (50,60] (60,100] \n##      231       28       16        9       10",
+    "title": "2  Workflow and Data Cleaning",
+    "section": "3.11 Binning a continuous variable into categorical ranges.",
+    "text": "3.11 Binning a continuous variable into categorical ranges.\nWe can use the cut function to create a new variable that categorizes income into the following ranges: &lt;30, [30, 40), [40,50), [50, 60), 60+.\ndepress$inc_cut &lt;- cut(depress$income, breaks=c(0, 30,40,50,60, 100))\ntable(depress$inc_cut)\n## \n##   (0,30]  (30,40]  (40,50]  (50,60] (60,100] \n##      231       28       16        9       10",
     "crumbs": [
-      "Preparing Data for Analysis"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Workflow and Data Cleaning</span>"
     ]
   },
   {
     "objectID": "explore.html#dichotomizing-a-measure-into-2-categories",
     "href": "explore.html#dichotomizing-a-measure-into-2-categories",
-    "title": "Preparing Data for Analysis",
-    "section": "Dichotomizing a measure into 2 categories",
-    "text": "Dichotomizing a measure into 2 categories\nDichotomous variables tend to be binary indicator variables where a code of 1 is the level you’re interested in.\nFor example, in this study gender is coded as 2=Female and 1=Male. (This data was collected in the ’70s, and so only two genders were provided as options). We want to convert this 1=Female and 0=Male.\ndepress$sex &lt;- depress$sex -1 \ntable(depress$sex)\n## \n##   0   1 \n## 111 183\n0/1 binary coding is mandatory for many analyses. One simple reason is that now you can calculate the mean and interpret it as a proportion.\nmean(depress$sex)\n## [1] 0.622449\n62% of individuals in this data set are female.\nSometimes the data is recorded as 1/2 (Yes/No), so just subtracting from 1 doesn’t create a positive indicator of the variable. For example, drink=1 if they are a regular drinker, and drink=2 if they are not. We want not drinking to be coded as 0, not 2.\ntable(depress$drink)\n## \n##   1   2 \n## 234  60\nThe ifelse() function says that if depress$DRINK has a value equal to 2 ==2, then change the value to 0. Otherwise leave it alone.\ndepress$drink &lt;- ifelse(depress$drink==2, 0, depress$drink)\ntable(depress$drink)\n## \n##   0   1 \n##  60 234",
+    "title": "2  Workflow and Data Cleaning",
+    "section": "3.12 Dichotomizing a measure into 2 categories",
+    "text": "3.12 Dichotomizing a measure into 2 categories\nDichotomous variables tend to be binary indicator variables where a code of 1 is the level you’re interested in.\nFor example, in this study gender is coded as 2=Female and 1=Male. (This data was collected in the ’70s, and so only two genders were provided as options). We want to convert this 1=Female and 0=Male.\ndepress$sex &lt;- depress$sex -1 \ntable(depress$sex)\n## \n##   0   1 \n## 111 183\n0/1 binary coding is mandatory for many analyses. One simple reason is that now you can calculate the mean and interpret it as a proportion.\nmean(depress$sex)\n## [1] 0.622449\n62% of individuals in this data set are female.\nSometimes the data is recorded as 1/2 (Yes/No), so just subtracting from 1 doesn’t create a positive indicator of the variable. For example, drink=1 if they are a regular drinker, and drink=2 if they are not. We want not drinking to be coded as 0, not 2.\ntable(depress$drink)\n## \n##   1   2 \n## 234  60\nThe ifelse() function says that if depress$DRINK has a value equal to 2 ==2, then change the value to 0. Otherwise leave it alone.\ndepress$drink &lt;- ifelse(depress$drink==2, 0, depress$drink)\ntable(depress$drink)\n## \n##   0   1 \n##  60 234",
     "crumbs": [
-      "Preparing Data for Analysis"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Workflow and Data Cleaning</span>"
     ]
   },
   {
     "objectID": "explore.html#sum-or-average-values-across-multiple-variables",
     "href": "explore.html#sum-or-average-values-across-multiple-variables",
-    "title": "Preparing Data for Analysis",
-    "section": "Sum or Average values across multiple variables",
-    "text": "Sum or Average values across multiple variables\nThe Center for Epidemiological Studies Depression Scale (CESD) is series of questions asked to a person to measure their level of depression. CESD is calculated as the sum of all 20 component variables, and is already on this data set. Let’s create a new variable named sleep as subscale for sleep quality by adding up question numbers 5, 11, and 19.\nReference: http://cesd-r.com/cesdr/\ndepress$sleep &lt;- depress$c5 + depress$c11 + depress$c19\n## # depress &lt;- depress %&gt;% mutate(sleep = c5+c11+c19) # Not run. dplyr example\n## # depress &lt;- depress %&gt;% mutate(across(c(c5, c11, c19), mean)) # Not run, across() example\nsummary(depress$sleep)\n##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n##   0.000   0.000   1.000   1.167   2.000   7.000",
+    "title": "2  Workflow and Data Cleaning",
+    "section": "3.13 Sum or Average values across multiple variables",
+    "text": "3.13 Sum or Average values across multiple variables\nThe Center for Epidemiological Studies Depression Scale (CESD) is series of questions asked to a person to measure their level of depression. CESD is calculated as the sum of all 20 component variables, and is already on this data set. Let’s create a new variable named sleep as subscale for sleep quality by adding up question numbers 5, 11, and 19.\nReference: http://cesd-r.com/cesdr/\ndepress$sleep &lt;- depress$c5 + depress$c11 + depress$c19\n## # depress &lt;- depress %&gt;% mutate(sleep = c5+c11+c19) # Not run. dplyr example\n## # depress &lt;- depress %&gt;% mutate(across(c(c5, c11, c19), mean)) # Not run, across() example\nsummary(depress$sleep)\n##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n##   0.000   0.000   1.000   1.167   2.000   7.000",
     "crumbs": [
-      "Preparing Data for Analysis"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Workflow and Data Cleaning</span>"
     ]
   },
   {
     "objectID": "explore.html#transformations-for-normality",
     "href": "explore.html#transformations-for-normality",
-    "title": "Preparing Data for Analysis",
-    "section": "Transformations for Normality",
-    "text": "Transformations for Normality\nLet’s look at assessing normal distributions using the cleaned depression data set.\nhist(depress$income, prob=TRUE, xlab=\"Annual income (in thousands)\", \n     main=\"Histogram and Density curve of Income\", ylab=\"\")\nlines(density(depress$income), col=\"blue\")\n\nsummary(depress$income)\n##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n##    2.00    9.00   15.00   20.57   28.00   65.00\nThe distribution of annual income is slightly skewed right with a mean of $20.5k per year and a median of $15k per year income. The range of values goes from $2k to $65k. Reported income above $40k appear to have been rounded to the nearest $10k, because there are noticeable peaks at $40k, $50k, and $60k.\nIn general, transformations are more effective when the the standard deviation is large relative to the mean. One rule of thumb is if the sd/mean ratio is less than 1/4, a transformation may not be necessary.\nsd(depress$income) / mean(depress$income)\n## [1] 0.743147\nAlternatively Hoaglin, Mosteller and Tukey (1985) showed that if the largest observation divided by the smallest observation is over 2, then the data may not be sufficiently variable for the transformation to be decisive.\nmax(depress$income) / (min(depress$income)+.1)\n## [1] 30.95238\nNote these rules are not meaningful for data without a natural zero.\nAnother common method of assessing normality is to create a normal probability (or normal quantile) plot.\nqqnorm(depress$income);qqline(depress$income, col=\"red\")\n\nThe points on the normal probability plot do not follow the red reference line very well. The dots show a more curved, or U shaped form rather than following a linear line. This is another indication that the data is skewed and a transformation for normality should be created.\n\nCreate three new variables: log10inc as the log base 10 of Income, loginc as the natural log of Income, and xincome which is equal to the negative of one divided by the cubic root of income.\n\nlog10inc &lt;- log10(depress$income)\nloginc   &lt;- log(depress$income)\nxincome  &lt;- -1/(depress$income)^(-1/3)\n\nCreate a single plot that display normal probability plots for the original, and each of the three transformations of income. Use the base graphics grid organizer par(mfrow=c(r,c)) where r is the number of rows and c is the number of columns. Which transformation does a better job of normalizing the distribution of Income?\n\npar(mfrow=c(2,2)) # Try (4,1) and (1,4) to see how this works. \nqqnorm(depress$income, main=\"Income\"); qqline(depress$income,col=\"blue\")\nqqnorm(log10inc, main=\"Log 10\"); qqline(log10inc, col=\"blue\")\nqqnorm(loginc, main = \"Natural Log\"); qqline(loginc, col=\"blue\")\nqqnorm(xincome, main=\"-1/cuberoot(income)\"); qqline(xincome, col=\"blue\")",
+    "title": "2  Workflow and Data Cleaning",
+    "section": "3.14 Transformations for Normality",
+    "text": "3.14 Transformations for Normality\nLet’s look at assessing normal distributions using the cleaned depression data set.\nhist(depress$income, prob=TRUE, xlab=\"Annual income (in thousands)\", \n     main=\"Histogram and Density curve of Income\", ylab=\"\")\nlines(density(depress$income), col=\"blue\")\n\nsummary(depress$income)\n##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n##    2.00    9.00   15.00   20.57   28.00   65.00\nThe distribution of annual income is slightly skewed right with a mean of $20.5k per year and a median of $15k per year income. The range of values goes from $2k to $65k. Reported income above $40k appear to have been rounded to the nearest $10k, because there are noticeable peaks at $40k, $50k, and $60k.\nIn general, transformations are more effective when the the standard deviation is large relative to the mean. One rule of thumb is if the sd/mean ratio is less than 1/4, a transformation may not be necessary.\nsd(depress$income) / mean(depress$income)\n## [1] 0.743147\nAlternatively Hoaglin, Mosteller and Tukey (1985) showed that if the largest observation divided by the smallest observation is over 2, then the data may not be sufficiently variable for the transformation to be decisive.\nmax(depress$income) / (min(depress$income)+.1)\n## [1] 30.95238\nNote these rules are not meaningful for data without a natural zero.\nAnother common method of assessing normality is to create a normal probability (or normal quantile) plot.\nqqnorm(depress$income);qqline(depress$income, col=\"red\")\n\nThe points on the normal probability plot do not follow the red reference line very well. The dots show a more curved, or U shaped form rather than following a linear line. This is another indication that the data is skewed and a transformation for normality should be created.\n\nCreate three new variables: log10inc as the log base 10 of Income, loginc as the natural log of Income, and xincome which is equal to the negative of one divided by the cubic root of income.\n\nlog10inc &lt;- log10(depress$income)\nloginc   &lt;- log(depress$income)\nxincome  &lt;- -1/(depress$income)^(-1/3)\n\nCreate a single plot that display normal probability plots for the original, and each of the three transformations of income. Use the base graphics grid organizer par(mfrow=c(r,c)) where r is the number of rows and c is the number of columns. Which transformation does a better job of normalizing the distribution of Income?\n\npar(mfrow=c(2,2)) # Try (4,1) and (1,4) to see how this works. \nqqnorm(depress$income, main=\"Income\"); qqline(depress$income,col=\"blue\")\nqqnorm(log10inc, main=\"Log 10\"); qqline(log10inc, col=\"blue\")\nqqnorm(loginc, main = \"Natural Log\"); qqline(loginc, col=\"blue\")\nqqnorm(xincome, main=\"-1/cuberoot(income)\"); qqline(xincome, col=\"blue\")",
     "crumbs": [
-      "Preparing Data for Analysis"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Workflow and Data Cleaning</span>"
     ]
   },
   {
     "objectID": "explore.html#export-and-save",
     "href": "explore.html#export-and-save",
-    "title": "Preparing Data for Analysis",
-    "section": "Export and Save",
-    "text": "Export and Save\nYou’ve just made a ton of changes!\n\nSave or export the new data set to your computer.\nEdit the codebook to reflect the changes that you made.\nKeep the data, codebook and data management file in the same folder.\n\ndepress_clean &lt;- depress %&gt;% select(var1, var2, var3)\n\n# Save as a .Rdata file for later use in R\nsave(depress_clean, \"data/depress_clean.Rdata\") \nNow every time you run your data cleaning script file, it will make all the changes and save/overwrite the depress_clean.Rdata data file. This ensures that any analysis script that uses this data has the most up to date varibles.\nNeed to export to a different software program? Look into the haven package.\nSPSS users commonly save cleaned data as a .sav format.\nSAVE outfile='FilePath\\depress_sysdate.sav'\n/KEEP = Variable_Name1 Variable_Name2.\nEXECUTE.\nSaving only selected variables\n\nIn SPSS the /KEEP statement demonstrated above only writes the variable names listed to the saved data set. This can be very useful when dealing with data sets with a large number of variables.\nFor R users, using dplyr select is generally the fastest.",
+    "title": "2  Workflow and Data Cleaning",
+    "section": "3.15 Export and Save",
+    "text": "3.15 Export and Save\nYou’ve just made a ton of changes!\n\nSave or export the new data set to your computer.\nEdit the codebook to reflect the changes that you made.\nKeep the data, codebook and data management file in the same folder.\n\ndepress_clean &lt;- depress %&gt;% select(var1, var2, var3)\n\n# Save as a .Rdata file for later use in R\nsave(depress_clean, \"data/depress_clean.Rdata\") \nNow every time you run your data cleaning script file, it will make all the changes and save/overwrite the depress_clean.Rdata data file. This ensures that any analysis script that uses this data has the most up to date varibles.\nNeed to export to a different software program? Look into the haven package.\nSPSS users commonly save cleaned data as a .sav format.\nSAVE outfile='FilePath\\depress_sysdate.sav'\n/KEEP = Variable_Name1 Variable_Name2.\nEXECUTE.\nSaving only selected variables\n\nIn SPSS the /KEEP statement demonstrated above only writes the variable names listed to the saved data set. This can be very useful when dealing with data sets with a large number of variables.\nFor R users, using dplyr select is generally the fastest.",
     "crumbs": [
-      "Preparing Data for Analysis"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Workflow and Data Cleaning</span>"
     ]
   },
   {
     "objectID": "explore.html#wide-long",
     "href": "explore.html#wide-long",
-    "title": "Preparing Data for Analysis",
-    "section": "Wide vs. Long data",
-    "text": "Wide vs. Long data\nRead more on tidy data here: https://r4ds.hadley.nz/data-tidy\nThe data on Lung function originally was recorded in wide format, with separate variables for mother’s and father’s FEV1 score (MFEV1 and FFEV). In this format, the data is one record per family.\nfev &lt;- read.delim(\"https://norcalbiostat.netlify.com/data/Lung_081217.txt\", \n                    sep=\"\\t\", header=TRUE)\nhead(fev)\n##   ID AREA FSEX FAGE FHEIGHT FWEIGHT FFVC FFEV1 MSEX MAGE MHEIGHT MWEIGHT MFVC\n## 1  1    1    1   53      61     161  391  3.23    2   43      62     136  370\n## 2  2    1    1   40      72     198  441  3.95    2   38      66     160  411\n## 3  3    1    1   26      69     210  445  3.47    2   27      59     114  309\n## 4  4    1    1   34      68     187  433  3.74    2   36      58     123  265\n## 5  5    1    1   46      61     121  354  2.90    2   39      62     128  245\n## 6  6    1    1   44      72     153  610  4.91    2   36      66     125  349\n##   MFEV1 OCSEX OCAGE OCHEIGHT OCWEIGHT OCFVC OCFEV1 MCSEX MCAGE MCHEIGHT\n## 1  3.31     2    12       59      115   296   2.79    NA    NA       NA\n## 2  3.47     1    10       56       66   323   2.39    NA    NA       NA\n## 3  2.65     1     8       50       59   114   1.11    NA    NA       NA\n## 4  2.06     2    11       57      106   256   1.85     1     9       49\n## 5  2.33     1    16       61       88   260   2.47     2    12       60\n## 6  3.06     1    15       67      100   389   3.55     1    13       57\n##   MCWEIGHT MCFVC MCFEV1 YCSEX YCAGE YCHEIGHT YCWEIGHT YCFVC YCFEV1\n## 1       NA    NA     NA    NA    NA       NA       NA    NA     NA\n## 2       NA    NA     NA    NA    NA       NA       NA    NA     NA\n## 3       NA    NA     NA    NA    NA       NA       NA    NA     NA\n## 4       56   159   1.30    NA    NA       NA       NA    NA     NA\n## 5       85   268   2.34     2    10       50       53   154   1.43\n## 6       87   276   2.37     2    10       55       72   195   1.69\nTo analyze the effect of gender on FEV, the data need to be in long format, with a single variable for fev and a separate variable for gender. The following code chunk demonstrates one method of combining data on height, gender, age and FEV1 for both males and females.\nfev2 &lt;- data.frame(gender = c(fev$FSEX, fev$MSEX), \n                   rev = c(fev$FFEV1, fev$MFEV1), \n                   ht = c(fev$FHEIGHT, fev$MHEIGHT), \n                   age = c(fev$FAGE, fev$MAGE))\nfev2$gender &lt;- factor(fev2$gender, labels=c(\"M\", \"F\"))\nhead(fev2)  \n##   gender  rev ht age\n## 1      M 3.23 61  53\n## 2      M 3.95 72  40\n## 3      M 3.47 69  26\n## 4      M 3.74 68  34\n## 5      M 2.90 61  46\n## 6      M 4.91 72  44\nNearly all analysis procedures and most graphing procedures require the data to be in long format. There are several R packages that can help with this including reshape2 and tidyr.",
+    "title": "2  Workflow and Data Cleaning",
+    "section": "3.16 Wide vs. Long data",
+    "text": "3.16 Wide vs. Long data\nRead more on tidy data here: https://r4ds.hadley.nz/data-tidy\nThe data on Lung function originally was recorded in wide format, with separate variables for mother’s and father’s FEV1 score (MFEV1 and FFEV). In this format, the data is one record per family.\nfev &lt;- read.delim(\"https://norcalbiostat.netlify.com/data/Lung_081217.txt\", \n                    sep=\"\\t\", header=TRUE)\nhead(fev)\n##   ID AREA FSEX FAGE FHEIGHT FWEIGHT FFVC FFEV1 MSEX MAGE MHEIGHT MWEIGHT MFVC\n## 1  1    1    1   53      61     161  391  3.23    2   43      62     136  370\n## 2  2    1    1   40      72     198  441  3.95    2   38      66     160  411\n## 3  3    1    1   26      69     210  445  3.47    2   27      59     114  309\n## 4  4    1    1   34      68     187  433  3.74    2   36      58     123  265\n## 5  5    1    1   46      61     121  354  2.90    2   39      62     128  245\n## 6  6    1    1   44      72     153  610  4.91    2   36      66     125  349\n##   MFEV1 OCSEX OCAGE OCHEIGHT OCWEIGHT OCFVC OCFEV1 MCSEX MCAGE MCHEIGHT\n## 1  3.31     2    12       59      115   296   2.79    NA    NA       NA\n## 2  3.47     1    10       56       66   323   2.39    NA    NA       NA\n## 3  2.65     1     8       50       59   114   1.11    NA    NA       NA\n## 4  2.06     2    11       57      106   256   1.85     1     9       49\n## 5  2.33     1    16       61       88   260   2.47     2    12       60\n## 6  3.06     1    15       67      100   389   3.55     1    13       57\n##   MCWEIGHT MCFVC MCFEV1 YCSEX YCAGE YCHEIGHT YCWEIGHT YCFVC YCFEV1\n## 1       NA    NA     NA    NA    NA       NA       NA    NA     NA\n## 2       NA    NA     NA    NA    NA       NA       NA    NA     NA\n## 3       NA    NA     NA    NA    NA       NA       NA    NA     NA\n## 4       56   159   1.30    NA    NA       NA       NA    NA     NA\n## 5       85   268   2.34     2    10       50       53   154   1.43\n## 6       87   276   2.37     2    10       55       72   195   1.69\nTo analyze the effect of gender on FEV, the data need to be in long format, with a single variable for fev and a separate variable for gender. The following code chunk demonstrates one method of combining data on height, gender, age and FEV1 for both males and females.\nfev2 &lt;- data.frame(gender = c(fev$FSEX, fev$MSEX), \n                   rev = c(fev$FFEV1, fev$MFEV1), \n                   ht = c(fev$FHEIGHT, fev$MHEIGHT), \n                   age = c(fev$FAGE, fev$MAGE))\nfev2$gender &lt;- factor(fev2$gender, labels=c(\"M\", \"F\"))\nhead(fev2)  \n##   gender  rev ht age\n## 1      M 3.23 61  53\n## 2      M 3.95 72  40\n## 3      M 3.47 69  26\n## 4      M 3.74 68  34\n## 5      M 2.90 61  46\n## 6      M 4.91 72  44\nNearly all analysis procedures and most graphing procedures require the data to be in long format. There are several R packages that can help with this including reshape2 and tidyr.",
     "crumbs": [
-      "Preparing Data for Analysis"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Workflow and Data Cleaning</span>"
     ]
   },
   {
     "objectID": "explore.html#missing-data",
     "href": "explore.html#missing-data",
-    "title": "Preparing Data for Analysis",
-    "section": "Missing data",
-    "text": "Missing data\n\nIdentifying missing data\nIn Excel, missing data can show up as a blank cell. In SPSS it is represented as a . period. R displays missing data as NA values.\nMissing Data in SPSS: https://stats.idre.ucla.edu/spss/modules/missing-data/\nWhy would data be missing? Other than the obvious data entry errors, tech glitches or just non-cooperative plants or people, sometimes values are out of range and you would rather delete them than change their value (data edit).\nLets look at the religion variable in the depression data set.\ntable(depress$relig, useNA=\"always\")\n## \n##    1    2    3    4    6 &lt;NA&gt; \n##  155   51   30   56    2    0\nLooking at the codebook, there is no category 6 for religion. Let’s change all values to NA.\ndepress$relig[depress$relig==6] &lt;- NA\nThis code says take all rows where relig is equal to 6, and change them to NA.\nConfirm recode.\ntable(depress$relig, useNA=\"always\")\n## \n##    1    2    3    4 &lt;NA&gt; \n##  155   51   30   56    2\nNotice the use of the useNA=\"always\" argument. If we just looked at the base table without this argument, we would have never known there was missing data!\ntable(depress$relig)\n## \n##   1   2   3   4 \n## 155  51  30  56\nWhat about continuous variables? Well there happens to be no other missing data in this data set, so let’s make up a set of 7 data points stored in a variable named y.\ny &lt;- c(1, 2, 3, NA, 4, NA, 6)\ny\n## [1]  1  2  3 NA  4 NA  6\nThe #1 way to identify missing data in a continuous variable is by looking at the summary() values.\nmean(y)\n## [1] NA\nsummary(y)\n##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's \n##     1.0     2.0     3.0     3.2     4.0     6.0       2\nmean(y, na.rm=TRUE)\n## [1] 3.2\nIn R, any arithmetic function (like addition, multiplication) on missing data results in a missing value. The na.rm=TRUE toggle tells R to calculate the complete case mean. This is a biased measure of the mean, but missing data is a topic worthy of it’s own course and is introduced in Chapter @ref(mda).\n\n\nModel predictions\nSituation: You want to add model predictions to the data set, but you have missing data that was automatically dropped prior to analysis.\n\n\nRegression\nR objects created by methods such as lm and glm will store the data used in the model in the model object itself in model$data. See Chapter @ref(binary-classification) for an example.\n\n\nFactor Analysis and Principle Components\nIf your original data had missing values, here is one way to get the PC’s / factor scores for available data back onto the data set.\nMethod 1) Create an ID column and merge new variables onto original data. (add columns)\n\nIf no ID column exists, create one on the original dataset id = 1:NROW(data)\nUse select() to extract the ID and all variables used in the factor analysis, then do a na.omit() to drop rows with any missing data. Save this as a new complete case data set.\nConduct PCA / Factor analysis on this new complete case data set (MINUS THE ID). Extract the PCs or factor scores.\nUse bind_cols() to add the ID variable to the data containing factor scores.\nThen left_join(original_data, factor_score_data) the factor scores back to the original data, using the ID variable as the joining key.\n\nMethod 2) Split the data, analyze one part then concatenate back together. (add rows)\n\nUse the complete.cases() function to create a boolean vector for if each row is complete\nSplit the data into complete and incomplete.\nDo the analysis on the complete rows, extracting the PC’s/Factors\nAdd the PC/Factor data onto the complete rows using bind_cols\nThen bind_rows the two parts back together.\n\ncc.idx &lt;- hiv %&gt;% select(starts_with(\"pb\")) %&gt;% complete.cases() # 1\n\ncomplete.rows &lt;- hiv[cc.idx,] #2\nincomplete.rows &lt;- hiv[!cc.idx,]\n\npc.scores &lt;- princomp(pb)$scores #3 \n\ncomplete.add.pc &lt;- bind_cols(complete.rows, pc.scores) #4\n\nhiv.with.pcs &lt;- bind_rows(complete.add.pc, incomplete.rows) #5",
+    "title": "2  Workflow and Data Cleaning",
+    "section": "3.17 Missing data",
+    "text": "3.17 Missing data\n\n3.17.1 Identifying missing data\nIn Excel, missing data can show up as a blank cell. In SPSS it is represented as a . period. R displays missing data as NA values.\nMissing Data in SPSS: https://stats.idre.ucla.edu/spss/modules/missing-data/\nWhy would data be missing? Other than the obvious data entry errors, tech glitches or just non-cooperative plants or people, sometimes values are out of range and you would rather delete them than change their value (data edit).\nLets look at the religion variable in the depression data set.\ntable(depress$relig, useNA=\"always\")\n## \n##    1    2    3    4    6 &lt;NA&gt; \n##  155   51   30   56    2    0\nLooking at the codebook, there is no category 6 for religion. Let’s change all values to NA.\ndepress$relig[depress$relig==6] &lt;- NA\nThis code says take all rows where relig is equal to 6, and change them to NA.\nConfirm recode.\ntable(depress$relig, useNA=\"always\")\n## \n##    1    2    3    4 &lt;NA&gt; \n##  155   51   30   56    2\nNotice the use of the useNA=\"always\" argument. If we just looked at the base table without this argument, we would have never known there was missing data!\ntable(depress$relig)\n## \n##   1   2   3   4 \n## 155  51  30  56\nWhat about continuous variables? Well there happens to be no other missing data in this data set, so let’s make up a set of 7 data points stored in a variable named y.\ny &lt;- c(1, 2, 3, NA, 4, NA, 6)\ny\n## [1]  1  2  3 NA  4 NA  6\nThe #1 way to identify missing data in a continuous variable is by looking at the summary() values.\nmean(y)\n## [1] NA\nsummary(y)\n##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's \n##     1.0     2.0     3.0     3.2     4.0     6.0       2\nmean(y, na.rm=TRUE)\n## [1] 3.2\nIn R, any arithmetic function (like addition, multiplication) on missing data results in a missing value. The na.rm=TRUE toggle tells R to calculate the complete case mean. This is a biased measure of the mean, but missing data is a topic worthy of it’s own course and is introduced in Chapter @ref(mda).\n\n\n3.17.2 Model predictions\nSituation: You want to add model predictions to the data set, but you have missing data that was automatically dropped prior to analysis.\n\n\n3.17.3 Regression\nR objects created by methods such as lm and glm will store the data used in the model in the model object itself in model$data. See Chapter @ref(binary-classification) for an example.\n\n\n3.17.4 Factor Analysis and Principle Components\nIf your original data had missing values, here is one way to get the PC’s / factor scores for available data back onto the data set.\nMethod 1) Create an ID column and merge new variables onto original data. (add columns)\n\nIf no ID column exists, create one on the original dataset id = 1:NROW(data)\nUse select() to extract the ID and all variables used in the factor analysis, then do a na.omit() to drop rows with any missing data. Save this as a new complete case data set.\nConduct PCA / Factor analysis on this new complete case data set (MINUS THE ID). Extract the PCs or factor scores.\nUse bind_cols() to add the ID variable to the data containing factor scores.\nThen left_join(original_data, factor_score_data) the factor scores back to the original data, using the ID variable as the joining key.\n\nMethod 2) Split the data, analyze one part then concatenate back together. (add rows)\n\nUse the complete.cases() function to create a boolean vector for if each row is complete\nSplit the data into complete and incomplete.\nDo the analysis on the complete rows, extracting the PC’s/Factors\nAdd the PC/Factor data onto the complete rows using bind_cols\nThen bind_rows the two parts back together.\n\ncc.idx &lt;- hiv %&gt;% select(starts_with(\"pb\")) %&gt;% complete.cases() # 1\n\ncomplete.rows &lt;- hiv[cc.idx,] #2\nincomplete.rows &lt;- hiv[!cc.idx,]\n\npc.scores &lt;- princomp(pb)$scores #3 \n\ncomplete.add.pc &lt;- bind_cols(complete.rows, pc.scores) #4\n\nhiv.with.pcs &lt;- bind_rows(complete.add.pc, incomplete.rows) #5",
     "crumbs": [
-      "Preparing Data for Analysis"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/index.html",
-    "href": "quarto-workflows/index.html",
-    "title": "Quarto workflows",
-    "section": "",
-    "text": "How do you work in Quarto? You can use whichever tool you’re comfortable with (RStudio, Jupyter, GitHub, VS Code, etc). Developing your quarto site will have the same basic workflow, no matter which tool you use. It is very iterative, and each is explored more below.\n\nAuthoring: write text, code, images, etc in a file. Supported files include .md, .Rmd, .qmd, .ipynb…\nUpdate _quarto.yml as needed (for example, if you’ve created a new file you’d like included in your site)\nRender individual files and/or the whole website\nRepeat, repeat, repeat\nCommit and push your website to GitHub, your updates will publish automatically!\nRepeat all of the above to make the website as you’d like!\n\nNote: if editing from your internet browser we won’t render in Step 3. That step will not be separate, but combined with Step 5, which will only require a commit, not a push.",
-    "crumbs": [
-      "Quarto workflows"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/index.html#basic-workflow",
-    "href": "quarto-workflows/index.html#basic-workflow",
-    "title": "Quarto workflows",
-    "section": "",
-    "text": "How do you work in Quarto? You can use whichever tool you’re comfortable with (RStudio, Jupyter, GitHub, VS Code, etc). Developing your quarto site will have the same basic workflow, no matter which tool you use. It is very iterative, and each is explored more below.\n\nAuthoring: write text, code, images, etc in a file. Supported files include .md, .Rmd, .qmd, .ipynb…\nUpdate _quarto.yml as needed (for example, if you’ve created a new file you’d like included in your site)\nRender individual files and/or the whole website\nRepeat, repeat, repeat\nCommit and push your website to GitHub, your updates will publish automatically!\nRepeat all of the above to make the website as you’d like!\n\nNote: if editing from your internet browser we won’t render in Step 3. That step will not be separate, but combined with Step 5, which will only require a commit, not a push.",
-    "crumbs": [
-      "Quarto workflows"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/index.html#authoring",
-    "href": "quarto-workflows/index.html#authoring",
-    "title": "Quarto workflows",
-    "section": "Authoring",
-    "text": "Authoring\nAs an author, you have a lot of options of how your text will be formatted, arranged, and interlinked. You will be writing in Markdown, which is a lightweight text formatting language. The Quarto documentation about authoring introduces markdown-basics that will get you started. Also see Mine Çetinkaya-Rundel’s A Quarto tip a day.\nEach page of our site has a similar first few lines - this YAML, like we saw in our _quarto.yml and it is indicated by two sets of 3 dashes --- :\n---\ntitle: My title\n---\nYou’re able to add more features to individual pages by including it in the YAML, which for the most part here only includes a title. See Quarto excecution options for more information of what you can include in the YAML.",
-    "crumbs": [
-      "Quarto workflows"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/index.html#update-_quarto.yml",
-    "href": "quarto-workflows/index.html#update-_quarto.yml",
-    "title": "Quarto workflows",
-    "section": "Update _quarto.yml",
-    "text": "Update _quarto.yml\nLet’s have a closer look at the _quarto.yml file.\nThis type of file (.yml or .yaml) is written in YAML (“Yet Another Markup Language”). You’ll be able to shift the arrangement of webpages by reordering/adding/deleting them in the _quarto.yml file following the patterns you see in this example.\n\n\n\n_quarto.yml and website side-by-side\n\n\nNotice that there are multiple ways in the _quarto.yml for you to include a file in your website. For example, in the above image, the “First Observations” we see in the left sidebar of the published website (right image) is represented in _quarto.yml (left image) over two lines, with line 36 indicating the file reference and line 37 indicating the text to show up in the left sidebar. However, “From RStudio” is only represented in one line of _quarto.yml, on line 43. This represents two strategies for including a file in your website. By default, the title of a specified file will show up in the website’s sidebar, which is what is happening with the “From RStudio” example. If you would like more control over what is written in the sidebar vs the title of your files, then the approach we took with “First Observations” is what you’ll want to do: you’ll see that only “First Observations” shows up in the sidebar as we specified in _quarto.yml, but the page’s title says “First Observations & Setup” (which in our preference was too long for the sidebar).\n\n\n\n\n\n\nNote\n\n\n\nAs you modify _quarto.yml, the most important thing to know is that spacing matters. Pay attention to whether text is indented by one, two, four, or other spaces, and make sure you follow it; if your site is not looking as expected it is likely a silent error in your YAML. Some text editors like RStudio provide debugging support for YAML and are highly recommended to save you time and heartache.",
-    "crumbs": [
-      "Quarto workflows"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/index.html#install-quarto",
-    "href": "quarto-workflows/index.html#install-quarto",
-    "title": "Quarto workflows",
-    "section": "Install Quarto",
-    "text": "Install Quarto\nhttps://quarto.org/docs/get-started/ describes how to install Quarto, which will depend on your operating system. We’ll walk through installation for each tool in the next chapters.",
-    "crumbs": [
-      "Quarto workflows"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/browser.html",
-    "href": "quarto-workflows/browser.html",
-    "title": "From the Browser",
-    "section": "",
-    "text": "A workflow from the browser if good for getting started (since you do not need to install additional software) and for making small contributions, but is definitely limited. Once you feel comfortable here, you can move to a different setup.\nHere’s an example of editing content on an existing page.",
-    "crumbs": [
-      "Quarto workflows",
-      "From the Browser"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/browser.html#edit-content-on-an-existing-page",
-    "href": "quarto-workflows/browser.html#edit-content-on-an-existing-page",
-    "title": "From the Browser",
-    "section": "Edit content on an existing page",
-    "text": "Edit content on an existing page\nLet’s change the date on the home page of this website.\nIn your repository, navigate to index.md. Then, click the pencil icon in the top right to edit directly.\n\n\n\n\n\nWe are now in the “Edit file” tab of the editor, where we can make modifications. Let’s change the date to today’s date. Click the “Preview” tab to see your changes. You can even check the “Show diff” box on the right side to see the changes you’ve made.\n\n\n\n\n\nWhile you’re here, see if there are additional changes to the text you’d like to make. Maybe changing the title or author at the top, or for the main text on the home page of the website.\nOur index.md file is written in Markdown, which enables you to make simple text formatting. As you go back and forth from “Edit file” to “Preview”, notice the patterns of how the Markdown text looks when it is as source (“Edit file”) and when it is formatted (“Preview”). For example, in Markdown, you can make text as a header with # symbols, bold or italic with * symbols, and hyperlinks with [](). Notice that spacing is important: for example, there are carriage returns (when you hit the “return” key) before any bullet points. You can learn the short list of Markdown rules here: https://quarto.org/docs/authoring/markdown-basics.",
-    "crumbs": [
-      "Quarto workflows",
-      "From the Browser"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/browser.html#commit-and-publish",
-    "href": "quarto-workflows/browser.html#commit-and-publish",
-    "title": "From the Browser",
-    "section": "Commit and publish",
-    "text": "Commit and publish\nCommit your changes by scrolling to the bottom of the page and writing a commit message - a note to yourself and others about what changes you made. Write your commit message and then click the green “Commit changes” button.\n\n\n\n\n\nNow, click back to the main page of your GitHub repository. You should see the orange dot confirming your website is published. You’ll have to wait for the GitHub Action to tell quarto to build your site for you to see the update, but it will be there!",
-    "crumbs": [
-      "Quarto workflows",
-      "From the Browser"
-    ]
-  },
-  {
-    "objectID": "quarto-workflows/browser.html#limitations",
-    "href": "quarto-workflows/browser.html#limitations",
-    "title": "From the Browser",
-    "section": "Limitations",
-    "text": "Limitations\nWhile awesome that we can edit using GitHub directly from the browser, there are obvious limitations. One is that to see your edits show up in your book, you have to publish using the GitHub Action. This is slow. Another limitation is that we can only work on one file at a time and commit them each separately, which also is slow. Using additional software can make things much better, as we explore in subsequent chapters.",
-    "crumbs": [
-      "Quarto workflows",
-      "From the Browser"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Workflow and Data Cleaning</span>"
     ]
   }
 ]

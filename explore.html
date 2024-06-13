@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Course notes for Applied Statistics courses at CSU Chico">
 
-<title>Making sharable documents with Quarto</title>
+<title>Applied Statistics course notes - 2&nbsp; Workflow and Data Cleaning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,12 +59,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./quarto-workflows/index.html" rel="next">
 <link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -136,7 +137,7 @@ window.Quarto = {
 
 </head>
 
-<body class="nav-sidebar docked">
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -145,7 +146,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./explore.html">Preparing Data for Analysis</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./explore.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Workflow and Data Cleaning</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -157,17 +158,14 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-center sidebar-header">
-      <a href="./index.html" class="sidebar-logo-link">
-      <img src="./images/openscapes_hex.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
-      </a>
-      <div class="sidebar-tools-main tools-wide">
-    <a href="https://openscapes.org" title="Openscapes.org" class="quarto-navigation-tool px-1" aria-label="Openscapes.org"><i class="bi bi-globe"></i></a>
-    <a href="https://github.com/openscapes/quarto-website-tutorial" title="Quarto website tutorial" class="quarto-navigation-tool px-1" aria-label="Quarto website tutorial"><i class="bi bi-github"></i></a>
-    <a href="https://twitter.com/openscapes" title="Openscapes Twitter" class="quarto-navigation-tool px-1" aria-label="Openscapes Twitter"><i class="bi bi-twitter"></i></a>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Applied Statistics course notes</a> 
+        <div class="sidebar-tools-main">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
+    </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
@@ -179,54 +177,13 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Welcome</span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Applied Statistics</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./explore.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Preparing Data for Analysis</span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./quarto-workflows/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Quarto workflows</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./quarto-workflows/browser.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">From the Browser</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./quarto-workflows/rstudio.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">From RStudio</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./quarto-workflows/jupyter.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">From Jupyter</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./learning-more.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Learning more</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./transition-from-rmarkdown.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transition from Rmd</span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Workflow and Data Cleaning</span></span></a>
   </div>
 </li>
     </ul>
@@ -236,61 +193,73 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preparing-data-for-analysis" id="toc-preparing-data-for-analysis" class="nav-link active" data-scroll-target="#preparing-data-for-analysis">Preparing Data for Analysis</a></li>
-  <li><a href="#data_prep" id="toc-data_prep" class="nav-link" data-scroll-target="#data_prep">Workflow and Data Cleaning</a>
+  <li><a href="#data_prep" id="toc-data_prep" class="nav-link active" data-scroll-target="#data_prep"><span class="header-section-number">3</span> Workflow and Data Cleaning</a>
   <ul class="collapse">
-  <li><a href="#reproducible-workflows" id="toc-reproducible-workflows" class="nav-link" data-scroll-target="#reproducible-workflows">Reproducible workflows</a>
+  <li><a href="#reproducible-workflows" id="toc-reproducible-workflows" class="nav-link" data-scroll-target="#reproducible-workflows"><span class="header-section-number">3.1</span> Reproducible workflows</a>
   <ul class="collapse">
-  <li><a href="#literate-programming" id="toc-literate-programming" class="nav-link" data-scroll-target="#literate-programming">Literate programming</a></li>
+  <li><a href="#literate-programming" id="toc-literate-programming" class="nav-link" data-scroll-target="#literate-programming"><span class="header-section-number">3.1.1</span> Literate programming</a></li>
   </ul></li>
-  <li><a href="#import-data" id="toc-import-data" class="nav-link" data-scroll-target="#import-data">Import data</a></li>
-  <li><a href="#data-management" id="toc-data-management" class="nav-link" data-scroll-target="#data-management">Data Management</a></li>
-  <li><a href="#renaming-variable-names-for-sanity-sake" id="toc-renaming-variable-names-for-sanity-sake" class="nav-link" data-scroll-target="#renaming-variable-names-for-sanity-sake">Renaming variable names for sanity sake</a></li>
-  <li><a href="#identifying-variable-types" id="toc-identifying-variable-types" class="nav-link" data-scroll-target="#identifying-variable-types">Identifying Variable Types</a></li>
-  <li><a href="#convert-number-to-factor" id="toc-convert-number-to-factor" class="nav-link" data-scroll-target="#convert-number-to-factor">Convert number to factor</a></li>
-  <li><a href="#identifying-outliers" id="toc-identifying-outliers" class="nav-link" data-scroll-target="#identifying-outliers">Identifying Outliers</a></li>
-  <li><a href="#changing-numeric-values" id="toc-changing-numeric-values" class="nav-link" data-scroll-target="#changing-numeric-values">Changing numeric values</a></li>
-  <li><a href="#creating-secondary-variables" id="toc-creating-secondary-variables" class="nav-link" data-scroll-target="#creating-secondary-variables">Creating secondary variables</a></li>
-  <li><a href="#wrangling-factors" id="toc-wrangling-factors" class="nav-link" data-scroll-target="#wrangling-factors">Wrangling Factors</a>
+  <li><a href="#import-data" id="toc-import-data" class="nav-link" data-scroll-target="#import-data"><span class="header-section-number">3.2</span> Import data</a></li>
+  <li><a href="#data-management" id="toc-data-management" class="nav-link" data-scroll-target="#data-management"><span class="header-section-number">3.3</span> Data Management</a></li>
+  <li><a href="#renaming-variable-names-for-sanity-sake" id="toc-renaming-variable-names-for-sanity-sake" class="nav-link" data-scroll-target="#renaming-variable-names-for-sanity-sake"><span class="header-section-number">3.4</span> Renaming variable names for sanity sake</a></li>
+  <li><a href="#identifying-variable-types" id="toc-identifying-variable-types" class="nav-link" data-scroll-target="#identifying-variable-types"><span class="header-section-number">3.5</span> Identifying Variable Types</a></li>
+  <li><a href="#convert-number-to-factor" id="toc-convert-number-to-factor" class="nav-link" data-scroll-target="#convert-number-to-factor"><span class="header-section-number">3.6</span> Convert number to factor</a></li>
+  <li><a href="#identifying-outliers" id="toc-identifying-outliers" class="nav-link" data-scroll-target="#identifying-outliers"><span class="header-section-number">3.7</span> Identifying Outliers</a></li>
+  <li><a href="#changing-numeric-values" id="toc-changing-numeric-values" class="nav-link" data-scroll-target="#changing-numeric-values"><span class="header-section-number">3.8</span> Changing numeric values</a></li>
+  <li><a href="#creating-secondary-variables" id="toc-creating-secondary-variables" class="nav-link" data-scroll-target="#creating-secondary-variables"><span class="header-section-number">3.9</span> Creating secondary variables</a></li>
+  <li><a href="#wrangling-factors" id="toc-wrangling-factors" class="nav-link" data-scroll-target="#wrangling-factors"><span class="header-section-number">3.10</span> Wrangling Factors</a>
   <ul class="collapse">
-  <li><a href="#collapsing-categorical-variables-into-fewer-categories" id="toc-collapsing-categorical-variables-into-fewer-categories" class="nav-link" data-scroll-target="#collapsing-categorical-variables-into-fewer-categories">Collapsing categorical variables into fewer categories</a></li>
+  <li><a href="#collapsing-categorical-variables-into-fewer-categories" id="toc-collapsing-categorical-variables-into-fewer-categories" class="nav-link" data-scroll-target="#collapsing-categorical-variables-into-fewer-categories"><span class="header-section-number">3.10.1</span> Collapsing categorical variables into fewer categories</a></li>
   </ul></li>
-  <li><a href="#binning-a-continuous-variable-into-categorical-ranges." id="toc-binning-a-continuous-variable-into-categorical-ranges." class="nav-link" data-scroll-target="#binning-a-continuous-variable-into-categorical-ranges.">Binning a continuous variable into categorical ranges.</a></li>
-  <li><a href="#dichotomizing-a-measure-into-2-categories" id="toc-dichotomizing-a-measure-into-2-categories" class="nav-link" data-scroll-target="#dichotomizing-a-measure-into-2-categories">Dichotomizing a measure into 2 categories</a></li>
-  <li><a href="#sum-or-average-values-across-multiple-variables" id="toc-sum-or-average-values-across-multiple-variables" class="nav-link" data-scroll-target="#sum-or-average-values-across-multiple-variables">Sum or Average values across multiple variables</a></li>
-  <li><a href="#transformations-for-normality" id="toc-transformations-for-normality" class="nav-link" data-scroll-target="#transformations-for-normality">Transformations for Normality</a></li>
-  <li><a href="#export-and-save" id="toc-export-and-save" class="nav-link" data-scroll-target="#export-and-save">Export and Save</a></li>
-  <li><a href="#wide-long" id="toc-wide-long" class="nav-link" data-scroll-target="#wide-long">Wide vs.&nbsp;Long data</a></li>
-  <li><a href="#missing-data" id="toc-missing-data" class="nav-link" data-scroll-target="#missing-data">Missing data</a>
+  <li><a href="#binning-a-continuous-variable-into-categorical-ranges." id="toc-binning-a-continuous-variable-into-categorical-ranges." class="nav-link" data-scroll-target="#binning-a-continuous-variable-into-categorical-ranges."><span class="header-section-number">3.11</span> Binning a continuous variable into categorical ranges.</a></li>
+  <li><a href="#dichotomizing-a-measure-into-2-categories" id="toc-dichotomizing-a-measure-into-2-categories" class="nav-link" data-scroll-target="#dichotomizing-a-measure-into-2-categories"><span class="header-section-number">3.12</span> Dichotomizing a measure into 2 categories</a></li>
+  <li><a href="#sum-or-average-values-across-multiple-variables" id="toc-sum-or-average-values-across-multiple-variables" class="nav-link" data-scroll-target="#sum-or-average-values-across-multiple-variables"><span class="header-section-number">3.13</span> Sum or Average values across multiple variables</a></li>
+  <li><a href="#transformations-for-normality" id="toc-transformations-for-normality" class="nav-link" data-scroll-target="#transformations-for-normality"><span class="header-section-number">3.14</span> Transformations for Normality</a></li>
+  <li><a href="#export-and-save" id="toc-export-and-save" class="nav-link" data-scroll-target="#export-and-save"><span class="header-section-number">3.15</span> Export and Save</a></li>
+  <li><a href="#wide-long" id="toc-wide-long" class="nav-link" data-scroll-target="#wide-long"><span class="header-section-number">3.16</span> Wide vs.&nbsp;Long data</a></li>
+  <li><a href="#missing-data" id="toc-missing-data" class="nav-link" data-scroll-target="#missing-data"><span class="header-section-number">3.17</span> Missing data</a>
   <ul class="collapse">
-  <li><a href="#identifying-missing-data" id="toc-identifying-missing-data" class="nav-link" data-scroll-target="#identifying-missing-data">Identifying missing data</a></li>
-  <li><a href="#model-predictions" id="toc-model-predictions" class="nav-link" data-scroll-target="#model-predictions">Model predictions</a></li>
-  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression">Regression</a></li>
-  <li><a href="#factor-analysis-and-principle-components" id="toc-factor-analysis-and-principle-components" class="nav-link" data-scroll-target="#factor-analysis-and-principle-components">Factor Analysis and Principle Components</a></li>
+  <li><a href="#identifying-missing-data" id="toc-identifying-missing-data" class="nav-link" data-scroll-target="#identifying-missing-data"><span class="header-section-number">3.17.1</span> Identifying missing data</a></li>
+  <li><a href="#model-predictions" id="toc-model-predictions" class="nav-link" data-scroll-target="#model-predictions"><span class="header-section-number">3.17.2</span> Model predictions</a></li>
+  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression"><span class="header-section-number">3.17.3</span> Regression</a></li>
+  <li><a href="#factor-analysis-and-principle-components" id="toc-factor-analysis-and-principle-components" class="nav-link" data-scroll-target="#factor-analysis-and-principle-components"><span class="header-section-number">3.17.4</span> Factor Analysis and Principle Components</a></li>
   </ul></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/openscapes/quarto-website-tutorial/edit/main/explore.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/openscapes/quarto-website-tutorial/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Workflow and Data Cleaning</span></h1>
+</div>
 
 
 
-<section id="preparing-data-for-analysis" class="level1 unnumbered">
-<h1 class="unnumbered">Preparing Data for Analysis</h1>
-</section>
-<section id="data_prep" class="level1">
-<h1>Workflow and Data Cleaning</h1>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="data_prep" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Workflow and Data Cleaning</h1>
 <p>Once the data are available from a study there are still a number of steps that must be undertaken to get them into shape for analysis.</p>
 <p>One of the most misunderstood parts of the analysis process is the data preparation stage. To say that 70% of any analysis is spent on the data management stage is not an understatement.</p>
 <p>This chapter provides information on topics related to data processing and corresponds to PMA6 Chapter 3.</p>
-<section id="reproducible-workflows" class="level2">
-<h2 class="anchored" data-anchor-id="reproducible-workflows">Reproducible workflows</h2>
+<section id="reproducible-workflows" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="reproducible-workflows"><span class="header-section-number">3.1</span> Reproducible workflows</h2>
 <p>Reproducibility is the ability for any researcher to take the same data set and run the same set of software program instructions as another researcher and achieve the same results.</p>
 <p>The goal is to create an exact record of what was done to a data set to produce a specific result. To achieve reproducibility, we believe that three things must be present:</p>
 <ol type="1">
@@ -330,8 +299,8 @@ window.Quarto = {
 </figure>
 </div>
 <p>Figure Credits: <a href="http://www.biostat.jhsph.edu/~rpeng/">Roger Peng</a></p>
-<section id="literate-programming" class="level3">
-<h3 class="anchored" data-anchor-id="literate-programming">Literate programming</h3>
+<section id="literate-programming" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="literate-programming"><span class="header-section-number">3.1.1</span> Literate programming</h3>
 <ul>
 <li>Programming paradigm introduced by Knuth (1984)</li>
 <li>Explain the logic of the program or analysis process in a natural language,</li>
@@ -359,8 +328,8 @@ The current gold standard for writing reproducible literate documents in R is to
 <p><img src="images/q.png" class="img-fluid" alt="q"> What stages of the pipeline shown above can we conduct using literate programming tools?</p>
 </section>
 </section>
-<section id="import-data" class="level2">
-<h2 class="anchored" data-anchor-id="import-data">Import data</h2>
+<section id="import-data" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="import-data"><span class="header-section-number">3.2</span> Import data</h2>
 <p>This section uses the raw <code>depression</code> data set from the Afifi et.al. textbook. This is a tab-delimited data set, so we opt to use <code>read.table</code> here. We include arguments <code>sep="\t"</code> to indicate columns are separated with tabs and <code>header=TRUE</code> to indicate the first row of the data is the variable names.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)  </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>depress_raw <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"https://norcalbiostat.netlify.com/data/Depress.txt"</span>, </span>
@@ -371,8 +340,8 @@ The current gold standard for writing reproducible literate documents in R is to
 </div>
 <p>The absolute first thing you should do is to look at your raw data table. Are the column headers variable names? Did all the rows get read in? Are there any extra columns or rows included?</p>
 </section>
-<section id="data-management" class="level2">
-<h2 class="anchored" data-anchor-id="data-management">Data Management</h2>
+<section id="data-management" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="data-management"><span class="header-section-number">3.3</span> Data Management</h2>
 <p>Questions to ask yourself while reviewing the codebook to choose variables to be used in an analysis.</p>
 <ol type="1">
 <li>Are there codes that indicate missing? E.g. <em>MISSING</em> or <em>-99</em>?</li>
@@ -390,8 +359,8 @@ The current gold standard for writing reproducible literate documents in R is to
 <p>Some of these answers will come only after you look at your data. This can be looking at the raw data itself but also looking at tables and charts generated from the data. Often when you try to create a plot or table you will encounter an error or something odd looking that will be the notification that something has to be adjusted.</p>
 <p>The next sections go over a <em>few</em> of the common data management processes, but is not comprehensive, and may only show one method for cleaning. There are always different ways to accomplish tasks.</p>
 </section>
-<section id="renaming-variable-names-for-sanity-sake" class="level2">
-<h2 class="anchored" data-anchor-id="renaming-variable-names-for-sanity-sake">Renaming variable names for sanity sake</h2>
+<section id="renaming-variable-names-for-sanity-sake" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="renaming-variable-names-for-sanity-sake"><span class="header-section-number">3.4</span> Renaming variable names for sanity sake</h2>
 <p>The best method is to use the <code>clean_names()</code> function from the <a href="https://sfirke.github.io/janitor/">janitor</a> package.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>depress <span class="ot">&lt;-</span> depress_raw <span class="sc">%&gt;%</span> janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>A base R soluion is to use `tolower() to turn all variable names to lower case.</p>
@@ -399,8 +368,8 @@ The current gold standard for writing reproducible literate documents in R is to
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tolower</span>(<span class="st">"ThIs MIXTure of CAPS and lowercase WILL alL be conVERteD to LoWeR CAsE"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "this mixture of caps and lowercase will all be converted to lower case"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="identifying-variable-types" class="level2">
-<h2 class="anchored" data-anchor-id="identifying-variable-types">Identifying Variable Types</h2>
+<section id="identifying-variable-types" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="identifying-variable-types"><span class="header-section-number">3.5</span> Identifying Variable Types</h2>
 <p>The <code>str</code> function is short for <em>structure</em>. This shows you the variable names, what data types R thinks each variable are, and some of the raw data.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(depress)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 'data.frame':    294 obs. of  37 variables:</span></span>
@@ -489,8 +458,8 @@ The current gold standard for writing reproducible literate documents in R is to
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(depress<span class="sc">$</span>age)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "integer"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="convert-number-to-factor" class="level2">
-<h2 class="anchored" data-anchor-id="convert-number-to-factor">Convert number to factor</h2>
+<section id="convert-number-to-factor" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="convert-number-to-factor"><span class="header-section-number">3.6</span> Convert number to factor</h2>
 <p>When variables have numerical levels it is necessary to ensure that the program knows it is a factor variable.</p>
 <p>The following code uses the <code>factor()</code> function to take the marital status variable and convert it into a factor variable with specified labels that match the codebook.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>depress<span class="sc">$</span>marital <span class="ot">&lt;-</span> <span class="fu">factor</span>(depress<span class="sc">$</span>marital, </span>
@@ -504,8 +473,8 @@ The current gold standard for writing reproducible literate documents in R is to
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "factor"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>See more examples on <a href="https://norcalbiostat.github.io/MATH130/notes/06_factors.html#Convert_a_number_to_Factor_(Video)">Math 130 Lesson 06</a></strong></p>
 </section>
-<section id="identifying-outliers" class="level2">
-<h2 class="anchored" data-anchor-id="identifying-outliers">Identifying Outliers</h2>
+<section id="identifying-outliers" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="identifying-outliers"><span class="header-section-number">3.7</span> Identifying Outliers</h2>
 <p>Let’s look at the age variable in the depression data set.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(depress<span class="sc">$</span>age)</span>
@@ -522,8 +491,8 @@ The current gold standard for writing reproducible literate documents in R is to
 <p><img src="data_prep_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 <p>While there is at least one potential outliers (denoted by the dots), there are none so far away from the rest of the group (or at values such as 99 or -99 that may indicate missing codes) that we need to be concerned about.</p>
 </section>
-<section id="changing-numeric-values" class="level2">
-<h2 class="anchored" data-anchor-id="changing-numeric-values">Changing numeric values</h2>
+<section id="changing-numeric-values" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="changing-numeric-values"><span class="header-section-number">3.8</span> Changing numeric values</h2>
 <p>As an example of a common data entry error, and for demonstration purposes, I went in and changed a 19 to a 9. So the correct thing to do here is to change that 9, back to a 19. This is a very good use of the <code>ifelse()</code> function.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>depress<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(depress<span class="sc">$</span>age<span class="sc">==</span><span class="dv">9</span>, <span class="dv">19</span>, depress<span class="sc">$</span>age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The logical statement is <code>depress$age9</code>. Wherever this is true, replace the value of <code>depress$age</code> with 19, wherever this is false then keep the value of <code>depress$age</code> unchanged (by “replacing” the new value with the same old value).</p>
@@ -535,15 +504,15 @@ The current gold standard for writing reproducible literate documents in R is to
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   18.00   28.00   42.50   44.41   59.00   89.00</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Looks like it worked.</p>
 </section>
-<section id="creating-secondary-variables" class="level2">
-<h2 class="anchored" data-anchor-id="creating-secondary-variables">Creating secondary variables</h2>
+<section id="creating-secondary-variables" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="creating-secondary-variables"><span class="header-section-number">3.9</span> Creating secondary variables</h2>
 <p>See <a href="https://norcalbiostat.github.io/MATH130/notes/05_dm.html#Creating_new_variables_(Video)">Math 130 lesson 05</a> for now.</p>
 </section>
-<section id="wrangling-factors" class="level2">
-<h2 class="anchored" data-anchor-id="wrangling-factors">Wrangling Factors</h2>
+<section id="wrangling-factors" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="wrangling-factors"><span class="header-section-number">3.10</span> Wrangling Factors</h2>
 <p>For more help on renaming, releveling, lumping, and removing levels see <a href="https://norcalbiostat.github.io/MATH130/notes/06_factors.html">Math 130 lesson 06</a> for now. Also the <a href="https://forcats.tidyverse.org/index.html">forcats</a> vignette.</p>
-<section id="collapsing-categorical-variables-into-fewer-categories" class="level3">
-<h3 class="anchored" data-anchor-id="collapsing-categorical-variables-into-fewer-categories">Collapsing categorical variables into fewer categories</h3>
+<section id="collapsing-categorical-variables-into-fewer-categories" class="level3" data-number="3.10.1">
+<h3 data-number="3.10.1" class="anchored" data-anchor-id="collapsing-categorical-variables-into-fewer-categories"><span class="header-section-number">3.10.1</span> Collapsing categorical variables into fewer categories</h3>
 <p>For unbiased and accurate results of a statistical analysis, sufficient data has to be present. Often times once you start slicing and dicing the data to only look at certain groups, or if you are interested in the behavior of certain variables across levels of another variable, sometimes you start to run into small sample size problems.</p>
 <p>For example, consider marital status again. There are only 13 people who report being separated. This could potentially be too small of a group size for valid statistical analysis. One way to deal with insufficient data within a certain category is to collapse categories. The following code uses the <code>recode()</code> function from the <code>car</code> package to create a new variable that I am calling <code>marital2</code> that combines the <code>Divorced</code> and <code>Separated</code> levels.</p>
 <blockquote class="blockquote">
@@ -566,8 +535,8 @@ The current gold standard for writing reproducible literate documents in R is to
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(marital2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="binning-a-continuous-variable-into-categorical-ranges." class="level2">
-<h2 class="anchored" data-anchor-id="binning-a-continuous-variable-into-categorical-ranges.">Binning a continuous variable into categorical ranges.</h2>
+<section id="binning-a-continuous-variable-into-categorical-ranges." class="level2" data-number="3.11">
+<h2 data-number="3.11" class="anchored" data-anchor-id="binning-a-continuous-variable-into-categorical-ranges."><span class="header-section-number">3.11</span> Binning a continuous variable into categorical ranges.</h2>
 <p>We can use the <code>cut</code> function to create a new variable that categorizes income into the following ranges: &lt;30, [30, 40), [40,50), [50, 60), 60+.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>depress<span class="sc">$</span>inc_cut <span class="ot">&lt;-</span> <span class="fu">cut</span>(depress<span class="sc">$</span>income, <span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">30</span>,<span class="dv">40</span>,<span class="dv">50</span>,<span class="dv">60</span>, <span class="dv">100</span>))</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(depress<span class="sc">$</span>inc_cut)</span>
@@ -575,8 +544,8 @@ The current gold standard for writing reproducible literate documents in R is to
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   (0,30]  (30,40]  (40,50]  (50,60] (60,100] </span></span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="do">##      231       28       16        9       10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="dichotomizing-a-measure-into-2-categories" class="level2">
-<h2 class="anchored" data-anchor-id="dichotomizing-a-measure-into-2-categories">Dichotomizing a measure into 2 categories</h2>
+<section id="dichotomizing-a-measure-into-2-categories" class="level2" data-number="3.12">
+<h2 data-number="3.12" class="anchored" data-anchor-id="dichotomizing-a-measure-into-2-categories"><span class="header-section-number">3.12</span> Dichotomizing a measure into 2 categories</h2>
 <p>Dichotomous variables tend to be binary indicator variables where a code of <code>1</code> is the level you’re interested in.</p>
 <p>For example, in this study gender is coded as 2=Female and 1=Male. (<em>This data was collected in the ’70s, and so only two genders were provided as options</em>). We want to convert this 1=Female and 0=Male.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>depress<span class="sc">$</span>sex <span class="ot">&lt;-</span> depress<span class="sc">$</span>sex <span class="sc">-</span><span class="dv">1</span> </span>
@@ -600,8 +569,8 @@ The current gold standard for writing reproducible literate documents in R is to
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   0   1 </span></span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  60 234</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="sum-or-average-values-across-multiple-variables" class="level2">
-<h2 class="anchored" data-anchor-id="sum-or-average-values-across-multiple-variables">Sum or Average values across multiple variables</h2>
+<section id="sum-or-average-values-across-multiple-variables" class="level2" data-number="3.13">
+<h2 data-number="3.13" class="anchored" data-anchor-id="sum-or-average-values-across-multiple-variables"><span class="header-section-number">3.13</span> Sum or Average values across multiple variables</h2>
 <p>The Center for Epidemiological Studies Depression Scale (CESD) is series of questions asked to a person to measure their level of depression. <code>CESD</code> is calculated as the sum of all 20 component variables, and is already on this data set. Let’s create a new variable named <code>sleep</code> as subscale for sleep quality by adding up question numbers 5, 11, and 19.</p>
 <p>Reference: http://cesd-r.com/cesdr/</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>depress<span class="sc">$</span>sleep <span class="ot">&lt;-</span> depress<span class="sc">$</span>c5 <span class="sc">+</span> depress<span class="sc">$</span>c11 <span class="sc">+</span> depress<span class="sc">$</span>c19</span>
@@ -611,8 +580,8 @@ The current gold standard for writing reproducible literate documents in R is to
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   0.000   0.000   1.000   1.167   2.000   7.000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="transformations-for-normality" class="level2">
-<h2 class="anchored" data-anchor-id="transformations-for-normality">Transformations for Normality</h2>
+<section id="transformations-for-normality" class="level2" data-number="3.14">
+<h2 data-number="3.14" class="anchored" data-anchor-id="transformations-for-normality"><span class="header-section-number">3.14</span> Transformations for Normality</h2>
 <p>Let’s look at assessing normal distributions using the <strong>cleaned</strong> depression data set.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(depress<span class="sc">$</span>income, <span class="at">prob=</span><span class="cn">TRUE</span>, <span class="at">xlab=</span><span class="st">"Annual income (in thousands)"</span>, </span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">"Histogram and Density curve of Income"</span>, <span class="at">ylab=</span><span class="st">""</span>)</span>
@@ -649,8 +618,8 @@ The current gold standard for writing reproducible literate documents in R is to
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(xincome, <span class="at">main=</span><span class="st">"-1/cuberoot(income)"</span>); <span class="fu">qqline</span>(xincome, <span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="data_prep_files/figure-html/unnamed-chunk-21-1.png" width="960"></p>
 </section>
-<section id="export-and-save" class="level2">
-<h2 class="anchored" data-anchor-id="export-and-save">Export and Save</h2>
+<section id="export-and-save" class="level2" data-number="3.15">
+<h2 data-number="3.15" class="anchored" data-anchor-id="export-and-save"><span class="header-section-number">3.15</span> Export and Save</h2>
 <p>You’ve just made a ton of changes!</p>
 <ul>
 <li>Save or export the new data set to your computer.</li>
@@ -673,8 +642,8 @@ EXECUTE.</code></pre>
 <li>For R users, using <code>dplyr</code> select is generally the fastest.</li>
 </ul>
 </section>
-<section id="wide-long" class="level2">
-<h2 class="anchored" data-anchor-id="wide-long">Wide vs.&nbsp;Long data</h2>
+<section id="wide-long" class="level2" data-number="3.16">
+<h2 data-number="3.16" class="anchored" data-anchor-id="wide-long"><span class="header-section-number">3.16</span> Wide vs.&nbsp;Long data</h2>
 <p>Read more on tidy data here: <a href="https://r4ds.hadley.nz/data-tidy">https://r4ds.hadley.nz/data-tidy</a></p>
 <p>The data on Lung function originally was recorded in <em>wide</em> format, with separate variables for mother’s and father’s FEV1 score (<code>MFEV1</code> and <code>FFEV</code>). In this format, the data is one record per family.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fev <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">"https://norcalbiostat.netlify.com/data/Lung_081217.txt"</span>, </span>
@@ -717,10 +686,10 @@ EXECUTE.</code></pre>
 <span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      M 4.91 72  44</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Nearly all analysis procedures and most graphing procedures require the data to be in long format. There are several <code>R</code> packages that can help with this including <code>reshape2</code> and <code>tidyr</code>.</p>
 </section>
-<section id="missing-data" class="level2">
-<h2 class="anchored" data-anchor-id="missing-data">Missing data</h2>
-<section id="identifying-missing-data" class="level3">
-<h3 class="anchored" data-anchor-id="identifying-missing-data">Identifying missing data</h3>
+<section id="missing-data" class="level2" data-number="3.17">
+<h2 data-number="3.17" class="anchored" data-anchor-id="missing-data"><span class="header-section-number">3.17</span> Missing data</h2>
+<section id="identifying-missing-data" class="level3" data-number="3.17.1">
+<h3 data-number="3.17.1" class="anchored" data-anchor-id="identifying-missing-data"><span class="header-section-number">3.17.1</span> Identifying missing data</h3>
 <p>In Excel, missing data can show up as a blank cell. In SPSS it is represented as a <code>.</code> period. R displays missing data as <code>NA</code> values.</p>
 <p>Missing Data in SPSS: https://stats.idre.ucla.edu/spss/modules/missing-data/</p>
 <p>Why would data be missing? Other than the obvious data entry errors, tech glitches or just non-cooperative plants or people, sometimes values are out of range and you would rather delete them than change their value (data edit).</p>
@@ -756,16 +725,16 @@ EXECUTE.</code></pre>
 <span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 3.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In R, any arithmetic function (like addition, multiplication) on missing data results in a missing value. The <code>na.rm=TRUE</code> toggle tells R to calculate the <em>complete case</em> mean. This is a biased measure of the mean, but missing data is a topic worthy of it’s own course and is introduced in Chapter @ref(mda).</p>
 </section>
-<section id="model-predictions" class="level3">
-<h3 class="anchored" data-anchor-id="model-predictions">Model predictions</h3>
+<section id="model-predictions" class="level3" data-number="3.17.2">
+<h3 data-number="3.17.2" class="anchored" data-anchor-id="model-predictions"><span class="header-section-number">3.17.2</span> Model predictions</h3>
 <p><strong>Situation</strong>: You want to add model predictions to the data set, but you have missing data that was automatically dropped prior to analysis.</p>
 </section>
-<section id="regression" class="level3">
-<h3 class="anchored" data-anchor-id="regression">Regression</h3>
+<section id="regression" class="level3" data-number="3.17.3">
+<h3 data-number="3.17.3" class="anchored" data-anchor-id="regression"><span class="header-section-number">3.17.3</span> Regression</h3>
 <p>R objects created by methods such as <code>lm</code> and <code>glm</code> will store the data used in the model in the model object itself in <code>model$data</code>. See Chapter @ref(binary-classification) for an example.</p>
 </section>
-<section id="factor-analysis-and-principle-components" class="level3">
-<h3 class="anchored" data-anchor-id="factor-analysis-and-principle-components">Factor Analysis and Principle Components</h3>
+<section id="factor-analysis-and-principle-components" class="level3" data-number="3.17.4">
+<h3 data-number="3.17.4" class="anchored" data-anchor-id="factor-analysis-and-principle-components"><span class="header-section-number">3.17.4</span> Factor Analysis and Principle Components</h3>
 <p>If your original data had missing values, here is one way to get the PC’s / factor scores for available data back onto the data set.</p>
 <p><strong>Method 1) Create an ID column and merge new variables onto original data. (add columns)</strong></p>
 <ol type="1">
@@ -1025,7 +994,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/openscapes\.github\.io\/quarto-website-tutorial");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -1355,14 +1324,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Welcome">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
+      <a href="./index.html" class="pagination-link" aria-label="Applied Statistics">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Applied Statistics</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./quarto-workflows/index.html" class="pagination-link" aria-label="Quarto workflows">
-        <span class="nav-page-text">Quarto workflows</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
@@ -1373,7 +1339,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/openscapes/quarto-website-tutorial/edit/main/explore.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/openscapes/quarto-website-tutorial/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    </div>
     <div class="nav-footer-right">
 <p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</p>
 </div>
