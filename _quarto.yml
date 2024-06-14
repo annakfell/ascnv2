@@ -7,10 +7,6 @@ book:
   author: "Robin Donatello, Edward Roualdes"
   date: last-modified
   description: "Course notes for Applied Statistics courses at CSU Chico"
-#  site-url: "https://openscapes.github.io/quarto-website-tutorial" 
-#  repo-url: https://github.com/openscapes/quarto-website-tutorial 
-#  repo-actions: [edit, issue]
-
   chapters: 
     - href: index.qmd
     - href: dataprep.qmd
@@ -19,10 +15,12 @@ book:
 #      chapters: 
 #        - href: dataprep.qmd
 #        - href: data_viz.qmd
-  
   page-footer:
     right: "This page is built with ❤️ and [Quarto](https://quarto.org/)."
     left: "&copy; CC-By Openscapes, 2024"
+#  site-url: "https://openscapes.github.io/quarto-website-tutorial" 
+#  repo-url: https://github.com/openscapes/quarto-website-tutorial 
+#  repo-actions: [edit, issue]
 
 #bibliography 
 
