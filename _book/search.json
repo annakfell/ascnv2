@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Applied Statistics",
     "section": "",
-    "text": "0.1 Preface\nThis document is a set of course notes for several Applied Statistics courses at California State University, Chico. This is not a textbook replacement, and topics covered will vary depending on the instructor. To make this clear we use the term notebook to refer to this document so as not to be confused with a traditional textbook.\nSome data and examples in this notebook are drawn from Practical Multivariate Analysis, 6tth ed, Afifi, May, Donatello, Clark and used with permission by the authors.\nThis work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.",
+    "text": "Preface\nThis document is a set of course notes for several Applied Statistics courses at California State University, Chico. This is not a textbook replacement, and topics covered will vary depending on the instructor. To make this clear we use the term notebook to refer to this document so as not to be confused with a traditional textbook.\nSome data and examples in this notebook are drawn from Practical Multivariate Analysis, 6tth ed, Afifi, May, Donatello, Clark and used with permission by the authors.\nThis work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Preface</span>"
     ]
