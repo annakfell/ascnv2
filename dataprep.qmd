@@ -51,12 +51,9 @@ Literate programming tools are integrated into most common statistical packages
 * Markdown (R, Stata), Quarto (R, Python, others)
 * $\LaTeX$ (R, SAS, Stata)  
 
-
-
-```{block2,  type='rmdnote'}
+:::{.callout-note appearance=minimal}
 The current gold standard for writing reproducible literate documents in R is to use [Quarto](https://quarto.org/docs/get-started/hello/rstudio.html). This works with Python, julia and other code editing platforms. 
-```
-
+:::
 
 Practicing reproducible research techniques using literate programming tools allows such major updates to be a simple matter of re-compiling all coded instructions using the updated data set. 
 
@@ -83,15 +80,14 @@ This section uses the raw `depression` data set from the Afifi et.al. textbook. 
 
 ```{r start2, warning=FALSE, message=FALSE}
 library(ggplot2)  
-depress_raw <- read.table("~/quarto-template/data/Depress.txt", 
+depress_raw <- read.table(here::here("data/Depress.txt"), 
                       sep="\t", header=TRUE)  
 ```
 
-```{block2,  type='rmdnote'}
+:::{.callout-note appearance=minimal}
 **Learn more** See R for Data Science 2nd edit for more instruction on importing different types of data and ways you can streamline your data import.
 https://r4ds.hadley.nz/data-import
-```
-
+:::
 
 The absolute first thing you should do is to look at your raw data table. Are the column headers variable names? Did all the rows get read in? Are there any extra columns or rows included? 
 
@@ -419,7 +415,7 @@ Read more on tidy data here: [https://r4ds.hadley.nz/data-tidy](https://r4ds.had
 The data on Lung function originally was recorded in _wide_ format, with separate variables for mother's and father's FEV1 score (`MFEV1` and `FFEV`). In this format, the data is one record per family. 
 
 ```{r}
-fev <- read.delim("~/quarto-template/data/Lung_081217.txt", 
+fev <- read.delim(here::here("data/Lung_081217.txt"), 
                     sep="\t", header=TRUE)
 head(fev)
 ```
