@@ -58,6 +58,7 @@ We will use a subset of the `diamonds` dataset that comes with the `ggplot2` pac
 
 
 ```{r}
+library(ggplot2)
 data("diamonds")
 set.seed(1410) # Make the sample reproducible
 dsmall <- diamonds[sample(nrow(diamonds), 1000), ]
@@ -417,6 +418,7 @@ And this easy change is why we love `ggplot2`.
 Not as easy as one would hope, but the solution is to calculate the desired percentages first and then plot the summary data using either `geom_bar(stat='identity')` or `geom_col()`. 
 
 ```{r}
+library(dplyr)
 calc.props <- diamonds %>% group_by(color, cut) %>%
               summarise(count=n()) %>%
               mutate(pct=round(count/sum(count),3))
@@ -593,6 +595,7 @@ Doesn't look to pretty, but kinda gets the point across. Few fair quality diamon
 **ggplot**
 We can reproduce the same thing by plotting one continuous variable against one categorical variable, and adding a layer of points. I'd argue that horizontal looks better due to the axis-labels. 
 ```{r}
+library(gridExtra)
 a <- ggplot(dsmall, aes(y=carat, x=cut)) + geom_point()
 b <- ggplot(dsmall, aes(y=cut, x=carat)) + geom_point()
 grid.arrange(a, b, ncol=2)
@@ -794,8 +797,8 @@ Before you share your plot with any other eyes, always take a step back and try 
 
 **Problem:** Missing data showing up as a category in ggplot? 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
-NCbirths <- read.csv("https://norcalbiostat.netlify.com/data/NCbirths.csv", header=TRUE)
-email <- read.table("https://norcalbiostat.netlify.com/data/email.txt", header=TRUE, sep="\t")
+NCbirths <- read.csv("https://www.norcalbiostat.com/data/NCbirths.csv", header=TRUE)
+email <- read.table("https://www.norcalbiostat.com/data/email.txt", header=TRUE, sep="\t")
 ```
 
 Get rid of that far right bar!

@@ -3,18 +3,20 @@ project:
   
 book: 
   page-navigation: true
-  title: "Applied Statistics course notes"
+  title: "Applied Statistics"
   author: "Robin Donatello, Edward Roualdes"
   date: last-modified
   description: "Course notes for Applied Statistics courses at CSU Chico"
-  chapters: 
+  chapters:
     - href: index.qmd
-    - href: dataprep.qmd
-    - href: data_viz.qmd
-#    - part: "Preparing Data for Analysis"
-#      chapters: 
-#        - href: dataprep.qmd
-#        - href: data_viz.qmd
+    - part: "Preparing Data for Analysis"
+      chapters: 
+        - href: dataprep.qmd
+        - href: data_viz.qmd
+#    
+#    - href: dataprep.qmd
+#    - href: data_viz.qmd
+
   page-footer:
     right: "This page is built with ❤️ and [Quarto](https://quarto.org/)."
     left: "&copy; CC-By Openscapes, 2024"
