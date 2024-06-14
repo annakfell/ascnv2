@@ -214,37 +214,34 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#data_prep" id="toc-data_prep" class="nav-link active" data-scroll-target="#data_prep"><span class="header-section-number">3</span> Workflow and Data Cleaning</a>
+  <li><a href="#reproducible-workflows" id="toc-reproducible-workflows" class="nav-link active" data-scroll-target="#reproducible-workflows"><span class="header-section-number">2.1</span> Reproducible workflows</a>
   <ul class="collapse">
-  <li><a href="#reproducible-workflows" id="toc-reproducible-workflows" class="nav-link" data-scroll-target="#reproducible-workflows"><span class="header-section-number">3.1</span> Reproducible workflows</a>
-  <ul class="collapse">
-  <li><a href="#literate-programming" id="toc-literate-programming" class="nav-link" data-scroll-target="#literate-programming"><span class="header-section-number">3.1.1</span> Literate programming</a></li>
+  <li><a href="#literate-programming" id="toc-literate-programming" class="nav-link" data-scroll-target="#literate-programming"><span class="header-section-number">2.1.1</span> Literate programming</a></li>
   </ul></li>
-  <li><a href="#import-data" id="toc-import-data" class="nav-link" data-scroll-target="#import-data"><span class="header-section-number">3.2</span> Import data</a></li>
-  <li><a href="#data-management" id="toc-data-management" class="nav-link" data-scroll-target="#data-management"><span class="header-section-number">3.3</span> Data Management</a></li>
-  <li><a href="#renaming-variable-names-for-sanity-sake" id="toc-renaming-variable-names-for-sanity-sake" class="nav-link" data-scroll-target="#renaming-variable-names-for-sanity-sake"><span class="header-section-number">3.4</span> Renaming variable names for sanity sake</a></li>
-  <li><a href="#identifying-variable-types" id="toc-identifying-variable-types" class="nav-link" data-scroll-target="#identifying-variable-types"><span class="header-section-number">3.5</span> Identifying Variable Types</a></li>
-  <li><a href="#convert-number-to-factor" id="toc-convert-number-to-factor" class="nav-link" data-scroll-target="#convert-number-to-factor"><span class="header-section-number">3.6</span> Convert number to factor</a></li>
-  <li><a href="#identifying-outliers" id="toc-identifying-outliers" class="nav-link" data-scroll-target="#identifying-outliers"><span class="header-section-number">3.7</span> Identifying Outliers</a></li>
-  <li><a href="#changing-numeric-values" id="toc-changing-numeric-values" class="nav-link" data-scroll-target="#changing-numeric-values"><span class="header-section-number">3.8</span> Changing numeric values</a></li>
-  <li><a href="#creating-secondary-variables" id="toc-creating-secondary-variables" class="nav-link" data-scroll-target="#creating-secondary-variables"><span class="header-section-number">3.9</span> Creating secondary variables</a></li>
-  <li><a href="#wrangling-factors" id="toc-wrangling-factors" class="nav-link" data-scroll-target="#wrangling-factors"><span class="header-section-number">3.10</span> Wrangling Factors</a>
+  <li><a href="#import-data" id="toc-import-data" class="nav-link" data-scroll-target="#import-data"><span class="header-section-number">2.2</span> Import data</a></li>
+  <li><a href="#data-management" id="toc-data-management" class="nav-link" data-scroll-target="#data-management"><span class="header-section-number">2.3</span> Data Management</a></li>
+  <li><a href="#renaming-variable-names-for-sanity-sake" id="toc-renaming-variable-names-for-sanity-sake" class="nav-link" data-scroll-target="#renaming-variable-names-for-sanity-sake"><span class="header-section-number">2.4</span> Renaming variable names for sanity sake</a></li>
+  <li><a href="#identifying-variable-types" id="toc-identifying-variable-types" class="nav-link" data-scroll-target="#identifying-variable-types"><span class="header-section-number">2.5</span> Identifying Variable Types</a></li>
+  <li><a href="#convert-number-to-factor" id="toc-convert-number-to-factor" class="nav-link" data-scroll-target="#convert-number-to-factor"><span class="header-section-number">2.6</span> Convert number to factor</a></li>
+  <li><a href="#identifying-outliers" id="toc-identifying-outliers" class="nav-link" data-scroll-target="#identifying-outliers"><span class="header-section-number">2.7</span> Identifying Outliers</a></li>
+  <li><a href="#changing-numeric-values" id="toc-changing-numeric-values" class="nav-link" data-scroll-target="#changing-numeric-values"><span class="header-section-number">2.8</span> Changing numeric values</a></li>
+  <li><a href="#creating-secondary-variables" id="toc-creating-secondary-variables" class="nav-link" data-scroll-target="#creating-secondary-variables"><span class="header-section-number">2.9</span> Creating secondary variables</a></li>
+  <li><a href="#wrangling-factors" id="toc-wrangling-factors" class="nav-link" data-scroll-target="#wrangling-factors"><span class="header-section-number">2.10</span> Wrangling Factors</a>
   <ul class="collapse">
-  <li><a href="#collapsing-categorical-variables-into-fewer-categories" id="toc-collapsing-categorical-variables-into-fewer-categories" class="nav-link" data-scroll-target="#collapsing-categorical-variables-into-fewer-categories"><span class="header-section-number">3.10.1</span> Collapsing categorical variables into fewer categories</a></li>
+  <li><a href="#collapsing-categorical-variables-into-fewer-categories" id="toc-collapsing-categorical-variables-into-fewer-categories" class="nav-link" data-scroll-target="#collapsing-categorical-variables-into-fewer-categories"><span class="header-section-number">2.10.1</span> Collapsing categorical variables into fewer categories</a></li>
   </ul></li>
-  <li><a href="#binning-a-continuous-variable-into-categorical-ranges." id="toc-binning-a-continuous-variable-into-categorical-ranges." class="nav-link" data-scroll-target="#binning-a-continuous-variable-into-categorical-ranges."><span class="header-section-number">3.11</span> Binning a continuous variable into categorical ranges.</a></li>
-  <li><a href="#dichotomizing-a-measure-into-2-categories" id="toc-dichotomizing-a-measure-into-2-categories" class="nav-link" data-scroll-target="#dichotomizing-a-measure-into-2-categories"><span class="header-section-number">3.12</span> Dichotomizing a measure into 2 categories</a></li>
-  <li><a href="#sum-or-average-values-across-multiple-variables" id="toc-sum-or-average-values-across-multiple-variables" class="nav-link" data-scroll-target="#sum-or-average-values-across-multiple-variables"><span class="header-section-number">3.13</span> Sum or Average values across multiple variables</a></li>
-  <li><a href="#transformations-for-normality" id="toc-transformations-for-normality" class="nav-link" data-scroll-target="#transformations-for-normality"><span class="header-section-number">3.14</span> Transformations for Normality</a></li>
-  <li><a href="#export-and-save" id="toc-export-and-save" class="nav-link" data-scroll-target="#export-and-save"><span class="header-section-number">3.15</span> Export and Save</a></li>
-  <li><a href="#wide-long" id="toc-wide-long" class="nav-link" data-scroll-target="#wide-long"><span class="header-section-number">3.16</span> Wide vs.&nbsp;Long data</a></li>
-  <li><a href="#missing-data" id="toc-missing-data" class="nav-link" data-scroll-target="#missing-data"><span class="header-section-number">3.17</span> Missing data</a>
+  <li><a href="#binning-a-continuous-variable-into-categorical-ranges." id="toc-binning-a-continuous-variable-into-categorical-ranges." class="nav-link" data-scroll-target="#binning-a-continuous-variable-into-categorical-ranges."><span class="header-section-number">2.11</span> Binning a continuous variable into categorical ranges.</a></li>
+  <li><a href="#dichotomizing-a-measure-into-2-categories" id="toc-dichotomizing-a-measure-into-2-categories" class="nav-link" data-scroll-target="#dichotomizing-a-measure-into-2-categories"><span class="header-section-number">2.12</span> Dichotomizing a measure into 2 categories</a></li>
+  <li><a href="#sum-or-average-values-across-multiple-variables" id="toc-sum-or-average-values-across-multiple-variables" class="nav-link" data-scroll-target="#sum-or-average-values-across-multiple-variables"><span class="header-section-number">2.13</span> Sum or Average values across multiple variables</a></li>
+  <li><a href="#transformations-for-normality" id="toc-transformations-for-normality" class="nav-link" data-scroll-target="#transformations-for-normality"><span class="header-section-number">2.14</span> Transformations for Normality</a></li>
+  <li><a href="#export-and-save" id="toc-export-and-save" class="nav-link" data-scroll-target="#export-and-save"><span class="header-section-number">2.15</span> Export and Save</a></li>
+  <li><a href="#wide-long" id="toc-wide-long" class="nav-link" data-scroll-target="#wide-long"><span class="header-section-number">2.16</span> Wide vs.&nbsp;Long data</a></li>
+  <li><a href="#missing-data" id="toc-missing-data" class="nav-link" data-scroll-target="#missing-data"><span class="header-section-number">2.17</span> Missing data</a>
   <ul class="collapse">
-  <li><a href="#identifying-missing-data" id="toc-identifying-missing-data" class="nav-link" data-scroll-target="#identifying-missing-data"><span class="header-section-number">3.17.1</span> Identifying missing data</a></li>
-  <li><a href="#model-predictions" id="toc-model-predictions" class="nav-link" data-scroll-target="#model-predictions"><span class="header-section-number">3.17.2</span> Model predictions</a></li>
-  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression"><span class="header-section-number">3.17.3</span> Regression</a></li>
-  <li><a href="#factor-analysis-and-principle-components" id="toc-factor-analysis-and-principle-components" class="nav-link" data-scroll-target="#factor-analysis-and-principle-components"><span class="header-section-number">3.17.4</span> Factor Analysis and Principle Components</a></li>
-  </ul></li>
+  <li><a href="#identifying-missing-data" id="toc-identifying-missing-data" class="nav-link" data-scroll-target="#identifying-missing-data"><span class="header-section-number">2.17.1</span> Identifying missing data</a></li>
+  <li><a href="#model-predictions" id="toc-model-predictions" class="nav-link" data-scroll-target="#model-predictions"><span class="header-section-number">2.17.2</span> Model predictions</a></li>
+  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression"><span class="header-section-number">2.17.3</span> Regression</a></li>
+  <li><a href="#factor-analysis-and-principle-components" id="toc-factor-analysis-and-principle-components" class="nav-link" data-scroll-target="#factor-analysis-and-principle-components"><span class="header-section-number">2.17.4</span> Factor Analysis and Principle Components</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -254,7 +251,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dataprep.html">Preparing Data for Analysis</a></li><li class="breadcrumb-item"><a href="./dataprep.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Workflow and Data Cleaning</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Workflow and Data Cleaning</span></h1>
+<h1 class="title"><span id="data_prep" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Workflow and Data Cleaning</span></span></h1>
 </div>
 
 
@@ -271,13 +268,11 @@ window.Quarto = {
 </header>
 
 
-<section id="data_prep" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Workflow and Data Cleaning</h1>
 <p>Once the data are available from a study there are still a number of steps that must be undertaken to get them into shape for analysis.</p>
 <p>One of the most misunderstood parts of the analysis process is the data preparation stage. To say that 70% of any analysis is spent on the data management stage is not an understatement.</p>
 <p>This chapter provides information on topics related to data processing and corresponds to PMA6 Chapter 3.</p>
-<section id="reproducible-workflows" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="reproducible-workflows"><span class="header-section-number">3.1</span> Reproducible workflows</h2>
+<section id="reproducible-workflows" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="reproducible-workflows"><span class="header-section-number">2.1</span> Reproducible workflows</h2>
 <p>Reproducibility is the ability for any researcher to take the same data set and run the same set of software program instructions as another researcher and achieve the same results.</p>
 <p>The goal is to create an exact record of what was done to a data set to produce a specific result. To achieve reproducibility, we believe that three things must be present:</p>
 <ol type="1">
@@ -317,8 +312,8 @@ window.Quarto = {
 </figure>
 </div>
 <p>Figure Credits: <a href="http://www.biostat.jhsph.edu/~rpeng/">Roger Peng</a></p>
-<section id="literate-programming" class="level3" data-number="3.1.1">
-<h3 data-number="3.1.1" class="anchored" data-anchor-id="literate-programming"><span class="header-section-number">3.1.1</span> Literate programming</h3>
+<section id="literate-programming" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="literate-programming"><span class="header-section-number">2.1.1</span> Literate programming</h3>
 <ul>
 <li>Programming paradigm introduced by Knuth (1984)</li>
 <li>Explain the logic of the program or analysis process in a natural language,</li>
@@ -348,8 +343,8 @@ The current gold standard for writing reproducible literate documents in R is to
 <p><img src="images/q.png" class="img-fluid" alt="q"> What stages of the pipeline shown above can we conduct using literate programming tools?</p>
 </section>
 </section>
-<section id="import-data" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="import-data"><span class="header-section-number">3.2</span> Import data</h2>
+<section id="import-data" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="import-data"><span class="header-section-number">2.2</span> Import data</h2>
 <p>This section uses the raw <code>depression</code> data set from the Afifi et.al. textbook. This is a tab-delimited data set, so we opt to use <code>read.table</code> here. We include arguments <code>sep="\t"</code> to indicate columns are separated with tabs and <code>header=TRUE</code> to indicate the first row of the data is the variable names.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)  </span>
@@ -364,8 +359,8 @@ The current gold standard for writing reproducible literate documents in R is to
 </div>
 <p>The absolute first thing you should do is to look at your raw data table. Are the column headers variable names? Did all the rows get read in? Are there any extra columns or rows included?</p>
 </section>
-<section id="data-management" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="data-management"><span class="header-section-number">3.3</span> Data Management</h2>
+<section id="data-management" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="data-management"><span class="header-section-number">2.3</span> Data Management</h2>
 <p>Questions to ask yourself while reviewing the codebook to choose variables to be used in an analysis.</p>
 <ol type="1">
 <li>Are there codes that indicate missing? E.g. <em>MISSING</em> or <em>-99</em>?</li>
@@ -383,8 +378,8 @@ The current gold standard for writing reproducible literate documents in R is to
 <p>Some of these answers will come only after you look at your data. This can be looking at the raw data itself but also looking at tables and charts generated from the data. Often when you try to create a plot or table you will encounter an error or something odd looking that will be the notification that something has to be adjusted.</p>
 <p>The next sections go over a <em>few</em> of the common data management processes, but is not comprehensive, and may only show one method for cleaning. There are always different ways to accomplish tasks.</p>
 </section>
-<section id="renaming-variable-names-for-sanity-sake" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="renaming-variable-names-for-sanity-sake"><span class="header-section-number">3.4</span> Renaming variable names for sanity sake</h2>
+<section id="renaming-variable-names-for-sanity-sake" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="renaming-variable-names-for-sanity-sake"><span class="header-section-number">2.4</span> Renaming variable names for sanity sake</h2>
 <p>The best method is to use the <code>clean_names()</code> function from the <a href="https://sfirke.github.io/janitor/">janitor</a> package.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -413,8 +408,8 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 </section>
-<section id="identifying-variable-types" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="identifying-variable-types"><span class="header-section-number">3.5</span> Identifying Variable Types</h2>
+<section id="identifying-variable-types" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="identifying-variable-types"><span class="header-section-number">2.5</span> Identifying Variable Types</h2>
 <p>The <code>str</code> function is short for <em>structure</em>. This shows you the variable names, what data types R thinks each variable are, and some of the raw data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(depress)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -517,8 +512,8 @@ $ chronill &lt;int&gt; 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 
 </div>
 </div>
 </section>
-<section id="convert-number-to-factor" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="convert-number-to-factor"><span class="header-section-number">3.6</span> Convert number to factor</h2>
+<section id="convert-number-to-factor" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="convert-number-to-factor"><span class="header-section-number">2.6</span> Convert number to factor</h2>
 <p>When variables have numerical levels it is necessary to ensure that the program knows it is a factor variable.</p>
 <p>The following code uses the <code>factor()</code> function to take the marital status variable and convert it into a factor variable with specified labels that match the codebook.</p>
 <div class="cell">
@@ -540,8 +535,8 @@ Never Married       Married      Divorced     Separated       Widowed
 </div>
 <p><strong>See more examples on <a href="https://norcalbiostat.github.io/MATH130/notes/06_factors.html#Convert_a_number_to_Factor_(Video)">Math 130 Lesson 06</a></strong></p>
 </section>
-<section id="identifying-outliers" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="identifying-outliers"><span class="header-section-number">3.7</span> Identifying Outliers</h2>
+<section id="identifying-outliers" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="identifying-outliers"><span class="header-section-number">2.7</span> Identifying Outliers</h2>
 <p>Let’s look at the age variable in the depression data set.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
@@ -578,8 +573,8 @@ Never Married       Married      Divorced     Separated       Widowed
 </div>
 <p>While there is at least one potential outliers (denoted by the dots), there are none so far away from the rest of the group (or at values such as 99 or -99 that may indicate missing codes) that we need to be concerned about.</p>
 </section>
-<section id="changing-numeric-values" class="level2" data-number="3.8">
-<h2 data-number="3.8" class="anchored" data-anchor-id="changing-numeric-values"><span class="header-section-number">3.8</span> Changing numeric values</h2>
+<section id="changing-numeric-values" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="changing-numeric-values"><span class="header-section-number">2.8</span> Changing numeric values</h2>
 <p>As an example of a common data entry error, and for demonstration purposes, I went in and changed a 19 to a 9. So the correct thing to do here is to change that 9, back to a 19. This is a very good use of the <code>ifelse()</code> function.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>depress<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(depress<span class="sc">$</span>age<span class="sc">==</span><span class="dv">9</span>, <span class="dv">19</span>, depress<span class="sc">$</span>age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -599,15 +594,15 @@ Never Married       Married      Divorced     Separated       Widowed
 </div>
 <p>Looks like it worked.</p>
 </section>
-<section id="creating-secondary-variables" class="level2" data-number="3.9">
-<h2 data-number="3.9" class="anchored" data-anchor-id="creating-secondary-variables"><span class="header-section-number">3.9</span> Creating secondary variables</h2>
+<section id="creating-secondary-variables" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="creating-secondary-variables"><span class="header-section-number">2.9</span> Creating secondary variables</h2>
 <p>See <a href="https://norcalbiostat.github.io/MATH130/notes/05_dm.html#Creating_new_variables_(Video)">Math 130 lesson 05</a> for now.</p>
 </section>
-<section id="wrangling-factors" class="level2" data-number="3.10">
-<h2 data-number="3.10" class="anchored" data-anchor-id="wrangling-factors"><span class="header-section-number">3.10</span> Wrangling Factors</h2>
+<section id="wrangling-factors" class="level2" data-number="2.10">
+<h2 data-number="2.10" class="anchored" data-anchor-id="wrangling-factors"><span class="header-section-number">2.10</span> Wrangling Factors</h2>
 <p>For more help on renaming, releveling, lumping, and removing levels see <a href="https://norcalbiostat.github.io/MATH130/notes/06_factors.html">Math 130 lesson 06</a> for now. Also the <a href="https://forcats.tidyverse.org/index.html">forcats</a> vignette.</p>
-<section id="collapsing-categorical-variables-into-fewer-categories" class="level3" data-number="3.10.1">
-<h3 data-number="3.10.1" class="anchored" data-anchor-id="collapsing-categorical-variables-into-fewer-categories"><span class="header-section-number">3.10.1</span> Collapsing categorical variables into fewer categories</h3>
+<section id="collapsing-categorical-variables-into-fewer-categories" class="level3" data-number="2.10.1">
+<h3 data-number="2.10.1" class="anchored" data-anchor-id="collapsing-categorical-variables-into-fewer-categories"><span class="header-section-number">2.10.1</span> Collapsing categorical variables into fewer categories</h3>
 <p>For unbiased and accurate results of a statistical analysis, sufficient data has to be present. Often times once you start slicing and dicing the data to only look at certain groups, or if you are interested in the behavior of certain variables across levels of another variable, sometimes you start to run into small sample size problems.</p>
 <p>For example, consider marital status again. There are only 13 people who report being separated. This could potentially be too small of a group size for valid statistical analysis. One way to deal with insufficient data within a certain category is to collapse categories. The following code uses the <code>recode()</code> function from the <code>car</code> package to create a new variable that I am calling <code>marital2</code> that combines the <code>Divorced</code> and <code>Separated</code> levels.</p>
 <blockquote class="blockquote">
@@ -638,8 +633,8 @@ Never Married       Married      Divorced     Separated       Widowed
 </div>
 </section>
 </section>
-<section id="binning-a-continuous-variable-into-categorical-ranges." class="level2" data-number="3.11">
-<h2 data-number="3.11" class="anchored" data-anchor-id="binning-a-continuous-variable-into-categorical-ranges."><span class="header-section-number">3.11</span> Binning a continuous variable into categorical ranges.</h2>
+<section id="binning-a-continuous-variable-into-categorical-ranges." class="level2" data-number="2.11">
+<h2 data-number="2.11" class="anchored" data-anchor-id="binning-a-continuous-variable-into-categorical-ranges."><span class="header-section-number">2.11</span> Binning a continuous variable into categorical ranges.</h2>
 <p>We can use the <code>cut</code> function to create a new variable that categorizes income into the following ranges: &lt;30, [30, 40), [40,50), [50, 60), 60+.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>depress<span class="sc">$</span>inc_cut <span class="ot">&lt;-</span> <span class="fu">cut</span>(depress<span class="sc">$</span>income, <span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">30</span>,<span class="dv">40</span>,<span class="dv">50</span>,<span class="dv">60</span>, <span class="dv">100</span>))</span>
@@ -651,8 +646,8 @@ Never Married       Married      Divorced     Separated       Widowed
 </div>
 </div>
 </section>
-<section id="dichotomizing-a-measure-into-2-categories" class="level2" data-number="3.12">
-<h2 data-number="3.12" class="anchored" data-anchor-id="dichotomizing-a-measure-into-2-categories"><span class="header-section-number">3.12</span> Dichotomizing a measure into 2 categories</h2>
+<section id="dichotomizing-a-measure-into-2-categories" class="level2" data-number="2.12">
+<h2 data-number="2.12" class="anchored" data-anchor-id="dichotomizing-a-measure-into-2-categories"><span class="header-section-number">2.12</span> Dichotomizing a measure into 2 categories</h2>
 <p>Dichotomous variables tend to be binary indicator variables where a code of <code>1</code> is the level you’re interested in.</p>
 <p>For example, in this study gender is coded as 2=Female and 1=Male. (<em>This data was collected in the ’70s, and so only two genders were provided as options</em>). We want to convert this 1=Female and 0=Male.</p>
 <div class="cell">
@@ -692,8 +687,8 @@ Never Married       Married      Divorced     Separated       Widowed
 </div>
 </div>
 </section>
-<section id="sum-or-average-values-across-multiple-variables" class="level2" data-number="3.13">
-<h2 data-number="3.13" class="anchored" data-anchor-id="sum-or-average-values-across-multiple-variables"><span class="header-section-number">3.13</span> Sum or Average values across multiple variables</h2>
+<section id="sum-or-average-values-across-multiple-variables" class="level2" data-number="2.13">
+<h2 data-number="2.13" class="anchored" data-anchor-id="sum-or-average-values-across-multiple-variables"><span class="header-section-number">2.13</span> Sum or Average values across multiple variables</h2>
 <p>The Center for Epidemiological Studies Depression Scale (CESD) is series of questions asked to a person to measure their level of depression. <code>CESD</code> is calculated as the sum of all 20 component variables, and is already on this data set. Let’s create a new variable named <code>sleep</code> as subscale for sleep quality by adding up question numbers 5, 11, and 19.</p>
 <p>Reference: http://cesd-r.com/cesdr/</p>
 <div class="cell">
@@ -709,8 +704,8 @@ Never Married       Married      Divorced     Separated       Widowed
 </div>
 </div>
 </section>
-<section id="transformations-for-normality" class="level2" data-number="3.14">
-<h2 data-number="3.14" class="anchored" data-anchor-id="transformations-for-normality"><span class="header-section-number">3.14</span> Transformations for Normality</h2>
+<section id="transformations-for-normality" class="level2" data-number="2.14">
+<h2 data-number="2.14" class="anchored" data-anchor-id="transformations-for-normality"><span class="header-section-number">2.14</span> Transformations for Normality</h2>
 <p>Let’s look at assessing normal distributions using the <strong>cleaned</strong> depression data set.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(depress<span class="sc">$</span>income, <span class="at">prob=</span><span class="cn">TRUE</span>, <span class="at">xlab=</span><span class="st">"Annual income (in thousands)"</span>, </span>
@@ -783,8 +778,8 @@ Never Married       Married      Divorced     Separated       Widowed
 </div>
 </div>
 </section>
-<section id="export-and-save" class="level2" data-number="3.15">
-<h2 data-number="3.15" class="anchored" data-anchor-id="export-and-save"><span class="header-section-number">3.15</span> Export and Save</h2>
+<section id="export-and-save" class="level2" data-number="2.15">
+<h2 data-number="2.15" class="anchored" data-anchor-id="export-and-save"><span class="header-section-number">2.15</span> Export and Save</h2>
 <p>You’ve just made a ton of changes!</p>
 <ul>
 <li>Save or export the new data set to your computer.</li>
@@ -809,8 +804,8 @@ EXECUTE.</code></pre>
 <li>For R users, using <code>dplyr</code> select is generally the fastest.</li>
 </ul>
 </section>
-<section id="wide-long" class="level2" data-number="3.16">
-<h2 data-number="3.16" class="anchored" data-anchor-id="wide-long"><span class="header-section-number">3.16</span> Wide vs.&nbsp;Long data</h2>
+<section id="wide-long" class="level2" data-number="2.16">
+<h2 data-number="2.16" class="anchored" data-anchor-id="wide-long"><span class="header-section-number">2.16</span> Wide vs.&nbsp;Long data</h2>
 <p>Read more on tidy data here: <a href="https://r4ds.hadley.nz/data-tidy">https://r4ds.hadley.nz/data-tidy</a></p>
 <p>The data on Lung function originally was recorded in <em>wide</em> format, with separate variables for mother’s and father’s FEV1 score (<code>MFEV1</code> and <code>FFEV</code>). In this format, the data is one record per family.</p>
 <div class="cell">
@@ -861,10 +856,10 @@ EXECUTE.</code></pre>
 </div>
 <p>Nearly all analysis procedures and most graphing procedures require the data to be in long format. There are several <code>R</code> packages that can help with this including <code>reshape2</code> and <code>tidyr</code>.</p>
 </section>
-<section id="missing-data" class="level2" data-number="3.17">
-<h2 data-number="3.17" class="anchored" data-anchor-id="missing-data"><span class="header-section-number">3.17</span> Missing data</h2>
-<section id="identifying-missing-data" class="level3" data-number="3.17.1">
-<h3 data-number="3.17.1" class="anchored" data-anchor-id="identifying-missing-data"><span class="header-section-number">3.17.1</span> Identifying missing data</h3>
+<section id="missing-data" class="level2" data-number="2.17">
+<h2 data-number="2.17" class="anchored" data-anchor-id="missing-data"><span class="header-section-number">2.17</span> Missing data</h2>
+<section id="identifying-missing-data" class="level3" data-number="2.17.1">
+<h3 data-number="2.17.1" class="anchored" data-anchor-id="identifying-missing-data"><span class="header-section-number">2.17.1</span> Identifying missing data</h3>
 <p>In Excel, missing data can show up as a blank cell. In SPSS it is represented as a <code>.</code> period. R displays missing data as <code>NA</code> values.</p>
 <p>Missing Data in SPSS: https://stats.idre.ucla.edu/spss/modules/missing-data/</p>
 <p>Why would data be missing? Other than the obvious data entry errors, tech glitches or just non-cooperative plants or people, sometimes values are out of range and you would rather delete them than change their value (data edit).</p>
@@ -926,16 +921,16 @@ EXECUTE.</code></pre>
 </div>
 <p>In R, any arithmetic function (like addition, multiplication) on missing data results in a missing value. The <code>na.rm=TRUE</code> toggle tells R to calculate the <em>complete case</em> mean. This is a biased measure of the mean, but missing data is a topic worthy of it’s own course and is introduced in Chapter @ref(mda).</p>
 </section>
-<section id="model-predictions" class="level3" data-number="3.17.2">
-<h3 data-number="3.17.2" class="anchored" data-anchor-id="model-predictions"><span class="header-section-number">3.17.2</span> Model predictions</h3>
+<section id="model-predictions" class="level3" data-number="2.17.2">
+<h3 data-number="2.17.2" class="anchored" data-anchor-id="model-predictions"><span class="header-section-number">2.17.2</span> Model predictions</h3>
 <p><strong>Situation</strong>: You want to add model predictions to the data set, but you have missing data that was automatically dropped prior to analysis.</p>
 </section>
-<section id="regression" class="level3" data-number="3.17.3">
-<h3 data-number="3.17.3" class="anchored" data-anchor-id="regression"><span class="header-section-number">3.17.3</span> Regression</h3>
+<section id="regression" class="level3" data-number="2.17.3">
+<h3 data-number="2.17.3" class="anchored" data-anchor-id="regression"><span class="header-section-number">2.17.3</span> Regression</h3>
 <p>R objects created by methods such as <code>lm</code> and <code>glm</code> will store the data used in the model in the model object itself in <code>model$data</code>. See Chapter @ref(binary-classification) for an example.</p>
 </section>
-<section id="factor-analysis-and-principle-components" class="level3" data-number="3.17.4">
-<h3 data-number="3.17.4" class="anchored" data-anchor-id="factor-analysis-and-principle-components"><span class="header-section-number">3.17.4</span> Factor Analysis and Principle Components</h3>
+<section id="factor-analysis-and-principle-components" class="level3" data-number="2.17.4">
+<h3 data-number="2.17.4" class="anchored" data-anchor-id="factor-analysis-and-principle-components"><span class="header-section-number">2.17.4</span> Factor Analysis and Principle Components</h3>
 <p>If your original data had missing values, here is one way to get the PC’s / factor scores for available data back onto the data set.</p>
 <p><strong>Method 1) Create an ID column and merge new variables onto original data. (add columns)</strong></p>
 <ol type="1">
@@ -967,7 +962,6 @@ EXECUTE.</code></pre>
 </div>
 
 
-</section>
 </section>
 </section>
 

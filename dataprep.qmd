@@ -1,7 +1,3 @@
----
-title: Workflow and Data Cleaning
----
-
 # Workflow and Data Cleaning {#data_prep}
 
 Once the data are available from a study there are still a number of steps that must be undertaken to get them into shape for analysis.
