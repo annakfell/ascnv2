@@ -5,3 +5,6 @@ This document is a set of course notes for several Applied Statistics courses at
 Some data and examples in this notebook are drawn from [*Practical Multivariate Analysis, 6tth ed, Afifi, May, Donatello, Clark*](https://www.crcpress.com/Practical-Multivariate-Analysis/Afifi-May-Donatello-Clark/p/book/9781138702226) and used with permission by the authors.
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" alt="Creative Commons License" style="border-width:0"/></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+
+## Acknowledgments {.unnumbered}
+Annabelle Feller ([\@annakfell](https://github.com/annakfell))
