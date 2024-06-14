@@ -13,10 +13,12 @@ book:
 
   chapters: 
     - href: index.qmd
-    - part: "Preparing Data for Analysis"
-      chapters: 
-        - href: dataprep.qmd
-        - href: data_viz.qmd
+    - href: dataprep.qmd
+    - href: data_viz.qmd
+#    - part: "Preparing Data for Analysis"
+#      chapters: 
+#        - href: dataprep.qmd
+#        - href: data_viz.qmd
   
   page-footer:
     right: "This page is built with ❤️ and [Quarto](https://quarto.org/)."

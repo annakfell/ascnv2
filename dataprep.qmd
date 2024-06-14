@@ -1,6 +1,7 @@
 ---
 title: Workflow and Data Cleaning
 ---
+
 # Workflow and Data Cleaning {#data_prep}
 
 Once the data are available from a study there are still a number of steps that must be undertaken to get them into shape for analysis.
@@ -86,7 +87,7 @@ This section uses the raw `depression` data set from the Afifi et.al. textbook. 
 
 ```{r start2, warning=FALSE, message=FALSE}
 library(ggplot2)  
-depress_raw <- read.table("https://norcalbiostat.netlify.com/data/Depress.txt", 
+depress_raw <- read.table("~/quarto-template/data/Depress.txt", 
                       sep="\t", header=TRUE)  
 ```
 
@@ -120,6 +121,7 @@ The next sections go over a _few_ of the common data management processes, but i
 The best method is to use the `clean_names()` function from the [janitor](https://sfirke.github.io/janitor/) package. 
 
 ```{r}
+library(dplyr)
 depress <- depress_raw %>% janitor::clean_names()
 ```
 
@@ -421,7 +423,7 @@ Read more on tidy data here: [https://r4ds.hadley.nz/data-tidy](https://r4ds.had
 The data on Lung function originally was recorded in _wide_ format, with separate variables for mother's and father's FEV1 score (`MFEV1` and `FFEV`). In this format, the data is one record per family. 
 
 ```{r}
-fev <- read.delim("https://norcalbiostat.netlify.com/data/Lung_081217.txt", 
+fev <- read.delim("~/quarto-template/data/Lung_081217.txt", 
                     sep="\t", header=TRUE)
 head(fev)
 ```
