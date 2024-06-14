@@ -17,18 +17,11 @@ jobs:
         with:
           # To install LaTeX to build PDF book 
           tinytex: true 
-          knitr: true
-          rmarkdown: true
           # uncomment below and fill to pin a version
           # version: 0.9.600
       
       # add software dependencies here
-      - name: Install macOS system dependencies
-        if: runner.os == 'macOS'
-        run: |
-          brew install rmarkdown
-          brew install knitr
-  
+
       - name: Publish to GitHub Pages (and render)
         uses: quarto-dev/quarto-actions/publish@v2
         with:
