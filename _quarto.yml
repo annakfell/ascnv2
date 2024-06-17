@@ -1,22 +1,31 @@
 project: 
   type: book
+  output-dir: _book
   
 book: 
-  page-navigation: true
   title: "Applied Statistics"
   author: "Robin Donatello, Edward Roualdes"
   date: last-modified
   description: "Course notes for Applied Statistics courses at CSU Chico"
-  chapters:
-    - href: index.qmd
-    - part: "Preparing Data for Analysis"
-      chapters:
-        - href: dataprep.qmd
-        - href: data_viz.qmd
+  reader-mode: true
+  site-url: https://annakfell.github.io/ascnv2/ 
+  repo-url: https://github.com/annakfell/ascnv2
+  repo-branch: main
+  repo-actions: [edit, issue]
 
   page-footer:
-    right: "This page is built with ❤️ and [Quarto](https://quarto.org/)."
-    left: "&copy; CC-By Openscapes, 2024"
+    right: |
+      This page is built with ❤️ and [Quarto](https://quarto.org/)
+
+  chapters:
+    - index.qmd
+    
+    - part: "Preparing Data for Analysis"
+      chapters:
+        - dataprep.qmd
+        - data_viz.qmd
+
+ 
 #  site-url: "https://openscapes.github.io/quarto-website-tutorial" 
 #  repo-url: https://github.com/openscapes/quarto-website-tutorial 
 #  repo-actions: [edit, issue]
