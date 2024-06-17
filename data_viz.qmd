@@ -7,7 +7,7 @@ There are two audiences in mind when creating data visualizations:
 1. For your eyes only (FYEO). These are quick and dirty plots, without annotation. Meant to be looked at once or twice.
 2. To share with others. These need to completely stand on their own. Axes labels, titles, colors as needed, possibly captions.
 
-You will see, and slowly learn, how to add these annotations and how to clean up your graphics to make them sharable. `ggplot2` already does a lot of this work for you. 
+You will see, and slowly learn, how to add these annotations and how to clean up your graphics to make them shareable. `ggplot2` already does a lot of this work for you. 
 
 We will also use the two most common methods used to create plots. 1) Base graphics, 2) the `ggplot2` package. Each have their own advantages and disadvantages. If you have not done so already, go ahead and install the `ggplot2` package now. 
 
@@ -18,7 +18,7 @@ For **almost** every plot discussed we will create two types of plots
 
 As time permits I will update each section with a third type of plot - 
 
-  3. Sharable - Contains all bells and whistles needed to make it presentable to others. 
+  3. Shareable - Contains all bells and whistles needed to make it presentable to others. 
 
 Your task, should you choose to accept, is to follow along through this tutorial and at each step try to reproduce the plot shown. You can accomplish this by simply copying and pasting the syntax into a new R code (or R Markdown) document. 
 
@@ -345,7 +345,7 @@ table(dsmall$cut, dsmall$color)
 
 There are 4 Fair diamonds with color D, and 21 Ideal quality diamonds with color J.
 
-#### Two-way Proprtion tables
+#### Two-way Proportion tables
 Choose your percentages depending on your research question. What are you wanting to compare? 
 
 Best practices: 
