@@ -1,4 +1,4 @@
-# Visualizing Data {#sec-data_viz}
+# Visualizing Data {#sec-data-viz}
 
 Visualizing your data is hands down the most important thing you can learn to do. There are links to additional resources at the end of this document for additional learning. 
 

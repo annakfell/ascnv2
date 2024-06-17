@@ -1,4 +1,4 @@
-## Preface {.unnumbered}
+# Preface {.unnumbered}
 
 This document is a set of course notes for several Applied Statistics courses at California State University, Chico. This is not a textbook replacement, and topics covered will vary depending on the instructor. To make this clear we use the term *notebook* to refer to this document so as not to be confused with a traditional textbook.
 
