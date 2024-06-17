@@ -70,6 +70,8 @@ dsmall <- diamonds[sample(nrow(diamonds), 1000), ]
 ### Categorical variables
 Both Nominal and Ordinal data types can be visualized using the same methods: tables, barcharts and pie charts. 
 
+::: {.panel-tabset}
+
 #### Tables
 Tables are the most common way to get summary statistics of a categorical variable. The `table()` function produces a frequency table, where each entry represents the number of records in the data set holding the corresponding labeled value. 
 
@@ -149,8 +151,6 @@ http://www.sthda.com/english/wiki/ggplot2-pie-chart-quick-start-guide-r-software
 
 However -- Never say never. Here's an example of a *good* use of pie charts. 
 http://www.storytellingwithdata.com/blog/2019/8/8/forty-five-pie-charts-never-say-never
- 
-
 
 #### Waffle Chart 
 This type of chart is not natively found in the `ggplot2` package, but it's own `waffle` package. These are great for infographics. 
@@ -164,8 +164,12 @@ waffle(dc/10, rows=5, size=0.5,
        xlab="1 square == 10 diamonds")
 ```
 
+:::
+
 ### Continuous Measures
 Here we can look at the price, carat, and depth of the diamonds. 
+
+::: {.panel-tabset}
 
 #### Dotplot
 ```{r}
@@ -323,10 +327,13 @@ ggplot(dsmall, aes(sample=price)) + stat_qq()
 
 Additional references on making qqplots in ggplot: http://www.sthda.com/english/wiki/ggplot2-qq-plot-quantile-quantile-graph-quick-start-guide-r-software-and-data-visualization
 
+:::
 
 ## Bivariate Visualizations
 
 ### Categorical v. Categorical
+
+::: {.panel-tabset}
 
 #### Two-way Frequency tables
 Cross-tabs, cross-tabulations and two-way tables (all the same thing, different names) can be created by using the `table()` function. 
@@ -413,6 +420,7 @@ For more than 2 colors I do not recommend choosing the colors yourself. I know l
 
 And this easy change is why we love `ggplot2`. 
 
+:::
 
 ### Grouped bar charts with percentages
 Not as easy as one would hope, but the solution is to calculate the desired percentages first and then plot the summary data using either `geom_bar(stat='identity')` or `geom_col()`. 
@@ -441,6 +449,7 @@ ggplot(calc.props, aes(x=color, fill=cut, y=pct)) +
                   scale_y_continuous(limits=c(0,1), labels=percent)
 ```   
 
+::: {.panel-tabset}
 
 #### `sjPlot` 
 
@@ -477,8 +486,11 @@ If you are wondering why there was no 3D barcharts demonstrated see
 [here](http://www.bbc.co.uk/schools/gcsebitesize/maths/statistics/representingdata2rev5.shtml), and 
 [here](https://en.wikipedia.org/wiki/Misleading_graph) for other ways you can really screw up your visualization.
 
+:::
 
 ### Continuous v. Continuous 
+
+::: {.panel-tabset}
 
 #### Scatterplot
 The most common method of visualizing the relationship between two continuous variables is by using a scatterplot. 
@@ -576,10 +588,13 @@ ggplot(ppc2, aes(x=carat, y=mean, col=cut)) + geom_line()
 
 And we get one line per cut. 
 
+:::
 
 ### Continuous v. Categorical
 Create an appropriate plot for a continuous variable, and plot it for each
 level of the categorical variable. 
+
+::: {.panel-tabset}
 
 #### Dotplot/strip chart
 
@@ -646,6 +661,8 @@ c <- ggplot(dsmall, aes(x=carat, fill=color)) + geom_density(alpha=.2)
 d <- ggplot(dsmall, aes(x=carat, col=color)) + geom_density() 
 grid.arrange(c,d, ncol=2)
 ```
+
+:::
 
 ### Joy plots / Ridgelines 
 Somewhat new (2017), joylines have not been added to the base distribution of `ggplot2` yet. For now it's available in the `ggjoy` package. Really good way to visualize density plots without the overlapping issue. 
