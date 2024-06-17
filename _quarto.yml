@@ -25,13 +25,6 @@ book:
         - dataprep.qmd
         - data_viz.qmd
 
- 
-#  site-url: "https://openscapes.github.io/quarto-website-tutorial" 
-#  repo-url: https://github.com/openscapes/quarto-website-tutorial 
-#  repo-actions: [edit, issue]
-
-#bibliography 
-
 format:
   html:
     theme:
