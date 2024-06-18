@@ -244,10 +244,9 @@ window.Quarto = {
   <li><a href="#wide-long" id="toc-wide-long" class="nav-link" data-scroll-target="#wide-long"><span class="header-section-number">1.16</span> Wide vs.&nbsp;Long data</a></li>
   <li><a href="#missing-data" id="toc-missing-data" class="nav-link" data-scroll-target="#missing-data"><span class="header-section-number">1.17</span> Missing data</a>
   <ul class="collapse">
-  <li><a href="#identifying-missing-data" id="toc-identifying-missing-data" class="nav-link" data-scroll-target="#identifying-missing-data"><span class="header-section-number">1.17.1</span> Identifying missing data</a></li>
-  <li><a href="#model-predictions" id="toc-model-predictions" class="nav-link" data-scroll-target="#model-predictions"><span class="header-section-number">1.17.2</span> Model predictions</a></li>
-  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression"><span class="header-section-number">1.17.3</span> Regression</a></li>
-  <li><a href="#factor-analysis-and-principle-components" id="toc-factor-analysis-and-principle-components" class="nav-link" data-scroll-target="#factor-analysis-and-principle-components"><span class="header-section-number">1.17.4</span> Factor Analysis and Principle Components</a></li>
+  <li><a href="#model-predictions" id="toc-model-predictions" class="nav-link" data-scroll-target="#model-predictions"><span class="header-section-number">1.17.1</span> Model predictions</a></li>
+  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression"><span class="header-section-number">1.17.2</span> Regression</a></li>
+  <li><a href="#factor-analysis-and-principle-components" id="toc-factor-analysis-and-principle-components" class="nav-link" data-scroll-target="#factor-analysis-and-principle-components"><span class="header-section-number">1.17.3</span> Factor Analysis and Principle Components</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/dataprep.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -357,9 +356,8 @@ window.Quarto = {
 <h2 data-number="1.2" class="anchored" data-anchor-id="import-data"><span class="header-section-number">1.2</span> Import data</h2>
 <p>This section uses the raw <code>depression</code> data set from the Afifi et. al.&nbsp;textbook. This is a tab-delimited data set, so we opt to use <code>read.table</code> here. We include arguments <code>sep="\t"</code> to indicate columns are separated with tabs and <code>header=TRUE</code> to indicate the first row of the data is the variable names.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)  </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>depress_raw <span class="ot">&lt;-</span> <span class="fu">read.table</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/Depress.txt"</span>), </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sep=</span><span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">header=</span><span class="cn">TRUE</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>depress_raw <span class="ot">&lt;-</span> <span class="fu">read.table</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/Depress.txt"</span>), </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sep=</span><span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">header=</span><span class="cn">TRUE</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
@@ -394,6 +392,10 @@ window.Quarto = {
 </section>
 <section id="renaming-variable-names-for-sanitys-sake" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="renaming-variable-names-for-sanitys-sake"><span class="header-section-number">1.4</span> Renaming variable names for sanity’s sake</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">With the <code>janitor</code> package</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Base R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <p>The best method is to use the <code>clean_names()</code> function from the <a href="https://sfirke.github.io/janitor/">janitor</a> package.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -413,7 +415,9 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>depress <span class="ot">&lt;-</span> depress_raw <span class="sc">%&gt;%</span> janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>A base R soluion is to use `tolower() to turn all variable names to lower case.</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>A base R solution is to use `tolower() to turn all variable names to lower case.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## names(depress) &lt;- tolower(names(depress))</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tolower</span>(<span class="st">"ThIs MIXTure of CAPS and lowercase WILL alL be conVERteD to LoWeR CAsE"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -421,9 +425,16 @@ Attaching package: 'dplyr'</code></pre>
 <pre><code>[1] "this mixture of caps and lowercase will all be converted to lower case"</code></pre>
 </div>
 </div>
+</div>
+</div>
+</div>
 </section>
 <section id="identifying-variable-types" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="identifying-variable-types"><span class="header-section-number">1.5</span> Identifying Variable Types</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Base R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Tidyverse</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <p>The <code>str</code> function is short for <em>structure</em>. This shows you the variable names, what data types R thinks each variable are, and some of the raw data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(depress)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -468,6 +479,8 @@ Attaching package: 'dplyr'</code></pre>
  $ chronill: int  1 1 0 1 0 1 1 0 1 0 ...</code></pre>
 </div>
 </div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <p>A <code>tidyverse</code> alternative is <code>glimpse()</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(depress)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -514,15 +527,29 @@ $ chronill &lt;int&gt; 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 
 </div>
 </div>
 <p>Right away this tells me that <strong>R</strong> thinks all variables are numeric integers, not categorical variables. Many of these will have to be changed. We’ll get to that in a moment.</p>
+</div>
+</div>
+</div>
 <p><strong>To check the data type of just one variable:</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true"><code>typeof()</code></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false"><code>class()</code></a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(depress<span class="sc">$</span>marital)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "integer"</code></pre>
 </div>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(depress<span class="sc">$</span>age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "integer"</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -559,7 +586,7 @@ Never Married       Married      Divorced     Separated       Widowed
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="dataprep_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="dataprep_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -580,7 +607,7 @@ Never Married       Married      Divorced     Separated       Widowed
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="dataprep_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="dataprep_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -589,11 +616,17 @@ Never Married       Married      Divorced     Separated       Widowed
 </section>
 <section id="changing-numeric-values" class="level2" data-number="1.8">
 <h2 data-number="1.8" class="anchored" data-anchor-id="changing-numeric-values"><span class="header-section-number">1.8</span> Changing numeric values</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true"><code>ifelse()</code> function</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Direct assign</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <p>As an example of a common data entry error, and for demonstration purposes, I went in and changed a 19 to a 9. So the correct thing to do here is to change that 9, back to a 19. This is a very good use of the <code>ifelse()</code> function.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>depress<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(depress<span class="sc">$</span>age<span class="sc">==</span><span class="dv">9</span>, <span class="dv">19</span>, depress<span class="sc">$</span>age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The logical statement is <code>depress$age9</code>. Wherever this is true, replace the value of <code>depress$age</code> with 19, and wherever this is false keep the value of <code>depress$age</code> unchanged (by “replacing” the new value with the same old value).</p>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <p>Alternatively, you can change that one value using bracket notation. Here you are specifying that you only want the rows where <code>age==9</code>, and directly assign a value of 19 to those rows.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>depress<span class="sc">$</span>age[depress<span class="sc">$</span>age<span class="sc">==</span><span class="dv">9</span>] <span class="ot">&lt;-</span> <span class="dv">19</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -607,6 +640,9 @@ Never Married       Married      Divorced     Separated       Widowed
 </div>
 </div>
 <p>Looks like it worked.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="creating-secondary-variables" class="level2" data-number="1.9">
 <h2 data-number="1.9" class="anchored" data-anchor-id="creating-secondary-variables"><span class="header-section-number">1.9</span> Creating secondary variables</h2>
@@ -711,7 +747,7 @@ Never Married       Married      Divorced     Separated       Widowed
 <section id="sum-or-average-values-across-multiple-variables" class="level2" data-number="1.13">
 <h2 data-number="1.13" class="anchored" data-anchor-id="sum-or-average-values-across-multiple-variables"><span class="header-section-number">1.13</span> Sum or Average values across multiple variables</h2>
 <p>The Center for Epidemiological Studies Depression Scale (CESD) is series of questions asked to a person to measure their level of depression. <code>CESD</code> is calculated as the sum of all 20 component variables, and is already on this data set. Let’s create a new variable named <code>sleep</code> as subscale for sleep quality by adding up question numbers 5, 11, and 19.</p>
-<p>Reference: http://cesd-r.com/cesdr/</p>
+<p>Reference: <a href="https://cesd-r.com/cesdr/">CESD-R</a></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>depress<span class="sc">$</span>sleep <span class="ot">&lt;-</span> depress<span class="sc">$</span>c5 <span class="sc">+</span> depress<span class="sc">$</span>c11 <span class="sc">+</span> depress<span class="sc">$</span>c19</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="do">## # depress &lt;- depress %&gt;% mutate(sleep = c5+c11+c19) # Not run. dplyr example</span></span>
@@ -727,6 +763,10 @@ Never Married       Married      Divorced     Separated       Widowed
 </section>
 <section id="transformations-for-normality" class="level2" data-number="1.14">
 <h2 data-number="1.14" class="anchored" data-anchor-id="transformations-for-normality"><span class="header-section-number">1.14</span> Transformations for Normality</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Histogram and Density Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">Q-Q Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false">To transform or not to transform</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <p>Let’s look at assessing normal distributions using the <strong>cleaned</strong> depression data set.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(depress<span class="sc">$</span>income, <span class="at">prob=</span><span class="cn">TRUE</span>, <span class="at">xlab=</span><span class="st">"Annual income (in thousands)"</span>, </span>
@@ -735,7 +775,7 @@ Never Married       Married      Divorced     Separated       Widowed
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="dataprep_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="dataprep_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -746,28 +786,15 @@ Never Married       Married      Divorced     Separated       Widowed
 </div>
 </div>
 <p>The distribution of annual income is slightly skewed right with a mean of $20.5k per year and a median of $15k per year income. The range of values goes from $2k to $65k. Reported income above $40k appear to have been rounded to the nearest $10k, because there are noticeable peaks at $40k, $50k, and $60k.</p>
-<p>In general, transformations are more effective when the the standard deviation is large relative to the mean. One rule of thumb is if the sd/mean ratio is less than 1/4, a transformation may not be necessary.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(depress<span class="sc">$</span>income) <span class="sc">/</span> <span class="fu">mean</span>(depress<span class="sc">$</span>income)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.743147</code></pre>
 </div>
-</div>
-<p>Alternatively Hoaglin, Mosteller and Tukey (1985) showed that if the largest observation divided by the smallest observation is over 2, then the data may not be sufficiently variable for the transformation to be decisive.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(depress<span class="sc">$</span>income) <span class="sc">/</span> (<span class="fu">min</span>(depress<span class="sc">$</span>income)<span class="sc">+</span>.<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 30.95238</code></pre>
-</div>
-</div>
-<p>Note these rules are not meaningful for data without a natural zero.</p>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
 <p>Another common method of assessing normality is to create a normal probability (or normal quantile) plot.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(depress<span class="sc">$</span>income);<span class="fu">qqline</span>(depress<span class="sc">$</span>income, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(depress<span class="sc">$</span>income);<span class="fu">qqline</span>(depress<span class="sc">$</span>income, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="dataprep_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="dataprep_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -777,24 +804,44 @@ Never Married       Married      Divorced     Separated       Widowed
 <li>Create three new variables: <code>log10inc</code> as the log base 10 of Income, <code>loginc</code> as the natural log of Income, and <code>xincome</code> which is equal to the negative of one divided by the cubic root of income.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>log10inc <span class="ot">&lt;-</span> <span class="fu">log10</span>(depress<span class="sc">$</span>income)</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>loginc   <span class="ot">&lt;-</span> <span class="fu">log</span>(depress<span class="sc">$</span>income)</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>xincome  <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span>(depress<span class="sc">$</span>income)<span class="sc">^</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>log10inc <span class="ot">&lt;-</span> <span class="fu">log10</span>(depress<span class="sc">$</span>income)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>loginc   <span class="ot">&lt;-</span> <span class="fu">log</span>(depress<span class="sc">$</span>income)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>xincome  <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span>(depress<span class="sc">$</span>income)<span class="sc">^</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Create a single plot that display normal probability plots for the original, and each of the three transformations of income. Use the base graphics grid organizer <code>par(mfrow=c(r,c))</code> where <code>r</code> is the number of rows and <code>c</code> is the number of columns. Which transformation does a better job of normalizing the distribution of Income?</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>)) <span class="co"># Try (4,1) and (1,4) to see how this works. </span></span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(depress<span class="sc">$</span>income, <span class="at">main=</span><span class="st">"Income"</span>); <span class="fu">qqline</span>(depress<span class="sc">$</span>income,<span class="at">col=</span><span class="st">"blue"</span>)</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(log10inc, <span class="at">main=</span><span class="st">"Log 10"</span>); <span class="fu">qqline</span>(log10inc, <span class="at">col=</span><span class="st">"blue"</span>)</span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(loginc, <span class="at">main =</span> <span class="st">"Natural Log"</span>); <span class="fu">qqline</span>(loginc, <span class="at">col=</span><span class="st">"blue"</span>)</span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(xincome, <span class="at">main=</span><span class="st">"-1/cuberoot(income)"</span>); <span class="fu">qqline</span>(xincome, <span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>)) <span class="co"># Try (4,1) and (1,4) to see how this works. </span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(depress<span class="sc">$</span>income, <span class="at">main=</span><span class="st">"Income"</span>); <span class="fu">qqline</span>(depress<span class="sc">$</span>income,<span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(log10inc, <span class="at">main=</span><span class="st">"Log 10"</span>); <span class="fu">qqline</span>(log10inc, <span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(loginc, <span class="at">main =</span> <span class="st">"Natural Log"</span>); <span class="fu">qqline</span>(loginc, <span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(xincome, <span class="at">main=</span><span class="st">"-1/cuberoot(income)"</span>); <span class="fu">qqline</span>(xincome, <span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="dataprep_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="dataprep_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
+<p>In general, transformations are more effective when the the standard deviation is large relative to the mean. One rule of thumb is if the sd/mean ratio is less than 1/4, a transformation may not be necessary.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(depress<span class="sc">$</span>income) <span class="sc">/</span> <span class="fu">mean</span>(depress<span class="sc">$</span>income)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.743147</code></pre>
+</div>
+</div>
+<p>Alternatively Hoaglin, Mosteller and Tukey (1985) showed that if the largest observation divided by the smallest observation is over 2, then the data may not be sufficiently variable for the transformation to be decisive.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(depress<span class="sc">$</span>income) <span class="sc">/</span> (<span class="fu">min</span>(depress<span class="sc">$</span>income)<span class="sc">+</span>.<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 30.95238</code></pre>
+</div>
+</div>
+<p>Note that these rules are not meaningful for data without a natural zero.</p>
 </div>
 </div>
 </div>
@@ -879,8 +926,10 @@ EXECUTE.</code></pre>
 </section>
 <section id="missing-data" class="level2" data-number="1.17">
 <h2 data-number="1.17" class="anchored" data-anchor-id="missing-data"><span class="header-section-number">1.17</span> Missing data</h2>
-<section id="identifying-missing-data" class="level3" data-number="1.17.1">
-<h3 data-number="1.17.1" class="anchored" data-anchor-id="identifying-missing-data"><span class="header-section-number">1.17.1</span> Identifying missing data</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Identifying missing data</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">Missing data in continuous variables</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <p>In Excel, missing data can show up as a blank cell. In SPSS it is represented as a <code>.</code> period. R displays missing data as <code>NA</code> values.</p>
 <p>Missing Data in SPSS: https://stats.idre.ucla.edu/spss/modules/missing-data/</p>
 <p>Why would data be missing? Other than the obvious data entry errors, tech glitches or just non-cooperative plants or people, sometimes values are out of range and you would rather delete them than change their value (data edit).</p>
@@ -916,6 +965,8 @@ EXECUTE.</code></pre>
 155  51  30  56 </code></pre>
 </div>
 </div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
 <p>What about continuous variables? Well there happens to be no other missing data in this data set, so let’s make up a set of 7 data points stored in a variable named <code>y</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="cn">NA</span>, <span class="dv">4</span>, <span class="cn">NA</span>, <span class="dv">6</span>)</span>
@@ -941,19 +992,25 @@ EXECUTE.</code></pre>
 </div>
 </div>
 <p>In R, any arithmetic function (like addition, multiplication) on missing data results in a missing value. The <code>na.rm=TRUE</code> toggle tells R to calculate the <em>complete case</em> mean. This is a biased measure of the mean, but missing data is a topic worthy of it’s own course and is introduced in Chapter @ref(mda).</p>
-</section>
-<section id="model-predictions" class="level3" data-number="1.17.2">
-<h3 data-number="1.17.2" class="anchored" data-anchor-id="model-predictions"><span class="header-section-number">1.17.2</span> Model predictions</h3>
+</div>
+</div>
+</div>
+<section id="model-predictions" class="level3" data-number="1.17.1">
+<h3 data-number="1.17.1" class="anchored" data-anchor-id="model-predictions"><span class="header-section-number">1.17.1</span> Model predictions</h3>
 <p><strong>Situation</strong>: You want to add model predictions to the data set, but you have missing data that was automatically dropped prior to analysis.</p>
 </section>
-<section id="regression" class="level3" data-number="1.17.3">
-<h3 data-number="1.17.3" class="anchored" data-anchor-id="regression"><span class="header-section-number">1.17.3</span> Regression</h3>
+<section id="regression" class="level3" data-number="1.17.2">
+<h3 data-number="1.17.2" class="anchored" data-anchor-id="regression"><span class="header-section-number">1.17.2</span> Regression</h3>
 <p>R objects created by methods such as <code>lm</code> and <code>glm</code> will store the data used in the model in the model object itself in <code>model$data</code>. See Chapter @ref(binary-classification) for an example.</p>
 </section>
-<section id="factor-analysis-and-principle-components" class="level3" data-number="1.17.4">
-<h3 data-number="1.17.4" class="anchored" data-anchor-id="factor-analysis-and-principle-components"><span class="header-section-number">1.17.4</span> Factor Analysis and Principle Components</h3>
+<section id="factor-analysis-and-principle-components" class="level3" data-number="1.17.3">
+<h3 data-number="1.17.3" class="anchored" data-anchor-id="factor-analysis-and-principle-components"><span class="header-section-number">1.17.3</span> Factor Analysis and Principle Components</h3>
 <p>If your original data had missing values, here is one way to get the PC’s / factor scores for available data back onto the data set.</p>
-<p><strong>Method 1) Create an ID column and merge new variables onto original data. (add columns)</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">Method 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false">Method 2</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
+<p><strong>Create an ID column and merge new variables onto original data. (add columns)</strong></p>
 <ol type="1">
 <li>If no ID column exists, create one on the original dataset <code>id = 1:NROW(data)</code></li>
 <li>Use <code>select()</code> to extract the ID and all variables used in the factor analysis, then do a <code>na.omit()</code> to drop rows with any missing data. Save this as a new complete case data set.</li>
@@ -961,7 +1018,9 @@ EXECUTE.</code></pre>
 <li>Use <code>bind_cols()</code> to add the ID variable to the data containing factor scores.</li>
 <li>Then <code>left_join(original_data, factor_score_data)</code> the factor scores back to the original data, using the ID variable as the joining key.</li>
 </ol>
-<p><strong>Method 2) Split the data, analyze one part then concatenate back together. (add rows)</strong></p>
+</div>
+<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
+<p><strong>Split the data, analyze one part then concatenate back together. (add rows)</strong></p>
 <ol type="1">
 <li>Use the <code>complete.cases()</code> function to create a boolean vector for if each row is complete</li>
 <li>Split the data into complete and incomplete.</li>
@@ -980,6 +1039,9 @@ EXECUTE.</code></pre>
 <span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a>complete.add.pc <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(complete.rows, pc.scores) <span class="co">#4</span></span>
 <span id="cb78-9"><a href="#cb78-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb78-10"><a href="#cb78-10" aria-hidden="true" tabindex="-1"></a>hiv.with.pcs <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(complete.add.pc, incomplete.rows) <span class="co">#5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 </div>
 
 
