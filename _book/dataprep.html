@@ -619,9 +619,16 @@ Never Married       Married      Divorced     Separated       Widowed
 <h3 data-number="1.10.1" class="anchored" data-anchor-id="collapsing-categorical-variables-into-fewer-categories"><span class="header-section-number">1.10.1</span> Collapsing categorical variables into fewer categories</h3>
 <p>For unbiased and accurate results of a statistical analysis, sufficient data has to be present. Often times once you start slicing and dicing the data to only look at certain groups, or if you are interested in the behavior of certain variables across levels of another variable, sometimes you start to run into small sample size problems.</p>
 <p>For example, consider marital status again. There are only 13 people who report being separated. This could potentially be too small of a group size for valid statistical analysis. One way to deal with insufficient data within a certain category is to collapse categories. The following code uses the <code>recode()</code> function from the <code>car</code> package to create a new variable that I am calling <code>marital2</code> that combines the <code>Divorced</code> and <code>Separated</code> levels.</p>
-<blockquote class="blockquote">
-<p>⚠️ Note: See <a href="https://norcalbiostat.github.io/MATH130/notes/06_factors.html#Collapsing_factor_levels_(Video)">Math 130 lesson 06</a> for a better method using forcats</p>
-</blockquote>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>For a better method using <code>forcats</code> see <a href="https://norcalbiostat.github.io/MATH130/notes/06_factors.html#Collapsing_factor_levels_(Video)">Math 130 lesson 06</a></p>
+</div>
+</div>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>marital2 <span class="ot">&lt;-</span> <span class="fu">recode</span>(depress<span class="sc">$</span>marital, <span class="st">"'Divorced' = 'Sep/Div'; 'Separated' = 'Sep/Div'"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
