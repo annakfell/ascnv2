@@ -1,5 +1,6 @@
 # Workflow and Data Cleaning {#sec-data-prep}
 
+
 Once the data are available from a study there are still a number of steps that must be undertaken to get them into shape for analysis.
 
 One of the most misunderstood parts of the analysis process is the data preparation stage. To say that 70% of any analysis is spent on the data management stage is not an understatement. 
@@ -9,13 +10,11 @@ This chapter provides information on topics related to data processing and corre
 
 ## Reproducible workflows
 
-Reproducibility is the ability for any researcher to take the same data set and run the same
-set of software program instructions as another researcher and achieve the same results. 
+Reproducibility is the ability for any researcher to take the same data set and run the same set of software program instructions as another researcher and achieve the same results. 
 
-The goal is to create an exact record of what was done to a data set to produce a specific result. To achieve
-reproducibility, we believe that three things must be present:
+The goal is to create an exact record of what was done to a data set to produce a specific result. To achieve reproducibility, we believe that three things must be present:
 
-1. The un-processed data are connected directly to software code file(s) that perform data preparation techniques.
+1. The unprocessed data are connected directly to software code file(s) that perform data preparation techniques.
 2. The processed data are connected directly to other software code file(s) that perform the analyses. 
 3. All data and code files are self-contained such that they could be given to another researcher to execute the code commands on a separate computer and achieve the same results as the original author. 
 
@@ -38,28 +37,28 @@ reproducibility, we believe that three things must be present:
 
 ![Repro](images/pipeline.png)
 
-Figure Credits: [Roger Peng](http://www.biostat.jhsph.edu/~rpeng/)
+Figure Credits: [Roger Peng](https://rdpeng.org)
 
 ### Literate programming
 
 * Programming paradigm introduced by Knuth (1984) 
-* Explain the logic of the program or analysis process in a natural language, 
+* Explain the logic of the program or analysis process in a natural language 
 * Small code snippets included at each step act as a full set of instructions that can be executed to reproduce the result/analysis being discussed. 
 
-Literate programming tools are integrated into most common statistical packages
+Literate programming tools are integrated into most common statistical packages, including:
 
-* Markdown (R, Stata), Quarto (R, Python, others)
+* Markdown (R, Stata), Quarto (R, Python, Julia, and JavaScript)
 * $\LaTeX$ (R, SAS, Stata)  
 
 :::{.callout-note appearance=minimal}
-The current gold standard for writing reproducible literate documents in R is to use [Quarto](https://quarto.org/docs/get-started/hello/rstudio.html). This works with Python, julia and other code editing platforms. 
+The current gold standard for writing reproducible literate documents in R is to use [Quarto](https://quarto.org/docs/get-started/hello/rstudio.html). Quarto documents can integrate code snippets from several languages and other code editing platforms, like Jupyter Notebook. 
 :::
 
-Practicing reproducible research techniques using literate programming tools allows such major updates to be a simple matter of re-compiling all coded instructions using the updated data set. 
+Practicing reproducible research techniques using literate programming tools allows such major updates to be a simple matter of recompiling all coded instructions using the updated data set. 
 
 The effort then is reduced to a careful review and update of any written results.
 
-Using literate programming tools create formatted documents
+Using literate programming tools, you can create formatted documents with
 
 * section headers
 * bold and italicized words
@@ -73,10 +72,9 @@ The author writes the text explanations, interpretations, and code in the statis
 ![q](images/q.png) What stages of the pipeline shown above can we conduct using literate programming tools? 
 
 
-
 ## Import data
 
-This section uses the raw `depression` data set from the Afifi et.al. textbook. This is a tab-delimited data set, so we opt to use `read.table` here. We include arguments `sep="\t"` to indicate columns are separated with tabs and `header=TRUE` to indicate the first row of the data is the variable names.
+This section uses the raw `depression` data set from the Afifi et. al. textbook. This is a tab-delimited data set, so we opt to use `read.table` here. We include arguments `sep="\t"` to indicate columns are separated with tabs and `header=TRUE` to indicate the first row of the data is the variable names.
 
 ```{r start2, warning=FALSE, message=FALSE}
 library(ggplot2)  
@@ -85,9 +83,9 @@ depress_raw <- read.table(here::here("data/Depress.txt"),
 ```
 
 :::{.callout-note appearance=minimal}
-**Learn more** See R for Data Science 2nd edit for more instruction on importing different types of data and ways you can streamline your data import.
-https://r4ds.hadley.nz/data-import
+**Learn more** See [R for Data Science (2e)](https://r4ds.hadley.nz/data-import) for more instruction on importing different types of data and ways you can streamline your data import.
 :::
+
 
 The absolute first thing you should do is to look at your raw data table. Are the column headers variable names? Did all the rows get read in? Are there any extra columns or rows included? 
 
@@ -96,19 +94,19 @@ The absolute first thing you should do is to look at your raw data table. Are th
 
 Questions to ask yourself while reviewing the codebook to choose variables to be used in an analysis. 
 
-1. Are there codes that indicate missing? E.g. *MISSING* or *-99*? 
+1. Are there codes that indicate missing data? E.g. *MISSING* or *-99*? 
 2. Do you need to make response codes more logical? 
     - Some systems will record 1=YES and 2=NO. This should be changed to 0=NO. 
 3. Do you need to recode numerical variables to categorical?
-    - Sometimes categorical data will be recorded as 1, 2, 3 etc when those numbers represent named categories. 
-4. Do you need to create secondary variables such as an average across measures to create a score. 
-5. Are the variable names user friendly? Mixtures of CAPS and lower case, names with spaces or special characters should all be changed. 
+    - Sometimes categorical data will be recorded as 1, 2, 3 etc. when those numbers represent named categories. 
+4. Do you need to create secondary variables such as an average across measures to create a score?
+5. Are the variable names user-friendly? Mixtures of CAPS and lower case, names with spaces or special characters should all be changed. 
 
 Some of these answers will come only after you look at your data. This can be looking at the raw data itself but also looking at tables and charts generated from the data. Often when you try to create a plot or table you will encounter an error or something odd looking that will be the notification that something has to be adjusted. 
 
 The next sections go over a _few_ of the common data management processes, but is not comprehensive, and may only show one method for cleaning. There are always different ways to accomplish tasks. 
 
-## Renaming variable names for sanity sake
+## Renaming variable names for sanity's sake
 
 The best method is to use the `clean_names()` function from the [janitor](https://sfirke.github.io/janitor/) package. 
 
@@ -120,7 +118,7 @@ depress <- depress_raw %>% janitor::clean_names()
 
 A base R soluion is to use `tolower() to turn all variable names to lower case. 
 
-```{r, eval = 2}
+```{r, eval=2}
 names(depress) <- tolower(names(depress))
 tolower("ThIs MIXTure of CAPS and lowercase WILL alL be conVERteD to LoWeR CAsE")
 ```
@@ -141,7 +139,7 @@ glimpse(depress)
 
 Right away this tells me that **R** thinks all variables are numeric integers, not categorical variables. Many of these will have to be changed. We'll get to that in a moment. 
 
-**Just check the data type of one variable**
+**To check the data type of just one variable:**
 
 ```{r}
 typeof(depress$marital)
@@ -170,7 +168,7 @@ class(depress$marital)
 
 ## Identifying Outliers
 
-Let's look at the age variable in the depression data set. 
+Let's look at the age variable in the `depression` data set. 
 ```{r, fig.width=10, fig.height=6}
 par(mfrow=c(1,2))
 boxplot(depress$age)
@@ -185,7 +183,7 @@ Now look back at the graphics. See anything odd? It appears as if the data go pr
 summary(depress$age)
 ```
 
-The minimum value is a 9, which is outside the range of valid values for this variable. This is where you, as a statistician, data analyst or researcher goes back to the PI and asks for advice. Should this data be set to missing, or edited in a way that changes this data point into a valid piece of data. 
+The minimum value is a 9, which is outside the range of valid values for this variable. This is where you, as a statistician, data analyst or researcher goes back to the PI and asks for advice. Should this data be set to missing, or edited in a way that changes this data point into a valid piece of data?
 
 **Another example**
 
@@ -204,7 +202,7 @@ As an example of a common data entry error, and for demonstration purposes, I we
 depress$age <- ifelse(depress$age==9, 19, depress$age)
 ```
 
-The logical statement is `depress$age9`. Wherever this is true, replace the value of `depress$age` with 19, wherever this is false then keep the value of `depress$age` unchanged (by "replacing" the new value with the same old value). 
+The logical statement is `depress$age9`. Wherever this is true, replace the value of `depress$age` with 19, and wherever this is false keep the value of `depress$age` unchanged (by "replacing" the new value with the same old value). 
 
 Alternatively, you can change that one value using bracket notation. Here you are specifying that you only want the rows where `age==9`, and directly assign a value of 19 to those rows.  
 ```{r}
@@ -291,7 +289,7 @@ Sometimes the data is recorded as 1/2 (Yes/No), so just subtracting from 1 doesn
 table(depress$drink)
 ```
 
-The `ifelse()` function says that if `depress$DRINK` has a value equal to 2 `==2`, then change the value to 0. Otherwise leave it alone. 
+The `ifelse()` function says that if `depress$drink` has a value equal to 2 `==2`, then change the value to 0. Otherwise leave it alone. 
 
 ```{r fix_depress_drink}
 depress$drink <- ifelse(depress$drink==2, 0, depress$drink)
@@ -387,7 +385,7 @@ depress_clean <- depress %>% select(var1, var2, var3)
 save(depress_clean, "data/depress_clean.Rdata") 
 ```
 
-Now every time you run your data cleaning script file, it will make all the changes and save/overwrite the `depress_clean.Rdata` data file. This ensures that any analysis script that uses this data has the most up to date varibles. 
+Now every time you run your data cleaning script file, it will make all the changes and save/overwrite the `depress_clean.Rdata` data file. This ensures that any analysis script that uses this data has the most up to date variables. 
 
 
 Need to export to a different software program? Look into the `haven` package.

@@ -226,7 +226,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#import-data" id="toc-import-data" class="nav-link" data-scroll-target="#import-data"><span class="header-section-number">1.2</span> Import data</a></li>
   <li><a href="#data-management" id="toc-data-management" class="nav-link" data-scroll-target="#data-management"><span class="header-section-number">1.3</span> Data Management</a></li>
-  <li><a href="#renaming-variable-names-for-sanity-sake" id="toc-renaming-variable-names-for-sanity-sake" class="nav-link" data-scroll-target="#renaming-variable-names-for-sanity-sake"><span class="header-section-number">1.4</span> Renaming variable names for sanity sake</a></li>
+  <li><a href="#renaming-variable-names-for-sanitys-sake" id="toc-renaming-variable-names-for-sanitys-sake" class="nav-link" data-scroll-target="#renaming-variable-names-for-sanitys-sake"><span class="header-section-number">1.4</span> Renaming variable names for sanity’s sake</a></li>
   <li><a href="#identifying-variable-types" id="toc-identifying-variable-types" class="nav-link" data-scroll-target="#identifying-variable-types"><span class="header-section-number">1.5</span> Identifying Variable Types</a></li>
   <li><a href="#convert-number-to-factor" id="toc-convert-number-to-factor" class="nav-link" data-scroll-target="#convert-number-to-factor"><span class="header-section-number">1.6</span> Convert number to factor</a></li>
   <li><a href="#identifying-outliers" id="toc-identifying-outliers" class="nav-link" data-scroll-target="#identifying-outliers"><span class="header-section-number">1.7</span> Identifying Outliers</a></li>
@@ -282,7 +282,7 @@ window.Quarto = {
 <p>Reproducibility is the ability for any researcher to take the same data set and run the same set of software program instructions as another researcher and achieve the same results.</p>
 <p>The goal is to create an exact record of what was done to a data set to produce a specific result. To achieve reproducibility, we believe that three things must be present:</p>
 <ol type="1">
-<li>The un-processed data are connected directly to software code file(s) that perform data preparation techniques.</li>
+<li>The unprocessed data are connected directly to software code file(s) that perform data preparation techniques.</li>
 <li>The processed data are connected directly to other software code file(s) that perform the analyses.</li>
 <li>All data and code files are self-contained such that they could be given to another researcher to execute the code commands on a separate computer and achieve the same results as the original author.</li>
 </ol>
@@ -317,17 +317,17 @@ window.Quarto = {
 <figcaption>Repro</figcaption>
 </figure>
 </div>
-<p>Figure Credits: <a href="http://www.biostat.jhsph.edu/~rpeng/">Roger Peng</a></p>
+<p>Figure Credits: <a href="https://rdpeng.org">Roger Peng</a></p>
 <section id="literate-programming" class="level3" data-number="1.1.1">
 <h3 data-number="1.1.1" class="anchored" data-anchor-id="literate-programming"><span class="header-section-number">1.1.1</span> Literate programming</h3>
 <ul>
 <li>Programming paradigm introduced by Knuth (1984)</li>
-<li>Explain the logic of the program or analysis process in a natural language,</li>
+<li>Explain the logic of the program or analysis process in a natural language</li>
 <li>Small code snippets included at each step act as a full set of instructions that can be executed to reproduce the result/analysis being discussed.</li>
 </ul>
-<p>Literate programming tools are integrated into most common statistical packages</p>
+<p>Literate programming tools are integrated into most common statistical packages, including:</p>
 <ul>
-<li>Markdown (R, Stata), Quarto (R, Python, others)</li>
+<li>Markdown (R, Stata), Quarto (R, Python, Julia, and JavaScript)</li>
 <li><span class="math inline">\(\LaTeX\)</span> (R, SAS, Stata)</li>
 </ul>
 <div class="callout callout-style-simple callout-note no-icon">
@@ -336,13 +336,13 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The current gold standard for writing reproducible literate documents in R is to use <a href="https://quarto.org/docs/get-started/hello/rstudio.html">Quarto</a>. This works with Python, julia and other code editing platforms.</p>
+<p>The current gold standard for writing reproducible literate documents in R is to use <a href="https://quarto.org/docs/get-started/hello/rstudio.html">Quarto</a>. Quarto documents can integrate code snippets from several languages and other code editing platforms, like Jupyter Notebook.</p>
 </div>
 </div>
 </div>
-<p>Practicing reproducible research techniques using literate programming tools allows such major updates to be a simple matter of re-compiling all coded instructions using the updated data set.</p>
+<p>Practicing reproducible research techniques using literate programming tools allows such major updates to be a simple matter of recompiling all coded instructions using the updated data set.</p>
 <p>The effort then is reduced to a careful review and update of any written results.</p>
-<p>Using literate programming tools create formatted documents</p>
+<p>Using literate programming tools, you can create formatted documents with</p>
 <ul>
 <li>section headers</li>
 <li>bold and italicized words</li>
@@ -355,7 +355,7 @@ window.Quarto = {
 </section>
 <section id="import-data" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="import-data"><span class="header-section-number">1.2</span> Import data</h2>
-<p>This section uses the raw <code>depression</code> data set from the Afifi et.al. textbook. This is a tab-delimited data set, so we opt to use <code>read.table</code> here. We include arguments <code>sep="\t"</code> to indicate columns are separated with tabs and <code>header=TRUE</code> to indicate the first row of the data is the variable names.</p>
+<p>This section uses the raw <code>depression</code> data set from the Afifi et. al.&nbsp;textbook. This is a tab-delimited data set, so we opt to use <code>read.table</code> here. We include arguments <code>sep="\t"</code> to indicate columns are separated with tabs and <code>header=TRUE</code> to indicate the first row of the data is the variable names.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)  </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>depress_raw <span class="ot">&lt;-</span> <span class="fu">read.table</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/Depress.txt"</span>), </span>
@@ -367,7 +367,7 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Learn more</strong> See R for Data Science 2nd edit for more instruction on importing different types of data and ways you can streamline your data import. https://r4ds.hadley.nz/data-import</p>
+<p><strong>Learn more</strong> See <a href="https://r4ds.hadley.nz/data-import">R for Data Science (2e)</a> for more instruction on importing different types of data and ways you can streamline your data import.</p>
 </div>
 </div>
 </div>
@@ -377,23 +377,23 @@ window.Quarto = {
 <h2 data-number="1.3" class="anchored" data-anchor-id="data-management"><span class="header-section-number">1.3</span> Data Management</h2>
 <p>Questions to ask yourself while reviewing the codebook to choose variables to be used in an analysis.</p>
 <ol type="1">
-<li>Are there codes that indicate missing? E.g. <em>MISSING</em> or <em>-99</em>?</li>
+<li>Are there codes that indicate missing data? E.g. <em>MISSING</em> or <em>-99</em>?</li>
 <li>Do you need to make response codes more logical?
 <ul>
 <li>Some systems will record 1=YES and 2=NO. This should be changed to 0=NO.</li>
 </ul></li>
 <li>Do you need to recode numerical variables to categorical?
 <ul>
-<li>Sometimes categorical data will be recorded as 1, 2, 3 etc when those numbers represent named categories.</li>
+<li>Sometimes categorical data will be recorded as 1, 2, 3 etc. when those numbers represent named categories.</li>
 </ul></li>
-<li>Do you need to create secondary variables such as an average across measures to create a score.</li>
-<li>Are the variable names user friendly? Mixtures of CAPS and lower case, names with spaces or special characters should all be changed.</li>
+<li>Do you need to create secondary variables such as an average across measures to create a score?</li>
+<li>Are the variable names user-friendly? Mixtures of CAPS and lower case, names with spaces or special characters should all be changed.</li>
 </ol>
 <p>Some of these answers will come only after you look at your data. This can be looking at the raw data itself but also looking at tables and charts generated from the data. Often when you try to create a plot or table you will encounter an error or something odd looking that will be the notification that something has to be adjusted.</p>
 <p>The next sections go over a <em>few</em> of the common data management processes, but is not comprehensive, and may only show one method for cleaning. There are always different ways to accomplish tasks.</p>
 </section>
-<section id="renaming-variable-names-for-sanity-sake" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="renaming-variable-names-for-sanity-sake"><span class="header-section-number">1.4</span> Renaming variable names for sanity sake</h2>
+<section id="renaming-variable-names-for-sanitys-sake" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="renaming-variable-names-for-sanitys-sake"><span class="header-section-number">1.4</span> Renaming variable names for sanity’s sake</h2>
 <p>The best method is to use the <code>clean_names()</code> function from the <a href="https://sfirke.github.io/janitor/">janitor</a> package.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -514,7 +514,7 @@ $ chronill &lt;int&gt; 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 
 </div>
 </div>
 <p>Right away this tells me that <strong>R</strong> thinks all variables are numeric integers, not categorical variables. Many of these will have to be changed. We’ll get to that in a moment.</p>
-<p><strong>Just check the data type of one variable</strong></p>
+<p><strong>To check the data type of just one variable:</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(depress<span class="sc">$</span>marital)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -551,7 +551,7 @@ Never Married       Married      Divorced     Separated       Widowed
 </section>
 <section id="identifying-outliers" class="level2" data-number="1.7">
 <h2 data-number="1.7" class="anchored" data-anchor-id="identifying-outliers"><span class="header-section-number">1.7</span> Identifying Outliers</h2>
-<p>Let’s look at the age variable in the depression data set.</p>
+<p>Let’s look at the age variable in the <code>depression</code> data set.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(depress<span class="sc">$</span>age)</span>
@@ -573,7 +573,7 @@ Never Married       Married      Divorced     Separated       Widowed
    9.00   28.00   42.50   44.38   59.00   89.00 </code></pre>
 </div>
 </div>
-<p>The minimum value is a 9, which is outside the range of valid values for this variable. This is where you, as a statistician, data analyst or researcher goes back to the PI and asks for advice. Should this data be set to missing, or edited in a way that changes this data point into a valid piece of data.</p>
+<p>The minimum value is a 9, which is outside the range of valid values for this variable. This is where you, as a statistician, data analyst or researcher goes back to the PI and asks for advice. Should this data be set to missing, or edited in a way that changes this data point into a valid piece of data?</p>
 <p><strong>Another example</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(depress<span class="sc">$</span>income)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -593,7 +593,7 @@ Never Married       Married      Divorced     Separated       Widowed
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>depress<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(depress<span class="sc">$</span>age<span class="sc">==</span><span class="dv">9</span>, <span class="dv">19</span>, depress<span class="sc">$</span>age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The logical statement is <code>depress$age9</code>. Wherever this is true, replace the value of <code>depress$age</code> with 19, wherever this is false then keep the value of <code>depress$age</code> unchanged (by “replacing” the new value with the same old value).</p>
+<p>The logical statement is <code>depress$age9</code>. Wherever this is true, replace the value of <code>depress$age</code> with 19, and wherever this is false keep the value of <code>depress$age</code> unchanged (by “replacing” the new value with the same old value).</p>
 <p>Alternatively, you can change that one value using bracket notation. Here you are specifying that you only want the rows where <code>age==9</code>, and directly assign a value of 19 to those rows.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>depress<span class="sc">$</span>age[depress<span class="sc">$</span>age<span class="sc">==</span><span class="dv">9</span>] <span class="ot">&lt;-</span> <span class="dv">19</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -690,7 +690,7 @@ Never Married       Married      Divorced     Separated       Widowed
 234  60 </code></pre>
 </div>
 </div>
-<p>The <code>ifelse()</code> function says that if <code>depress$DRINK</code> has a value equal to 2 <code>==2</code>, then change the value to 0. Otherwise leave it alone.</p>
+<p>The <code>ifelse()</code> function says that if <code>depress$drink</code> has a value equal to 2 <code>==2</code>, then change the value to 0. Otherwise leave it alone.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>depress<span class="sc">$</span>drink <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(depress<span class="sc">$</span>drink<span class="sc">==</span><span class="dv">2</span>, <span class="dv">0</span>, depress<span class="sc">$</span>drink)</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(depress<span class="sc">$</span>drink)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -806,7 +806,7 @@ Never Married       Married      Divorced     Separated       Widowed
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Save as a .Rdata file for later use in R</span></span>
 <span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(depress_clean, <span class="st">"data/depress_clean.Rdata"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now every time you run your data cleaning script file, it will make all the changes and save/overwrite the <code>depress_clean.Rdata</code> data file. This ensures that any analysis script that uses this data has the most up to date varibles.</p>
+<p>Now every time you run your data cleaning script file, it will make all the changes and save/overwrite the <code>depress_clean.Rdata</code> data file. This ensures that any analysis script that uses this data has the most up to date variables.</p>
 <p>Need to export to a different software program? Look into the <code>haven</code> package.</p>
 <p>SPSS users commonly save cleaned data as a <code>.sav</code> format.</p>
 <pre><code>SAVE outfile='FilePath\depress_sysdate.sav'
