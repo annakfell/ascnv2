@@ -6,7 +6,11 @@
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/dataprep.html</loc>
+<<<<<<< HEAD
     <lastmod>2024-06-18T17:00:32.748Z</lastmod>
+=======
+    <lastmod>2024-06-18T15:42:56.140Z</lastmod>
+>>>>>>> 6d14120 (Note with warning icon from emo::ji package replaced with warning style callout block)
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/data_viz.html</loc>
