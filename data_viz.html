@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Course notes for Applied Statistics courses at CSU Chico">
+<meta name="description" content="Course notes for various Applied Statistics courses at CSU Chico">
 
 <title>Applied Statistics - 2&nbsp; Visualizing Data</title>
 <style>
@@ -383,10 +383,6 @@ window.Quarto = {
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>cut)) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..count..)) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Frequnency of diamonds by cut type"</span>) <span class="sc">+</span> </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">y=</span>..count.. <span class="sc">+</span> <span class="dv">10</span>, <span class="at">label=</span>..count..), <span class="at">stat=</span><span class="st">'count'</span>, <span class="at">size =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.
-ℹ Please use `after_stat(count)` instead.</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -399,8 +395,8 @@ window.Quarto = {
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
 <p>Often you don’t want to compare counts but percents. To accomplish this, we have to aggregate the data to calculate the proportions first, then plot the aggregated data using <code>geom_col</code> to create the columns.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cut.props <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(dsmall<span class="sc">$</span>cut)))</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>cut.props <span class="co"># what does this data look like? </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cut.props <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(dsmall<span class="sc">$</span>cut)))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>cut.props <span class="co"># what does this data look like? </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       Var1  Freq
 1      Fair 0.034
@@ -409,9 +405,9 @@ window.Quarto = {
 4   Premium 0.257
 5     Ideal 0.390</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cut.props, <span class="fu">aes</span>(<span class="at">x=</span>Var1, <span class="at">y=</span>Freq)) <span class="sc">+</span> <span class="fu">geom_col</span>() <span class="sc">+</span> </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Proportion"</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Cut type"</span>) <span class="sc">+</span> </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Proportion of diamonds by cut type"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cut.props, <span class="fu">aes</span>(<span class="at">x=</span>Var1, <span class="at">y=</span>Freq)) <span class="sc">+</span> <span class="fu">geom_col</span>() <span class="sc">+</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Proportion"</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Cut type"</span>) <span class="sc">+</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Proportion of diamonds by cut type"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -424,10 +420,10 @@ window.Quarto = {
 <div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
 <p>Another way to visualize categorical data that takes up less ink than bars is a Cleveland dot plot. Here again we are plotting summary data instead of the raw data. This uses the <code>geom_segment</code> that draws the lines from x=0 to the value of the proportion (named <code>Freq</code> because of the way <code>data.frame</code> works).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cut.props, <span class="fu">aes</span>(<span class="at">x=</span>Freq, <span class="at">y=</span>Var1)) <span class="sc">+</span>  </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Proportion of diamonds"</span>) <span class="sc">+</span> </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Cut Type"</span>) <span class="sc">+</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="dv">0</span>, <span class="at">xend=</span>Freq, <span class="at">y=</span>Var1, <span class="at">yend=</span>Var1), <span class="at">color=</span><span class="st">'grey50'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cut.props, <span class="fu">aes</span>(<span class="at">x=</span>Freq, <span class="at">y=</span>Var1)) <span class="sc">+</span>  </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Proportion of diamonds"</span>) <span class="sc">+</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Cut Type"</span>) <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="dv">0</span>, <span class="at">xend=</span>Freq, <span class="at">y=</span>Var1, <span class="at">yend=</span>Var1), <span class="at">color=</span><span class="st">'grey50'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -441,8 +437,8 @@ window.Quarto = {
 <p>Just like <code>barplot()</code>, <code>pie()</code> takes a table object as it’s argument.</p>
 <p><strong>base</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dc <span class="ot">&lt;-</span> <span class="fu">table</span>(dsmall<span class="sc">$</span>cut)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(dc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dc <span class="ot">&lt;-</span> <span class="fu">table</span>(dsmall<span class="sc">$</span>cut)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(dc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -453,7 +449,7 @@ window.Quarto = {
 </div>
 <p>Pie charts are my <em>least</em> favorite plotting type. Human eyeballs can’t distinguish between angles as well as we can with heights. A mandatory piece needed to make the wedges readable is to add the percentages of each wedge.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(dc, <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="fu">names</span>(dc), <span class="st">' ('</span>, <span class="fu">prop.table</span>(dc)<span class="sc">*</span><span class="dv">100</span>, <span class="st">"%)"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(dc, <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="fu">names</span>(dc), <span class="st">' ('</span>, <span class="fu">prop.table</span>(dc)<span class="sc">*</span><span class="dv">100</span>, <span class="st">"%)"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -471,11 +467,11 @@ window.Quarto = {
 <p>This type of chart is not natively found in the <code>ggplot2</code> package, but it’s own <code>waffle</code> package. These are great for infographics.</p>
 <p>Reference: https://www.r-bloggers.com/making-waffle-charts-in-r-with-the-new-waffle-package/</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(waffle)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">waffle</span>(dc<span class="sc">/</span><span class="dv">10</span>, <span class="at">rows=</span><span class="dv">5</span>, <span class="at">size=</span><span class="fl">0.5</span>, </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">"Cut quality of diamond"</span>, </span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">"1 square == 10 diamonds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(waffle)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">waffle</span>(dc<span class="sc">/</span><span class="dv">10</span>, <span class="at">rows=</span><span class="dv">5</span>, <span class="at">size=</span><span class="fl">0.5</span>, </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">"Cut quality of diamond"</span>, </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">"1 square == 10 diamonds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -496,7 +492,7 @@ window.Quarto = {
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dsmall<span class="sc">$</span>depth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dsmall<span class="sc">$</span>depth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -511,7 +507,7 @@ window.Quarto = {
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <p>Rather than showing the value of each observation, we prefer to think of the value as belonging to a . <strong>The height of the bars in a histogram display the frequency of values that fall into those of those bins.</strong> For example if we cut the poverty rates into 7 bins of equal width, the frequency table would look like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">cut</span>(dsmall<span class="sc">$</span>depth, <span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">cut</span>(dsmall<span class="sc">$</span>depth, <span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 (55.3,57.6] (57.6,59.8] (59.8,62.1] (62.1,64.4] (64.4,66.7] (66.7,68.9] 
@@ -523,7 +519,7 @@ window.Quarto = {
 <p>In a histogram, the binned counts are plotted as bars into a histogram. Note that the x-axis is continuous, so the bars touch. This is unlike the barchart that has a categorical x-axis, and vertical bars that are separated.</p>
 <p><strong>base</strong> You can make a histogram in base graphics super easy.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(dsmall<span class="sc">$</span>depth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(dsmall<span class="sc">$</span>depth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -534,7 +530,7 @@ window.Quarto = {
 </div>
 <p>And it doesn’t take too much to clean it up. Here you can specify the number of bins by specifying how many <code>breaks</code> should be made in the data (the number of breaks controls the number of bins, and bin width) and use <code>col</code> for the fill color.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(dsmall<span class="sc">$</span>depth, <span class="at">xlab=</span><span class="st">"depth"</span>, <span class="at">main=</span><span class="st">"Histogram of diamond depth"</span>, <span class="at">col=</span><span class="st">"cyan"</span>, <span class="at">breaks=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(dsmall<span class="sc">$</span>depth, <span class="at">xlab=</span><span class="st">"depth"</span>, <span class="at">main=</span><span class="st">"Histogram of diamond depth"</span>, <span class="at">col=</span><span class="st">"cyan"</span>, <span class="at">breaks=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -545,7 +541,7 @@ window.Quarto = {
 </div>
 <p><strong>ggplot</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>depth)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">2.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>depth)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">2.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -556,11 +552,8 @@ window.Quarto = {
 </div>
 <p>The binwidth here is set by looking at the cut points above that were used to create 7 bins. Notice that darkgrey is the default fill color, but makes it hard to differentiate between the bars. So we’ll make the outline black using <code>colour</code>, and <code>fill</code> the bars with white.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>depth)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">colour=</span><span class="st">"black"</span>, <span class="at">fill=</span><span class="st">"white"</span>) <span class="sc">+</span> </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Distribution of diamond depth"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>depth)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">colour=</span><span class="st">"black"</span>, <span class="at">fill=</span><span class="st">"white"</span>) <span class="sc">+</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Distribution of diamond depth"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -575,7 +568,7 @@ window.Quarto = {
 <p>To get a better idea of the true shape of the distribution we can “smooth” out the bins and create what’s called a <code>density</code> plot or curve. Notice that the shape of this distribution curve is much more… “wigglier” than the histogram may have implied.</p>
 <p><strong>base</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(dsmall<span class="sc">$</span>depth))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(dsmall<span class="sc">$</span>depth))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -587,7 +580,7 @@ window.Quarto = {
 <p>Awesome title huh? (NOT)</p>
 <p><strong>ggplot2</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>depth)) <span class="sc">+</span> <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>depth)) <span class="sc">+</span> <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -601,8 +594,8 @@ window.Quarto = {
 <p>Often is is more helpful to have the density (or kernel density) plot <em>on top of</em> a histogram plot.</p>
 <p><strong>Base</strong> Since the height of the bars in a histogram default to showing the frequency of records in the data set within that bin, we need to 1) scale the height so that it’s a <em>relative frequency</em>, and then use the <code>lines()</code> function to add a <code>density()</code> line on top.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(dsmall<span class="sc">$</span>depth, <span class="at">prob=</span><span class="cn">TRUE</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(dsmall<span class="sc">$</span>depth), <span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(dsmall<span class="sc">$</span>depth, <span class="at">prob=</span><span class="cn">TRUE</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(dsmall<span class="sc">$</span>depth), <span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -613,11 +606,8 @@ window.Quarto = {
 </div>
 <p><strong>ggplot</strong> The syntax starts the same, we’ll add a new geom, <code>geom_density</code> and color the line blue. Then we add the histogram geom using <code>geom_histogram</code> but must specify that the y axis should be on the density, not frequency, scale. Note that this has to go inside the aesthetic statement <code>aes()</code>. I’m also going to get rid of the fill by using <code>NA</code> so it doesn’t plot over the density line.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>depth)) <span class="sc">+</span> <span class="fu">geom_density</span>(<span class="at">col=</span><span class="st">"blue"</span>) <span class="sc">+</span> </span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span>..density..), <span class="at">colour=</span><span class="st">"black"</span>, <span class="at">fill=</span><span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>depth)) <span class="sc">+</span> <span class="fu">geom_density</span>(<span class="at">col=</span><span class="st">"blue"</span>) <span class="sc">+</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span>..density..), <span class="at">colour=</span><span class="st">"black"</span>, <span class="at">fill=</span><span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -631,7 +621,7 @@ window.Quarto = {
 <p>Another very common way to visualize the distribution of a continuous variable is using a boxplot. Boxplots are useful for quickly identifying where the bulk of your data lie. R specifically draws a “modified” boxplot where values that are considered outliers are plotted as dots.</p>
 <p><strong>base</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(dsmall<span class="sc">$</span>depth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(dsmall<span class="sc">$</span>depth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -642,7 +632,7 @@ window.Quarto = {
 </div>
 <p>Notice that the only axis labeled is the y=axis. Like a dotplot the x axis, or “width”, of the boxplot is meaningless here. We can make the axis more readable by flipping the plot on it’s side.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(dsmall<span class="sc">$</span>depth, <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">main=</span><span class="st">"Distribution of diamond prices"</span>, <span class="at">xlab=</span><span class="st">"Dollars"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(dsmall<span class="sc">$</span>depth, <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">main=</span><span class="st">"Distribution of diamond prices"</span>, <span class="at">xlab=</span><span class="st">"Dollars"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -654,7 +644,7 @@ window.Quarto = {
 <p>Horizontal is a bit easier to read in my opinion.</p>
 <p><strong>ggplot</strong> What about ggplot? ggplot doesn’t really like to do univariate boxplots. We can get around that by specifying that we want the box placed at a specific x value.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span>, <span class="at">y=</span>depth)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span>, <span class="at">y=</span>depth)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -665,7 +655,7 @@ window.Quarto = {
 </div>
 <p>To flip it horizontal you may think to simply swap x and y? Good thinking. Of course it wouldn’t be that easy. So let’s just flip the whole darned plot on it’s coordinate axis.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span>, <span class="at">y=</span>depth)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span>, <span class="at">y=</span>depth)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -677,7 +667,7 @@ window.Quarto = {
 </div>
 <div id="tabset-2-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-6-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span>, <span class="at">y=</span>depth)) <span class="sc">+</span> <span class="fu">geom_violin</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span>, <span class="at">y=</span>depth)) <span class="sc">+</span> <span class="fu">geom_violin</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -690,7 +680,7 @@ window.Quarto = {
 <div id="tabset-2-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-7-tab">
 <p>Overlaying a boxplot and a violin plot serves a similar purpose to Histograms + Density plots.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span>, <span class="at">y=</span>depth)) <span class="sc">+</span> <span class="fu">geom_violin</span>() <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span>, <span class="at">y=</span>depth)) <span class="sc">+</span> <span class="fu">geom_violin</span>() <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -701,12 +691,12 @@ window.Quarto = {
 </div>
 <p>Better appearance - different levels of transparency of the box and violin.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span>, <span class="at">y=</span>depth)) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_violin</span>(<span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">alpha=</span>.<span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">width=</span>.<span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">theme</span>(<span class="at">axis.title.x=</span><span class="fu">element_blank</span>(),</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.text.x=</span><span class="fu">element_blank</span>(),</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.ticks.x=</span><span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span>, <span class="at">y=</span>depth)) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_violin</span>(<span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">alpha=</span>.<span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">width=</span>.<span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">theme</span>(<span class="at">axis.title.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.text.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.ticks.x=</span><span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -720,8 +710,8 @@ window.Quarto = {
 <p>The last useful plot that we will do on a single continuous variable is to assess the <em>normality</em> of the distribution. Basically how close the data follows a normal distribution.</p>
 <p><strong>base</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(dsmall<span class="sc">$</span>price)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(dsmall<span class="sc">$</span>price, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(dsmall<span class="sc">$</span>price)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(dsmall<span class="sc">$</span>price, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -732,9 +722,9 @@ window.Quarto = {
 </div>
 <p>The line I make red because it is a reference line. The closer the points are to following this line, the more “normal” the shape of the distribution is. Price has some pretty strong deviation away from that line. Below I have plotted what a normal distribution looks like as an example of a “perfect” fit.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(z)</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(z, <span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(z)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(z, <span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -745,7 +735,7 @@ window.Quarto = {
 </div>
 <p><strong>ggplot</strong> qq (or qnorm) plots specifically plot the data against a theoretical distribution. That means in the <code>aes()</code> aesthetic argument we don’t specify either x or y, but instead the <code>sample=</code> is the variable we want to plot.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">sample=</span>price)) <span class="sc">+</span> <span class="fu">stat_qq</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">sample=</span>price)) <span class="sc">+</span> <span class="fu">stat_qq</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -771,7 +761,7 @@ window.Quarto = {
 <p>Cross-tabs, cross-tabulations and two-way tables (all the same thing, different names) can be created by using the <code>table()</code> function.</p>
 <p>The frequency table is constructed using the <code>table()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dsmall<span class="sc">$</span>cut, dsmall<span class="sc">$</span>color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dsmall<span class="sc">$</span>cut, dsmall<span class="sc">$</span>color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           
              D  E  F  G  H  I  J
@@ -796,7 +786,7 @@ window.Quarto = {
 <p><strong>Cell proportions</strong></p>
 <p>Wrapping <code>prop.table()</code> around a table gives you the <strong>cell</strong> proportions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(dsmall<span class="sc">$</span>cut, dsmall<span class="sc">$</span>color))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(dsmall<span class="sc">$</span>cut, dsmall<span class="sc">$</span>color))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           
                 D     E     F     G     H     I     J
@@ -811,7 +801,7 @@ window.Quarto = {
 <p><strong>Row proportions</strong></p>
 <p>To get the <strong>row</strong> proportions, you specify <code>margin=1</code>. The percentages now add up to 1 across the rows.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(dsmall<span class="sc">$</span>cut, dsmall<span class="sc">$</span>color), <span class="at">margin=</span><span class="dv">1</span>),<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(dsmall<span class="sc">$</span>cut, dsmall<span class="sc">$</span>color), <span class="at">margin=</span><span class="dv">1</span>),<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           
                 D     E     F     G     H     I     J
@@ -826,7 +816,7 @@ window.Quarto = {
 <p><strong>Column proportions</strong></p>
 <p>To get the <strong>column</strong> proportions, you specify <code>margin=2</code>. The percentages now add up to 1 down the columns.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(dsmall<span class="sc">$</span>cut, dsmall<span class="sc">$</span>color), <span class="at">margin=</span><span class="dv">2</span>),<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(dsmall<span class="sc">$</span>cut, dsmall<span class="sc">$</span>color), <span class="at">margin=</span><span class="dv">2</span>),<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           
                 D     E     F     G     H     I     J
@@ -843,8 +833,8 @@ window.Quarto = {
 <p>To compare proportions of one categorical variable within the same level of another, is to use grouped barcharts.</p>
 <p><strong>base</strong> As before, the object to be plotted needs to be the result of a table.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>cc <span class="ot">&lt;-</span> <span class="fu">table</span>(dsmall<span class="sc">$</span>cut, dsmall<span class="sc">$</span>color)</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(cc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>cc <span class="ot">&lt;-</span> <span class="fu">table</span>(dsmall<span class="sc">$</span>cut, dsmall<span class="sc">$</span>color)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(cc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -855,7 +845,7 @@ window.Quarto = {
 </div>
 <p>Stacked bars can be difficult to interpret, and very difficult to compare values between groups. A side by side barchart is preferable. The <code>beside=TRUE</code> is what controls the placement of the bars.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(cc, <span class="at">main=</span><span class="st">"quick side by side barchart using base graphics"</span>, <span class="at">beside=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(cc, <span class="at">main=</span><span class="st">"quick side by side barchart using base graphics"</span>, <span class="at">beside=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -866,7 +856,7 @@ window.Quarto = {
 </div>
 <p><strong>ggplot</strong> Again plot the cut on the x axis, but then <code>fill</code> using the second categorical variable. This has the effect of visualizing the <strong>row</strong> percents from the table above. The percent of color, within each type of cut.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>cut, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>cut, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -877,7 +867,7 @@ window.Quarto = {
 </div>
 <p>Again the default is a stacked barchart. So we just specify <code>position=dodge</code> to put the bars side by side.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>cut, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>cut, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -888,7 +878,7 @@ window.Quarto = {
 </div>
 <p>And look, an automatic legend. What if I wanted to better compare cut within color group? This is the <strong>column</strong> percentages. Just switch which variable is the x axis and which one is used to fill the colors!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>color, <span class="at">fill=</span>cut)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>color, <span class="at">fill=</span>cut)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -907,29 +897,11 @@ window.Quarto = {
 <h3 data-number="2.4.2" class="anchored" data-anchor-id="grouped-bar-charts-with-percentages"><span class="header-section-number">2.4.2</span> Grouped bar charts with percentages</h3>
 <p>Not as easy as one would hope, but the solution is to calculate the desired percentages first and then plot the summary data using either <code>geom_bar(stat='identity')</code> or <code>geom_col()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'dplyr'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
-
-    filter, lag</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>calc.props <span class="ot">&lt;-</span> diamonds <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(color, cut) <span class="sc">%&gt;%</span></span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">count=</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">pct=</span><span class="fu">round</span>(count<span class="sc">/</span><span class="fu">sum</span>(count),<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'color'. You can override using the
-`.groups` argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>calc.props</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>calc.props <span class="ot">&lt;-</span> diamonds <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(color, cut) <span class="sc">%&gt;%</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">count=</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">pct=</span><span class="fu">round</span>(count<span class="sc">/</span><span class="fu">sum</span>(count),<span class="dv">3</span>))</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>calc.props</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 35 × 4
 # Groups:   color [7]
@@ -950,8 +922,8 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <p>Since we’re plotting summary data, the height of the bars is specified using <code>y=pct</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(calc.props, <span class="fu">aes</span>(<span class="at">x=</span>color, <span class="at">fill=</span>cut, <span class="at">y=</span>pct)) <span class="sc">+</span></span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">geom_col</span>(<span class="at">position=</span><span class="st">"dodge"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(calc.props, <span class="fu">aes</span>(<span class="at">x=</span>color, <span class="at">fill=</span>cut, <span class="at">y=</span>pct)) <span class="sc">+</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">geom_col</span>(<span class="at">position=</span><span class="st">"dodge"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -962,10 +934,10 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <p>Now set some options to the y axis using <code>scale_y_continuous()</code> to make the graph more accurate and readable. The <code>labels=percent</code> comes from the <code>scales</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(calc.props, <span class="fu">aes</span>(<span class="at">x=</span>color, <span class="at">fill=</span>cut, <span class="at">y=</span>pct)) <span class="sc">+</span></span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">geom_col</span>(<span class="at">position=</span><span class="st">"dodge"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">scale_y_continuous</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">labels=</span>percent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(calc.props, <span class="fu">aes</span>(<span class="at">x=</span>color, <span class="at">fill=</span>cut, <span class="at">y=</span>pct)) <span class="sc">+</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">geom_col</span>(<span class="at">position=</span><span class="st">"dodge"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">scale_y_continuous</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">labels=</span>percent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -980,11 +952,8 @@ Attaching package: 'dplyr'</code></pre>
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <p>sjPlot does a very nice job of being able to cleanly show not only n’s but percents.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Learn more about sjPlot with 'browseVignettes("sjPlot")'.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_xtab</span>(dsmall<span class="sc">$</span>color, dsmall<span class="sc">$</span>cut, <span class="at">margin=</span><span class="st">"row"</span>, <span class="at">coord.flip =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_xtab</span>(dsmall<span class="sc">$</span>color, dsmall<span class="sc">$</span>cut, <span class="at">margin=</span><span class="st">"row"</span>, <span class="at">coord.flip =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -997,7 +966,7 @@ Attaching package: 'dplyr'</code></pre>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <p>But what if you want to know how two categorical variables are related and you don’t want to look at two different barplots? Mosaic plots are a way to visualize the proportions in a table. So here’s the two-way table we’ll be plotting.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dsmall<span class="sc">$</span>cut, dsmall<span class="sc">$</span>color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dsmall<span class="sc">$</span>cut, dsmall<span class="sc">$</span>color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           
              D  E  F  G  H  I  J
@@ -1010,7 +979,7 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <p>The syntax for a mosaic plot uses <em>model notation</em>, which is basically y ~ x where the ~ is read as “twiddle” or “tilde”. It’s to the left of your <strong>1</strong> key.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(cut<span class="sc">~</span>color, <span class="at">data=</span>dsmall)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(cut<span class="sc">~</span>color, <span class="at">data=</span>dsmall)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1021,9 +990,9 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <p>Helpful, ish. Here are two very useful options. In reverse obviousness, <code>color</code> applies shades of gray to one of the factor levels, and <code>shade</code> applies a color gradient scale to the cells in order of what is less than expected (red) to what is more than expected (blue) if these two factors were completely independent.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)) <span class="co"># display the plots in 1 row and 2 columns</span></span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(cut<span class="sc">~</span>color, <span class="at">data=</span>dsmall, <span class="at">color=</span><span class="cn">TRUE</span>)</span>
-<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(cut<span class="sc">~</span>color, <span class="at">data=</span>dsmall, <span class="at">shade=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)) <span class="co"># display the plots in 1 row and 2 columns</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(cut<span class="sc">~</span>color, <span class="at">data=</span>dsmall, <span class="at">color=</span><span class="cn">TRUE</span>)</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(cut<span class="sc">~</span>color, <span class="at">data=</span>dsmall, <span class="at">shade=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1048,7 +1017,7 @@ Attaching package: 'dplyr'</code></pre>
 <p>The most common method of visualizing the relationship between two continuous variables is by using a scatterplot.</p>
 <p><strong>base</strong> Back to the <code>plot()</code> command. Here we use model notation again, so it’s <span class="math inline">\(y~x\)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(price<span class="sc">~</span>carat, <span class="at">data=</span>dsmall)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(price<span class="sc">~</span>carat, <span class="at">data=</span>dsmall)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1060,7 +1029,7 @@ Attaching package: 'dplyr'</code></pre>
 <p>Looks like for the most part as the carat value increases so does price. That makes sense.</p>
 <p><strong>ggplot</strong> With ggplot we specify both the x and y variables, and add a point.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1080,9 +1049,9 @@ Attaching package: 'dplyr'</code></pre>
 <p>Two most common trend lines added to a scatterplots are the “best fit” straight line and the “lowess” smoother line.</p>
 <p><strong>base</strong> The best fit line (in blue) gets added by using the <code>abline()</code> function wrapped around the linear model function <code>lm()</code>. Note it uses the same model notation syntax and the <code>data=</code> statement as the <code>plot()</code> function does. The lowess line is added using the <code>lines()</code> function, but the <code>lowess()</code> function itself doesn’t allow for the <code>data=</code> statement so we have to use <code>$</code> sign notation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(price<span class="sc">~</span>carat, <span class="at">data=</span>dsmall)</span>
-<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(price<span class="sc">~</span>carat, <span class="at">data=</span>dsmall), <span class="at">col=</span><span class="st">"blue"</span>)</span>
-<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(dsmall<span class="sc">$</span>price<span class="sc">~</span>dsmall<span class="sc">$</span>carat), <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(price<span class="sc">~</span>carat, <span class="at">data=</span>dsmall)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(price<span class="sc">~</span>carat, <span class="at">data=</span>dsmall), <span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(dsmall<span class="sc">$</span>price<span class="sc">~</span>dsmall<span class="sc">$</span>carat), <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1093,10 +1062,7 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <p><strong>ggplot</strong> With ggplot, we just add a <code>geom_smooth()</code> layer.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1108,13 +1074,9 @@ Attaching package: 'dplyr'</code></pre>
 <p>Here the point-wise confidence interval for this lowess line is shown in grey. If you want to turn the confidence interval off, use <code>se=FALSE</code>. Also notice that the smoothing geom uses a different function or window than the <code>lowess</code> function used in base graphics.</p>
 <p>Here it is again using the <code>ggplot</code> plotting function and adding another <code>geom_smooth()</code> layer for the <code>lm</code> (linear model) line in blue, and the lowess line (by not specifying a method) in red.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">method=</span><span class="st">"lm"</span>, <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span> </span>
-<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">color=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'
-`geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">method=</span><span class="st">"lm"</span>, <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span> </span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">color=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1128,12 +1090,12 @@ Attaching package: 'dplyr'</code></pre>
 <p>Line plots connect each dot with a straight line. This is most often done when measuring trends of the response as the value of x increases (such as a time series)</p>
 <p>We saw earlier that <code>carat</code> and <code>price</code> seemed possibly linear. Let see how the average price changes with carat.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>price.per.carat <span class="ot">&lt;-</span> dsmall <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(carat) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(price))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>price.per.carat <span class="ot">&lt;-</span> dsmall <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(carat) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(price))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>base</strong> For base graphics, type=‘b’ means both points and lines, ‘l’ gives you just lines and ‘p’ gives you only points. You can find more plotting character options under <code>?pch</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mean<span class="sc">~</span>carat, <span class="at">data=</span>price.per.carat, <span class="at">type=</span><span class="st">'l'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mean<span class="sc">~</span>carat, <span class="at">data=</span>price.per.carat, <span class="at">type=</span><span class="st">'l'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1144,7 +1106,7 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <p><strong>ggplot</strong> With ggplot we specify that we want a line geometry only.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(price.per.carat, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>mean)) <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(price.per.carat, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>mean)) <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1155,16 +1117,12 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <p>How does this relationship change with cut of the diamond? First lets get the average price per combination of carat and cut.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>ppc2 <span class="ot">&lt;-</span> dsmall <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(cut, carat) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(price))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'cut'. You can override using the `.groups`
-argument.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>ppc2 <span class="ot">&lt;-</span> dsmall <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(cut, carat) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(price))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>base</strong> This plot can be created in base graphics, but it takes an advanced knowledge of the graphics system to do so. So I do not show it here.</p>
 <p><strong>ggplot</strong> This is where ggplot starts to excel in it’s ease of creating more complex plots. All we have to do is specify that we want the lines colored by the cut variable.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ppc2, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>mean, <span class="at">col=</span>cut)) <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ppc2, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>mean, <span class="at">col=</span>cut)) <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1188,7 +1146,7 @@ argument.</code></pre>
 <p>Dotplots can be very useful when plotting dots against several categories. They can also be called stripcharts.</p>
 <p><strong>base</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stripchart</span>(carat <span class="sc">~</span> cut, <span class="at">data=</span>dsmall)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stripchart</span>(carat <span class="sc">~</span> cut, <span class="at">data=</span>dsmall)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1200,19 +1158,10 @@ argument.</code></pre>
 <p>Doesn’t look to pretty, but kinda gets the point across. Few fair quality diamonds in the data set, pretty spread out across the carat range except one high end outlier.</p>
 <p><strong>ggplot</strong> We can reproduce the same thing by plotting one continuous variable against one categorical variable, and adding a layer of points. I’d argue that horizontal looks better due to the axis-labels.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'gridExtra'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:dplyr':
-
-    combine</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">y=</span>carat, <span class="at">x=</span>cut)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
-<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">y=</span>cut, <span class="at">x=</span>carat)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
-<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(a, b, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">y=</span>carat, <span class="at">x=</span>cut)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">y=</span>cut, <span class="at">x=</span>carat)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(a, b, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1225,7 +1174,7 @@ Attaching package: 'gridExtra'</code></pre>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
 <p><strong>base</strong> Base graphics plots grouped boxplots with also just the addition of a twiddle (tilde) <code>~</code>. Another example of where model notation works.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(carat<span class="sc">~</span>color, <span class="at">data=</span>dsmall)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(carat<span class="sc">~</span>color, <span class="at">data=</span>dsmall)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1236,7 +1185,7 @@ Attaching package: 'gridExtra'</code></pre>
 </div>
 <p><strong>ggplot</strong> A simple addition, just define your x and y accordingly.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>color, <span class="at">y=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>color, <span class="at">y=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1247,9 +1196,9 @@ Attaching package: 'gridExtra'</code></pre>
 </div>
 <p><strong>Adding violins</strong> Violin plots can be overlaid here as well.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>color, <span class="at">y=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span></span>
-<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_violin</span>(<span class="at">alpha=</span>.<span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">width=</span>.<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>color, <span class="at">y=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_violin</span>(<span class="at">alpha=</span>.<span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">width=</span>.<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1263,12 +1212,9 @@ Attaching package: 'gridExtra'</code></pre>
 <p><strong>base</strong> There is no easy way to create grouped histograms in base graphics we will skip it.</p>
 <p><strong>ggplot</strong> By default ggplot wants to overlay all plots on the same grid. This doesn’t look to good with histograms. Instead you can overlay density plots</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_density</span>() </span>
-<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(a,b, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_density</span>() </span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(a,b, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1279,9 +1225,9 @@ Attaching package: 'gridExtra'</code></pre>
 </div>
 <p>The solid fills are still difficult to read, so we can either turn down the alpha (turn up the transparency) or only color the lines and not the fill.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_density</span>(<span class="at">alpha=</span>.<span class="dv">2</span>)</span>
-<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">col=</span>color)) <span class="sc">+</span> <span class="fu">geom_density</span>() </span>
-<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(c,d, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_density</span>(<span class="at">alpha=</span>.<span class="dv">2</span>)</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">col=</span>color)) <span class="sc">+</span> <span class="fu">geom_density</span>() </span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(c,d, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1298,20 +1244,8 @@ Attaching package: 'gridExtra'</code></pre>
 <h3 data-number="2.4.5" class="anchored" data-anchor-id="joy-plots-ridgelines"><span class="header-section-number">2.4.5</span> Joy plots / Ridgelines</h3>
 <p>Somewhat new (2017), joylines have not been added to the base distribution of <code>ggplot2</code> yet. For now it’s available in the <code>ggjoy</code> package. Really good way to visualize density plots without the overlapping issue.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggjoy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: ggridges</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The ggjoy package has been deprecated. Please switch over to the
-ggridges package, which provides the same functionality. Porting
-guidelines can be found here:
-https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>color)) <span class="sc">+</span> <span class="fu">geom_joy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Picking joint bandwidth of 0.165</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggjoy)</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>color)) <span class="sc">+</span> <span class="fu">geom_joy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1327,7 +1261,7 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 <p>This is a good place to introduce a term called <code>faceting</code>. The definition is <em>a particular aspect or feature of something</em>, or <em>one side of something many-sided, especially of a cut gem</em>. Basically instead of plotting the grouped graphics on the same plotting area, we let each group have it’s own plot, or facet.</p>
 <p>We add a <code>facet_wrap()</code> and specify that we want to panel on the color group. Note the twiddle in front of color.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1338,7 +1272,7 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 </div>
 <p>The grid placement can be semi-controlled by using the <code>ncol</code> argument in the <code>facet_wrap()</code> statement.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>color, <span class="at">ncol=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>color, <span class="at">ncol=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1349,7 +1283,7 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 </div>
 <p>It is important to compare distributions across groups on the same scale, and our eyes can compare items vertically better than horizontally. So let’s force <code>ncol=1</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>color, <span class="at">ncol=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>color, <span class="at">ncol=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1363,10 +1297,10 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 <h2 data-number="2.6" class="anchored" data-anchor-id="multiple-plots-per-window"><span class="header-section-number">2.6</span> Multiple plots per window</h2>
 <p><strong>base</strong> I use <code>par(mfrow=c(r,c))</code> for base graphics, where <code>r</code> is the number of rows and <code>c</code> the number of columns.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
-<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dsmall<span class="sc">$</span>carat)</span>
-<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dsmall<span class="sc">$</span>color)</span>
-<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dsmall<span class="sc">$</span>price <span class="sc">~</span> dsmall<span class="sc">$</span>carat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dsmall<span class="sc">$</span>carat)</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dsmall<span class="sc">$</span>color)</span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dsmall<span class="sc">$</span>price <span class="sc">~</span> dsmall<span class="sc">$</span>carat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1378,9 +1312,9 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 <p>Other resources including learning about <code>layouts</code>. Multipanel plotting with base graphics http://seananderson.ca/courses/11-multipanel/multipanel.pdf</p>
 <p><strong>ggplot</strong> Use the <code>grid.arrange</code> function in the <code>gridExtra</code> package. I’ve done it several times above. You assign the output of a ggplot object to an object (here it’s <code>plot1</code> and <code>plot2</code>). Then you use <code>grid.arrange()</code> to arrange them either side by side or top and bottom.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_density</span>(<span class="at">alpha=</span>.<span class="dv">2</span>)</span>
-<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">col=</span>color)) <span class="sc">+</span> <span class="fu">geom_density</span>() </span>
-<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(a,b, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_density</span>(<span class="at">alpha=</span>.<span class="dv">2</span>)</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">col=</span>color)) <span class="sc">+</span> <span class="fu">geom_density</span>() </span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(a,b, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1398,7 +1332,7 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 <h3 data-number="2.7.1" class="anchored" data-anchor-id="three-continuous"><span class="header-section-number">2.7.1</span> Three continuous</h3>
 <p>Continuous variables can also be mapped to the size of the point. Here I set the alpha on the points so we could see the overplotting (many points on a single spot). So the darker the spot the more data points on that spot.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price, <span class="at">size=</span>depth)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">alpha=</span>.<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price, <span class="at">size=</span>depth)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">alpha=</span>.<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1412,8 +1346,8 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 <h3 data-number="2.7.2" class="anchored" data-anchor-id="scatterplot-matrix"><span class="header-section-number">2.7.2</span> Scatterplot matrix</h3>
 <p>A scatterplot matrix allows you to look at the bivariate comparison of multiple pairs of variables simultaneously. First we need to trim down the data set to only include the variables we want to plot, then we use the <code>pairs()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>c.vars <span class="ot">&lt;-</span> dsmall[,<span class="fu">c</span>(<span class="st">'carat'</span>, <span class="st">'depth'</span>, <span class="st">'price'</span>, <span class="st">'x'</span>, <span class="st">'y'</span>, <span class="st">'z'</span>)]</span>
-<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(c.vars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>c.vars <span class="ot">&lt;-</span> dsmall[,<span class="fu">c</span>(<span class="st">'carat'</span>, <span class="st">'depth'</span>, <span class="st">'price'</span>, <span class="st">'x'</span>, <span class="st">'y'</span>, <span class="st">'z'</span>)]</span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(c.vars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1428,7 +1362,7 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 <h3 data-number="2.7.3" class="anchored" data-anchor-id="two-categorical-and-one-continuous"><span class="header-section-number">2.7.3</span> Two categorical and one continuous</h3>
 <p>This is very similar to side by side boxplots, one violin plot per <code>cut</code>, within each level of color. This is difficult to really see due to the large number of categories each factor has.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>color, <span class="at">y=</span>price, <span class="at">fill=</span>cut)) <span class="sc">+</span> <span class="fu">geom_violin</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>color, <span class="at">y=</span>price, <span class="at">fill=</span>cut)) <span class="sc">+</span> <span class="fu">geom_violin</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1439,7 +1373,7 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 </div>
 <p>Best bet here would be to panel on color and change the x axis to cut.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>cut, <span class="at">y=</span>price, <span class="at">fill=</span>cut)) <span class="sc">+</span> <span class="fu">geom_violin</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>cut, <span class="at">y=</span>price, <span class="at">fill=</span>cut)) <span class="sc">+</span> <span class="fu">geom_violin</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1452,13 +1386,10 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 <section id="two-continuous-and-one-categorical" class="level3" data-number="2.7.4">
 <h3 data-number="2.7.4" class="anchored" data-anchor-id="two-continuous-and-one-categorical"><span class="header-section-number">2.7.4</span> Two continuous and one categorical</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price, <span class="at">color=</span>cut)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Colored by cut"</span>)</span>
-<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price, <span class="at">color=</span>cut)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_smooth</span>(<span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span><span class="fu">ggtitle</span>(<span class="st">"Lowess line per cut"</span>)</span>
-<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(a, d, <span class="at">nrow=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price, <span class="at">color=</span>cut)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Colored by cut"</span>)</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price, <span class="at">color=</span>cut)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_smooth</span>(<span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span><span class="fu">ggtitle</span>(<span class="st">"Lowess line per cut"</span>)</span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(a, d, <span class="at">nrow=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1469,10 +1400,7 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 </div>
 <p>Change the shape</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price, <span class="at">shape=</span>cut)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Shape by cut"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using shapes for an ordinal variable is not advised</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price, <span class="at">shape=</span>cut)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Shape by cut"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1483,7 +1411,7 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 </div>
 <p>Or we just panel by the third variable</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>cut)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>cut)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1498,7 +1426,7 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 <h2 data-number="2.8" class="anchored" data-anchor-id="paneling-on-two-variables"><span class="header-section-number">2.8</span> Paneling on two variables</h2>
 <p>Who says we’re stuck with only faceting on one variable? A variant on <code>facet_wrap</code> is <code>facet_grid</code>. Here we can specify multiple variables to panel on.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(cut<span class="sc">~</span>color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">fill=</span>color)) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(cut<span class="sc">~</span>color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1509,7 +1437,7 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 </div>
 <p>How about plotting price against caret, for all combinations of color and clarity, with the points further separated by cut?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price, <span class="at">color=</span>cut)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(clarity<span class="sc">~</span>color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price, <span class="at">color=</span>cut)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(clarity<span class="sc">~</span>color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1520,7 +1448,7 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 </div>
 <p>And lastly let’s look back at how we can play with scatterplots of using a third categorical variable (using <code>ggplot2</code> only). We can color the points by cut,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price, <span class="at">color=</span>cut)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price, <span class="at">color=</span>cut)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1531,10 +1459,7 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 </div>
 <p>We could add a smoothing lowess line for each cut separately,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price, <span class="at">color=</span>cut)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">se=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price, <span class="at">color=</span>cut)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">se=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1545,10 +1470,7 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 </div>
 <p>We could change the color by clarity, and shape by cut.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price, <span class="at">color=</span>clarity, <span class="at">shape=</span>cut)) <span class="sc">+</span> <span class="fu">geom_point</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using shapes for an ordinal variable is not advised</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dsmall, <span class="fu">aes</span>(<span class="at">x=</span>carat, <span class="at">y=</span>price, <span class="at">color=</span>clarity, <span class="at">shape=</span>cut)) <span class="sc">+</span> <span class="fu">geom_point</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1566,7 +1488,7 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 <p><strong>Problem:</strong> Missing data showing up as a category in ggplot?</p>
 <p>Get rid of that far right bar!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(NCbirths, <span class="fu">aes</span>(<span class="at">x=</span>marital)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(NCbirths, <span class="fu">aes</span>(<span class="at">x=</span>marital)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1577,8 +1499,8 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 </div>
 <p><strong>Solution:</strong> Use <code>dplyr</code> to select only the variables you are going to plot, then pipe in the <code>na.omit()</code> at the end. It will create a temporary data frame (e.g) <code>plot.data</code> that you then provide to <code>ggplot()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a>plot.data <span class="ot">&lt;-</span> NCbirths <span class="sc">%&gt;%</span> <span class="fu">select</span>(marital) <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span>
-<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot.data, <span class="fu">aes</span>(<span class="at">x=</span>marital)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>plot.data <span class="ot">&lt;-</span> NCbirths <span class="sc">%&gt;%</span> <span class="fu">select</span>(marital) <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot.data, <span class="fu">aes</span>(<span class="at">x=</span>marital)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1591,8 +1513,8 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 <p>Consider a continuous variable for the number of characters in an email <code>num_char</code>, and a 0/1 binary variable <code>spam</code>.</p>
 <p><strong>Solution:</strong> Create a second variable <code>var_factor</code> for plotting and keep the binary <code>var</code> as 0/1 for analysis.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a>email<span class="sc">$</span>spam_cat <span class="ot">&lt;-</span> <span class="fu">factor</span>(email<span class="sc">$</span>spam, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Ham"</span>, <span class="st">"Spam"</span>))</span>
-<span id="cb121-2"><a href="#cb121-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">y=</span>num_char, <span class="at">x=</span>spam_cat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>email<span class="sc">$</span>spam_cat <span class="ot">&lt;-</span> <span class="fu">factor</span>(email<span class="sc">$</span>spam, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Ham"</span>, <span class="st">"Spam"</span>))</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">y=</span>num_char, <span class="at">x=</span>spam_cat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1604,8 +1526,8 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 <p><strong>Problem:</strong> You want to change the legend title for a <code>fill</code> or <code>color</code> scale.</p>
 <p><strong>Solution:</strong> Add the <code>name=</code> argument to whatever layer you added that created the legend. Here I speciefied a <code>fill</code>, and it was a <code>discrete</code> variable. So I use the <code>scale_fill_discrete()</code> layer.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">y=</span>num_char, <span class="at">x=</span>spam_cat, <span class="at">fill=</span>spam_cat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
-<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">name=</span><span class="st">"Ya like Spam?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">y=</span>num_char, <span class="at">x=</span>spam_cat, <span class="at">fill=</span>spam_cat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">name=</span><span class="st">"Ya like Spam?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1616,8 +1538,8 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 </div>
 <p>Here, I <code>col</code>ored the points by a discrete variable, so the layer is <code>scale_color_discrete()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">x=</span>num_char, <span class="at">y=</span>line_breaks, <span class="at">col=</span>spam_cat)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb123-2"><a href="#cb123-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name=</span><span class="st">"Ya like Spam?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">x=</span>num_char, <span class="at">y=</span>line_breaks, <span class="at">col=</span>spam_cat)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name=</span><span class="st">"Ya like Spam?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1628,13 +1550,9 @@ https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
 </div>
 <p><strong>Problem:</strong> You want to add means to boxplots. Boxplots are great. Even better with violin overlays. Know what makes them even better than butter? Adding a point for the mean. <code>stat_summary</code> is the layer you want to add. Check out <a href="https://stackoverflow.com/questions/23942959/ggplot2-show-separate-mean-values-in-box-plot-for-grouped-data">this stack overflow post</a> for more context.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">x=</span>spam_cat, <span class="at">y=</span>num_char, <span class="at">fill=</span>spam_cat)) <span class="sc">+</span></span>
-<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y=</span><span class="st">"mean"</span>, <span class="at">geom=</span><span class="st">"point"</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">pch=</span><span class="dv">17</span>,<span class="at">color=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: The `fun.y` argument of `stat_summary()` is deprecated as of ggplot2 3.3.0.
-ℹ Please use the `fun` argument instead.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">x=</span>spam_cat, <span class="at">y=</span>num_char, <span class="at">fill=</span>spam_cat)) <span class="sc">+</span></span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y=</span><span class="st">"mean"</span>, <span class="at">geom=</span><span class="st">"point"</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">pch=</span><span class="dv">17</span>,<span class="at">color=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
