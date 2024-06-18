@@ -6,7 +6,7 @@ book:
   title: "Applied Statistics"
   author: "Robin Donatello, Edward Roualdes"
   date: last-modified
-  description: "Course notes for Applied Statistics courses at CSU Chico"
+  description: "Course notes for various Applied Statistics courses at CSU Chico"
   reader-mode: true
   site-url: https://annakfell.github.io/ascnv2/ 
   repo-url: https://github.com/annakfell/ascnv2
@@ -40,3 +40,5 @@ filters:
 
 execute: 
   freeze: auto
+  warning: false
+  message: false
