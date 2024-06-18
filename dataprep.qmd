@@ -77,7 +77,6 @@ The author writes the text explanations, interpretations, and code in the statis
 This section uses the raw `depression` data set from the Afifi et. al. textbook. This is a tab-delimited data set, so we opt to use `read.table` here. We include arguments `sep="\t"` to indicate columns are separated with tabs and `header=TRUE` to indicate the first row of the data is the variable names.
 
 ```{r start2, warning=FALSE, message=FALSE}
-library(ggplot2)  
 depress_raw <- read.table(here::here("data/Depress.txt"), 
                       sep="\t", header=TRUE)  
 ```
@@ -108,6 +107,10 @@ The next sections go over a _few_ of the common data management processes, but i
 
 ## Renaming variable names for sanity's sake
 
+::: {.panel-tabset}
+
+## With the `janitor` package
+
 The best method is to use the `clean_names()` function from the [janitor](https://sfirke.github.io/janitor/) package. 
 
 ```{r}
@@ -115,22 +118,30 @@ library(dplyr)
 depress <- depress_raw %>% janitor::clean_names()
 ```
 
+## Base R
 
-A base R soluion is to use `tolower() to turn all variable names to lower case. 
+A base R solution is to use `tolower() to turn all variable names to lower case. 
 
 ```{r, eval=2}
 names(depress) <- tolower(names(depress))
 tolower("ThIs MIXTure of CAPS and lowercase WILL alL be conVERteD to LoWeR CAsE")
 ```
 
+:::
 
 ## Identifying Variable Types
+
+::: {.panel-tabset}
+
+### Base R
 
 The `str` function is short for _structure_. This shows you the variable names, what data types R thinks each variable are, and some of the raw data. 
 
 ```{r look_depress}
 str(depress)
 ```
+
+### Tidyverse
 
 A `tidyverse` alternative is `glimpse()`
 ```{r}
@@ -139,13 +150,22 @@ glimpse(depress)
 
 Right away this tells me that **R** thinks all variables are numeric integers, not categorical variables. Many of these will have to be changed. We'll get to that in a moment. 
 
+:::
+
 **To check the data type of just one variable:**
 
+::: {.panel-tabset}
+
+### `typeof()`
 ```{r}
 typeof(depress$marital)
+```
+### `class()`
+```{r}
 class(depress$age)
 ```
 
+:::
 
 ## Convert number to factor
 
@@ -196,6 +216,9 @@ While there is at least one potential outliers (denoted by the dots), there are 
 
 ## Changing numeric values
 
+::: {.panel-tabset}
+
+### `ifelse()` function
 As an example of a common data entry error, and for demonstration purposes, I went in and changed a 19 to a 9. So the correct thing to do here is to change that 9, back to a 19. This is a very good use of the `ifelse()` function. 
 
 ```{r}
@@ -203,6 +226,8 @@ depress$age <- ifelse(depress$age==9, 19, depress$age)
 ```
 
 The logical statement is `depress$age9`. Wherever this is true, replace the value of `depress$age` with 19, and wherever this is false keep the value of `depress$age` unchanged (by "replacing" the new value with the same old value). 
+
+### Direct assign
 
 Alternatively, you can change that one value using bracket notation. Here you are specifying that you only want the rows where `age==9`, and directly assign a value of 19 to those rows.  
 ```{r}
@@ -216,6 +241,7 @@ summary(depress$age)
 
 Looks like it worked. 
 
+:::
 
 ## Creating secondary variables
 
@@ -303,7 +329,7 @@ table(depress$drink)
 
 The Center for Epidemiological Studies Depression Scale (CESD) is series of questions asked to a person to measure their level of depression. `CESD` is calculated as the sum of all 20 component variables, and is already on this data set. Let's create a new variable named `sleep` as subscale for sleep quality by adding up question numbers 5, 11, and 19. 
 
-Reference: http://cesd-r.com/cesdr/
+Reference: [CESD-R](https://cesd-r.com/cesdr/)
 
 ```{r create_depress_sleep, eval=1}
 depress$sleep <- depress$c5 + depress$c11 + depress$c19
@@ -319,6 +345,10 @@ summary(depress$sleep)
 
 ## Transformations for Normality
 
+::: {.panel-tabset}
+
+### Histogram and Density Plot
+
 Let's look at assessing normal distributions using the **cleaned** depression data set. 
 
 ```{r}
@@ -330,17 +360,7 @@ summary(depress$income)
 
 The distribution of annual income is slightly skewed right with a mean of $20.5k per year and a median of $15k per year income. The range of values goes from $2k to $65k. Reported income above $40k appear to have been rounded to the nearest $10k, because there are noticeable peaks at $40k, $50k, and $60k. 
 
-In general, transformations are more effective when the the standard deviation is large relative to the mean. One rule of thumb is if the sd/mean ratio is less than 1/4, a transformation may not be necessary. 
-```{r}
-sd(depress$income) / mean(depress$income)
-```
-
-Alternatively Hoaglin, Mosteller and Tukey (1985) showed that if the largest observation divided by the smallest observation is over 2, then the data may not be sufficiently variable for the transformation to be decisive. 
-```{r}
-max(depress$income) / (min(depress$income)+.1)
-```
-
-Note these rules are not meaningful for data without a natural zero. 
+### Q-Q Plot
 
 Another common method of assessing normality is to create a normal probability (or normal quantile) plot. 
 
@@ -370,6 +390,20 @@ qqnorm(loginc, main = "Natural Log"); qqline(loginc, col="blue")
 qqnorm(xincome, main="-1/cuberoot(income)"); qqline(xincome, col="blue")
 ```
 
+### To transform or not to transform
+In general, transformations are more effective when the the standard deviation is large relative to the mean. One rule of thumb is if the sd/mean ratio is less than 1/4, a transformation may not be necessary. 
+```{r}
+sd(depress$income) / mean(depress$income)
+```
+
+Alternatively Hoaglin, Mosteller and Tukey (1985) showed that if the largest observation divided by the smallest observation is over 2, then the data may not be sufficiently variable for the transformation to be decisive. 
+```{r}
+max(depress$income) / (min(depress$income)+.1)
+```
+
+Note that these rules are not meaningful for data without a natural zero. 
+
+:::
 
 ## Export and Save
 
@@ -436,6 +470,8 @@ Nearly all analysis procedures and most graphing procedures require the data to 
 
 ## Missing data 
 
+:::{.panel-tabset}
+
 ### Identifying missing data
 
 In Excel, missing data can show up as a blank cell. In SPSS it is represented as a `.` period. R displays missing data as `NA` values. 
@@ -465,6 +501,8 @@ Notice the use of the `useNA="always"` argument. If we just looked at the base t
 table(depress$relig)
 ```
 
+### Missing data in continuous variables
+
 What about continuous variables? Well there happens to be no other missing data in this data set, so let's make up a set of 7 data points stored in a variable named `y`. 
 
 ```{r fakey}
@@ -481,6 +519,7 @@ mean(y, na.rm=TRUE)
 
 In R, any arithmetic function (like addition, multiplication) on missing data results in a missing value. The `na.rm=TRUE` toggle tells R to calculate the _complete case_ mean. This is a biased measure of the mean, but missing data is a topic worthy of it's own course and is introduced in Chapter \@ref(mda).
 
+:::
 
 ### Model predictions 
 
@@ -495,7 +534,10 @@ R objects created by methods such as `lm` and `glm` will store the data used in 
 
 If your original data had missing values, here is one way to get the PC's / factor scores for available data back onto the data set. 
 
-**Method 1) Create an ID column and merge new variables onto original data. (add columns)**
+:::{.panel-tabset}
+
+#### Method 1 
+**Create an ID column and merge new variables onto original data. (add columns)**
 
 1. If no ID column exists, create one on the original dataset `id = 1:NROW(data)`
 2. Use `select()` to extract the ID and all variables used in the factor analysis, then do a `na.omit()` to drop rows with any missing data. Save this as a new complete case data set. 
@@ -503,7 +545,8 @@ If your original data had missing values, here is one way to get the PC's / fact
 5. Use `bind_cols()` to add the ID variable to the data containing factor scores. 
 6. Then `left_join(original_data, factor_score_data)` the factor scores back to the original data, using the ID variable as the joining key.
 
-**Method 2) Split the data, analyze one part then concatenate back together. (add rows)**
+#### Method 2 
+**Split the data, analyze one part then concatenate back together. (add rows)**
 
 1. Use the `complete.cases()` function to create a boolean vector for if each row is complete
 2. Split the data into complete and incomplete.
@@ -523,3 +566,4 @@ complete.add.pc <- bind_cols(complete.rows, pc.scores) #4
 
 hiv.with.pcs <- bind_rows(complete.add.pc, incomplete.rows) #5
 ```
+:::
