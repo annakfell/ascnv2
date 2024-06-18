@@ -2,6 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://annakfell.github.io/ascnv2/index.html</loc>
+<<<<<<< HEAD
+<<<<<<< HEAD
     <lastmod>2024-06-18T02:32:02.763Z</lastmod>
   </url>
   <url>
@@ -11,9 +13,49 @@
 =======
     <lastmod>2024-06-18T15:42:56.140Z</lastmod>
 >>>>>>> 6d14120 (Note with warning icon from emo::ji package replaced with warning style callout block)
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+=======
+>>>>>>> ce72411 (merging common_code)
+    <lastmod>2024-06-18T02:08:13.896Z</lastmod>
+  </url>
+  <url>
+    <loc>https://annakfell.github.io/ascnv2/dataprep.html</loc>
+    <lastmod>2024-06-18T02:08:33.522Z</lastmod>
+<<<<<<< HEAD
+>>>>>>> 75ac3e7 (resolves #4)
+=======
+=======
+    <lastmod>2024-06-18T02:32:02.763Z</lastmod>
+  </url>
+  <url>
+    <loc>https://annakfell.github.io/ascnv2/dataprep.html</loc>
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <lastmod>2024-06-18T04:20:17.182Z</lastmod>
+>>>>>>> 6efbbfa (Fixed broken links, punctuation in Data Preparation)
+=======
+    <lastmod>2024-06-18T15:42:56.140Z</lastmod>
+>>>>>>> 6d14120 (Note with warning icon from emo::ji package replaced with warning style callout block)
+=======
+    <lastmod>2024-06-18T17:00:32.748Z</lastmod>
+>>>>>>> fd421cd (Added tabsets in Ch1 for alternate methods)
+=======
+    <lastmod>2024-06-18T17:00:32.748Z</lastmod>
+=======
+    <lastmod>2024-06-18T15:42:56.140Z</lastmod>
+>>>>>>> 6d14120 (Note with warning icon from emo::ji package replaced with warning style callout block)
+>>>>>>> 10cb9fc (merging common_code)
+>>>>>>> ce72411 (merging common_code)
+>>>>>>> b99e3ac (merging common_code)
+>>>>>>> 23ed4a8 (merging common_code)
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/data_viz.html</loc>
-    <lastmod>2024-06-17T20:57:07.449Z</lastmod>
+    <lastmod>2024-06-18T02:08:30.191Z</lastmod>
   </url>
 </urlset>
