@@ -415,9 +415,14 @@ Now every time you run your data cleaning script file, it will make all the chan
 
 Need to export to a different software program? Look into the `haven` package.
 
-**Saving only selected variables**
-
-Using `dplyr` select is generally the fastest.
+::: {.callout-tip}
+### Saving only selected variables
+We can use `dplyr::select` to select and save individual variables without storing the entire data frame.
+```{r eval=FALSE}
+var1 <- depress %>% select(var1)
+save(var1, "data/var1.Rdata")
+```
+:::
 
 ## Wide vs. Long data {#wide-long}
 
