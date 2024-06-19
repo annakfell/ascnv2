@@ -402,7 +402,7 @@ window.Quarto = {
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p>A base R solution is to use `tolower() to turn all variable names to lower case.</p>
+<p>A base R solution is to use <code>tolower()</code> to turn all variable names to lower case.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## names(depress) &lt;- tolower(names(depress))</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tolower</span>(<span class="st">"ThIs MIXTure of CAPS and lowercase WILL alL be conVERteD to LoWeR CAsE"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -559,7 +559,16 @@ Never Married       Married      Divorced     Separated       Widowed
 <pre><code>[1] "factor"</code></pre>
 </div>
 </div>
-<p><strong>See more examples on <a href="https://norcalbiostat.github.io/MATH130/notes/06_factors.html#Convert_a_number_to_Factor_(Video)">Math 130 Lesson 06</a></strong></p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>See more examples on <a href="https://norcalbiostat.github.io/MATH130/notes/06_factors.html#Convert_a_number_to_Factor_(Video)">Math 130 Lesson 06</a></p>
+</div>
+</div>
+</div>
 </section>
 <section id="identifying-outliers" class="level2" data-number="1.7">
 <h2 data-number="1.7" class="anchored" data-anchor-id="identifying-outliers"><span class="header-section-number">1.7</span> Identifying Outliers</h2>
@@ -631,11 +640,29 @@ Never Married       Married      Divorced     Separated       Widowed
 </section>
 <section id="creating-secondary-variables" class="level2" data-number="1.9">
 <h2 data-number="1.9" class="anchored" data-anchor-id="creating-secondary-variables"><span class="header-section-number">1.9</span> Creating secondary variables</h2>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <p>See <a href="https://norcalbiostat.github.io/MATH130/notes/05_dm.html#Creating_new_variables_(Video)">Math 130 lesson 05</a> for now.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="wrangling-factors" class="level2" data-number="1.10">
 <h2 data-number="1.10" class="anchored" data-anchor-id="wrangling-factors"><span class="header-section-number">1.10</span> Wrangling Factors</h2>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <p>For more help on renaming, releveling, lumping, and removing levels see <a href="https://norcalbiostat.github.io/MATH130/notes/06_factors.html">Math 130 lesson 06</a> for now. Also the <a href="https://forcats.tidyverse.org/index.html">forcats</a> vignette.</p>
+</div>
+</div>
+</div>
 <section id="collapsing-categorical-variables-into-fewer-categories" class="level3" data-number="1.10.1">
 <h3 data-number="1.10.1" class="anchored" data-anchor-id="collapsing-categorical-variables-into-fewer-categories"><span class="header-section-number">1.10.1</span> Collapsing categorical variables into fewer categories</h3>
 <p>For unbiased and accurate results of a statistical analysis, sufficient data has to be present. Often times once you start slicing and dicing the data to only look at certain groups, or if you are interested in the behavior of certain variables across levels of another variable, sometimes you start to run into small sample size problems.</p>
@@ -852,7 +879,16 @@ Never Married       Married      Divorced     Separated       Widowed
 </section>
 <section id="wide-long" class="level2" data-number="1.16">
 <h2 data-number="1.16" class="anchored" data-anchor-id="wide-long"><span class="header-section-number">1.16</span> Wide vs.&nbsp;Long data</h2>
-<p>Read more on tidy data here: <a href="https://r4ds.hadley.nz/data-tidy">https://r4ds.hadley.nz/data-tidy</a></p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Read more on tidy data here: <a href="https://r4ds.hadley.nz/data-tidy" class="uri">https://r4ds.hadley.nz/data-tidy</a></p>
+</div>
+</div>
+</div>
 <p>The data on Lung function originally was recorded in <em>wide</em> format, with separate variables for mother’s and father’s FEV1 score (<code>MFEV1</code> and <code>FFEV</code>). In this format, the data is one record per family.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>fev <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/Lung_081217.txt"</span>), </span>
