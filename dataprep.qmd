@@ -503,7 +503,7 @@ summary(y)
 mean(y, na.rm=TRUE)
 ```
 
-In R, any arithmetic function (like addition, multiplication) on missing data results in a missing value. The `na.rm=TRUE` toggle tells R to calculate the *complete case* mean. This is a biased measure of the mean, but missing data is a topic worthy of it's own course and is introduced in Chapter \@ref(mda).
+In R, any arithmetic function (like addition, multiplication) on missing data results in a missing value. The `na.rm=TRUE` toggle tells R to calculate the *complete case* mean. This is a biased measure of the mean, but missing data is a topic worthy of it's own course and is introduced in @sec-classification.
 :::
 
 ### Model predictions
@@ -512,7 +512,7 @@ In R, any arithmetic function (like addition, multiplication) on missing data re
 
 ### Regression
 
-R objects created by methods such as `lm` and `glm` will store the data used in the model in the model object itself in `model$data`. See Chapter \@ref(binary-classification) for an example.
+R objects created by methods such as `lm` and `glm` will store the data used in the model in the model object itself in `model$data`. See @sec-classification for an example.
 
 ### Factor Analysis and Principle Components
 
