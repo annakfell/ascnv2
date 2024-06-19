@@ -31,7 +31,6 @@ The goal is to create an exact record of what was done to a data set to produce 
 * This means your code must be saved in a script file. 
     - Include sufficient notes to yourself describing what you are doing and why. 
     - For R, this can be in a `.R`, `.Rmd` or `.qmd` file. I always prefer the latter. 
-    - For SPSS you can specify to `paste the syntax` and copy into a `.sps` script file.
     - For SAS you'll use a `.sas` file
     - For STATA this will be a `.do` file
 
@@ -426,19 +425,10 @@ Now every time you run your data cleaning script file, it will make all the chan
 
 Need to export to a different software program? Look into the `haven` package.
 
-SPSS users commonly save cleaned data as a `.sav` format.  
-
-```
-SAVE outfile='FilePath\depress_sysdate.sav'
-/KEEP = Variable_Name1 Variable_Name2.
-EXECUTE.
-```
 
 **Saving only selected variables**
 
-* In SPSS the `/KEEP` statement demonstrated above only writes the variable names listed to the saved data set. This can be very useful when dealing with data sets with a large number of variables. 
-* For R users, using `dplyr` select is generally the fastest. 
-
+Using `dplyr` select is generally the fastest. 
 
 
 ## Wide vs. Long data {#wide-long}
@@ -474,9 +464,7 @@ Nearly all analysis procedures and most graphing procedures require the data to 
 
 ### Identifying missing data
 
-In Excel, missing data can show up as a blank cell. In SPSS it is represented as a `.` period. R displays missing data as `NA` values. 
-
-Missing Data in SPSS: https://stats.idre.ucla.edu/spss/modules/missing-data/
+In Excel, missing data can show up as a blank cell. R displays missing data as `NA` values. 
 
 Why would data be missing? Other than the obvious data entry errors, tech glitches or just non-cooperative plants or people, sometimes values are out of range and you would rather delete them than change their value (data edit). 
 
