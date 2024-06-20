@@ -741,7 +741,7 @@ Learn more
   &lt;NA&gt;                      0       0      0       0    0</code></pre>
 </div>
 </div>
-<p>Now that we’ve confirmed no missing data crept up in the process, we can drop the temporary <code>marital2</code> variable and actually fix <code>marital</code> with <code>forcats</code>.</p>
+<p>Now that we’ve confirmed no missing data crept up in the process, we can drop the temporary <code>marital2</code> variable and actually fix <code>marital</code> with <code>forcats::fct_collapse</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>depress<span class="sc">$</span>marital <span class="ot">&lt;-</span> <span class="fu">fct_collapse</span>(depress<span class="sc">$</span>marital, </span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">SepDiv =</span> <span class="fu">c</span>(<span class="st">"Divorced"</span>, <span class="st">"Separated"</span>))</span>

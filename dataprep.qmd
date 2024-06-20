@@ -303,7 +303,7 @@ Again, you should always confirm your recodes. Check a table of the old variable
 table(depress$marital, marital2, useNA = "always")
 ```
 
-Now that we've confirmed no missing data crept up in the process, we can drop the temporary `marital2` variable and actually fix `marital` with `forcats`.
+Now that we've confirmed no missing data crept up in the process, we can drop the temporary `marital2` variable and actually fix `marital` with `forcats::fct_collapse`.
 
 ```{r, message=FALSE, warning=FALSE}
 depress$marital <- fct_collapse(depress$marital, 
