@@ -291,7 +291,17 @@ window.Quarto = {
 <figcaption>PrepareData</figcaption>
 </figure>
 </div>
-<p><img src="images/q.png" class="img-fluid" alt="q"> Why do we need a codebook?</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Think about it
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Why do we need a codebook?</strong></p>
 <ul>
 <li>You are your own collaborator 6 months from now. Make sure you will be able to understand what you were doing.</li>
 <li>Investing the time to do things clearly and in a reproducible manner will make your future self happy.</li>
@@ -309,13 +319,14 @@ window.Quarto = {
 <li>For STATA this will be a <code>.do</code> file</li>
 </ul></li>
 </ul>
+</div>
+</div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/pipeline.png" class="img-fluid figure-img"></p>
-<figcaption>Repro</figcaption>
+<figcaption>Figure Credits: <a href="https://rdpeng.org">Roger Peng</a></figcaption>
 </figure>
 </div>
-<p>Figure Credits: <a href="https://rdpeng.org">Roger Peng</a></p>
 <section id="literate-programming" class="level3" data-number="1.1.1">
 <h3 data-number="1.1.1" class="anchored" data-anchor-id="literate-programming"><span class="header-section-number">1.1.1</span> Literate programming</h3>
 <ul>
@@ -328,14 +339,17 @@ window.Quarto = {
 <li>Markdown (R, Stata), Quarto (R, Python, Julia, and JavaScript)</li>
 <li><span class="math inline">\(\LaTeX\)</span> (R, SAS, Stata)</li>
 </ul>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<i class="callout-icon"></i>
 </div>
-<div class="callout-body-container">
+<div class="callout-title-container flex-fill">
+Learn more
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>The current gold standard for writing reproducible literate documents in R is to use <a href="https://quarto.org/docs/get-started/hello/rstudio.html">Quarto</a>. Quarto documents can integrate code snippets from several languages and other code editing platforms, like Jupyter Notebook.</p>
-</div>
 </div>
 </div>
 <p>Practicing reproducible research techniques using literate programming tools allows such major updates to be a simple matter of recompiling all coded instructions using the updated data set.</p>
@@ -348,7 +362,19 @@ window.Quarto = {
 </ul>
 <p>in a streamlined manner that is fully synchronized with the code itself.</p>
 <p>The author writes the text explanations, interpretations, and code in the statistical software program itself, and the program will execute all commands and combine the text, code and output all together into a final dynamic document.</p>
-<p><img src="images/q.png" class="img-fluid" alt="q"> What stages of the pipeline shown above can we conduct using literate programming tools?</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Think about it
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What stages of the pipeline shown above can we conduct using literate programming tools?</p>
+</div>
+</div>
 </section>
 </section>
 <section id="import-data" class="level2" data-number="1.2">
@@ -358,14 +384,17 @@ window.Quarto = {
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>depress_raw <span class="ot">&lt;-</span> <span class="fu">read.table</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/Depress.txt"</span>), </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sep=</span><span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">header=</span><span class="cn">TRUE</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<i class="callout-icon"></i>
 </div>
-<div class="callout-body-container">
-<p><strong>Learn more</strong> See <a href="https://r4ds.hadley.nz/data-import">R for Data Science (2e)</a> for more instruction on importing different types of data and ways you can streamline your data import.</p>
+<div class="callout-title-container flex-fill">
+Learn more
 </div>
+</div>
+<div class="callout-body-container callout-body">
+<p>See <a href="https://r4ds.hadley.nz/data-import">R for Data Science (2e)</a> for more instruction on importing different types of data and ways you can streamline your data import.</p>
 </div>
 </div>
 <p>The absolute first thing you should do is to look at your raw data table. Are the column headers variable names? Did all the rows get read in? Are there any extra columns or rows included?</p>
@@ -559,14 +588,17 @@ Never Married       Married      Divorced     Separated       Widowed
 <pre><code>[1] "factor"</code></pre>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<i class="callout-icon"></i>
 </div>
-<div class="callout-body-container">
+<div class="callout-title-container flex-fill">
+Learn more
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>See more examples on <a href="https://norcalbiostat.github.io/MATH130/notes/06_factors.html#Convert_a_number_to_Factor_(Video)">Math 130 Lesson 06</a></p>
-</div>
 </div>
 </div>
 </section>
@@ -640,41 +672,50 @@ Never Married       Married      Divorced     Separated       Widowed
 </section>
 <section id="creating-secondary-variables" class="level2" data-number="1.9">
 <h2 data-number="1.9" class="anchored" data-anchor-id="creating-secondary-variables"><span class="header-section-number">1.9</span> Creating secondary variables</h2>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<i class="callout-icon"></i>
 </div>
-<div class="callout-body-container">
+<div class="callout-title-container flex-fill">
+Learn more
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>See <a href="https://norcalbiostat.github.io/MATH130/notes/05_dm.html#Creating_new_variables_(Video)">Math 130 lesson 05</a> for now.</p>
-</div>
 </div>
 </div>
 </section>
 <section id="wrangling-factors" class="level2" data-number="1.10">
 <h2 data-number="1.10" class="anchored" data-anchor-id="wrangling-factors"><span class="header-section-number">1.10</span> Wrangling Factors</h2>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<i class="callout-icon"></i>
 </div>
-<div class="callout-body-container">
+<div class="callout-title-container flex-fill">
+Learn more
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>For more help on renaming, releveling, lumping, and removing levels see <a href="https://norcalbiostat.github.io/MATH130/notes/06_factors.html">Math 130 lesson 06</a> for now. Also the <a href="https://forcats.tidyverse.org/index.html">forcats</a> vignette.</p>
-</div>
 </div>
 </div>
 <section id="collapsing-categorical-variables-into-fewer-categories" class="level3" data-number="1.10.1">
 <h3 data-number="1.10.1" class="anchored" data-anchor-id="collapsing-categorical-variables-into-fewer-categories"><span class="header-section-number">1.10.1</span> Collapsing categorical variables into fewer categories</h3>
 <p>For unbiased and accurate results of a statistical analysis, sufficient data has to be present. Often times once you start slicing and dicing the data to only look at certain groups, or if you are interested in the behavior of certain variables across levels of another variable, sometimes you start to run into small sample size problems.</p>
 <p>For example, consider marital status again. There are only 13 people who report being separated. This could potentially be too small of a group size for valid statistical analysis. One way to deal with insufficient data within a certain category is to collapse categories. The following code uses the <code>recode()</code> function from the <code>car</code> package to create a new variable that I am calling <code>marital2</code> that combines the <code>Divorced</code> and <code>Separated</code> levels.</p>
-<div class="callout callout-style-simple callout-warning">
-<div class="callout-body d-flex">
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-body-container">
-<p>For a better method using <code>forcats</code> see <a href="https://norcalbiostat.github.io/MATH130/notes/06_factors.html#Collapsing_factor_levels_(Video)">Math 130 lesson 06</a></p>
+<div class="callout-title-container flex-fill">
+Learn more
 </div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For a better method using <code>forcats</code> see <a href="https://norcalbiostat.github.io/MATH130/notes/06_factors.html#Collapsing_factor_levels_(Video)">Math 130 lesson 06</a></p>
 </div>
 </div>
 <div class="cell">
@@ -875,14 +916,16 @@ Never Married       Married      Divorced     Separated       Widowed
 <p>Now every time you run your data cleaning script file, it will make all the changes and save/overwrite the <code>depress_clean.Rdata</code> data file. This ensures that any analysis script that uses this data has the most up to date variables.</p>
 <p>Need to export to a different software program? Look into the <code>haven</code> package.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 Saving only selected variables
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>We can use <code>dplyr::select</code> to select and save individual variables without storing the entire data frame.</p>
 <div class="cell">
@@ -891,17 +934,21 @@ Saving only selected variables
 </div>
 </div>
 </div>
+</div>
 </section>
 <section id="wide-long" class="level2" data-number="1.16">
 <h2 data-number="1.16" class="anchored" data-anchor-id="wide-long"><span class="header-section-number">1.16</span> Wide vs.&nbsp;Long data</h2>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<i class="callout-icon"></i>
 </div>
-<div class="callout-body-container">
+<div class="callout-title-container flex-fill">
+Learn more
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Read more on tidy data here: <a href="https://r4ds.hadley.nz/data-tidy" class="uri">https://r4ds.hadley.nz/data-tidy</a></p>
-</div>
 </div>
 </div>
 <p>The data on Lung function originally was recorded in <em>wide</em> format, with separate variables for mother’s and father’s FEV1 score (<code>MFEV1</code> and <code>FFEV</code>). In this format, the data is one record per family.</p>
