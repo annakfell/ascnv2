@@ -494,12 +494,14 @@ Nearly all analysis procedures and most graphing procedures require the data to 
 
 ## Missing data
 
-::: panel-tabset
 ### Identifying missing data
 
 In Excel, missing data can show up as a blank cell. R displays missing data as `NA` values.
 
 Why would data be missing? Other than the obvious data entry errors, tech glitches or just non-cooperative plants or people, sometimes values are out of range and you would rather delete them than change their value (data edit).
+
+::: panel-tabset
+### Categorical
 
 Lets look at the religion variable in the depression data set.
 
@@ -527,7 +529,7 @@ Notice the use of the `useNA="always"` argument. If we just looked at the base t
 table(depress$relig)
 ```
 
-### Missing data in continuous variables
+### Continuous
 
 What about continuous variables? Well there happens to be no other missing data in this data set, so let's make up a set of 7 data points stored in a variable named `y`.
 
