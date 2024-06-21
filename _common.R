@@ -16,7 +16,6 @@ list.of.packages <- c(# data wrangling
                       "rstanarm", "lme4", 
                       # modeling and output
                       "performance"
-                      
                       )
 
 # archive
