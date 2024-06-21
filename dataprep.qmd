@@ -111,7 +111,17 @@ The next sections go over a *few* of the common data management processes, but i
 ## Renaming variable names for sanity's sake
 
 ::: panel-tabset
-## With the `janitor` package
+
+### Base R
+
+A base R solution is to use `tolower()` to turn all variable names to lower case.
+
+```{r, eval=2}
+names(depress) <- tolower(names(depress))
+tolower("ThIs MIXTure of CAPS and lowercase WILL alL be conVERteD to LoWeR CAsE")
+```
+
+### Using the janitor package
 
 The best method is to use the `clean_names()` function from the [janitor](https://sfirke.github.io/janitor/) package.
 
@@ -120,20 +130,14 @@ library(dplyr)
 depress <- depress_raw %>% janitor::clean_names()
 ```
 
-## Base R
+> Here is where a note about loading a specific function rather than the whole package with :: could go
 
-A base R solution is to use `tolower()` to turn all variable names to lower case.
-
-```{r, eval=2}
-names(depress) <- tolower(names(depress))
-tolower("ThIs MIXTure of CAPS and lowercase WILL alL be conVERteD to LoWeR CAsE")
-```
 :::
 
 ## Identifying Variable Types
 
 ::: panel-tabset
-### Base R
+#### Base R
 
 The `str` function is short for *structure*. This shows you the variable names, what data types R thinks each variable are, and some of the raw data.
 
@@ -141,7 +145,21 @@ The `str` function is short for *structure*. This shows you the variable names, 
 str(depress)
 ```
 
-### Tidyverse
+To check the data type of just one variable, you have two options:
+
+- The `typeof` function 
+
+```{r}
+typeof(depress$marital)
+```
+
+- The `class` function 
+
+```{r}
+class(depress$age)
+```
+
+#### Tidyverse
 
 A `tidyverse` alternative is `glimpse()`
 
@@ -150,22 +168,6 @@ glimpse(depress)
 ```
 
 Right away this tells me that **R** thinks all variables are numeric integers, not categorical variables. Many of these will have to be changed. We'll get to that in a moment.
-:::
-
-**To check the data type of just one variable:**
-
-::: panel-tabset
-### `typeof()`
-
-```{r}
-typeof(depress$marital)
-```
-
-### `class()`
-
-```{r}
-class(depress$age)
-```
 :::
 
 ## Convert number to factor
@@ -222,10 +224,12 @@ While there is at least one potential outliers (denoted by the dots), there are 
 
 ## Changing numeric values
 
-::: panel-tabset
-### `ifelse()` function
+As an example of a common data entry error, and for demonstration purposes, I went in and changed a 19 to a 9. So the correct thing to do here is to change that 9, back to a 19.
 
-As an example of a common data entry error, and for demonstration purposes, I went in and changed a 19 to a 9. So the correct thing to do here is to change that 9, back to a 19. This is a very good use of the `ifelse()` function.
+::: panel-tabset
+### Using ifelse()
+
+This is a very good use of the `ifelse()` function.
 
 ```{r}
 depress$age <- ifelse(depress$age==9, 19, depress$age)
@@ -259,15 +263,22 @@ See [Math 130 lesson 05](https://norcalbiostat.github.io/MATH130/notes/05_dm.htm
 
 ## Wrangling Factors
 
-### Collapsing categorical variables into fewer categories
+::: {.callout-tip}
+### Learn more
+For more help on renaming, releveling, lumping, and removing levels see [Math 130 lesson 06](https://norcalbiostat.github.io/MATH130/notes/06_factors.html) for now. Also the [forcats](https://forcats.tidyverse.org/index.html) vignette.
+:::
 
-::: {.panel-tabset}
-
-#### Recoding
+## Collapsing categorical variables into fewer categories
 
 For unbiased and accurate results of a statistical analysis, sufficient data has to be present. Often times once you start slicing and dicing the data to only look at certain groups, or if you are interested in the behavior of certain variables across levels of another variable, sometimes you start to run into small sample size problems.
 
-For example, consider marital status again. There are only 13 people who report being separated. This could potentially be too small of a group size for valid statistical analysis. One way to deal with insufficient data within a certain category is to collapse categories. The following code uses the `recode()` function from the `car` package to create a new variable that I am calling `marital2` that combines the `Divorced` and `Separated` levels.
+For example, consider marital status again. There are only 13 people who report being separated. This could potentially be too small of a group size for valid statistical analysis. One way to deal with insufficient data within a certain category is to collapse categories.
+
+::: {.panel-tabset}
+
+#### Using the car package
+
+ The following example code uses the `recode()` function from the `car` package to create a new variable that I am calling `marital2` that combines the `Divorced` and `Separated` levels.
 
 ```{r recode_marital, message=FALSE, warning=FALSE}
 library(car)
@@ -287,7 +298,7 @@ depress$marital <- recode(depress$marital, "'Divorced' = 'Sep/Div'; 'Separated' 
 rm(marital2)
 ```
 
-#### Using `forcats`
+#### Using forcats
 
 The `fct_collapse()` function from the `forcats` package is a more efficient way to collapse categories. Here we store the changes in the variable `marital2` before applying them to the dataframe.
 
@@ -313,11 +324,6 @@ rm(marital2)
 
 :::
 
-::: {.callout-tip}
-### Learn more
-For more help on renaming, releveling, lumping, and removing levels see [Math 130 lesson 06](https://norcalbiostat.github.io/MATH130/notes/06_factors.html) for now. Also the [forcats](https://forcats.tidyverse.org/index.html) vignette.
-:::
-
 ## Binning a continuous variable into categorical ranges.
 
 We can use the `cut` function to create a new variable that categorizes income into the following ranges: \<30, \[30, 40), \[40,50), \[50, 60), 60+.
@@ -331,7 +337,13 @@ table(depress$inc_cut)
 
 Dichotomous variables tend to be binary indicator variables where a code of `1` is the level you're interested in.
 
-For example, in this study gender is coded as 2=Female and 1=Male. (*This data was collected in the '70s, and so only two genders were provided as options*). We want to convert this 1=Female and 0=Male.
+::: {.panel-tabset}
+
+### Example 1
+
+> Switch example from binary gender to different characteristic
+
+In this study gender is coded as 2=Female and 1=Male. (*This data was collected in the '70s, and so only two genders were provided as options*). We want to convert this 1=Female and 0=Male.
 
 ```{r recode_depress_sex}
 depress$sex <- depress$sex -1 
@@ -346,6 +358,8 @@ mean(depress$sex)
 
 62% of individuals in this data set are female.
 
+### Example 2
+
 Sometimes the data is recorded as 1/2 (Yes/No), so just subtracting from 1 doesn't create a positive indicator of the variable. For example, `drink=1` if they are a regular drinker, and `drink=2` if they are not. We want not drinking to be coded as `0`, not `2`.
 
 ```{r tab_depress_drink}
@@ -358,6 +372,8 @@ The `ifelse()` function says that if `depress$drink` has a value equal to 2 `==2
 depress$drink <- ifelse(depress$drink==2, 0, depress$drink)
 table(depress$drink)
 ```
+
+:::
 
 ## Sum or Average values across multiple variables
 
@@ -453,23 +469,22 @@ save(depress_clean, "data/depress_clean.Rdata")
 
 Now every time you run your data cleaning script file, it will make all the changes and save/overwrite the `depress_clean.Rdata` data file. This ensures that any analysis script that uses this data has the most up to date variables.
 
-Need to export to a different software program? Look into the `haven` package.
-
-::: {.callout-tip collapse="true"}
-### Saving only selected variables
 We can use `dplyr::select` to select and save individual variables without storing the entire data frame.
 ```{r eval=FALSE}
 var1 <- depress %>% select(var1)
 save(var1, "data/var1.Rdata")
 ```
+
+
+::: {.callout-tip}
+
+## Learn more
+
+Need to export to a different software program? Look into the [haven](https://haven.tidyverse.org) package.
+
 :::
 
 ## Wide vs. Long data {#wide-long}
-
-::: {.callout-tip}
-### Learn more
-Read more on tidy data here: <https://r4ds.hadley.nz/data-tidy>
-:::
 
 The data on Lung function originally was recorded in *wide* format, with separate variables for mother's and father's FEV1 score (`MFEV1` and `FFEV`). In this format, the data is one record per family.
 
@@ -491,6 +506,11 @@ head(fev2)
 ```
 
 Nearly all analysis procedures and most graphing procedures require the data to be in long format. There are several `R` packages that can help with this including `reshape2` and `tidyr`.
+
+::: {.callout-tip}
+### Learn more
+Read more on tidy data [here](https://r4ds.hadley.nz/data-tidy).
+:::
 
 ## Missing data
 
@@ -553,13 +573,15 @@ In R, any arithmetic function (like addition, multiplication) on missing data re
 
 **Situation**: You want to add model predictions to the data set, but you have missing data that was automatically dropped prior to analysis.
 
+> Add methods for dealing with this 
+
 ### Regression
 
 R objects created by methods such as `lm` and `glm` will store the data used in the model in the model object itself in `model$data`. See @sec-classification for an example.
 
 ### Factor Analysis and Principle Components
 
-If your original data had missing values, here is one way to get the PC's / factor scores for available data back onto the data set.
+If your original data had missing values, here are two methods to get the PC's / factor scores for available data back onto the data set.
 
 ::: panel-tabset
 #### Method 1
