@@ -33,7 +33,7 @@ library(likert)           # Only used to get the pisaitems data in this case
 })
 
 # Set path to Box
-PATH_TO_BOX <- "C:/Users/kcollins17/Box/"
+#PATH_TO_BOX <- "C:/Users/kcollins17/Box/"
 
 pen <- palmerpenguins::penguins
 data("pisaitems")
@@ -41,7 +41,7 @@ data("pisaitems")
 # Removing all entries with an NA value because this dataset is only being used for an example of likert scales
 pisa <- pisaitems %>% na.omit(pisaitems)
 
-bns <- load(paste0(PATH_TO_BOX, "CHC All/01. Projects Active/CFO (SP6495203)/08. Research and Evaluation/02. Data Analysis/BNS3-pilot2/data/BNSp2_clean.Rdata")) 
+#bns <- load(paste0(PATH_TO_BOX, "CHC All/01. Projects Active/CFO (SP6495203)/08. Research and Evaluation/02. Data Analysis/BNS3-pilot2/data/BNSp2_clean.Rdata")) 
 
 knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
 

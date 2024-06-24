@@ -33,7 +33,10 @@ format:
     code-copy: true
     code-overflow: wrap
     toc: true
-
+    toc-depth: 4
+#    toc-location: left
+#    page-layout: full
+        
 filters:
   - include-files.lua
   - quarto

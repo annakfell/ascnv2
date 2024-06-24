@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.45">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2024-06-24">
+
+<title>R&amp;E Data Style Guide</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="_Style_guide_files/libs/clipboard/clipboard.min.js"></script>
+<script src="_Style_guide_files/libs/quarto-html/quarto.js"></script>
+<script src="_Style_guide_files/libs/quarto-html/popper.min.js"></script>
+<script src="_Style_guide_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="_Style_guide_files/libs/quarto-html/anchor.min.js"></script>
+<link href="_Style_guide_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="_Style_guide_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="_Style_guide_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="_Style_guide_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="_Style_guide_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="_Style_guide_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="_Style_guide_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-full toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#project-and-folder-setup" id="toc-project-and-folder-setup" class="nav-link active" data-scroll-target="#project-and-folder-setup">Project and folder setup</a>
+  <ul>
+  <li><a href="#qualtrics-specific-setup" id="toc-qualtrics-specific-setup" class="nav-link" data-scroll-target="#qualtrics-specific-setup">Qualtrics-specific setup</a></li>
+  </ul></li>
+  <li><a href="#script-file-types" id="toc-script-file-types" class="nav-link" data-scroll-target="#script-file-types">Script file types</a>
+  <ul>
+  <li><a href="#script-file-setup" id="toc-script-file-setup" class="nav-link" data-scroll-target="#script-file-setup">Script file setup</a></li>
+  <li><a href="#importing-and-exporting-data" id="toc-importing-and-exporting-data" class="nav-link" data-scroll-target="#importing-and-exporting-data">Importing and exporting data</a>
+  <ul class="collapse">
+  <li><a href="#importing-data" id="toc-importing-data" class="nav-link" data-scroll-target="#importing-data">Importing data</a>
+  <ul class="collapse">
+  <li><a href="#relative-file-paths" id="toc-relative-file-paths" class="nav-link" data-scroll-target="#relative-file-paths">Relative file paths</a></li>
+  </ul></li>
+  <li><a href="#exporting-data" id="toc-exporting-data" class="nav-link" data-scroll-target="#exporting-data">Exporting data</a></li>
+  <li><a href="#connecting-to-google-sheets" id="toc-connecting-to-google-sheets" class="nav-link" data-scroll-target="#connecting-to-google-sheets">Connecting to Google Sheets</a></li>
+  <li><a href="#emailing-through-r" id="toc-emailing-through-r" class="nav-link" data-scroll-target="#emailing-through-r">Emailing through R</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#formatting-code" id="toc-formatting-code" class="nav-link" data-scroll-target="#formatting-code">Formatting Code</a></li>
+  <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link" data-scroll-target="#data-visualization">Data Visualization</a>
+  <ul>
+  <li><a href="#choosing-your-audience" id="toc-choosing-your-audience" class="nav-link" data-scroll-target="#choosing-your-audience">Choosing your audience</a></li>
+  <li><a href="#choosing-colors" id="toc-choosing-colors" class="nav-link" data-scroll-target="#choosing-colors">Choosing Colors</a></li>
+  <li><a href="#best-practices" id="toc-best-practices" class="nav-link" data-scroll-target="#best-practices">Best Practices</a>
+  <ul class="collapse">
+  <li><a href="#significant-figures" id="toc-significant-figures" class="nav-link" data-scroll-target="#significant-figures">Significant Figures</a></li>
+  <li><a href="#informative-titles" id="toc-informative-titles" class="nav-link" data-scroll-target="#informative-titles">Informative Titles</a></li>
+  <li><a href="#consistent-themes" id="toc-consistent-themes" class="nav-link" data-scroll-target="#consistent-themes">Consistent Themes</a></li>
+  </ul></li>
+  <li><a href="#single-variable" id="toc-single-variable" class="nav-link" data-scroll-target="#single-variable">Single Variable</a>
+  <ul class="collapse">
+  <li><a href="#categorical" id="toc-categorical" class="nav-link" data-scroll-target="#categorical">Categorical</a></li>
+  <li><a href="#numeric" id="toc-numeric" class="nav-link" data-scroll-target="#numeric">Numeric</a>
+  <ul class="collapse">
+  <li><a href="#histogram" id="toc-histogram" class="nav-link" data-scroll-target="#histogram">Histogram</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#two-variables" id="toc-two-variables" class="nav-link" data-scroll-target="#two-variables">Two Variables</a>
+  <ul class="collapse">
+  <li><a href="#numeric-1" id="toc-numeric-1" class="nav-link" data-scroll-target="#numeric-1">Numeric</a>
+  <ul class="collapse">
+  <li><a href="#plots" id="toc-plots" class="nav-link" data-scroll-target="#plots">Plots</a></li>
+  </ul></li>
+  <li><a href="#categorical-1" id="toc-categorical-1" class="nav-link" data-scroll-target="#categorical-1">Categorical</a></li>
+  <li><a href="#numeric-categorical" id="toc-numeric-categorical" class="nav-link" data-scroll-target="#numeric-categorical">Numeric + Categorical</a>
+  <ul class="collapse">
+  <li><a href="#boxplot" id="toc-boxplot" class="nav-link" data-scroll-target="#boxplot">Boxplot</a></li>
+  <li><a href="#violin-plot" id="toc-violin-plot" class="nav-link" data-scroll-target="#violin-plot">Violin plot</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#likert" id="toc-likert" class="nav-link" data-scroll-target="#likert">Likert</a></li>
+  <li><a href="#graph-checklist" id="toc-graph-checklist" class="nav-link" data-scroll-target="#graph-checklist">Graph Checklist</a></li>
+  <li><a href="#table-checklist" id="toc-table-checklist" class="nav-link" data-scroll-target="#table-checklist">Table Checklist</a></li>
+  </ul></li>
+  <li><a href="#setting-global-options" id="toc-setting-global-options" class="nav-link" data-scroll-target="#setting-global-options">Setting Global Options</a>
+  <ul>
+  <li><a href="#use-a-theme-globally" id="toc-use-a-theme-globally" class="nav-link" data-scroll-target="#use-a-theme-globally">Use a theme globally</a></li>
+  <li><a href="#add-figure-captions-with-automatically-updating-labels" id="toc-add-figure-captions-with-automatically-updating-labels" class="nav-link" data-scroll-target="#add-figure-captions-with-automatically-updating-labels">Add figure captions with automatically updating labels</a></li>
+  </ul></li>
+  <li><a href="#chcrne-package" id="toc-chcrne-package" class="nav-link" data-scroll-target="#chcrne-package">chcRne Package</a></li>
+  <li><a href="#other-sample-code-chunks" id="toc-other-sample-code-chunks" class="nav-link" data-scroll-target="#other-sample-code-chunks">Other Sample Code Chunks</a>
+  <ul>
+  <li><a href="#removing-na-levels-across-all-ordinal-variables" id="toc-removing-na-levels-across-all-ordinal-variables" class="nav-link" data-scroll-target="#removing-na-levels-across-all-ordinal-variables">Removing NA levels across all ordinal variables</a></li>
+  <li><a href="#calculating-the-percent-of-yes-responses-based-on-another-variable" id="toc-calculating-the-percent-of-yes-responses-based-on-another-variable" class="nav-link" data-scroll-target="#calculating-the-percent-of-yes-responses-based-on-another-variable">Calculating the percent of “yes” responses based on another variable</a></li>
+  </ul></li>
+  <li><a href="#helpful-r-packages" id="toc-helpful-r-packages" class="nav-link" data-scroll-target="#helpful-r-packages">Helpful R Packages</a>
+  <ul>
+  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling">Data Wrangling</a></li>
+  <li><a href="#data-visualization-1" id="toc-data-visualization-1" class="nav-link" data-scroll-target="#data-visualization-1">Data Visualization</a></li>
+  </ul></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further Reading</a>
+  <ul>
+  <li><a href="#data-visualization-2" id="toc-data-visualization-2" class="nav-link" data-scroll-target="#data-visualization-2">Data Visualization</a></li>
+  <li><a href="#coding-resources" id="toc-coding-resources" class="nav-link" data-scroll-target="#coding-resources">Coding Resources</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">R&amp;E Data Style Guide</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 24, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The R&amp;E data style guide provides an overview of best practices for project/script setup and data visualization at CHC. It is meant to be a living document, with additions, updates, and changes being made as needed. If you have any questions about the topics listed in the style guide or have suggestions for other topics to include, please contact Kelsey Kyllonen.</p>
+<!-- reference ToC order: -->
+<!-- https://norcalbiostat.github.io/AppliedStatistics_notes/univariate-visualizations.html -->
+<!-- panels? -->
+<!-- https://math615.netlify.app/topics/t04-describing_distributions.html -->
+<section id="project-and-folder-setup" class="level1">
+<h1>Project and folder setup</h1>
+<p>A typical data project will have at least three components to set up in Box before starting:</p>
+<ul>
+<li><strong>An R project (<code>.Rproj</code>) file</strong> - sets the working directory for the project
+<ul>
+<li>The R project is typically already at the grant project level (i.e., in the 08. Research &amp; Evaluation folder for the grant in Box) and will not need to be created for most projects</li>
+<li>Generally, we have one <code>.Rproj</code> file per grant</li>
+</ul></li>
+<li><strong>A <code>scripts</code> folder</strong> - for storing script files, including any import, data management, and report scripts</li>
+<li><strong>A <code>data</code> folder</strong> - for storing data imports/exports from the script files</li>
+</ul>
+<p>If your project will have one or more reports (<code>.rmd</code> or <code>.qmd</code> files) as a data product, you should also set up a <code>reports</code> folder to store these reports.</p>
+<section id="qualtrics-specific-setup" class="level2">
+<h2 class="anchored" data-anchor-id="qualtrics-specific-setup">Qualtrics-specific setup</h2>
+<p>For projects that use Qualtrics to collect any type of survey data, you should create an <code>import.r</code> script file that imports the survey data directly from Qualtrics using an application programming interface (API), then exports the raw data to use in the data management script. There are multiple reasons for using this process:</p>
+<ul>
+<li><p><strong>It saves time</strong> - you don’t need to manually download a copy of the data from Qualtrics and modify the file to import correctly in R each time we get new survey responses.</p></li>
+<li><p><strong>It’s more secure</strong> - the data exported from the import file is a single <code>.Rdata</code> file, which, unlike Excel or CSV files, can only be opened through R. You can (and should) also remove any unnecessary identifying information from the survey data, such as names, email addresses, and IP addresses, and create any necessary blinded IDs before exporting. The exported data file will overwrite any previous copy of the data, which prevents accidentally using an old version.</p></li>
+<li><p>A limited number of people on the R&amp;E team have API access to Qualtrics, so having separate import and data management scripts allows people without this API access to work on/run the data management scripts.</p></li>
+</ul>
+<p>For information on setting up Qualtrics API access, please see <a href="https://csuchico.box.com/s/r8gsp08qkvw3eiw7j5t88y0ez17qxjx2">this document</a>.</p>
+</section>
+</section>
+<section id="script-file-types" class="level1">
+<h1>Script file types</h1>
+<p>Typically, you will use an R script file (<code>.R</code>) for import scripts and data management/cleaning scripts and either an Rmarkdown (<code>.rmd</code>) or <a href="https://quarto.org/">Quarto</a> (<code>.qmd</code>) script file for exploratory data analyses (EDAs) or data reports. Rmarkdown and Quarto scripts have similar base functionality, but Quarto is a newer and more robust platform with more data visualization and report setup options, especially for html reports.</p>
+<p>The current practice on the CHC R&amp;E team is to use Quarto for all new report script files, but leave existing Rmarkdown script files in <code>.rmd</code> format unless Quarto functionality is needed.</p>
+<section id="script-file-setup" class="level2">
+<h2 class="anchored" data-anchor-id="script-file-setup">Script file setup</h2>
+<p>The contents of your R script file or Rmarkdown/Quarto file will look different depending on the needs of the project. However, all script files at CHC should start by loading the package libraries needed for the project, then importing the data set(s) to be cleaned/analyzed using relative file paths. In Rmarkdown/Quarto documents, this setup should be done in your first code chunk. See an example of a typical R&amp;E team script setup and several different ways of importing data below:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data wrangling</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)        <span class="co"># ggplot2, forcats, dplyr</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)            <span class="co"># for setting options in rmarkdown</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)             <span class="co"># for setting file paths</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)           <span class="co"># read excel files</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># visualizations</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)           <span class="co"># Creates simple graphs</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)       <span class="co"># Makes tables look pretty</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Import an .Rds data file from another folder ("Data and processing scripts") located one level above the current folder</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">'Data and processing scripts/intern_survey_clean.Rds'</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Import an .Rds data file from another folder ("Data and processing scripts") using the "here" package</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># This folder is one level above the current folder </span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file=</span><span class="fu">here</span>(<span class="st">"Data and processing scripts"</span>, <span class="st">"intern_survey_clean.Rds"</span>))</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Import an Excel file from a folder ("data") located one folder above the current folder</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>sbs <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/Subcontractor List.xlsx"</span>, <span class="at">sheet=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="importing-and-exporting-data" class="level2">
+<h2 class="anchored" data-anchor-id="importing-and-exporting-data">Importing and exporting data</h2>
+<section id="importing-data" class="level3">
+<h3 class="anchored" data-anchor-id="importing-data">Importing data</h3>
+<section id="relative-file-paths" class="level4">
+<h4 class="anchored" data-anchor-id="relative-file-paths">Relative file paths</h4>
+<p>Whenever possible, the R&amp;E team uses relative file paths (i.e., file paths that are not specific to one person’s computer) when importing data. Using relative file paths in script files means that anyone with access to the script file and data source could run the script without running into data import errors. These file paths rely on having a consistent working directory for the project by opening the script through the Rproject (<code>.Rproj</code>) file for the project. See an example of the same data import using relative and non-relative file paths in the code chunk below.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Relative file path (anyone could use)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">'Data and processing scripts/intern_survey_clean.Rds'</span>) <span class="co"># The data is located in the "Data and processing scripts" folder</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Non-relative file path (specific to Kelsey's computer)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="do">## DO NOT USE!!!!!</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">'C:/Users/kcollins17/Box/CHC All/10. Research, Evaluation &amp; Professional Presentations/05. CHC Student Internship Evaluation Surveys/Data and processing scripts/intern_survey_clean.Rds'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Occasionally, the data you need to import is located in a folder outside the Rproject for the script. In cases like this, the easiest way to import the data is usually to set up a <code>PATH_TO_BOX</code> object with each user’s non-relative file path extension, then use the <code>PATH_TO_BOX</code> along with the relative file extension. See an example of this in the code chunk below.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set path to Box</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>PATH_TO_BOX <span class="ot">&lt;-</span> <span class="st">"C:/Users/kcollins17/Box/"</span>     <span class="co"># Kelsey's path to Box</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># PATH_TO_BOX &lt;- "C:/Box/"                    # any other paths are commented out until needed</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">paste0</span>(PATH_TO_BOX, <span class="st">"CHC All/10. Research, Evaluation &amp; Professional Presentations/05. CHC Student Internship Evaluation Surveys/Data and processing scripts/intern_survey_clean.rds"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="exporting-data" class="level3">
+<h3 class="anchored" data-anchor-id="exporting-data">Exporting data</h3>
+<p>If the report from your <code>.rmd</code> or <code>.qmd</code> file will need to be run multiple times (e.g., monthly or quarterly), you should set up the report export to update with the current date and/or quarter or month to prevent previous reports from being overwritten. See examples of how to do this below:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Export a file labeled with the current date</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>filename_ <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"Preliminary SOW table as of "</span>,<span class="fu">Sys.Date</span>(),<span class="st">".xlsx"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write_xlsx</span>(<span class="at">x =</span> prelim, <span class="at">path =</span> <span class="fu">paste0</span>(<span class="st">"data/sow_prelim/"</span>,filename_)) <span class="co"># Exported file will be labeled "Preliminary SOW table as of [current date]"</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Export a file labeled with a current_quarter option</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Set current quarter</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>QUARTERS <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Q1"</span>, <span class="st">"Q2"</span>, <span class="st">"Q3"</span>, <span class="st">"Q4"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>current_quarter <span class="ot">&lt;-</span> QUARTERS[<span class="dv">2</span>]</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Export file</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(gcf_out, <span class="at">file =</span> <span class="fu">paste0</span>(<span class="st">"data/gcf/"</span>, current_quarter, <span class="st">"_gcf_data.Rds"</span>)) <span class="co"># Exported file will be labeled "Q2_gcf_data.Rds"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="connecting-to-google-sheets" class="level3">
+<h3 class="anchored" data-anchor-id="connecting-to-google-sheets">Connecting to Google Sheets</h3>
+<p>The <code>googlesheets4</code> package lets you import and export data directly from Google Sheets using an API instead of manually downloading the data from Google Sheets.</p>
+<p>To connect to the Google Sheet, first check the permissions on the Google Sheet to make sure that your email address is added as a user if needed, then import the sheet (see code below for an example). You will likely be asked to authenticate your email and/or API connection at this point; follow the command prompts from R in the console and browser window, and make sure to check the box to allow R to edit or delete your Google Sheets if asked. Once you’ve imported the Google Sheet, you can work with the data in R the same way as any other data set.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gsimport <span class="ot">&lt;-</span> <span class="fu">read_sheet</span>(<span class="st">"https://docs.google.com/spreadsheets/d/[entergooglesheetextensionhere]"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="emailing-through-r" class="level3">
+<h3 class="anchored" data-anchor-id="emailing-through-r">Emailing through R</h3>
+<p>The <code>gmailr</code> and <code>Microsoft365R</code> packages can be used to send emails in bulk (up to ~500 at a time) through Gmail and Outlook, respectively. The R&amp;E team typically uses the <code>gmailr</code> package to send gift card emails to survey participants through our research.for.chc Gmail account. We currently can’t use the <code>Microsoft365R</code> package to send emails through Outlook because of restrictions set up by ITSS.</p>
+<p>Depending on the project needs, the bulk emails can be customized for each recipient using any field in the data set, including name, additional email addresses, and unique gift card codes. For an example of how to set up a script to send customized gift card emails, please see the <code>gift_card_script_template.R</code> file located in the Coding Resources folder in Box.</p>
+<p>For instructions on how to set up R to connect to Gmail, please see the <a href="https://csuchico.box.com/s/witramopn9e4q0c03m967hsh33aky6uv">Sending emails using Gmail from R</a> document.</p>
+<p><strong>Note:</strong> the <code>gmailr</code> package requires a .json credential file to connect to the Gmail API. The same .json file can be used for multiple projects, and it should be placed in the <strong>same folder</strong> as the email script file. For an example of how to connect the .json file within an email script file, see the <code>test_sending_emails.r</code> script file in the Coding Resources folder in Box.</p>
+</section>
+</section>
+</section>
+<section id="formatting-code" class="level1">
+<h1>Formatting Code</h1>
+<p>In addition to improving overall readability, formatting your code in a consistent way helps others (and yourself!) interpret and troubleshoot your code more quickly. The R&amp;E team uses some of the principles from the <a href="https://style.tidyverse.org/">tidyverse style guide</a> as a basis for formatting code; see below for a list of topics and links.</p>
+<ul>
+<li><p><a href="https://style.tidyverse.org/files.html">File names</a></p></li>
+<li><p><a href="https://style.tidyverse.org/syntax.html">Code syntax</a></p></li>
+<li><p><a href="https://style.tidyverse.org/functions.html">Functions</a></p></li>
+<li><p><a href="https://style.tidyverse.org/pipes.html">Pipes</a></p></li>
+<li><p><a href="https://style.tidyverse.org/ggplot2.html">ggplot2 formatting</a></p></li>
+</ul>
+</section>
+<section id="data-visualization" class="level1">
+<h1>Data Visualization</h1>
+<section id="choosing-your-audience" class="level2">
+<h2 class="anchored" data-anchor-id="choosing-your-audience">Choosing your audience</h2>
+<p>The level of detail you put into your graphs/tables will depend on who the graph/table is for. In general, you will be visualizing data for three audience types: yourself and/or the R&amp;E team, internal (CHC) audiences, and external (professional) audiences. The tabs below describe the three audience types and show an example graph for each.</p>
+<p><strong>Who is your audience?</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Yourself</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Internal Audience</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Professional</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Graphs/tables for yourself and/or the R&amp;E team can be “quick and dirty.” These graphs are for getting a quick look at the data and are meant for people who are familiar with data.</p>
+<div class="cell" data-fig-weight="3">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_frq</span>(pen<span class="sc">$</span>species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>These graphs and tables are meant to be used internally (within CHC) and for some outside funder reports. These graphs don’t have to be completely perfect, but they should be fairly polished and be understandable for people with some familiarity with the project/data/analysis. A good rule of thumb for these graphs is if they were to end up being published as-is without your knowledge, you wouldn’t be completely embarrassed to see them in print.</p>
+<div class="cell" data-fig-weight="3">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_frq</span>(pen<span class="sc">$</span>species, <span class="at">title =</span> <span class="st">"Count of Penguins by Species"</span>) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">xlab</span>(<span class="st">"Species"</span>) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p>Professional quality graphs and tables have the highest amount of detail and take the most amount of time to make. They should be able to be interpreted by people not familiar with the project/data/analysis without reading the rest of the report.</p>
+<div class="cell" data-fig-weight="3">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_frq</span>(pen<span class="sc">$</span>species, <span class="at">title =</span> <span class="st">"Count of Penguins by Species"</span>) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Includes penguins from Torgerson, Biscoe, and Dream islands"</span>) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">xlab</span>(<span class="st">"Penguin Species"</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">ylab</span>(<span class="st">"Penguin Count"</span>) <span class="sc">+</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>          <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="choosing-colors" class="level2">
+<h2 class="anchored" data-anchor-id="choosing-colors">Choosing Colors</h2>
+<p>Whenever possible, colors should either help your audience more easily interpret the graph or convey meaning in some way.</p>
+<p><strong>Tips for choosing colors:</strong></p>
+<ul>
+<li>Create your graph using the default colors first, then modify if needed</li>
+<li>Use <a href="https://csuchico.app.box.com/s/d798wfpb9jj7nttvdrz3b9o0kqwkvixj">branding guide colors</a> if required</li>
+<li>Use a colorblind-friendly palette – Check <a href="https://davidmathlogic.com/colorblind/#%23D81B60-%231E88E5-%23FFC107-%23004D40">this page</a> and <a href="https://projects.susielu.com/viz-palette">this page</a> to see how colors look under different types of colorblindness</li>
+<li>Use contrasting colors (often called qualitative colors) for categorical variables since all variables carry the same weight – See <a href="https://colorspace.r-forge.r-project.org/articles/hcl_palettes.html">this page</a> for an example of contrasting/qualitative color palettes.<br>
+</li>
+<li>Only use a gradient for ordinal/continuous data when implying a numeric scale (e.g., likert)</li>
+</ul>
+<p>The <a href="https://r-graph-gallery.com/38-rcolorbrewers-palettes.html"><code>RColorBrewer</code></a> package has many pre-set color palettes to choose from, including examples of sequential vs.&nbsp;divergent color scales. To see more examples of color palettes, including sequential vs.&nbsp;diverging color scales and colorblind-friendly palettes, check out the <a href="https://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3">Color Brewer 2.0</a> site.</p>
+</section>
+<section id="best-practices" class="level2">
+<h2 class="anchored" data-anchor-id="best-practices">Best Practices</h2>
+<section id="significant-figures" class="level3">
+<h3 class="anchored" data-anchor-id="significant-figures">Significant Figures</h3>
+<p>When creating graphs and tables, R (and other stats programs) will often display two or more significant figures for each calculation. In most cases, this is unnecessary for understanding differences between the variables and will be more difficult for your audience to interpret. See an example of this in the <strong>Avg Body Mass</strong> column in the two tables below:</p>
+<div class="columns">
+<div class="column" style="width:48%;">
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>nosigfig <span class="ot">&lt;-</span> pen <span class="sc">%&gt;%</span> <span class="fu">select</span>(species, sex, body_mass_g) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(species, sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">list</span>(<span class="at">mean =</span> <span class="sc">~</span> <span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">count =</span> <span class="sc">~</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(.x))))) <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">relocate</span>(species, sex, body_mass_g_count, body_mass_g_mean) <span class="sc">%&gt;%</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">rename</span>(<span class="at">Species =</span> species, <span class="at">Sex =</span> sex, <span class="at">Count =</span> body_mass_g_count, <span class="st">"Avg Body Mass (g)"</span> <span class="ot">=</span> body_mass_g_mean)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>nosigfig <span class="sc">%&gt;%</span> </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">booktabs =</span> <span class="cn">TRUE</span>, <span class="at">caption =</span> <span class="st">"Mean Penguin Body Mass by Species and Sex"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"HOLD_position"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Mean Penguin Body Mass by Species and Sex</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Species</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Sex</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Count</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Avg Body Mass (g)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Adelie</td>
+<td style="text-align: left;">female</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">3368.836</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Adelie</td>
+<td style="text-align: left;">male</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">4043.493</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Adelie</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3540.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Chinstrap</td>
+<td style="text-align: left;">female</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">3527.206</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Chinstrap</td>
+<td style="text-align: left;">male</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">3938.971</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gentoo</td>
+<td style="text-align: left;">female</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">4679.741</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gentoo</td>
+<td style="text-align: left;">male</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">5484.836</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gentoo</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4587.500</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</div><div class="column" style="width:48%;">
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sigfig <span class="ot">&lt;-</span> pen <span class="sc">%&gt;%</span> <span class="fu">select</span>(species, sex, body_mass_g) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(species, sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">list</span>(<span class="at">mean =</span> <span class="sc">~</span> <span class="fu">round</span>(<span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="at">count =</span> <span class="sc">~</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(.x))))) <span class="sc">%&gt;%</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">relocate</span>(species, sex, body_mass_g_count, body_mass_g_mean) <span class="sc">%&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">rename</span>(<span class="at">Species =</span> species, <span class="at">Sex =</span> sex, <span class="at">Count =</span> body_mass_g_count, <span class="st">"Avg Body Mass (g)"</span> <span class="ot">=</span> body_mass_g_mean)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>sigfig <span class="sc">%&gt;%</span> </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">booktabs =</span> <span class="cn">TRUE</span>, <span class="at">caption =</span> <span class="st">"Mean Penguin Body Mass by Species and Sex"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"HOLD_position"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Mean Penguin Body Mass by Species and Sex</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Species</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Sex</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Count</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Avg Body Mass (g)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Adelie</td>
+<td style="text-align: left;">female</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">3369</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Adelie</td>
+<td style="text-align: left;">male</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">4043</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Adelie</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3540</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Chinstrap</td>
+<td style="text-align: left;">female</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">3527</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Chinstrap</td>
+<td style="text-align: left;">male</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">3939</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gentoo</td>
+<td style="text-align: left;">female</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">4680</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gentoo</td>
+<td style="text-align: left;">male</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">5485</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gentoo</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4588</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</div>
+</div>
+<p>Note that some packages (<code>sjPlot</code>, etc.) will do this for you. See the <a href="#Helpful-R-Packages">Helpful R Packages</a> section for more information on <code>sjPlot</code> and other graph packages.</p>
+</section>
+<section id="informative-titles" class="level3">
+<h3 class="anchored" data-anchor-id="informative-titles">Informative Titles</h3>
+<p>Graphs and tables should be able to stand alone, without needing to refer to the report text to interpret the graph/table. Writing a descriptive title for your graph/table is an important part of this process.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grpfrq</span>(<span class="at">var.cnt =</span> pen<span class="sc">$</span>species, <span class="at">var.grp =</span> pen<span class="sc">$</span>island, <span class="at">title =</span> <span class="st">"Count of Penguin Species by Island (2007-2009)"</span>) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">xlab</span>(<span class="st">"Penguin Species"</span>) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Depending on your audience, it can also be appropriate to include the take-home message from the graph in the title.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grpfrq</span>(<span class="at">var.cnt =</span> pen<span class="sc">$</span>species, <span class="at">var.grp =</span> pen<span class="sc">$</span>island, <span class="at">title =</span> <span class="st">"Adelie penguins can be found on more islands than Gentoo or Chinstrap penguins"</span>) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">labs</span>(<span class="at">caption =</span> <span class="st">"Data from 2007-2009"</span>) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">xlab</span>(<span class="st">"Penguin Species"</span>) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span> </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>          <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Keep in mind that figure <strong>titles</strong> are different than <strong>captions</strong>. Titles contain a brief description (typically only one sentence, but doesn’t necessarily need to be a complete sentence), usually in larger text, of the figure. Captions provide a way to reference the figure/table within the text (example: Figure 2, Figure 3) and may use multiple sentences to describe the figure/table in detail. As a rule, captions go <strong>above</strong> tables and <strong>below</strong> figures (graphs). Tables often will not have titles because of the caption location.</p>
+<div class="cell" data-fig-weight="3">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grpfrq</span>(<span class="at">var.cnt =</span> pen<span class="sc">$</span>species, <span class="at">var.grp =</span> pen<span class="sc">$</span>island, </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">title =</span> <span class="st">"THIS IS WHERE THE TITLE GOES"</span>) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">xlab</span>(<span class="st">"Penguin Species"</span>) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span> </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>          <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>This is where the caption goes</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>add link to document on how to use dynamic numbers in captions (once Saul creates it)</p>
+</blockquote>
+</section>
+<section id="consistent-themes" class="level3">
+<h3 class="anchored" data-anchor-id="consistent-themes">Consistent Themes</h3>
+<p>It is considered good practice to create graphs with as little “visual noise” - extra lines, unnecessary colors/grayscale, numbers with too many significant figures, etc. - as possible. Visual noise can be overwhelming and cause key points to be missed because it forces your audience to process extra information.</p>
+<p>The easiest way to minimize unnecessary visual noise is to set a global theme for your graphs after loading in your R packages. See the <a href="#Set-a-theme-to-use-globally">Set a theme to use globally</a> section for instructions.</p>
+<p>Which graph is easier to interpret from a quick glance?</p>
+<div class="cell" data-source-line-numbers="12">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>this <span class="ot">&lt;-</span> <span class="fu">plot_grpfrq</span>(<span class="at">var.cnt =</span> pen<span class="sc">$</span>species, <span class="at">var.grp =</span> pen<span class="sc">$</span>island, <span class="at">title =</span> <span class="st">"This?"</span>) <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Count of Penguin Species by Island (2007-2009)"</span>) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">xlab</span>(<span class="st">"Penguin Species"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">set_theme</span>(<span class="at">legend.pos =</span> <span class="st">"top"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>that <span class="ot">&lt;-</span> <span class="fu">plot_grpfrq</span>(<span class="at">var.cnt =</span> pen<span class="sc">$</span>species, <span class="at">var.grp =</span> pen<span class="sc">$</span>island, <span class="at">title =</span> <span class="st">"Or That?"</span>) <span class="sc">+</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>          <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Count of Penguin Species by Island (2007-2009)"</span>) <span class="sc">+</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>          <span class="fu">xlab</span>(<span class="st">"Penguin Species"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>          <span class="fu">set_theme</span>(<span class="at">legend.pos =</span> <span class="st">"top"</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">base =</span> <span class="fu">theme_minimal</span>())</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(this, that, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="1344"></p>
+</figure>
+</div>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Section on graphics - write general comments, link to ASCN as a overall guide with lots of options. then a bulleted list that link directly to CHC preferred choice which robin will have to create.</p>
+</blockquote>
+</section>
+</section>
+<section id="single-variable" class="level2">
+<h2 class="anchored" data-anchor-id="single-variable">Single Variable</h2>
+<section id="categorical" class="level3">
+<h3 class="anchored" data-anchor-id="categorical">Categorical</h3>
+<p>Bar charts are the most common way to visualize single variable categorical data. It is good practice to label the bars with both the count and percent of each data category to make it easy for your audience to interpret the graph. Some packages (example: <code>sjPlot</code>) will do this automatically.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_frq</span>(pen<span class="sc">$</span>year, <span class="at">title =</span> <span class="st">"Number of Penguins Sampled Per Year"</span>) <span class="sc">+</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Includes penguins from Torgerson, Biscoe, and Dream islands"</span>) <span class="sc">+</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">ylab</span>(<span class="st">"Penguin Count"</span>) <span class="sc">+</span> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>          <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="numeric" class="level3">
+<h3 class="anchored" data-anchor-id="numeric">Numeric</h3>
+<section id="histogram" class="level4">
+<h4 class="anchored" data-anchor-id="histogram">Histogram</h4>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>plotting <span class="ot">&lt;-</span> pen <span class="sc">%&gt;%</span> <span class="fu">select</span>(species, sex, body_mass_g) <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_frq</span>(plotting<span class="sc">$</span>body_mass_g, <span class="at">type=</span><span class="st">"density"</span>, <span class="at">title =</span> <span class="st">"Distribution of Penguin Body Mass by Species"</span>) <span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">xlab</span>(<span class="st">"Body Mass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="two-variables" class="level2">
+<h2 class="anchored" data-anchor-id="two-variables">Two Variables</h2>
+<section id="numeric-1" class="level3">
+<h3 class="anchored" data-anchor-id="numeric-1">Numeric</h3>
+<section id="plots" class="level4">
+<h4 class="anchored" data-anchor-id="plots">Plots</h4>
+<p>Basic plots are a good way to show the relationship between two continuous variables. In the plot below, it is easy to visualize the strong relationship between body mass and flipper length in the <code>penguins</code> data set.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> species), <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Paired"</span>) <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relationship Between Body Mass and Flipper Length in Penguins"</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">x =</span> <span class="st">"Body Mass (g)"</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">y =</span> <span class="st">"Flipper Length (mm)"</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">caption =</span> <span class="st">"Data from 2007-2009"</span>) <span class="sc">+</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>          <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Adding colors to the plot based on a third variable can help further visualize relationships within the data. The plots below show the same plot with colored points representing species and sex, respectively.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plotspecies <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> species), <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Paired"</span>) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relationship Between Body Mass and Flipper Length in Penguins"</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">x =</span> <span class="st">"Body Mass (g)"</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">y =</span> <span class="st">"Flipper Length (mm)"</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">caption =</span> <span class="st">"Data from 2007-2009"</span>) <span class="sc">+</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>          <span class="fu">theme_minimal</span>()</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>plotsex <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>          <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> sex), <span class="at">size =</span> <span class="dv">2</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>          <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Paired"</span>) <span class="sc">+</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>          <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relationship Between Body Mass and Flipper Length in Penguins"</span>,</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">x =</span> <span class="st">"Body Mass (g)"</span>,</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">y =</span> <span class="st">"Flipper Length (mm)"</span>,</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">caption =</span> <span class="st">"Data from 2007-2009"</span>) <span class="sc">+</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>          <span class="fu">theme_minimal</span>()</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(plotspecies, plotsex, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="1344"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You can also use various combinations of <code>facet_wrap</code> and the <code>gghighlight</code> package to show individual plots by categorical variable. Faceting the plots separates the numeric data for each categorical variable into its own plot, and adding highlighting to the faceted plots shows the full data distribution plotted in gray in each plot. See examples of both faceting and faceting with highlighting in the plots below:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plotfaceted <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Paired"</span>) <span class="sc">+</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Faceted"</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">subtitle =</span> <span class="st">"Relationship Between Body Mass and Flipper Length in Penguins"</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">x =</span> <span class="st">"Body Mass (g)"</span>,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">y =</span> <span class="st">"Flipper Length (mm)"</span>,</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">caption =</span> <span class="st">"Data from 2007-2009"</span>) <span class="sc">+</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>          <span class="fu">aes</span>(<span class="at">color =</span> species) <span class="sc">+</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>          <span class="fu">facet_wrap</span>(<span class="sc">~</span> species) <span class="sc">+</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>          <span class="fu">set_theme</span>(<span class="at">legend.pos =</span> <span class="st">"none"</span>,</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">base =</span> <span class="fu">theme_minimal</span>())</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>plothighlighted <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>          <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>          <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Paired"</span>) <span class="sc">+</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>          <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Faceted and Highlighted"</span>,</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>               <span class="at">subtitle =</span> <span class="st">"Relationship Between Body Mass and Flipper Length in Penguins"</span>,</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>               <span class="at">x =</span> <span class="st">"Body Mass (g)"</span>,</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>               <span class="at">y =</span> <span class="st">"Flipper Length (mm)"</span>,</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>               <span class="at">caption =</span> <span class="st">"Data from 2007-2009"</span>) <span class="sc">+</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>          <span class="fu">aes</span>(<span class="at">color =</span> species) <span class="sc">+</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>          <span class="fu">facet_wrap</span>(<span class="sc">~</span> species) <span class="sc">+</span> gghighlight<span class="sc">::</span><span class="fu">gghighlight</span>() <span class="sc">+</span></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>          <span class="fu">theme_minimal</span>()</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(plotfaceted, plothighlighted, <span class="at">nrow =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Remember to choose color palettes that are both black and white printing-friendly and color blindness-friendly.</p>
+</section>
+</section>
+<section id="categorical-1" class="level3">
+<h3 class="anchored" data-anchor-id="categorical-1">Categorical</h3>
+<p>Bar charts are commonly used to show relationships between two categorical variables. Side-by-side bar graphs and stacked bar graphs are the most common types. The examples below show the same data in two different chart formats.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>unstacked <span class="ot">&lt;-</span> <span class="fu">plot_grpfrq</span>(<span class="at">var.cnt =</span> pen<span class="sc">$</span>species, <span class="at">var.grp =</span> pen<span class="sc">$</span>island, </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">title =</span> <span class="st">"Side-By-Side Bars"</span>) <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Count of Penguin Species by Island (2007-2009)"</span>) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">xlab</span>(<span class="st">"Penguin Species"</span>) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>          <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span> </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>          <span class="fu">theme_minimal</span>()</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>stacked <span class="ot">&lt;-</span> <span class="fu">plot_grpfrq</span>(<span class="at">var.cnt =</span> pen<span class="sc">$</span>species, <span class="at">var.grp =</span> pen<span class="sc">$</span>island, <span class="at">bar.pos =</span> <span class="st">"stack"</span>,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">title =</span> <span class="st">"Stacked Bars"</span>) <span class="sc">+</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>          <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Count of Penguin Species by Island (2007-2009)"</span>) <span class="sc">+</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>          <span class="fu">xlab</span>(<span class="st">"Penguin Species"</span>) <span class="sc">+</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>          <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span> </span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>          <span class="fu">theme_minimal</span>()</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(unstacked, stacked, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="1344"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that it is more difficult to compare the relative heights of the bar sections in stacked bar graphs. The example above is a good example of this, since some of the islands are not represented in each species in the data set. Labeling the stacked bars with the count and percent of each bar section can help with this (<code>sjPlot</code> does this automatically).</p>
+</section>
+<section id="numeric-categorical" class="level3">
+<h3 class="anchored" data-anchor-id="numeric-categorical">Numeric + Categorical</h3>
+<section id="boxplot" class="level4">
+<h4 class="anchored" data-anchor-id="boxplot">Boxplot</h4>
+<p>Boxplots can be used to show the overall characteristics of a continuous variable in relation to a categorical variable. Boxplots have four sections that each represent 25% of the data range: an upper whisker, an upper quartile, a lower quartile, and a lower whisker. The line within the box represents the <strong>median</strong>, and any outliers in the data are shown as points above or below the whisker lines.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>plotting <span class="ot">&lt;-</span> pen <span class="sc">%&gt;%</span> <span class="fu">select</span>(species, sex, body_mass_g) <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggboxplot</span>(plotting, <span class="at">x=</span><span class="st">"species"</span>, <span class="at">y=</span><span class="st">"body_mass_g"</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Distribution of Penguin Body Mass by Species"</span>, </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">xlab =</span> <span class="st">"Species"</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">ylab =</span> <span class="st">"Body Mass (g)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Color can be used to show the data separated out by an additional categorical variable. The boxplot below shows the same penguin body mass data separated out by both species and sex.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>plotting <span class="ot">&lt;-</span> pen <span class="sc">%&gt;%</span> <span class="fu">select</span>(species, sex, body_mass_g) <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggboxplot</span>(plotting, <span class="at">x=</span><span class="st">"species"</span>, <span class="at">y=</span><span class="st">"body_mass_g"</span>,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Distribution of Penguin Body Mass by Species"</span>, </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">xlab =</span> <span class="st">"Species"</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">ylab =</span> <span class="st">"Body Mass (g)"</span>,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> <span class="st">"sex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that boxplots can be confusing to audiences who aren’t used to working with data/graphs. Use with caution, and be prepared to do a lot of explaining!</p>
+<section id="jitter" class="level5">
+<h5 class="anchored" data-anchor-id="jitter">Jitter</h5>
+<p>Jitter is a graph option that helps visualize the distribution of data points that would otherwise overlap in continuous data plotted against categorical data. It works by introducing random noise that moves the categorical side of the points slightly across the binwidth of the graph. The first graph below does not use jitter, while the second graph uses jitter. Notice that the graph using jitter has more horizontal space between the points, which makes it easier to view the point distribution.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>nojitter <span class="ot">&lt;-</span> <span class="fu">ggboxplot</span>(plotting, <span class="at">x=</span><span class="st">"species"</span>, <span class="at">y=</span><span class="st">"body_mass_g"</span>,</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Without Jitter"</span>, </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">xlab =</span> <span class="st">"Species"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">ylab =</span> <span class="st">"Body Mass (g)"</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">add =</span> <span class="st">"point"</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> <span class="st">"sex"</span>)  <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>          <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Distribution of Penguin Body Mass by Species"</span>)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>jitter <span class="ot">&lt;-</span> <span class="fu">ggboxplot</span>(plotting, <span class="at">x=</span><span class="st">"species"</span>, <span class="at">y=</span><span class="st">"body_mass_g"</span>,</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"With Jitter"</span>, </span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">xlab =</span> <span class="st">"Species"</span>,</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">ylab =</span> <span class="st">"Body Mass (g)"</span>,</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>                <span class="at">add =</span> <span class="st">"jitter"</span>,</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> <span class="st">"sex"</span>) <span class="sc">+</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>          <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Distribution of Penguin Body Mass by Species"</span>)</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(nojitter, jitter, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="1344"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="violin-plot" class="level4">
+<h4 class="anchored" data-anchor-id="violin-plot">Violin plot</h4>
+<p>Violin plots are similar in concept to boxplots, but they show the shape of the distribution of data rather than representing the data as a box. Below is the same penguin body mass data visualized as a violin plot.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggviolin</span>(plotting, <span class="at">x=</span><span class="st">"species"</span>, <span class="at">y=</span><span class="st">"body_mass_g"</span>,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Distribution of Penguin Body Mass by Species"</span>, </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">xlab =</span> <span class="st">"Species"</span>,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">ylab =</span> <span class="st">"Body Mass (g)"</span>,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> <span class="st">"sex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You can also combine boxplots and violin plots to show more information.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggviolin</span>(plotting, <span class="at">x=</span><span class="st">"species"</span>, <span class="at">y=</span><span class="st">"body_mass_g"</span>,</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Distribution of Penguin Body Mass by Species"</span>, </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">xlab =</span> <span class="st">"Species"</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">ylab =</span> <span class="st">"Body Mass (g)"</span>,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> <span class="st">"sex"</span>,</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">add =</span> <span class="st">"boxplot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Like boxplots, violin plots can be confusing to audiences without much data experience.</p>
+</section>
+</section>
+</section>
+<section id="likert" class="level2">
+<h2 class="anchored" data-anchor-id="likert">Likert</h2>
+<p>Likert scale questions are commonly used on surveys to measure participants’ beliefs, opinions, and attitudes toward various statements. Participants are typically asked to indicate how much they agree or disagree with a series of statements. Other variations include how likely or unlikely a participant would be to take a particular action or how familiar or unfamiliar a participant is with a concept or program. Some examples of likert scale questions are below:</p>
+<ul>
+<li>This internship provided me with important skills related to my career goals
+<ul>
+<li>Strongly disagree</li>
+<li>Disagree</li>
+<li>Neither agree nor disagree</li>
+<li>Agree</li>
+<li>Strongly agree</li>
+</ul></li>
+<li>How satisfied are you with your overall internship experience?
+<ul>
+<li>Very dissatisfied</li>
+<li>Somewhat dissatisfied</li>
+<li>Neither satisfied nor dissatisfied</li>
+<li>Somewhat satisfied</li>
+<li>Very satisfied</li>
+</ul></li>
+<li>How familiar are you with the SNAP/CalFresh program?
+<ul>
+<li>Very unfamiliar</li>
+<li>Somewhat unfamiliar</li>
+<li>Neither familiar nor unfamiliar</li>
+<li>Somewhat familiar</li>
+<li>Very familiar</li>
+</ul></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> pisa <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">colnames</span>(pisa)[<span class="fu">grepl</span>(<span class="st">"ST24Q0"</span>, <span class="fu">colnames</span>(pisa))]) <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">select</span>(<span class="sc">-</span>ST24Q04, <span class="sc">-</span>ST24Q05, <span class="sc">-</span>ST24Q06, <span class="sc">-</span>ST24Q07, <span class="sc">-</span>ST24Q08, <span class="sc">-</span>ST24Q09)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting column names</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: these column names are for illustration purposes only and do not reflect the actual data</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tmp) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"I prefer pancakes over waffles"</span>,</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"My favorite breakfast food is french toast"</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"I would choose syrup over fruit topping"</span>)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Set color palette</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>likert.pal<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">brewer.pal</span>(<span class="dv">4</span>, <span class="st">"BrBG"</span>)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating the likert graph</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_likert</span>(tmp,</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">grid.range =</span> <span class="fu">c</span>(<span class="fl">1.0</span>, <span class="fl">1.0</span>), <span class="co"># Sets the axis range</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">expand.grid =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">values =</span> <span class="st">"sum.outside"</span>,</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">catcount =</span> <span class="dv">4</span>,</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">geom.colors =</span> likert.pal<span class="fl">.4</span>,</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">title =</span> <span class="st">"When choosing breakfast foods..."</span>,</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">show.prc.sign =</span> <span class="cn">TRUE</span>, <span class="at">reverse.scale =</span> <span class="cn">TRUE</span>, <span class="at">show.n=</span><span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">set_theme</span>(<span class="at">legend.pos =</span> <span class="st">"top"</span>, <span class="at">base =</span> <span class="fu">theme_minimal</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that in this example, there are four potential answer choices: strongly disagree, disagree, agree, and strongly agree. CHC typically uses a five-answer likert scale with a neutral response option (example: neither agree nor disagree) when developing survey questions.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grpfrq</span>(<span class="at">var.cnt =</span> pen<span class="sc">$</span>species, <span class="at">var.grp =</span> pen<span class="sc">$</span>island, <span class="at">title =</span> <span class="st">"Count of Penguin Species by Island (2007-2009)"</span>) <span class="sc">+</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">xlab</span>(<span class="st">"Penguin Species"</span>) <span class="sc">+</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">ylab</span>(<span class="st">"Count"</span>) <span class="sc">+</span> </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="_Style_guide_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="graph-checklist" class="level2">
+<h2 class="anchored" data-anchor-id="graph-checklist">Graph Checklist</h2>
+<p><strong>Titles</strong></p>
+<ul>
+<li>Figure titles go <em>below</em> the figure</li>
+<li>Use sentence case</li>
+<li>Bold font (not italic)</li>
+<li>“Figure [number]”, not “Fig. [number]”</li>
+</ul>
+<p><strong>Captions</strong></p>
+<ul>
+<li>Any captions used should be self-explanatory and help the figure stand alone</li>
+</ul>
+<p><strong>Axes</strong></p>
+<ul>
+<li>Axis titles should have bolded font</li>
+<li>Axis title text should go in the direction of the arrows/axes (i.e., the y-axis title should be written vertically)</li>
+<li>Text should be word-wrapped as opposed to angled text</li>
+<li>Text should be left-justified when possible</li>
+<li>Y-axis tick marks:
+<ul>
+<li>Should start at 0 whenever possible (starting at 50 is okay in specific situations)</li>
+<li>Should use reasonable/meaningful tick mark breaks/intervals - what is appropriate will differ based on the situation</li>
+</ul></li>
+</ul>
+<p><strong>Legends</strong></p>
+<ul>
+<li>Figures do not need a legend if the information is already labeled or built into the axis titles</li>
+<li>Legends can be placed either inside or outside the figure
+<ul>
+<li>If inside the plot, place wherever there is room</li>
+</ul></li>
+<li>External legends should be on the right hand side of the figure when possible
+<ul>
+<li>If the document space does not allow a right hand side legend, place the legend on the top of the figure instead</li>
+</ul></li>
+</ul>
+<p><strong>Annotation</strong></p>
+<ul>
+<li>Default to including n(%) over the bars in plots
+<ul>
+<li>Required for external audiences, less so for internal audiences</li>
+</ul></li>
+</ul>
+<p><strong>Colors</strong></p>
+<ul>
+<li>Use branding guide colors if required</li>
+<li>Use a colorblind-friendly palette</li>
+<li>Use contrasting colors for categorical variables</li>
+<li>Use a gradient for ordinal/continuous data <strong>only</strong> when implying a numeric scale (e.g., likert)</li>
+<li>Only use colors when they add understanding/meaning to your graph</li>
+</ul>
+</section>
+<section id="table-checklist" class="level2">
+<h2 class="anchored" data-anchor-id="table-checklist">Table Checklist</h2>
+<p><strong>Titles</strong></p>
+<ul>
+<li>Table titles go <em>on top/above</em> the table</li>
+<li>Use sentence case</li>
+<li>Use bold font</li>
+</ul>
+<p><strong>Borders/Lines</strong></p>
+<ul>
+<li>Remove vertical borders if required for manuscripts/journals</li>
+</ul>
+<p><strong>Text Positioning/Style</strong></p>
+<ul>
+<li>First column should be left-justified, the rest of the columns should be center-justified</li>
+<li>First row should be bolded</li>
+<li>First column can also be bolded</li>
+</ul>
+<p><strong>Subcategories</strong></p>
+<ul>
+<li>Subcategory rows should be indented or right-justified to make them visibly distinguished
+<ul>
+<li>Example: in a demographic table containing several variables, the subcategories of a “race” variable (“white”, “black”, etc.) would be indented to improve the readability of the table</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="setting-global-options" class="level1">
+<h1>Setting Global Options</h1>
+<section id="use-a-theme-globally" class="level2">
+<h2 class="anchored" data-anchor-id="use-a-theme-globally">Use a theme globally</h2>
+<p>Use the following code chunk in the setup header to set a consistent theme across all of the graphs in your document. Remember that it is considered good practice to choose the theme with the least visual noise that still conveys all the needed information for your graph.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>ggplot<span class="sc">::</span><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>More ggthemes can be found <a href="https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/">here</a>.</p>
+</section>
+<section id="add-figure-captions-with-automatically-updating-labels" class="level2">
+<h2 class="anchored" data-anchor-id="add-figure-captions-with-automatically-updating-labels">Add figure captions with automatically updating labels</h2>
+<p>Use the following code chunk in the setup header to set your figure captions to automatically update with sequential numbers.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>fig.num <span class="ot">&lt;&lt;-</span> <span class="dv">0</span> <span class="co"># global var</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>fig.cap <span class="ot">&lt;-</span> <span class="cf">function</span>(cap) {</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  fig.num <span class="ot">&lt;&lt;-</span> fig.num <span class="sc">+</span> <span class="dv">1</span> <span class="co"># override global var</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">"Figure 1."</span>, fig.num, <span class="st">": "</span>, cap)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="chcrne-package" class="level1">
+<h1>chcRne Package</h1>
+<p>The <code>chcRne</code> R package contains functions that the R&amp;E team frequently uses for data cleaning and analysis. The chcRne package currently contains the following functions:</p>
+<ul>
+<li><code>yesno_to_binary</code> - for converting marked/unmarked questions to 1/0 for use in <code>pnta.unanswered.to.miss()</code></li>
+<li><code>pnta.unanswered.to.miss()</code> - for setting all columns in select all that apply questions to NA when the “prefer not to answer” option is selected</li>
+<li><code>nperc_tbl_MATA()</code> - for creating a table that shows counts (n) and percentages for each option in a mark all that apply question</li>
+<li><code>question_table</code> - for creating a table with counts and percentages when working with a <strong>single</strong> categorical variable</li>
+<li><code>print_n_reporting()</code> - reports the count and percent of non-NA responses</li>
+<li><code>count_and_percent()</code> - returns a string that includes the total count and percentage of the categories in the input variable</li>
+</ul>
+<p>Please see the <code>chcRne</code> <a href="https://smoorad99.github.io/chcRnePackage/">package website</a> for instructions for installing the package and more information about using these functions.</p>
+</section>
+<section id="other-sample-code-chunks" class="level1">
+<h1>Other Sample Code Chunks</h1>
+<section id="removing-na-levels-across-all-ordinal-variables" class="level2">
+<h2 class="anchored" data-anchor-id="removing-na-levels-across-all-ordinal-variables">Removing NA levels across all ordinal variables</h2>
+<p>Use the following code chunk to remove NAs across all ordinal variables.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set up the function</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>remove.na.levels <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">levels</span>(x)[<span class="fu">which</span>(<span class="fu">is.na</span>(<span class="fu">levels</span>(x)))] <span class="ot">&lt;-</span> <span class="cn">NA</span> </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co"># list out all variable names with this problem and apply function</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>cols.with.na.lvls <span class="ot">&lt;-</span> pisaitems <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(is.ordered)) <span class="sc">%&gt;%</span> <span class="fu">names</span>()</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>pisaitems <span class="ot">&lt;-</span> pisaitems <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(cols.with.na.lvls), <span class="sc">~</span><span class="fu">remove.na.levels</span>(.x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="calculating-the-percent-of-yes-responses-based-on-another-variable" class="level2">
+<h2 class="anchored" data-anchor-id="calculating-the-percent-of-yes-responses-based-on-another-variable">Calculating the percent of “yes” responses based on another variable</h2>
+<p>Use the following code chunk to calculate the percent of “yes” responses across multiple variables by another variable.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># step 1: calculate # and % yes for each variable by group</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>dta.to.plot <span class="ot">&lt;-</span> BNSp2b <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># select variables to plot</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(eth_white, eth_african_amer, firstgen, eth_hispanic, food_insecure_2item) <span class="sc">%&gt;%</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># pivot longer so multiple variables become 1 variable (all vars except %yes var)</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>food_insecure_2item, <span class="at">names_to =</span> <span class="st">"characteristic"</span>, <span class="at">values_to =</span> <span class="st">"level"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># drop rows with no data on the characteristic grouping variables</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(level)) <span class="sc">%&gt;%</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># reformat characteristic name so it's human readable instead of a variable name</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">characteristic =</span> <span class="fu">fct_recode</span>(characteristic, </span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">White =</span> <span class="st">"eth_white"</span>, <span class="st">`</span><span class="at">African American</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"eth_african_amer"</span>, </span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">First Generation</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"firstgen"</span>, <span class="st">`</span><span class="at">Hispanic/LatinX</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"eth_hispanic"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># group by levels within characteristic </span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(characteristic, level) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># calculate n and % yes by level within group</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">x =</span> <span class="fu">sum</span>(food_insecure_2item <span class="sc">==</span> <span class="dv">1</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>), </span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">N =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(food_insecure_2item)), </span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">pct =</span> x<span class="sc">/</span>N, </span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">pct_lab =</span> <span class="fu">paste0</span>(x, <span class="st">"/"</span>, N, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, <span class="fu">percent</span>(pct, <span class="at">accuracy =</span> .<span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># drop the no's</span></span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(level <span class="sc">==</span> <span class="dv">1</span>) </span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: pass into ggplot. Instead of saving the intermediary data set, one could pipe all the above code directly into ggplot</span></span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>dta.to.plot <span class="sc">%&gt;%</span> </span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>characteristic, <span class="at">y=</span>pct)) <span class="sc">+</span> </span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> </span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">y=</span>pct<span class="fl">+.05</span>, <span class="at">label=</span>pct_lab)) <span class="sc">+</span> </span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">labels=</span>percent) <span class="sc">+</span></span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Respondent characteristic"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Percent"</span>) <span class="sc">+</span> </span>
+<span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Percent of respondents who report being food insecure within various characteristics"</span>) <span class="sc">+</span> </span>
+<span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="helpful-r-packages" class="level1">
+<h1>Helpful R Packages</h1>
+<section id="data-wrangling" class="level2">
+<h2 class="anchored" data-anchor-id="data-wrangling">Data Wrangling</h2>
+<p><a href="https://cran.r-project.org/web/packages/tidyverse/vignettes/paper.html"><code>tidyverse</code></a> - a compilation of useful R packages frequently used at CHC, including (but not limited to):</p>
+<ul>
+<li><a href="https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html"><code>dplyr</code></a> - for data manipulation and cleaning</li>
+<li><a href="https://cran.r-project.org/web/packages/ggplot2/vignettes/ggplot2-in-packages.html"><code>ggplot2</code></a> - for graphs/data visualizations</li>
+<li><a href="https://cran.r-project.org/web/packages/forcats/vignettes/forcats.html"><code>forcats</code></a> - extremely useful package for working with factor variables</li>
+<li><a href="https://cran.r-project.org/web/packages/broom/vignettes/broom.html"><code>broom</code></a> - quickly provides information about your dataset</li>
+<li><a href="https://readxl.tidyverse.org/"><code>readxl</code></a> - for importing data in Excel files</li>
+<li><a href="https://googlesheets4.tidyverse.org/"><code>googlesheets4</code></a> - for importing data from Google Sheets</li>
+<li><a href="https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html"><code>lubridate</code></a> - tools for working with dates</li>
+<li><a href="https://cran.r-project.org/web/packages/stringr/vignettes/stringr.html"><code>stringr</code></a> - tools for working with strings</li>
+</ul>
+<p><a href="https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html"><code>janitor</code></a> - has tools for data cleaning</p>
+<p><a href="https://juba.github.io/questionr/index.html"><code>questionr</code></a> - contains helpful tools for processing survey data</p>
+<p><a href="https://cran.r-project.org/web/packages/qualtRics/vignettes/qualtRics.html"><code>qualtRics</code></a> - provides API access to Qualtrics and has basic commands for recoding and filtering variables</p>
+<p><a href="https://cran.r-project.org/web/packages/gmailr/vignettes/gmailr.html"><code>gmailr</code></a> - provides API access to Gmail and has tools for sending emails in bulk</p>
+<p><a href="https://github.com/Azure/Microsoft365R"><code>Microsoft365R</code></a> - provides API access to Microsoft Outlook (among other things) and has tools for sending emails in bulk. Note: we cannot currently use this package for sending emails at CHC due to IT limitations.</p>
+</section>
+<section id="data-visualization-1" class="level2">
+<h2 class="anchored" data-anchor-id="data-visualization-1">Data Visualization</h2>
+<p><a href="https://cran.r-project.org/web/packages/ggplot2/vignettes/ggplot2-in-packages.html"><code>ggplot2</code></a> - included in the <a href="https://cran.r-project.org/web/packages/tidyverse/vignettes/paper.html"><code>tidyverse</code></a> package (see Data Wrangling section above)</p>
+<p><a href="https://rpkgs.datanovia.com/ggpubr/"><code>ggpubr</code></a> - another graph package, especially good for histograms, boxplots, and violin plots</p>
+<p><a href="https://strengejacke.github.io/sjPlot"><code>sjPlot</code></a> - creates graphs with built-in counts/percentages and other useful features</p>
+<p><a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html"><code>kableExtra</code></a> - for creating pretty tables. Note that this package has been causing intermittent file path length errors lately for unknown reasons</p>
+<p><a href="https://cran.r-project.org/web/packages/gtsummary/vignettes/tbl_summary.html"><code>gtsummary</code></a> - another package for creating pretty tables</p>
+<p><a href="https://gt.rstudio.com/"><code>gt</code></a> - another package for creating tables, especially good for tables that need to be exported to Microsoft Word</p>
+</section>
+</section>
+<section id="further-reading" class="level1">
+<h1>Further Reading</h1>
+<section id="data-visualization-2" class="level2">
+<h2 class="anchored" data-anchor-id="data-visualization-2">Data Visualization</h2>
+<p><a href="https://www.psychologicalscience.org/publications/visual-data-communication.html">The Science of Visual Data Communication: What Works</a> - An overview of data visualization practices</p>
+<p><a href="https://journals.sagepub.com/stoken/default+domain/10.1177%2F15291006211057899-FREE/full">The Practice of Visual Data Communication: What Works</a> - Article with good tips and examples for data visualization</p>
+<p><a href="https://clauswilke.com/dataviz/">Fundamentals of Data Visualization</a> - A book with in-depth examples of data visualization and best practices.</p>
+</section>
+<section id="coding-resources" class="level2">
+<h2 class="anchored" data-anchor-id="coding-resources">Coding Resources</h2>
+<p><a href="https://stat545.com/">Stat 545</a> - A great resource for data wrangling, analysis, and visualization in R.</p>
+<p><a href="https://epirhandbook.com/en/index.html">The Epidemiologist R Handbook</a> - An excellent general R resource for people new(er) to coding. Has simple explanations and tutorials for common R tasks.</p>
+<p><a href="https://posit.co/resources/cheatsheets/">R Cheatsheets</a> - Short (1-2 page) guides for popular topics and packages.</p>
+<p><a href="https://happygitwithr.com/">Happy Git with R</a> - A manual for setting up R to connect with Github.</p>
+<blockquote class="blockquote">
+<p>albert cairo - art of visualization?</p>
+</blockquote>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
