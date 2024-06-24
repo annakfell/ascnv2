@@ -509,7 +509,7 @@ Nearly all analysis procedures and most graphing procedures require the data to 
 
 ::: {.callout-tip}
 ### Learn more
-Read more on tidy data [here](https://r4ds.hadley.nz/data-tidy).
+Read more on tidy data in [R for Data Science 2e](https://r4ds.hadley.nz/data-tidy), or look into the [mice](https://www.gerkovink.com/miceVignettes/) package vignettes.
 :::
 
 ## Missing data
