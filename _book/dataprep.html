@@ -561,10 +561,10 @@ $ acuteill &lt;int&gt; 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 
 $ chronill &lt;int&gt; 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1…</code></pre>
 </div>
 </div>
+</div>
+</div>
+</div>
 <p>Right away this tells me that <strong>R</strong> thinks all variables are numeric integers, not categorical variables. Many of these will have to be changed. We’ll get to that in a moment.</p>
-</div>
-</div>
-</div>
 </section>
 <section id="convert-number-to-factor" class="level2" data-number="1.6">
 <h2 data-number="1.6" class="anchored" data-anchor-id="convert-number-to-factor"><span class="header-section-number">1.6</span> Convert number to factor</h2>
@@ -712,8 +712,19 @@ Learn more
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <p>The following example code uses the <code>recode()</code> function from the <code>car</code> package to create a new variable that I am calling <code>marital2</code> that combines the <code>Divorced</code> and <code>Separated</code> levels.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>marital2 <span class="ot">&lt;-</span> <span class="fu">recode</span>(depress<span class="sc">$</span>marital, <span class="st">"'Divorced' = 'Sep/Div'; 'Separated' = 'Sep/Div'"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>marital2 <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">recode</span>(depress<span class="sc">$</span>marital, <span class="st">"'Divorced' = 'Sep/Div'; 'Separated' = 'Sep/Div'"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<blockquote class="blockquote">
+<p>warning about package conflicts as example of why :: is used</p>
+</blockquote>
+</div>
+</div>
 </div>
 <p>Always confirm your recodes. Check a table of the old variable (<code>marital</code>) against the new one <code>marital2</code>.</p>
 <div class="cell">
