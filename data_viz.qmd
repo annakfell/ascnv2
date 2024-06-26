@@ -831,6 +831,10 @@ b <- ggplot(pen, aes(x=bill_depth_mm, fill=species)) + geom_density()
 grid.arrange(a,b, ncol=2)
 ```
 
+## quarto
+
+> example or reference to https://quarto.org/docs/get-started/computations/rstudio.html#multiple-figures 
+
 :::
 
 ## Multivariate (3+ variables)
