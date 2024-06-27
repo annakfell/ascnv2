@@ -121,19 +121,32 @@ pen |> select(species, island) |> tbl_summary()
 This can be advantageous if you want to have a single table showing the frequency distribution of multiple variables. 
 :::
 
-### Barcharts / Barplots
+### Frequency Barcharts / Barplots
 
+::: {.callout-warning appearance=simple}
+
+> adjust explanatory text here
+
+:::  
 
 A Barchart or barplot takes these frequencies, and draws bars along the X-axis where the height of the bars is determined by the frequencies seen in the table. 
 
 ::: {.panel-tabset}
 
 ## base
+
 To create a barplot/barchart in base graphics requires the data to be in summarized in a table form first. Then the result of the table is plotted. The first argument is the table to be plotted, the `main` argument controls the title. 
 ```{r}
 ps <- table(pen$species)
 barplot(ps, main="Barchart using base graphics")
 ```
+
+::: {.callout-warning appearance=simple}
+
+> note yaxis direction and no labels at top of bar
+
+:::  
+
 
 ## ggplot
 The geometry needed to draw a barchart in ggplot is `geom_bar()`.
@@ -147,13 +160,25 @@ For more practice with `ggplot` syntax, reference [Math 130 Lesson 07](https://n
 
 :::
 
-## Prettier
-The biggest addition to a barchart is the numbers on top of the bars. This isn't mandatory, but it does make it nice. 
+**Adding Annotation**
+
+The biggest addition to increase the readability of a barchart is to add the frequencies on top of the bars. 
+
 ```{r}
 ggplot(pen, aes(x=species)) + theme_bw() + 
     geom_bar(aes(y = ..count..)) + ggtitle("Frequency of penguins by species") + 
     geom_text(aes(y=..count.. + 10, label=..count..), stat='count', size = 5)
 ```
+
+
+## sjPlot
+::: {.callout-warning appearance=simple}
+
+> explain why this is the current best option
+
+:::  
+
+use sjplot example here. 
 
 ## Plotting proportions
 
@@ -168,6 +193,12 @@ ggplot(spec.props, aes(x=Var1, y=Freq)) + geom_col() +
   ggtitle("Proportion of penguins by species")
 ```
 :::
+
+### Proportion Barcharts
+
+* move the example above here b/c ggplot example
+* create a 'base' tab, but with only space for robin to write
+* third tab is sjplot plot_frq (add this to the above section also)
 
 ### Other
 
@@ -286,12 +317,18 @@ To get a better idea of the true shape of the distribution we can "smooth" out t
 ## base
 
 ```{r}
-plot(density(na.omit(pen$bill_length_mm))) 
+# plot(density(na.omit(pen$bill_length_mm))) 
+pen$bill_length_mm |> na.omit() |> density() |> plot()
 ```
 
 Awesome title huh? (NOT)
 
-> added na.omit as base function would not produce plot with missing values
+::: {.callout-warning appearance=simple}
+
+> discuss why na.omit and nesting vs pipe example
+
+:::  
+
 
 ## ggplot2
 
@@ -793,18 +830,25 @@ This is a good place to introduce a term called `faceting`. The definition is _a
 We add a `facet_wrap()` and specify that we want to panel on the species group. Note the twiddle in front of species 
 
 ```{r}
+#| fig-height: 4
 ggplot(pen, aes(x=bill_depth_mm, fill=species)) + geom_density() + facet_wrap(~species)
 ```
 
 The grid placement can be semi-controlled by using the `ncol` argument in the `facet_wrap()` statement. 
-```{r, fig.height=6}
-ggplot(pen, aes(x=bill_depth_mm, fill=species)) + geom_density() + facet_wrap(~species, ncol=4)
+```{r}
+#| fig-height: 4
+
+ggplot(pen, aes(x=bill_depth_mm, fill=species)) + 
+  geom_density() + facet_wrap(~species, ncol=4)
 ```
 
 It is important to compare distributions across groups on the same scale, and our eyes can compare items vertically better than horizontally. So let's force `ncol=1`. 
 
-```{r, fig.height=6}
-ggplot(pen, aes(x=bill_depth_mm, fill=species)) + geom_density() + facet_wrap(~species, ncol=1)
+```{r}
+#| fig-height: 4
+#| 
+ggplot(pen, aes(x=bill_depth_mm, fill=species)) + 
+  geom_density() + facet_wrap(~species, ncol=1)
 ```
 
 
@@ -896,6 +940,9 @@ ggplot(pen, aes(x=bill_length_mm, y=bill_depth_mm)) + geom_point() + facet_wrap(
 ```
 
 ## Paneling on two variables
+> move this up as a subsection of the faceting/paneling section 
+
+
 Who says we're stuck with only faceting on one variable? A variant on `facet_wrap` is `facet_grid`. Here we can specify multiple variables to panel on. 
 
 ```{r, fig.width=10, fig.height=5}
@@ -1033,13 +1080,11 @@ I suggest playing around with `size` and plotting character `pch` to get a feel 
 
 Go [here](http://www.cookbook-r.com/Graphs/) for these. 
 
-### Other plots not mentioned
 
 * [Heat maps](https://www.r-bloggers.com/how-to-make-a-simple-heatmap-in-ggplot2/) 
 * [Word clouds](https://rpubs.com/brandonkopp/creating-word-clouds-in-r), or [simpler](http://dangoldin.com/2016/06/06/word-clouds-in-r/)
 * Interactive plots - Look into `plotly()` and `ggplotly()`, start with their guide directed towards R users [here](https://plotly.com/ggplot2/getting-started/) or browse the [Plotly R open source graphing library](https://plotly.com/r/)
 
-> + the circle type plots
 
 ## Additional Resources
 
@@ -1051,7 +1096,9 @@ For any Google Search -  be sure to limit searches to within the past year or so
   - ggplot2: Elegant Graphics for Data Analysis 3e (Read it [online](http://ggplot2.org/book/) or buy it on [Amazon](http://amzn.com/0387981403))
 
 * Reference and tutorial sites
-  - [STHDA](http://www.sthda.com/english/): Statisical tools for high-throughput data analysis. 
+  - [STHDA](http://www.sthda.com/english/): Statistical tools for high-throughput data analysis. 
+      - [ggplot2 essentials](http://www.sthda.com/english/wiki/ggplot2-essentials)
+      - [Other graphics](http://www.sthda.com/english/articles/32-r-graphics-essentials/)
   - Quick-R: [Basic Graphs](http://www.statmethods.net/graphs/index.html) and [ggplot2](http://www.statmethods.net/advgraphs/ggplot2.html)
 
 * Help lists 
