@@ -180,7 +180,14 @@ ggplot(pen, aes(x=species)) + theme_bw() +
 
 use sjplot example here. 
 
-## Plotting proportions
+
+:::
+
+### Proportion Barcharts
+
+::: {.panel-tabset}
+
+## ggplot
 
 Often you don't want to compare counts but percents. To accomplish this, we have to aggregate the data to calculate the proportions first, then plot the aggregated data using `geom_col` to create the columns.
 
@@ -192,13 +199,23 @@ ggplot(spec.props, aes(x=Var1, y=Freq)) + geom_col() +
   ylab("Proportion") + xlab("Species") + 
   ggtitle("Proportion of penguins by species")
 ```
+
+## base
+
+:::{.callout-warning appearance=simple}
+* create a 'base' tab, but with only space for robin to write
+
 :::
 
-### Proportion Barcharts
+## sjplot
 
-* move the example above here b/c ggplot example
-* create a 'base' tab, but with only space for robin to write
+:::{.callout-warning appearance=simple}
 * third tab is sjplot plot_frq (add this to the above section also)
+
+:::
+
+:::
+
 
 ### Other
 
@@ -447,11 +464,10 @@ Additional references on making qqplots in ggplot: [ggplot2 qq plot (quantile - 
 
 :::
 
-## Bivariate Visualizations
 
-### Categorical v. Categorical
+## Categorical v. Categorical
 
-#### Two-way tables
+### Two-way tables
 
 > intro to two way frequency and proportion tables
 
@@ -506,7 +522,7 @@ round(prop.table(table(pen$island, pen$species), margin=2),3)
 
 :::
 
-#### Grouped bar charts
+### Grouped bar charts
 To compare proportions of one categorical variable within the same level of another, is to use grouped barcharts. 
 
 ::: {.panel-tabset}
@@ -547,7 +563,7 @@ And this easy change is why we love `ggplot2`.
 
 :::
 
-#### Grouped bar charts with percentages
+### Grouped bar charts with percentages
 Not as easy as one would hope, but the solution is to calculate the desired percentages first and then plot the summary data using either `geom_bar(stat='identity')` or `geom_col()`. 
 
 ```{r}
@@ -616,9 +632,9 @@ If you are wondering why there was no 3D barcharts demonstrated see
 
 :::
 
-### Continuous v. Continuous 
+## Continuous v. Continuous 
 
-#### Scatterplot
+### Scatterplot
 The most common method of visualizing the relationship between two continuous variables is by using a scatterplot. 
 
 ::: {.panel-tabset}
@@ -645,7 +661,7 @@ ggplot(pen, aes(x=body_mass_g, y=flipper_length_mm)) + geom_point()
 * [Scatterplot matrices - R bloggers](https://www.r-bloggers.com/scatterplot-matrices/)
 
 
-#### Adding lines to the scatterplots 
+### Adding lines to the scatterplots 
 
 Two most common trend lines added to a scatterplots are the "best fit" straight line and the "lowess" smoother line. 
 
@@ -679,7 +695,7 @@ ggplot(pen, aes(x=body_mass_g, y=flipper_length_mm)) + geom_point() +
 
 :::
 
-#### Line plots
+### Line plots
 
 Line plots connect each dot with a straight line. This is most often done when measuring trends of the response as the value of x increases (such as a time series)
 
@@ -732,13 +748,13 @@ knowledge of the graphics system to do so. So I do not show it here.
 
 :::
 
-### Continuous v. Categorical
+## Continuous v. Categorical
 Create an appropriate plot for a continuous variable, and plot it for each
 level of the categorical variable. 
 
 
 
-#### Dotplot/strip chart
+### Dotplot/strip chart
 
 Dotplots can be very useful when plotting dots against several categories. They can also be called stripcharts. 
 
@@ -760,7 +776,7 @@ grid.arrange(a, b, ncol=2)
 :::
 
 
-#### Grouped boxplots
+### Grouped boxplots
 
 ::: {.panel-tabset}
 
@@ -790,7 +806,7 @@ ggplot(pen, aes(x=species, y=bill_depth_mm, fill=species)) +
 
 :::
 
-#### Grouped histograms
+### Grouped histograms
 
 ::: {.panel-tabset}
 
@@ -814,7 +830,7 @@ There is no easy way to create grouped histograms in base graphics we will skip 
 
 :::
 
-#### Joy plots / Ridgelines 
+### Joy plots / Ridgelines 
 Somewhat new (2017), joylines have not been added to the base distribution of `ggplot2` yet. For now it's available in the `ggjoy` package. Really good way to visualize density plots without the overlapping issue. 
 
 ```{r, fig.width=10}
