@@ -381,19 +381,6 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pen <span class="ot">&lt;-</span> palmerpenguins<span class="sc">::</span>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Learn more
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>For more practice with <code>ggplot</code> syntax, reference <a href="https://norcalbiostat.github.io/MATH130/notes/07_plots.html#The_syntax_of_ggplot">Math 130 Lesson 07</a>, or the <a href="https://r-graphics.org/chapter-ggplot2">R Graphics Cookbook appendix</a>.</p>
-</div>
-</div>
 <blockquote class="blockquote">
 <p>[RAD] write a paragraph here about how this section is organized.</p>
 </blockquote>
@@ -405,7 +392,7 @@ Learn more
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="tables"><span class="header-section-number">2.3.1</span> Tables</h3>
 <p>Frequency and proporation (relative frequency) tables are the most common way to get summary statistics of a categorical variable.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Base R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">gtsummary</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">gtsummary</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <p>The <code>table()</code> function produces a frequency table, where each entry represents the number of records in the data set holding the corresponding labeled value.</p>
@@ -427,23 +414,23 @@ Learn more
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pen <span class="sc">|&gt;</span> <span class="fu">select</span>(species) <span class="sc">|&gt;</span> <span class="fu">tbl_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="mkbsnxvmim" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#mkbsnxvmim table {
+<div id="sxzvkbwzck" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#sxzvkbwzck table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#mkbsnxvmim thead, #mkbsnxvmim tbody, #mkbsnxvmim tfoot, #mkbsnxvmim tr, #mkbsnxvmim td, #mkbsnxvmim th {
+#sxzvkbwzck thead, #sxzvkbwzck tbody, #sxzvkbwzck tfoot, #sxzvkbwzck tr, #sxzvkbwzck td, #sxzvkbwzck th {
   border-style: none;
 }
 
-#mkbsnxvmim p {
+#sxzvkbwzck p {
   margin: 0;
   padding: 0;
 }
 
-#mkbsnxvmim .gt_table {
+#sxzvkbwzck .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -469,12 +456,12 @@ Learn more
   border-left-color: #D3D3D3;
 }
 
-#mkbsnxvmim .gt_caption {
+#sxzvkbwzck .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#mkbsnxvmim .gt_title {
+#sxzvkbwzck .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -486,7 +473,7 @@ Learn more
   border-bottom-width: 0;
 }
 
-#mkbsnxvmim .gt_subtitle {
+#sxzvkbwzck .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -498,7 +485,7 @@ Learn more
   border-top-width: 0;
 }
 
-#mkbsnxvmim .gt_heading {
+#sxzvkbwzck .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -510,13 +497,13 @@ Learn more
   border-right-color: #D3D3D3;
 }
 
-#mkbsnxvmim .gt_bottom_border {
+#sxzvkbwzck .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mkbsnxvmim .gt_col_headings {
+#sxzvkbwzck .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -531,7 +518,7 @@ Learn more
   border-right-color: #D3D3D3;
 }
 
-#mkbsnxvmim .gt_col_heading {
+#sxzvkbwzck .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -551,7 +538,7 @@ Learn more
   overflow-x: hidden;
 }
 
-#mkbsnxvmim .gt_column_spanner_outer {
+#sxzvkbwzck .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -563,15 +550,15 @@ Learn more
   padding-right: 4px;
 }
 
-#mkbsnxvmim .gt_column_spanner_outer:first-child {
+#sxzvkbwzck .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mkbsnxvmim .gt_column_spanner_outer:last-child {
+#sxzvkbwzck .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mkbsnxvmim .gt_column_spanner {
+#sxzvkbwzck .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -583,11 +570,11 @@ Learn more
   width: 100%;
 }
 
-#mkbsnxvmim .gt_spanner_row {
+#sxzvkbwzck .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#mkbsnxvmim .gt_group_heading {
+#sxzvkbwzck .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -613,7 +600,7 @@ Learn more
   text-align: left;
 }
 
-#mkbsnxvmim .gt_empty_group_heading {
+#sxzvkbwzck .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -628,15 +615,15 @@ Learn more
   vertical-align: middle;
 }
 
-#mkbsnxvmim .gt_from_md > :first-child {
+#sxzvkbwzck .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mkbsnxvmim .gt_from_md > :last-child {
+#sxzvkbwzck .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mkbsnxvmim .gt_row {
+#sxzvkbwzck .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -655,7 +642,7 @@ Learn more
   overflow-x: hidden;
 }
 
-#mkbsnxvmim .gt_stub {
+#sxzvkbwzck .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -668,7 +655,7 @@ Learn more
   padding-right: 5px;
 }
 
-#mkbsnxvmim .gt_stub_row_group {
+#sxzvkbwzck .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -682,15 +669,15 @@ Learn more
   vertical-align: top;
 }
 
-#mkbsnxvmim .gt_row_group_first td {
+#sxzvkbwzck .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mkbsnxvmim .gt_row_group_first th {
+#sxzvkbwzck .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#mkbsnxvmim .gt_summary_row {
+#sxzvkbwzck .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -700,16 +687,16 @@ Learn more
   padding-right: 5px;
 }
 
-#mkbsnxvmim .gt_first_summary_row {
+#sxzvkbwzck .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mkbsnxvmim .gt_first_summary_row.thick {
+#sxzvkbwzck .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mkbsnxvmim .gt_last_summary_row {
+#sxzvkbwzck .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -719,7 +706,7 @@ Learn more
   border-bottom-color: #D3D3D3;
 }
 
-#mkbsnxvmim .gt_grand_summary_row {
+#sxzvkbwzck .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -729,7 +716,7 @@ Learn more
   padding-right: 5px;
 }
 
-#mkbsnxvmim .gt_first_grand_summary_row {
+#sxzvkbwzck .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -739,7 +726,7 @@ Learn more
   border-top-color: #D3D3D3;
 }
 
-#mkbsnxvmim .gt_last_grand_summary_row_top {
+#sxzvkbwzck .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -749,11 +736,11 @@ Learn more
   border-bottom-color: #D3D3D3;
 }
 
-#mkbsnxvmim .gt_striped {
+#sxzvkbwzck .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mkbsnxvmim .gt_table_body {
+#sxzvkbwzck .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -762,7 +749,7 @@ Learn more
   border-bottom-color: #D3D3D3;
 }
 
-#mkbsnxvmim .gt_footnotes {
+#sxzvkbwzck .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -776,7 +763,7 @@ Learn more
   border-right-color: #D3D3D3;
 }
 
-#mkbsnxvmim .gt_footnote {
+#sxzvkbwzck .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -785,7 +772,7 @@ Learn more
   padding-right: 5px;
 }
 
-#mkbsnxvmim .gt_sourcenotes {
+#sxzvkbwzck .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -799,7 +786,7 @@ Learn more
   border-right-color: #D3D3D3;
 }
 
-#mkbsnxvmim .gt_sourcenote {
+#sxzvkbwzck .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -807,63 +794,63 @@ Learn more
   padding-right: 5px;
 }
 
-#mkbsnxvmim .gt_left {
+#sxzvkbwzck .gt_left {
   text-align: left;
 }
 
-#mkbsnxvmim .gt_center {
+#sxzvkbwzck .gt_center {
   text-align: center;
 }
 
-#mkbsnxvmim .gt_right {
+#sxzvkbwzck .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mkbsnxvmim .gt_font_normal {
+#sxzvkbwzck .gt_font_normal {
   font-weight: normal;
 }
 
-#mkbsnxvmim .gt_font_bold {
+#sxzvkbwzck .gt_font_bold {
   font-weight: bold;
 }
 
-#mkbsnxvmim .gt_font_italic {
+#sxzvkbwzck .gt_font_italic {
   font-style: italic;
 }
 
-#mkbsnxvmim .gt_super {
+#sxzvkbwzck .gt_super {
   font-size: 65%;
 }
 
-#mkbsnxvmim .gt_footnote_marks {
+#sxzvkbwzck .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#mkbsnxvmim .gt_asterisk {
+#sxzvkbwzck .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mkbsnxvmim .gt_indent_1 {
+#sxzvkbwzck .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mkbsnxvmim .gt_indent_2 {
+#sxzvkbwzck .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mkbsnxvmim .gt_indent_3 {
+#sxzvkbwzck .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mkbsnxvmim .gt_indent_4 {
+#sxzvkbwzck .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mkbsnxvmim .gt_indent_5 {
+#sxzvkbwzck .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -909,23 +896,23 @@ Learn more
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pen <span class="sc">|&gt;</span> <span class="fu">select</span>(species, island) <span class="sc">|&gt;</span> <span class="fu">tbl_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="wlwqfwrrfr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wlwqfwrrfr table {
+<div id="uyhpfvwkhl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#uyhpfvwkhl table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#wlwqfwrrfr thead, #wlwqfwrrfr tbody, #wlwqfwrrfr tfoot, #wlwqfwrrfr tr, #wlwqfwrrfr td, #wlwqfwrrfr th {
+#uyhpfvwkhl thead, #uyhpfvwkhl tbody, #uyhpfvwkhl tfoot, #uyhpfvwkhl tr, #uyhpfvwkhl td, #uyhpfvwkhl th {
   border-style: none;
 }
 
-#wlwqfwrrfr p {
+#uyhpfvwkhl p {
   margin: 0;
   padding: 0;
 }
 
-#wlwqfwrrfr .gt_table {
+#uyhpfvwkhl .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -951,12 +938,12 @@ Learn more
   border-left-color: #D3D3D3;
 }
 
-#wlwqfwrrfr .gt_caption {
+#uyhpfvwkhl .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#wlwqfwrrfr .gt_title {
+#uyhpfvwkhl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -968,7 +955,7 @@ Learn more
   border-bottom-width: 0;
 }
 
-#wlwqfwrrfr .gt_subtitle {
+#uyhpfvwkhl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -980,7 +967,7 @@ Learn more
   border-top-width: 0;
 }
 
-#wlwqfwrrfr .gt_heading {
+#uyhpfvwkhl .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -992,13 +979,13 @@ Learn more
   border-right-color: #D3D3D3;
 }
 
-#wlwqfwrrfr .gt_bottom_border {
+#uyhpfvwkhl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wlwqfwrrfr .gt_col_headings {
+#uyhpfvwkhl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1013,7 +1000,7 @@ Learn more
   border-right-color: #D3D3D3;
 }
 
-#wlwqfwrrfr .gt_col_heading {
+#uyhpfvwkhl .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1033,7 +1020,7 @@ Learn more
   overflow-x: hidden;
 }
 
-#wlwqfwrrfr .gt_column_spanner_outer {
+#uyhpfvwkhl .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1045,15 +1032,15 @@ Learn more
   padding-right: 4px;
 }
 
-#wlwqfwrrfr .gt_column_spanner_outer:first-child {
+#uyhpfvwkhl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wlwqfwrrfr .gt_column_spanner_outer:last-child {
+#uyhpfvwkhl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wlwqfwrrfr .gt_column_spanner {
+#uyhpfvwkhl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1065,11 +1052,11 @@ Learn more
   width: 100%;
 }
 
-#wlwqfwrrfr .gt_spanner_row {
+#uyhpfvwkhl .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#wlwqfwrrfr .gt_group_heading {
+#uyhpfvwkhl .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1095,7 +1082,7 @@ Learn more
   text-align: left;
 }
 
-#wlwqfwrrfr .gt_empty_group_heading {
+#uyhpfvwkhl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1110,15 +1097,15 @@ Learn more
   vertical-align: middle;
 }
 
-#wlwqfwrrfr .gt_from_md > :first-child {
+#uyhpfvwkhl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wlwqfwrrfr .gt_from_md > :last-child {
+#uyhpfvwkhl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wlwqfwrrfr .gt_row {
+#uyhpfvwkhl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1137,7 +1124,7 @@ Learn more
   overflow-x: hidden;
 }
 
-#wlwqfwrrfr .gt_stub {
+#uyhpfvwkhl .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1150,7 +1137,7 @@ Learn more
   padding-right: 5px;
 }
 
-#wlwqfwrrfr .gt_stub_row_group {
+#uyhpfvwkhl .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1164,15 +1151,15 @@ Learn more
   vertical-align: top;
 }
 
-#wlwqfwrrfr .gt_row_group_first td {
+#uyhpfvwkhl .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wlwqfwrrfr .gt_row_group_first th {
+#uyhpfvwkhl .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#wlwqfwrrfr .gt_summary_row {
+#uyhpfvwkhl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1182,16 +1169,16 @@ Learn more
   padding-right: 5px;
 }
 
-#wlwqfwrrfr .gt_first_summary_row {
+#uyhpfvwkhl .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wlwqfwrrfr .gt_first_summary_row.thick {
+#uyhpfvwkhl .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wlwqfwrrfr .gt_last_summary_row {
+#uyhpfvwkhl .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1201,7 +1188,7 @@ Learn more
   border-bottom-color: #D3D3D3;
 }
 
-#wlwqfwrrfr .gt_grand_summary_row {
+#uyhpfvwkhl .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1211,7 +1198,7 @@ Learn more
   padding-right: 5px;
 }
 
-#wlwqfwrrfr .gt_first_grand_summary_row {
+#uyhpfvwkhl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1221,7 +1208,7 @@ Learn more
   border-top-color: #D3D3D3;
 }
 
-#wlwqfwrrfr .gt_last_grand_summary_row_top {
+#uyhpfvwkhl .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1231,11 +1218,11 @@ Learn more
   border-bottom-color: #D3D3D3;
 }
 
-#wlwqfwrrfr .gt_striped {
+#uyhpfvwkhl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wlwqfwrrfr .gt_table_body {
+#uyhpfvwkhl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1244,7 +1231,7 @@ Learn more
   border-bottom-color: #D3D3D3;
 }
 
-#wlwqfwrrfr .gt_footnotes {
+#uyhpfvwkhl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1258,7 +1245,7 @@ Learn more
   border-right-color: #D3D3D3;
 }
 
-#wlwqfwrrfr .gt_footnote {
+#uyhpfvwkhl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1267,7 +1254,7 @@ Learn more
   padding-right: 5px;
 }
 
-#wlwqfwrrfr .gt_sourcenotes {
+#uyhpfvwkhl .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1281,7 +1268,7 @@ Learn more
   border-right-color: #D3D3D3;
 }
 
-#wlwqfwrrfr .gt_sourcenote {
+#uyhpfvwkhl .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1289,63 +1276,63 @@ Learn more
   padding-right: 5px;
 }
 
-#wlwqfwrrfr .gt_left {
+#uyhpfvwkhl .gt_left {
   text-align: left;
 }
 
-#wlwqfwrrfr .gt_center {
+#uyhpfvwkhl .gt_center {
   text-align: center;
 }
 
-#wlwqfwrrfr .gt_right {
+#uyhpfvwkhl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wlwqfwrrfr .gt_font_normal {
+#uyhpfvwkhl .gt_font_normal {
   font-weight: normal;
 }
 
-#wlwqfwrrfr .gt_font_bold {
+#uyhpfvwkhl .gt_font_bold {
   font-weight: bold;
 }
 
-#wlwqfwrrfr .gt_font_italic {
+#uyhpfvwkhl .gt_font_italic {
   font-style: italic;
 }
 
-#wlwqfwrrfr .gt_super {
+#uyhpfvwkhl .gt_super {
   font-size: 65%;
 }
 
-#wlwqfwrrfr .gt_footnote_marks {
+#uyhpfvwkhl .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#wlwqfwrrfr .gt_asterisk {
+#uyhpfvwkhl .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wlwqfwrrfr .gt_indent_1 {
+#uyhpfvwkhl .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wlwqfwrrfr .gt_indent_2 {
+#uyhpfvwkhl .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wlwqfwrrfr .gt_indent_3 {
+#uyhpfvwkhl .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wlwqfwrrfr .gt_indent_4 {
+#uyhpfvwkhl .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wlwqfwrrfr .gt_indent_5 {
+#uyhpfvwkhl .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1416,7 +1403,7 @@ Learn more
 <h3 data-number="2.3.2" class="anchored" data-anchor-id="barcharts-barplots"><span class="header-section-number">2.3.2</span> Barcharts / Barplots</h3>
 <p>A Barchart or barplot takes these frequencies, and draws bars along the X-axis where the height of the bars is determined by the frequencies seen in the table.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">pretty</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false">proportions</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">Prettier</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false">Plotting proportions</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <p>To create a barplot/barchart in base graphics requires the data to be in summarized in a table form first. Then the result of the table is plotted. The first argument is the table to be plotted, the <code>main</code> argument controls the title.</p>
@@ -1442,6 +1429,19 @@ Learn more
 <p><img src="data_viz_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learn more
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For more practice with <code>ggplot</code> syntax, reference <a href="https://norcalbiostat.github.io/MATH130/notes/07_plots.html#The_syntax_of_ggplot">Math 130 Lesson 07</a>, or the <a href="https://r-graphics.org/chapter-ggplot2">R Graphics Cookbook appendix</a>.</p>
 </div>
 </div>
 </div>
@@ -2694,7 +2694,16 @@ Learn more
 </section>
 <section id="troubleshooting" class="level2" data-number="2.10">
 <h2 data-number="2.10" class="anchored" data-anchor-id="troubleshooting"><span class="header-section-number">2.10</span> Troubleshooting</h2>
-<p><strong>Problem:</strong> Missing data showing up as a category in ggplot?</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Problem: Missing data showing up as a category in ggplot?
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Get rid of that far right bar!</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(NCbirths, <span class="fu">aes</span>(<span class="at">x=</span>marital)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2706,7 +2715,19 @@ Learn more
 </div>
 </div>
 </div>
-<p><strong>Solution:</strong> Use <code>dplyr</code> to select only the variables you are going to plot, then pipe in the <code>na.omit()</code> at the end. It will create a temporary data frame (e.g) <code>plot.data</code> that you then provide to <code>ggplot()</code>.</p>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution:
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Use <code>dplyr</code> to select only the variables you are going to plot, then pipe in the <code>na.omit()</code> at the end. It will create a temporary data frame (e.g) <code>plot.data</code> that you then provide to <code>ggplot()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>plot.data <span class="ot">&lt;-</span> NCbirths <span class="sc">%&gt;%</span> <span class="fu">select</span>(marital) <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span>
 <span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot.data, <span class="fu">aes</span>(<span class="at">x=</span>marital)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2718,9 +2739,38 @@ Learn more
 </div>
 </div>
 </div>
-<p><strong>Problem:</strong> Got numerical binary 0/1 data but want to plot it as categorical? &gt; Other related error messages: &gt; * Continuous x aesthetic – did you forget aes(group=…)?</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Problem: Got numerical binary 0/1 data but want to plot it as categorical?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<blockquote class="blockquote">
+<p>Other related error messages: Continuous x aesthetic – did you forget aes(group=…)?</p>
+</blockquote>
 <p>Consider a continuous variable for the number of characters in an email <code>num_char</code>, and a 0/1 binary variable <code>spam</code>.</p>
-<p><strong>Solution:</strong> Create a second variable <code>var_factor</code> for plotting and keep the binary <code>var</code> as 0/1 for analysis.</p>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution:
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Create a second variable <code>var_factor</code> for plotting and keep the binary <code>var</code> as 0/1 for analysis.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>email<span class="sc">$</span>spam_cat <span class="ot">&lt;-</span> <span class="fu">factor</span>(email<span class="sc">$</span>spam, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Ham"</span>, <span class="st">"Spam"</span>))</span>
 <span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">y=</span>num_char, <span class="at">x=</span>spam_cat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2732,8 +2782,34 @@ Learn more
 </div>
 </div>
 </div>
-<p><strong>Problem:</strong> You want to change the legend title for a <code>fill</code> or <code>color</code> scale.</p>
-<p><strong>Solution:</strong> Add the <code>name=</code> argument to whatever layer you added that created the legend. Here I speciefied a <code>fill</code>, and it was a <code>discrete</code> variable. So I use the <code>scale_fill_discrete()</code> layer.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Problem: You want to change the legend title for a <code>fill</code> or <code>color</code> scale.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="callout callout-style-simple callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution:
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Add the <code>name=</code> argument to whatever layer you added that created the legend. Here I speciefied a <code>fill</code>, and it was a <code>discrete</code> variable. So I use the <code>scale_fill_discrete()</code> layer.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">y=</span>num_char, <span class="at">x=</span>spam_cat, <span class="at">fill=</span>spam_cat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
 <span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">name=</span><span class="st">"Ya like Spam?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2757,7 +2833,22 @@ Learn more
 </div>
 </div>
 </div>
-<p><strong>Problem:</strong> You want to add means to boxplots. Boxplots are great. Even better with violin overlays. Know what makes them even better than butter? Adding a point for the mean. <code>stat_summary</code> is the layer you want to add. Check out <a href="https://stackoverflow.com/questions/23942959/ggplot2-show-separate-mean-values-in-box-plot-for-grouped-data">this stack overflow post</a> for more context.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Problem: You want to add means to boxplots.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Boxplots are great. Even better with violin overlays. Know what makes them even better than butter? Adding a point for the mean. <code>stat_summary</code> is the layer you want to add. Check out <a href="https://stackoverflow.com/questions/23942959/ggplot2-show-separate-mean-values-in-box-plot-for-grouped-data">this stack overflow post</a> for more context.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">x=</span>spam_cat, <span class="at">y=</span>num_char, <span class="at">fill=</span>spam_cat)) <span class="sc">+</span></span>
 <span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
@@ -2770,7 +2861,24 @@ Learn more
 </div>
 </div>
 </div>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution:
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>I suggest playing around with <code>size</code> and plotting character <code>pch</code> to get a feel for how these work. You can also look at <code>?pch</code> (and scroll down in the help file) to see the 25 default plotting characters.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="but-what-about" class="level2" data-number="2.11">
 <h2 data-number="2.11" class="anchored" data-anchor-id="but-what-about"><span class="header-section-number">2.11</span> But what about…</h2>

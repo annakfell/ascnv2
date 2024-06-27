@@ -84,12 +84,6 @@ We will use the `penguins` dataset that comes with the `palmerpenguins` package.
 pen <- palmerpenguins::penguins
 ```
 
-::: {.callout-tip}
-### Learn more
-For more practice with `ggplot` syntax, reference [Math 130 Lesson 07](https://norcalbiostat.github.io/MATH130/notes/07_plots.html#The_syntax_of_ggplot), or the [R Graphics Cookbook appendix](https://r-graphics.org/chapter-ggplot2).
-
-:::
-
 > [RAD] write a paragraph here about how this section is organized. 
 
 ## One Categorical Variable
@@ -102,7 +96,8 @@ Both Nominal and Ordinal data types can be visualized using the same methods: ta
 Frequency and proporation (relative frequency) tables are the most common way to get summary statistics of a categorical variable.
 
 ::: {.panel-tabset}
-## Base R
+
+## base
 
 The `table()` function produces a frequency table, where each entry represents the number of records in the data set holding the corresponding labeled value. 
 
@@ -146,7 +141,13 @@ The geometry needed to draw a barchart in ggplot is `geom_bar()`.
 ggplot(pen, aes(x=species)) + geom_bar()
 ```
 
-## pretty
+::: {.callout-tip}
+### Learn more
+For more practice with `ggplot` syntax, reference [Math 130 Lesson 07](https://norcalbiostat.github.io/MATH130/notes/07_plots.html#The_syntax_of_ggplot), or the [R Graphics Cookbook appendix](https://r-graphics.org/chapter-ggplot2).
+
+:::
+
+## Prettier
 The biggest addition to a barchart is the numbers on top of the bars. This isn't mandatory, but it does make it nice. 
 ```{r}
 ggplot(pen, aes(x=species)) + theme_bw() + 
@@ -154,7 +155,7 @@ ggplot(pen, aes(x=species)) + theme_bw() +
     geom_text(aes(y=..count.. + 10, label=..count..), stat='count', size = 5)
 ```
 
-## proportions
+## Plotting proportions
 
 Often you don't want to compare counts but percents. To accomplish this, we have to aggregate the data to calculate the proportions first, then plot the aggregated data using `geom_col` to create the columns.
 
@@ -931,7 +932,9 @@ Before you share your plot with any other eyes, always take a step back and try 
 
 ## Troubleshooting 
 
-**Problem:** Missing data showing up as a category in ggplot? 
+::: {.callout-note appearance=minimal}
+
+## Problem: Missing data showing up as a category in ggplot? 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 NCbirths <- read.csv("https://www.norcalbiostat.com/data/NCbirths.csv", header=TRUE)
 email <- read.table("https://www.norcalbiostat.com/data/email.txt", header=TRUE, sep="\t")
@@ -942,30 +945,50 @@ Get rid of that far right bar!
 ggplot(NCbirths, aes(x=marital)) + geom_bar()
 ```
 
-**Solution:** Use `dplyr` to select only the variables you are going to plot, then pipe in the `na.omit()` at the end. It will create a temporary data frame (e.g) `plot.data` that you then provide to `ggplot()`.
+::: {.callout-tip appearance=minimal collapse=true}
+
+## Solution:
+Use `dplyr` to select only the variables you are going to plot, then pipe in the `na.omit()` at the end. It will create a temporary data frame (e.g) `plot.data` that you then provide to `ggplot()`.
 
 ```{r}
 plot.data <- NCbirths %>% select(marital) %>% na.omit()
 ggplot(plot.data, aes(x=marital)) + geom_bar()
 ```
 
+:::
 
-**Problem:** Got numerical binary 0/1 data but want to plot it as categorical? 
-> Other related error messages: 
-> * Continuous x aesthetic -- did you forget aes(group=...)?  
+:::
+
+::: {.callout-note appearance=minimal}
+
+## Problem: Got numerical binary 0/1 data but want to plot it as categorical? 
+
+> Other related error messages: Continuous x aesthetic -- did you forget aes(group=...)?  
 
 Consider a continuous variable for the number of characters in an email `num_char`, and a 0/1 binary variable `spam`. 
 
-**Solution:** Create a second variable `var_factor` for plotting and keep the binary `var` as 0/1 for analysis. 
+::: {.callout-tip appearance=minimal collapse=true}
+
+## Solution:
+Create a second variable `var_factor` for plotting and keep the binary `var` as 0/1 for analysis. 
 
 ```{r}
 email$spam_cat <- factor(email$spam, labels=c("Ham", "Spam"))
 ggplot(email, aes(y=num_char, x=spam_cat)) + geom_boxplot()
 ```
 
-**Problem:** You want to change the legend title for a `fill` or `color` scale.  
+:::
 
-**Solution:** Add the `name=` argument to whatever layer you added that created the legend. Here I speciefied a `fill`, and it was a `discrete` variable. So I use the `scale_fill_discrete()` layer. 
+:::
+
+::: {.callout-note appearance=minimal}
+
+## Problem: You want to change the legend title for a `fill` or `color` scale.  
+
+::: {.callout-tip appearance=minimal collapse=true}
+
+## Solution:
+Add the `name=` argument to whatever layer you added that created the legend. Here I speciefied a `fill`, and it was a `discrete` variable. So I use the `scale_fill_discrete()` layer. 
 
 ```{r}
 ggplot(email, aes(y=num_char, x=spam_cat, fill=spam_cat)) + geom_boxplot() + 
@@ -978,7 +1001,13 @@ ggplot(email, aes(x=num_char, y=line_breaks, col=spam_cat)) + geom_point() +
   scale_color_discrete(name="Ya like Spam?")
 ```
 
-**Problem:** You want to add means to boxplots. 
+:::
+
+:::
+
+::: {.callout-note appearance=minimal}
+
+## Problem: You want to add means to boxplots. 
 Boxplots are great. Even better with violin overlays. Know what makes them even better than butter? Adding a point for the mean. `stat_summary` is the layer you want to add. Check out [this stack overflow post](https://stackoverflow.com/questions/23942959/ggplot2-show-separate-mean-values-in-box-plot-for-grouped-data) for more context. 
 
 ```{r}
@@ -987,7 +1016,15 @@ ggplot(email, aes(x=spam_cat, y=num_char, fill=spam_cat)) +
   stat_summary(fun.y="mean", geom="point", size=3, pch=17,color="blue")
 ```
 
+::: {.callout-tip appearance=minimal collapse=true}
+
+## Solution:
+
 I suggest playing around with `size` and plotting character `pch` to get a feel for how these work. You can also look at `?pch` (and scroll down in the help file) to see the 25 default plotting characters.
+
+:::
+
+:::
 
 ## But what about...
 
