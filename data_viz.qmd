@@ -154,12 +154,6 @@ The geometry needed to draw a barchart in ggplot is `geom_bar()`.
 ggplot(pen, aes(x=species)) + geom_bar()
 ```
 
-::: {.callout-tip}
-### Learn more
-For more practice with `ggplot` syntax, reference [Math 130 Lesson 07](https://norcalbiostat.github.io/MATH130/notes/07_plots.html#The_syntax_of_ggplot), or the [R Graphics Cookbook appendix](https://r-graphics.org/chapter-ggplot2).
-
-:::
-
 **Adding Annotation**
 
 The biggest addition to increase the readability of a barchart is to add the frequencies on top of the bars. 
@@ -250,15 +244,14 @@ pie(ps, labels = paste0(names(ps), ' (', prop.table(ps)*100, "%)"))
 
 **ggplot**
 
-And here I thought pie charts couldn't get worse... I'm not a fan at all of the ggplot version. So i'm not even going to show it. [Here's](http://www.sthda.com/english/wiki/ggplot2-pie-chart-quick-start-guide-r-software-and-data-visualization) a link to another great tutorial that does show you how to make one. 
+And here I thought pie charts couldn't get worse... I'm not a fan at all of the ggplot version. So i'm not even going to show it. [STHDA](http://www.sthda.com/english/wiki/ggplot2-pie-chart-quick-start-guide-r-software-and-data-visualization) has a great tutorial that does show you how to make one. 
 
-However -- Never say never. [Here's](http://www.storytellingwithdata.com/blog/2019/8/8/forty-five-pie-charts-never-say-never) an example of a *good* use of pie charts. 
+However -- Never say never. [Storytelling with data](http://www.storytellingwithdata.com/blog/2019/8/8/forty-five-pie-charts-never-say-never) has a blog post with an example of a *good* use of pie charts. 
 
 
 #### Waffle Chart 
 This type of chart is not natively found in the `ggplot2` package, but it's own `waffle` package. These are great for infographics. 
 
-Reference: [Making waffle charts in R - R bloggers](https://www.r-bloggers.com/making-waffle-charts-in-r-with-the-new-waffle-package/)
 
 ```{r}
 library(waffle)
@@ -460,8 +453,6 @@ qq (or qnorm) plots specifically plot the data against a theoretical distributio
 ggplot(pen, aes(sample=body_mass_g)) + stat_qq()
 ```
 
-Additional references on making qqplots in ggplot: [ggplot2 qq plot (quantile - quantile graph) : Quick start guide - STHDA](http://www.sthda.com/english/wiki/ggplot2-qq-plot-quantile-quantile-graph-quick-start-guide-r-software-and-data-visualization)
-
 :::
 
 
@@ -625,6 +616,7 @@ mosaicplot(island~species, data=pen, shade=TRUE)
 For example, there are fewer 'Very Good' cut diamonds that are color 'G', and fewer 'Premium' cut diamonds that are color 'H'. As you can see, knowing what your data means when trying to interpret what the plots are telling you is essential. 
 
 That's about all the ways you can plot categorical variables. 
+
 If you are wondering why there was no 3D barcharts demonstrated see  
 [here](http://faculty.atu.edu/mfinan/2043/section31.pdf),
 [here](https://www.bbc.co.uk/bitesize/articles/z7cx7yc), and 
@@ -654,12 +646,6 @@ ggplot(pen, aes(x=body_mass_g, y=flipper_length_mm)) + geom_point()
 ```
 
 :::
-
-**Other Resources**
-
-* [Scatterplot in R tutorial - Datacamp](http://www.statmethods.net/graphs/scatterplot.html)  
-* [Scatterplot matrices - R bloggers](https://www.r-bloggers.com/scatterplot-matrices/)
-
 
 ### Adding lines to the scatterplots 
 
@@ -831,6 +817,12 @@ There is no easy way to create grouped histograms in base graphics we will skip 
 :::
 
 ### Joy plots / Ridgelines 
+
+:::{.callout-warning appearance=simple}
+check this section for updates - has this changed?
+
+:::
+
 Somewhat new (2017), joylines have not been added to the base distribution of `ggplot2` yet. For now it's available in the `ggjoy` package. Really good way to visualize density plots without the overlapping issue. 
 
 ```{r, fig.width=10}
@@ -1095,17 +1087,34 @@ For any Google Search -  be sure to limit searches to within the past year or so
 
 * Comprehensive guides
   - [R Graphics 2e](https://www.stat.auckland.ac.nz/~paul/RG2e/): The best book about using base graphics
-  - R Graphics Cookbook (Read the book [online](https://r-graphics.org) or buy it on [Amazon](https://www.amazon.com/dp/1491978600)): The best book for using ggplot2 
-  - ggplot2: Elegant Graphics for Data Analysis 3e (Read it [online](http://ggplot2.org/book/) or buy it on [Amazon](http://amzn.com/0387981403))
+  - [R Graphics Cookbook](https://r-graphics.org): The best book for using ggplot2 
+  - [ggplot2: Elegant Graphics for Data Analysis 3e](http://ggplot2.org/book/) 
 
-* Reference and tutorial sites
-  - [STHDA](http://www.sthda.com/english/): Statistical tools for high-throughput data analysis. 
-      - [ggplot2 essentials](http://www.sthda.com/english/wiki/ggplot2-essentials)
-      - [Other graphics](http://www.sthda.com/english/articles/32-r-graphics-essentials/)
-  - Quick-R: [Basic Graphs](http://www.statmethods.net/graphs/index.html) and [ggplot2](http://www.statmethods.net/advgraphs/ggplot2.html)
+* Subject reference and tutorial sites
+  - [Math 130 Lesson 07 - Creating graphics](https://norcalbiostat.github.io/MATH130/notes/07_plots.html#The_syntax_of_ggplot) - more on ggplot2 syntax
+  - [STHDA](http://www.sthda.com/english/): Statistical tools for high-throughput data analysis.
+    - [ggplot2 essentials](http://www.sthda.com/english/wiki/ggplot2-essentials)
+    - [Other graphics options](http://www.sthda.com/english/articles/32-r-graphics-essentials/)
+    - [ggplot2 qq plot (quantile - quantile graph) : Quick start guide](http://www.sthda.com/english/wiki/ggplot2-qq-plot-quantile-quantile-graph-quick-start-guide-r-software-and-data-visualization)
+  -[Quick-R / Datacamp](https://www.statmethods.net): 
+    - [Basic Graphs](http://www.statmethods.net/graphs/index.html)
+    - [ggplot2](http://www.statmethods.net/advgraphs/ggplot2.html)
+    - [Scatterplots](http://www.statmethods.net/graphs/scatterplot.html)  
+  - [R-bloggers](https://www.r-bloggers.com)
+    - [Waffle charts](https://www.r-bloggers.com/making-waffle-charts-in-r-with-the-new-waffle-package/)
+    - [Scatterplot matrices](https://www.r-bloggers.com/scatterplot-matrices/)
+
+* Literate programming tools
+  - Quarto
+    - [DMultiple figure alignment](https://quarto.org/docs/get-started/computations/rstudio.html#multiple-figures) 
 
 * Help lists 
-    - ggplot2 users on [Google groups](http://groups.google.com/group/ggplot2) 
-    - [stackoverflow questions tagged ggplot2](http://stackoverflow.com/tags/ggplot2)
-    - Chico R users group ([Events page](https://www.meetup.com/chico-r-users-group/))
-    
+    - [ggplot2 Google Groups](http://groups.google.com/group/ggplot2) 
+    - [Stackoverflow questions tagged ggplot2](http://stackoverflow.com/tags/ggplot2)
+    - [Chico R users group](https://www.meetup.com/chico-r-users-group/))
+
+::: {.callout-tip}
+### Learn more
+For more practice with `ggplot` syntax, reference 
+
+:::
