@@ -979,9 +979,7 @@ Before you share your plot with any other eyes, always take a step back and try 
 
 ## Troubleshooting 
 
-::: {.callout-note appearance=minimal}
-
-## Problem: Missing data showing up as a category in ggplot? 
+### Problem: Missing data showing up as a category in ggplot? 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 NCbirths <- read.csv("https://www.norcalbiostat.com/data/NCbirths.csv", header=TRUE)
 email <- read.table("https://www.norcalbiostat.com/data/email.txt", header=TRUE, sep="\t")
@@ -1004,11 +1002,7 @@ ggplot(plot.data, aes(x=marital)) + geom_bar()
 
 :::
 
-:::
-
-::: {.callout-note appearance=minimal}
-
-## Problem: Got numerical binary 0/1 data but want to plot it as categorical? 
+### Problem: Got numerical binary 0/1 data but want to plot it as categorical? 
 
 > Other related error messages: Continuous x aesthetic -- did you forget aes(group=...)?  
 
@@ -1026,11 +1020,8 @@ ggplot(email, aes(y=num_char, x=spam_cat)) + geom_boxplot()
 
 :::
 
-:::
 
-::: {.callout-note appearance=minimal}
-
-## Problem: You want to change the legend title for a `fill` or `color` scale.  
+### Problem: You want to change the legend title for a `fill` or `color` scale.  
 
 ::: {.callout-tip appearance=minimal collapse=true}
 
@@ -1050,11 +1041,8 @@ ggplot(email, aes(x=num_char, y=line_breaks, col=spam_cat)) + geom_point() +
 
 :::
 
-:::
+### Problem: You want to add means to boxplots. 
 
-::: {.callout-note appearance=minimal}
-
-## Problem: You want to add means to boxplots. 
 Boxplots are great. Even better with violin overlays. Know what makes them even better than butter? Adding a point for the mean. `stat_summary` is the layer you want to add. Check out [this stack overflow post](https://stackoverflow.com/questions/23942959/ggplot2-show-separate-mean-values-in-box-plot-for-grouped-data) for more context. 
 
 ```{r}
@@ -1071,7 +1059,6 @@ I suggest playing around with `size` and plotting character `pch` to get a feel 
 
 :::
 
-:::
 
 ## But what about...
 
