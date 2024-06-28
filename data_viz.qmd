@@ -315,7 +315,14 @@ Note I did **not** specify the `binwidth` argument here. The size of the bins ca
 
 ## ggpubr
 
-> RAD add example here. 
+The `ggpubr` package is based on `ggplot2`, with simpler syntax for quickly generating polished graphs.
+
+```{r}
+
+gghistogram(pen, x = "bill_length_mm",
+            title = "Distribution of penguin bill lengths")
+
+```
 
 :::
 
@@ -346,6 +353,12 @@ Awesome title huh? (NOT)
 ggplot(pen, aes(x=bill_length_mm)) + geom_density()
 ```
 
+## ggpubr
+
+```{r}
+ggdensity(pen, x = "bill_length_mm")
+```
+
 :::
 
 ### Histograms + density 
@@ -367,6 +380,15 @@ The syntax starts the same, we'll add a new geom, `geom_density` and color the l
 ggplot(pen, aes(x=bill_length_mm)) + geom_density(col="blue") + 
   geom_histogram(aes(y=..density..), colour="black", fill=NA)
 ```
+
+## ggpubr
+```{r}
+gghistogram(pen,
+            x = "bill_length_mm", 
+            add_density = TRUE,
+            add.params = list(color="blue"))
+```
+
 
 :::
 
@@ -400,16 +422,46 @@ To flip it horizontal you may think to simply swap x and y? Good thinking. Of co
 ggplot(pen, aes(x=1, y=bill_length_mm)) + geom_boxplot() + coord_flip()
 ```
 
+## ggpubr
+
+```{r}
+ggboxplot(pen, y="bill_length_mm", orientation = "horizontal")
+```
+
+
 :::
 
 ### Violin plots
+
+:::{.callout-warning appearance=simple}
+> brief intro - usage, how they're different from boxplots
+
+:::
+
+::: {.panel-tabset}
+
+## ggplot
 
 ```{r}
 ggplot(pen, aes(x=1, y=bill_length_mm)) + geom_violin()
 ```
 
-#### Boxplot + Violin plots
+## ggpubr
+
+```{r}
+ggviolin(pen, x=1, y="bill_length_mm")
+```
+
+
+:::
+
+### Boxplot + violin plots
+
 Overlaying a boxplot and a violin plot serves a similar purpose to Histograms + Density plots. 
+
+::: {.panel-tabset}
+
+## ggplot
 
 ```{r}
 ggplot(pen, aes(x=1, y=bill_length_mm)) + geom_violin() + geom_boxplot()
@@ -426,7 +478,16 @@ ggplot(pen, aes(x=1, y=bill_length_mm)) + xlab("") + theme_bw() +
               axis.ticks.x=element_blank())
 ```
 
+## ggpubr
 
+```{r}
+ggviolin(pen, x=1, y="bill_length_mm", 
+         alpha=.2, fill="blue", 
+         add = "boxplot", add.params = list(alpha=.4),
+         xlab="") 
+```
+
+:::
 
 ### Normal QQ plots
 The last useful plot that we will do on a single continuous variable is to assess the _normality_ of the distribution. Basically how close the data follows a normal distribution. 
@@ -451,6 +512,12 @@ qqline(z, col="blue")
 qq (or qnorm) plots specifically plot the data against a theoretical distribution. That means in the `aes()` aesthetic argument we don't specify either x or y, but instead the `sample=` is the variable we want to plot. 
 ```{r}
 ggplot(pen, aes(sample=body_mass_g)) + stat_qq()
+```
+
+## ggpubr
+
+```{r}
+ggqqplot(pen, x="body_mass_g")
 ```
 
 :::
@@ -1096,7 +1163,7 @@ For any Google Search -  be sure to limit searches to within the past year or so
     - [ggplot2 essentials](http://www.sthda.com/english/wiki/ggplot2-essentials)
     - [Other graphics options](http://www.sthda.com/english/articles/32-r-graphics-essentials/)
     - [ggplot2 qq plot (quantile - quantile graph) : Quick start guide](http://www.sthda.com/english/wiki/ggplot2-qq-plot-quantile-quantile-graph-quick-start-guide-r-software-and-data-visualization)
-  -[Quick-R / Datacamp](https://www.statmethods.net): 
+  - [Quick-R / Datacamp](https://www.statmethods.net): 
     - [Basic Graphs](http://www.statmethods.net/graphs/index.html)
     - [ggplot2](http://www.statmethods.net/advgraphs/ggplot2.html)
     - [Scatterplots](http://www.statmethods.net/graphs/scatterplot.html)  
@@ -1106,15 +1173,9 @@ For any Google Search -  be sure to limit searches to within the past year or so
 
 * Literate programming tools
   - Quarto
-    - [DMultiple figure alignment](https://quarto.org/docs/get-started/computations/rstudio.html#multiple-figures) 
+    - [Multiple figure alignment](https://quarto.org/docs/get-started/computations/rstudio.html#multiple-figures) 
 
 * Help lists 
     - [ggplot2 Google Groups](http://groups.google.com/group/ggplot2) 
     - [Stackoverflow questions tagged ggplot2](http://stackoverflow.com/tags/ggplot2)
-    - [Chico R users group](https://www.meetup.com/chico-r-users-group/))
-
-::: {.callout-tip}
-### Learn more
-For more practice with `ggplot` syntax, reference 
-
-:::
+    - [Chico R users group](https://www.meetup.com/chico-r-users-group/)
