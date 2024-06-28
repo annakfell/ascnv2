@@ -258,7 +258,10 @@ window.Quarto = {
   <li><a href="#grouped-histograms" id="toc-grouped-histograms" class="nav-link" data-scroll-target="#grouped-histograms"><span class="header-section-number">2.7.3</span> Grouped histograms</a></li>
   <li><a href="#joy-plots-ridgelines" id="toc-joy-plots-ridgelines" class="nav-link" data-scroll-target="#joy-plots-ridgelines"><span class="header-section-number">2.7.4</span> Joy plots / Ridgelines</a></li>
   </ul></li>
-  <li><a href="#faceting-paneling" id="toc-faceting-paneling" class="nav-link" data-scroll-target="#faceting-paneling"><span class="header-section-number">2.8</span> Faceting / paneling</a></li>
+  <li><a href="#faceting-paneling" id="toc-faceting-paneling" class="nav-link" data-scroll-target="#faceting-paneling"><span class="header-section-number">2.8</span> Faceting / paneling</a>
+  <ul>
+  <li><a href="#paneling-on-two-variables" id="toc-paneling-on-two-variables" class="nav-link" data-scroll-target="#paneling-on-two-variables"><span class="header-section-number">2.8.1</span> Paneling on two variables</a></li>
+  </ul></li>
   <li><a href="#multiple-plots-per-window" id="toc-multiple-plots-per-window" class="nav-link" data-scroll-target="#multiple-plots-per-window"><span class="header-section-number">2.9</span> Multiple plots per window</a></li>
   <li><a href="#multivariate-3-variables" id="toc-multivariate-3-variables" class="nav-link" data-scroll-target="#multivariate-3-variables"><span class="header-section-number">2.10</span> Multivariate (3+ variables)</a>
   <ul>
@@ -267,16 +270,15 @@ window.Quarto = {
   <li><a href="#two-categorical-and-one-continuous" id="toc-two-categorical-and-one-continuous" class="nav-link" data-scroll-target="#two-categorical-and-one-continuous"><span class="header-section-number">2.10.3</span> Two categorical and one continuous</a></li>
   <li><a href="#two-continuous-and-one-categorical" id="toc-two-continuous-and-one-categorical" class="nav-link" data-scroll-target="#two-continuous-and-one-categorical"><span class="header-section-number">2.10.4</span> Two continuous and one categorical</a></li>
   </ul></li>
-  <li><a href="#paneling-on-two-variables" id="toc-paneling-on-two-variables" class="nav-link" data-scroll-target="#paneling-on-two-variables"><span class="header-section-number">2.11</span> Paneling on two variables</a></li>
-  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting"><span class="header-section-number">2.12</span> Troubleshooting</a>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting"><span class="header-section-number">2.11</span> Troubleshooting</a>
   <ul>
-  <li><a href="#problem-missing-data-showing-up-as-a-category-in-ggplot" id="toc-problem-missing-data-showing-up-as-a-category-in-ggplot" class="nav-link" data-scroll-target="#problem-missing-data-showing-up-as-a-category-in-ggplot"><span class="header-section-number">2.12.1</span> Problem: Missing data showing up as a category in ggplot?</a></li>
-  <li><a href="#problem-got-numerical-binary-01-data-but-want-to-plot-it-as-categorical" id="toc-problem-got-numerical-binary-01-data-but-want-to-plot-it-as-categorical" class="nav-link" data-scroll-target="#problem-got-numerical-binary-01-data-but-want-to-plot-it-as-categorical"><span class="header-section-number">2.12.2</span> Problem: Got numerical binary 0/1 data but want to plot it as categorical?</a></li>
-  <li><a href="#problem-you-want-to-change-the-legend-title-for-a-fill-or-color-scale." id="toc-problem-you-want-to-change-the-legend-title-for-a-fill-or-color-scale." class="nav-link" data-scroll-target="#problem-you-want-to-change-the-legend-title-for-a-fill-or-color-scale."><span class="header-section-number">2.12.3</span> Problem: You want to change the legend title for a <code>fill</code> or <code>color</code> scale.</a></li>
-  <li><a href="#problem-you-want-to-add-means-to-boxplots." id="toc-problem-you-want-to-add-means-to-boxplots." class="nav-link" data-scroll-target="#problem-you-want-to-add-means-to-boxplots."><span class="header-section-number">2.12.4</span> Problem: You want to add means to boxplots.</a></li>
+  <li><a href="#problem-missing-data-showing-up-as-a-category-in-ggplot" id="toc-problem-missing-data-showing-up-as-a-category-in-ggplot" class="nav-link" data-scroll-target="#problem-missing-data-showing-up-as-a-category-in-ggplot"><span class="header-section-number">2.11.1</span> Problem: Missing data showing up as a category in ggplot?</a></li>
+  <li><a href="#problem-got-numerical-binary-01-data-but-want-to-plot-it-as-categorical" id="toc-problem-got-numerical-binary-01-data-but-want-to-plot-it-as-categorical" class="nav-link" data-scroll-target="#problem-got-numerical-binary-01-data-but-want-to-plot-it-as-categorical"><span class="header-section-number">2.11.2</span> Problem: Got numerical binary 0/1 data but want to plot it as categorical?</a></li>
+  <li><a href="#problem-you-want-to-change-the-legend-title-for-a-fill-or-color-scale." id="toc-problem-you-want-to-change-the-legend-title-for-a-fill-or-color-scale." class="nav-link" data-scroll-target="#problem-you-want-to-change-the-legend-title-for-a-fill-or-color-scale."><span class="header-section-number">2.11.3</span> Problem: You want to change the legend title for a <code>fill</code> or <code>color</code> scale.</a></li>
+  <li><a href="#problem-you-want-to-add-means-to-boxplots." id="toc-problem-you-want-to-add-means-to-boxplots." class="nav-link" data-scroll-target="#problem-you-want-to-add-means-to-boxplots."><span class="header-section-number">2.11.4</span> Problem: You want to add means to boxplots.</a></li>
   </ul></li>
-  <li><a href="#but-what-about" id="toc-but-what-about" class="nav-link" data-scroll-target="#but-what-about"><span class="header-section-number">2.13</span> But what about…</a></li>
-  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">2.14</span> Additional Resources</a></li>
+  <li><a href="#but-what-about" id="toc-but-what-about" class="nav-link" data-scroll-target="#but-what-about"><span class="header-section-number">2.12</span> But what about…</a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">2.13</span> Additional Resources</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/data_viz.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -413,23 +415,23 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pen <span class="sc">|&gt;</span> <span class="fu">select</span>(species) <span class="sc">|&gt;</span> <span class="fu">tbl_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="kmxkrwhkrc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#kmxkrwhkrc table {
+<div id="oyfznmhfyf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#oyfznmhfyf table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#kmxkrwhkrc thead, #kmxkrwhkrc tbody, #kmxkrwhkrc tfoot, #kmxkrwhkrc tr, #kmxkrwhkrc td, #kmxkrwhkrc th {
+#oyfznmhfyf thead, #oyfznmhfyf tbody, #oyfznmhfyf tfoot, #oyfznmhfyf tr, #oyfznmhfyf td, #oyfznmhfyf th {
   border-style: none;
 }
 
-#kmxkrwhkrc p {
+#oyfznmhfyf p {
   margin: 0;
   padding: 0;
 }
 
-#kmxkrwhkrc .gt_table {
+#oyfznmhfyf .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -455,12 +457,12 @@ Packages Used
   border-left-color: #D3D3D3;
 }
 
-#kmxkrwhkrc .gt_caption {
+#oyfznmhfyf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#kmxkrwhkrc .gt_title {
+#oyfznmhfyf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -472,7 +474,7 @@ Packages Used
   border-bottom-width: 0;
 }
 
-#kmxkrwhkrc .gt_subtitle {
+#oyfznmhfyf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -484,7 +486,7 @@ Packages Used
   border-top-width: 0;
 }
 
-#kmxkrwhkrc .gt_heading {
+#oyfznmhfyf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -496,13 +498,13 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#kmxkrwhkrc .gt_bottom_border {
+#oyfznmhfyf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#kmxkrwhkrc .gt_col_headings {
+#oyfznmhfyf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -517,7 +519,7 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#kmxkrwhkrc .gt_col_heading {
+#oyfznmhfyf .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -537,7 +539,7 @@ Packages Used
   overflow-x: hidden;
 }
 
-#kmxkrwhkrc .gt_column_spanner_outer {
+#oyfznmhfyf .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -549,15 +551,15 @@ Packages Used
   padding-right: 4px;
 }
 
-#kmxkrwhkrc .gt_column_spanner_outer:first-child {
+#oyfznmhfyf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#kmxkrwhkrc .gt_column_spanner_outer:last-child {
+#oyfznmhfyf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#kmxkrwhkrc .gt_column_spanner {
+#oyfznmhfyf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -569,11 +571,11 @@ Packages Used
   width: 100%;
 }
 
-#kmxkrwhkrc .gt_spanner_row {
+#oyfznmhfyf .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#kmxkrwhkrc .gt_group_heading {
+#oyfznmhfyf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -599,7 +601,7 @@ Packages Used
   text-align: left;
 }
 
-#kmxkrwhkrc .gt_empty_group_heading {
+#oyfznmhfyf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -614,15 +616,15 @@ Packages Used
   vertical-align: middle;
 }
 
-#kmxkrwhkrc .gt_from_md > :first-child {
+#oyfznmhfyf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#kmxkrwhkrc .gt_from_md > :last-child {
+#oyfznmhfyf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#kmxkrwhkrc .gt_row {
+#oyfznmhfyf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -641,7 +643,7 @@ Packages Used
   overflow-x: hidden;
 }
 
-#kmxkrwhkrc .gt_stub {
+#oyfznmhfyf .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -654,7 +656,7 @@ Packages Used
   padding-right: 5px;
 }
 
-#kmxkrwhkrc .gt_stub_row_group {
+#oyfznmhfyf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -668,15 +670,15 @@ Packages Used
   vertical-align: top;
 }
 
-#kmxkrwhkrc .gt_row_group_first td {
+#oyfznmhfyf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#kmxkrwhkrc .gt_row_group_first th {
+#oyfznmhfyf .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#kmxkrwhkrc .gt_summary_row {
+#oyfznmhfyf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -686,16 +688,16 @@ Packages Used
   padding-right: 5px;
 }
 
-#kmxkrwhkrc .gt_first_summary_row {
+#oyfznmhfyf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#kmxkrwhkrc .gt_first_summary_row.thick {
+#oyfznmhfyf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#kmxkrwhkrc .gt_last_summary_row {
+#oyfznmhfyf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -705,7 +707,7 @@ Packages Used
   border-bottom-color: #D3D3D3;
 }
 
-#kmxkrwhkrc .gt_grand_summary_row {
+#oyfznmhfyf .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -715,7 +717,7 @@ Packages Used
   padding-right: 5px;
 }
 
-#kmxkrwhkrc .gt_first_grand_summary_row {
+#oyfznmhfyf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -725,7 +727,7 @@ Packages Used
   border-top-color: #D3D3D3;
 }
 
-#kmxkrwhkrc .gt_last_grand_summary_row_top {
+#oyfznmhfyf .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -735,11 +737,11 @@ Packages Used
   border-bottom-color: #D3D3D3;
 }
 
-#kmxkrwhkrc .gt_striped {
+#oyfznmhfyf .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#kmxkrwhkrc .gt_table_body {
+#oyfznmhfyf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -748,7 +750,7 @@ Packages Used
   border-bottom-color: #D3D3D3;
 }
 
-#kmxkrwhkrc .gt_footnotes {
+#oyfznmhfyf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -762,7 +764,7 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#kmxkrwhkrc .gt_footnote {
+#oyfznmhfyf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -771,7 +773,7 @@ Packages Used
   padding-right: 5px;
 }
 
-#kmxkrwhkrc .gt_sourcenotes {
+#oyfznmhfyf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -785,7 +787,7 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#kmxkrwhkrc .gt_sourcenote {
+#oyfznmhfyf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -793,63 +795,63 @@ Packages Used
   padding-right: 5px;
 }
 
-#kmxkrwhkrc .gt_left {
+#oyfznmhfyf .gt_left {
   text-align: left;
 }
 
-#kmxkrwhkrc .gt_center {
+#oyfznmhfyf .gt_center {
   text-align: center;
 }
 
-#kmxkrwhkrc .gt_right {
+#oyfznmhfyf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#kmxkrwhkrc .gt_font_normal {
+#oyfznmhfyf .gt_font_normal {
   font-weight: normal;
 }
 
-#kmxkrwhkrc .gt_font_bold {
+#oyfznmhfyf .gt_font_bold {
   font-weight: bold;
 }
 
-#kmxkrwhkrc .gt_font_italic {
+#oyfznmhfyf .gt_font_italic {
   font-style: italic;
 }
 
-#kmxkrwhkrc .gt_super {
+#oyfznmhfyf .gt_super {
   font-size: 65%;
 }
 
-#kmxkrwhkrc .gt_footnote_marks {
+#oyfznmhfyf .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#kmxkrwhkrc .gt_asterisk {
+#oyfznmhfyf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#kmxkrwhkrc .gt_indent_1 {
+#oyfznmhfyf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#kmxkrwhkrc .gt_indent_2 {
+#oyfznmhfyf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#kmxkrwhkrc .gt_indent_3 {
+#oyfznmhfyf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#kmxkrwhkrc .gt_indent_4 {
+#oyfznmhfyf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#kmxkrwhkrc .gt_indent_5 {
+#oyfznmhfyf .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -895,23 +897,23 @@ Packages Used
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pen <span class="sc">|&gt;</span> <span class="fu">select</span>(species, island) <span class="sc">|&gt;</span> <span class="fu">tbl_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="gsqmwabodc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gsqmwabodc table {
+<div id="jxnrjnljty" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#jxnrjnljty table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gsqmwabodc thead, #gsqmwabodc tbody, #gsqmwabodc tfoot, #gsqmwabodc tr, #gsqmwabodc td, #gsqmwabodc th {
+#jxnrjnljty thead, #jxnrjnljty tbody, #jxnrjnljty tfoot, #jxnrjnljty tr, #jxnrjnljty td, #jxnrjnljty th {
   border-style: none;
 }
 
-#gsqmwabodc p {
+#jxnrjnljty p {
   margin: 0;
   padding: 0;
 }
 
-#gsqmwabodc .gt_table {
+#jxnrjnljty .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -937,12 +939,12 @@ Packages Used
   border-left-color: #D3D3D3;
 }
 
-#gsqmwabodc .gt_caption {
+#jxnrjnljty .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gsqmwabodc .gt_title {
+#jxnrjnljty .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -954,7 +956,7 @@ Packages Used
   border-bottom-width: 0;
 }
 
-#gsqmwabodc .gt_subtitle {
+#jxnrjnljty .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -966,7 +968,7 @@ Packages Used
   border-top-width: 0;
 }
 
-#gsqmwabodc .gt_heading {
+#jxnrjnljty .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -978,13 +980,13 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#gsqmwabodc .gt_bottom_border {
+#jxnrjnljty .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gsqmwabodc .gt_col_headings {
+#jxnrjnljty .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -999,7 +1001,7 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#gsqmwabodc .gt_col_heading {
+#jxnrjnljty .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1019,7 +1021,7 @@ Packages Used
   overflow-x: hidden;
 }
 
-#gsqmwabodc .gt_column_spanner_outer {
+#jxnrjnljty .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1031,15 +1033,15 @@ Packages Used
   padding-right: 4px;
 }
 
-#gsqmwabodc .gt_column_spanner_outer:first-child {
+#jxnrjnljty .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gsqmwabodc .gt_column_spanner_outer:last-child {
+#jxnrjnljty .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gsqmwabodc .gt_column_spanner {
+#jxnrjnljty .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1051,11 +1053,11 @@ Packages Used
   width: 100%;
 }
 
-#gsqmwabodc .gt_spanner_row {
+#jxnrjnljty .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gsqmwabodc .gt_group_heading {
+#jxnrjnljty .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1081,7 +1083,7 @@ Packages Used
   text-align: left;
 }
 
-#gsqmwabodc .gt_empty_group_heading {
+#jxnrjnljty .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1096,15 +1098,15 @@ Packages Used
   vertical-align: middle;
 }
 
-#gsqmwabodc .gt_from_md > :first-child {
+#jxnrjnljty .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gsqmwabodc .gt_from_md > :last-child {
+#jxnrjnljty .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gsqmwabodc .gt_row {
+#jxnrjnljty .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1123,7 +1125,7 @@ Packages Used
   overflow-x: hidden;
 }
 
-#gsqmwabodc .gt_stub {
+#jxnrjnljty .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1136,7 +1138,7 @@ Packages Used
   padding-right: 5px;
 }
 
-#gsqmwabodc .gt_stub_row_group {
+#jxnrjnljty .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1150,15 +1152,15 @@ Packages Used
   vertical-align: top;
 }
 
-#gsqmwabodc .gt_row_group_first td {
+#jxnrjnljty .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gsqmwabodc .gt_row_group_first th {
+#jxnrjnljty .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gsqmwabodc .gt_summary_row {
+#jxnrjnljty .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1168,16 +1170,16 @@ Packages Used
   padding-right: 5px;
 }
 
-#gsqmwabodc .gt_first_summary_row {
+#jxnrjnljty .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gsqmwabodc .gt_first_summary_row.thick {
+#jxnrjnljty .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gsqmwabodc .gt_last_summary_row {
+#jxnrjnljty .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1187,7 +1189,7 @@ Packages Used
   border-bottom-color: #D3D3D3;
 }
 
-#gsqmwabodc .gt_grand_summary_row {
+#jxnrjnljty .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1197,7 +1199,7 @@ Packages Used
   padding-right: 5px;
 }
 
-#gsqmwabodc .gt_first_grand_summary_row {
+#jxnrjnljty .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1207,7 +1209,7 @@ Packages Used
   border-top-color: #D3D3D3;
 }
 
-#gsqmwabodc .gt_last_grand_summary_row_top {
+#jxnrjnljty .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1217,11 +1219,11 @@ Packages Used
   border-bottom-color: #D3D3D3;
 }
 
-#gsqmwabodc .gt_striped {
+#jxnrjnljty .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gsqmwabodc .gt_table_body {
+#jxnrjnljty .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1230,7 +1232,7 @@ Packages Used
   border-bottom-color: #D3D3D3;
 }
 
-#gsqmwabodc .gt_footnotes {
+#jxnrjnljty .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1244,7 +1246,7 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#gsqmwabodc .gt_footnote {
+#jxnrjnljty .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1253,7 +1255,7 @@ Packages Used
   padding-right: 5px;
 }
 
-#gsqmwabodc .gt_sourcenotes {
+#jxnrjnljty .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1267,7 +1269,7 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#gsqmwabodc .gt_sourcenote {
+#jxnrjnljty .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1275,63 +1277,63 @@ Packages Used
   padding-right: 5px;
 }
 
-#gsqmwabodc .gt_left {
+#jxnrjnljty .gt_left {
   text-align: left;
 }
 
-#gsqmwabodc .gt_center {
+#jxnrjnljty .gt_center {
   text-align: center;
 }
 
-#gsqmwabodc .gt_right {
+#jxnrjnljty .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gsqmwabodc .gt_font_normal {
+#jxnrjnljty .gt_font_normal {
   font-weight: normal;
 }
 
-#gsqmwabodc .gt_font_bold {
+#jxnrjnljty .gt_font_bold {
   font-weight: bold;
 }
 
-#gsqmwabodc .gt_font_italic {
+#jxnrjnljty .gt_font_italic {
   font-style: italic;
 }
 
-#gsqmwabodc .gt_super {
+#jxnrjnljty .gt_super {
   font-size: 65%;
 }
 
-#gsqmwabodc .gt_footnote_marks {
+#jxnrjnljty .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gsqmwabodc .gt_asterisk {
+#jxnrjnljty .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gsqmwabodc .gt_indent_1 {
+#jxnrjnljty .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gsqmwabodc .gt_indent_2 {
+#jxnrjnljty .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gsqmwabodc .gt_indent_3 {
+#jxnrjnljty .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gsqmwabodc .gt_indent_4 {
+#jxnrjnljty .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gsqmwabodc .gt_indent_5 {
+#jxnrjnljty .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -2509,7 +2511,7 @@ Packages Used
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-70-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-70-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2581,7 +2583,7 @@ Packages Used
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-74-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-74-1.png" class="img-fluid figure-img" width="1056"></p>
 </figure>
 </div>
 </div>
@@ -2594,7 +2596,7 @@ Packages Used
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-75-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-75-1.png" class="img-fluid figure-img" width="1056"></p>
 </figure>
 </div>
 </div>
@@ -2641,7 +2643,7 @@ Packages Used
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-77-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-77-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
 </div>
@@ -2653,7 +2655,7 @@ Packages Used
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-78-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-78-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
 </div>
@@ -2670,6 +2672,31 @@ Packages Used
 </div>
 </div>
 </div>
+<section id="paneling-on-two-variables" class="level3" data-number="2.8.1">
+<h3 data-number="2.8.1" class="anchored" data-anchor-id="paneling-on-two-variables"><span class="header-section-number">2.8.1</span> Paneling on two variables</h3>
+<p>Who says we’re stuck with only faceting on one variable? A variant on <code>facet_wrap</code> is <code>facet_grid</code>. Here we can specify multiple variables to panel on.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>body_mass_g, <span class="at">fill=</span>sex)) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(sex<span class="sc">~</span>island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_viz_files/figure-html/unnamed-chunk-80-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>How about plotting bill length against flipper length, for all combinations of species and island, with the points further separated by sex?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>flipper_length_mm, <span class="at">y=</span>bill_length_mm, <span class="at">color=</span>sex)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(island<span class="sc">~</span>species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_viz_files/figure-html/unnamed-chunk-81-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="multiple-plots-per-window" class="level2" data-number="2.9">
 <h2 data-number="2.9" class="anchored" data-anchor-id="multiple-plots-per-window"><span class="header-section-number">2.9</span> Multiple plots per window</h2>
@@ -2679,14 +2706,14 @@ Packages Used
 <div id="tabset-23-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-23-1-tab">
 <p>I use <code>par(mfrow=c(r,c))</code> for base graphics, where <code>r</code> is the number of rows and <code>c</code> the number of columns.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pen<span class="sc">$</span>bill_depth_mm)</span>
-<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pen<span class="sc">$</span>species)</span>
-<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pen<span class="sc">$</span>bill_length_mm <span class="sc">~</span> pen<span class="sc">$</span>bill_depth_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pen<span class="sc">$</span>bill_depth_mm)</span>
+<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pen<span class="sc">$</span>species)</span>
+<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pen<span class="sc">$</span>bill_length_mm <span class="sc">~</span> pen<span class="sc">$</span>bill_depth_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-80-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-82-1.png" class="img-fluid figure-img" width="1056"></p>
 </figure>
 </div>
 </div>
@@ -2696,13 +2723,13 @@ Packages Used
 <div id="tabset-23-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-23-2-tab">
 <p>Use the <code>grid.arrange</code> function in the <code>gridExtra</code> package. I’ve done it several times above. You assign the output of a ggplot object to an object (here it’s <code>plot1</code> and <code>plot2</code>). Then you use <code>grid.arrange()</code> to arrange them either side by side or top and bottom.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_depth_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_density</span>(<span class="at">alpha=</span>.<span class="dv">2</span>)</span>
-<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_depth_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_density</span>() </span>
-<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(a,b, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_depth_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_density</span>(<span class="at">alpha=</span>.<span class="dv">2</span>)</span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_depth_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_density</span>() </span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(a,b, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-81-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-83-1.png" class="img-fluid figure-img" width="1056"></p>
 </figure>
 </div>
 </div>
@@ -2724,11 +2751,11 @@ Packages Used
 <h3 data-number="2.10.1" class="anchored" data-anchor-id="three-continuous"><span class="header-section-number">2.10.1</span> Three continuous</h3>
 <p>Continuous variables can also be mapped to the size of the point. Here I set the alpha on the points so we could see the overplotting (many points on a single spot). So the darker the spot the more data points on that spot.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm, <span class="at">y=</span>bill_depth_mm, <span class="at">size=</span>body_mass_g)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">alpha=</span>.<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm, <span class="at">y=</span>bill_depth_mm, <span class="at">size=</span>body_mass_g)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">alpha=</span>.<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-82-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-84-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2738,12 +2765,12 @@ Packages Used
 <h3 data-number="2.10.2" class="anchored" data-anchor-id="scatterplot-matrix"><span class="header-section-number">2.10.2</span> Scatterplot matrix</h3>
 <p>A scatterplot matrix allows you to look at the bivariate comparison of multiple pairs of variables simultaneously. First we need to trim down the data set to only include the variables we want to plot, then we use the <code>pairs()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>c.vars <span class="ot">&lt;-</span> pen[,<span class="fu">c</span>(<span class="st">'flipper_length_mm'</span>, <span class="st">'bill_length_mm'</span>, <span class="st">'bill_depth_mm'</span>, <span class="st">'body_mass_g'</span>)]</span>
-<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(c.vars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>c.vars <span class="ot">&lt;-</span> pen[,<span class="fu">c</span>(<span class="st">'flipper_length_mm'</span>, <span class="st">'bill_length_mm'</span>, <span class="st">'bill_depth_mm'</span>, <span class="st">'body_mass_g'</span>)]</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(c.vars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-83-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-85-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2756,34 +2783,7 @@ Packages Used
 <h3 data-number="2.10.3" class="anchored" data-anchor-id="two-categorical-and-one-continuous"><span class="header-section-number">2.10.3</span> Two categorical and one continuous</h3>
 <p>This is very similar to side by side boxplots, one violin plot per <code>sex</code>, within each island &gt; Original comment - This is difficult to really see due to the large number of categories each factor has. The categorical variables in the penguins dataset have less categories w less combinations</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>island, <span class="at">y=</span>bill_length_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_violin</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-84-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Best bet here would be to panel on species and change the x axis to location.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span>bill_length_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_violin</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-85-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="two-continuous-and-one-categorical" class="level3" data-number="2.10.4">
-<h3 data-number="2.10.4" class="anchored" data-anchor-id="two-continuous-and-one-categorical"><span class="header-section-number">2.10.4</span> Two continuous and one categorical</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm, <span class="at">y=</span>bill_depth_mm, <span class="at">color=</span>species)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Colored by species"</span>)</span>
-<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm, <span class="at">y=</span>bill_depth_mm, <span class="at">color=</span>species)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_smooth</span>(<span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span><span class="fu">ggtitle</span>(<span class="st">"Lowess line per species"</span>)</span>
-<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(a, d, <span class="at">nrow=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>island, <span class="at">y=</span>bill_length_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_violin</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2792,20 +2792,23 @@ Packages Used
 </div>
 </div>
 </div>
-<p>Change the shape</p>
+<p>Best bet here would be to panel on species and change the x axis to location.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm, <span class="at">y=</span>bill_depth_mm, <span class="at">shape=</span>species)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Shape by species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span>bill_length_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_violin</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-87-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-87-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Or we just panel by the third variable</p>
+</section>
+<section id="two-continuous-and-one-categorical" class="level3" data-number="2.10.4">
+<h3 data-number="2.10.4" class="anchored" data-anchor-id="two-continuous-and-one-categorical"><span class="header-section-number">2.10.4</span> Two continuous and one categorical</h3>
+<p>And lastly let’s look back at how we can play with scatterplots of using a third categorical variable (using <code>ggplot2</code> only). We can color the points by species,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm, <span class="at">y=</span>bill_depth_mm)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>flipper_length_mm, <span class="at">y=</span>bill_length_mm, <span class="at">color=</span>species)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2814,49 +2817,45 @@ Packages Used
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="paneling-on-two-variables" class="level2" data-number="2.11">
-<h2 data-number="2.11" class="anchored" data-anchor-id="paneling-on-two-variables"><span class="header-section-number">2.11</span> Paneling on two variables</h2>
-<blockquote class="blockquote">
-<p>move this up as a subsection of the faceting/paneling section</p>
-</blockquote>
-<p>Who says we’re stuck with only faceting on one variable? A variant on <code>facet_wrap</code> is <code>facet_grid</code>. Here we can specify multiple variables to panel on.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>body_mass_g, <span class="at">fill=</span>sex)) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(sex<span class="sc">~</span>island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-89-1.png" class="img-fluid figure-img" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>How about plotting bill length against flipper length, for all combinations of species and island, with the points further separated by sex?</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>flipper_length_mm, <span class="at">y=</span>bill_length_mm, <span class="at">color=</span>sex)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(island<span class="sc">~</span>species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-90-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>And lastly let’s look back at how we can play with scatterplots of using a third categorical variable (using <code>ggplot2</code> only). We can color the points by species,</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>flipper_length_mm, <span class="at">y=</span>bill_length_mm, <span class="at">color=</span>species)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-91-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
 <p>We could add a smoothing lowess line for each species separately,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>flipper_length_mm, <span class="at">y=</span>bill_length_mm, <span class="at">color=</span>species)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">se=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>flipper_length_mm, <span class="at">y=</span>bill_length_mm, <span class="at">color=</span>species)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">se=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_viz_files/figure-html/unnamed-chunk-89-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>And using <code>grid.arrange</code> we can include both visualizations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm, <span class="at">y=</span>bill_depth_mm, <span class="at">color=</span>species)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Colored by species"</span>)</span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm, <span class="at">y=</span>bill_depth_mm, <span class="at">color=</span>species)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_smooth</span>(<span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span><span class="fu">ggtitle</span>(<span class="st">"Lowess line per species"</span>)</span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(a, d, <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">nrow=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_viz_files/figure-html/unnamed-chunk-90-1.png" class="img-fluid figure-img" width="1056"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Or we just panel by species.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm, <span class="at">y=</span>bill_depth_mm)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_viz_files/figure-html/unnamed-chunk-91-1.png" class="img-fluid figure-img" width="864"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We could even change the color by sex, and shape by species.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>flipper_length_mm, <span class="at">y=</span>bill_length_mm, <span class="at">color=</span>sex, <span class="at">shape=</span>species)) <span class="sc">+</span> <span class="fu">geom_point</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2865,32 +2864,22 @@ Packages Used
 </div>
 </div>
 </div>
-<p>We could change the color by sex, and shape by species.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>flipper_length_mm, <span class="at">y=</span>bill_length_mm, <span class="at">color=</span>sex, <span class="at">shape=</span>species)) <span class="sc">+</span> <span class="fu">geom_point</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-93-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
 <p>That’s harder to read. So note that just because you <strong>can</strong> change an aesthetic, doesn’t mean you should. And just because you can plot things on the same axis, doesn’t mean you have to.</p>
 <p>Before you share your plot with any other eyes, always take a step back and try to explain what it is telling you. If you have to take more than a minute to get to the point then it may be too complex and simpler graphics are likely warranted.</p>
 <hr>
 </section>
-<section id="troubleshooting" class="level2" data-number="2.12">
-<h2 data-number="2.12" class="anchored" data-anchor-id="troubleshooting"><span class="header-section-number">2.12</span> Troubleshooting</h2>
-<section id="problem-missing-data-showing-up-as-a-category-in-ggplot" class="level3" data-number="2.12.1">
-<h3 data-number="2.12.1" class="anchored" data-anchor-id="problem-missing-data-showing-up-as-a-category-in-ggplot"><span class="header-section-number">2.12.1</span> Problem: Missing data showing up as a category in ggplot?</h3>
+</section>
+<section id="troubleshooting" class="level2" data-number="2.11">
+<h2 data-number="2.11" class="anchored" data-anchor-id="troubleshooting"><span class="header-section-number">2.11</span> Troubleshooting</h2>
+<section id="problem-missing-data-showing-up-as-a-category-in-ggplot" class="level3" data-number="2.11.1">
+<h3 data-number="2.11.1" class="anchored" data-anchor-id="problem-missing-data-showing-up-as-a-category-in-ggplot"><span class="header-section-number">2.11.1</span> Problem: Missing data showing up as a category in ggplot?</h3>
 <p>Get rid of that far right bar!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(NCbirths, <span class="fu">aes</span>(<span class="at">x=</span>marital)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(NCbirths, <span class="fu">aes</span>(<span class="at">x=</span>marital)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-95-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-94-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2909,12 +2898,12 @@ Solution:
 <div class="callout-body-container callout-body">
 <p>Use <code>dplyr</code> to select only the variables you are going to plot, then pipe in the <code>na.omit()</code> at the end. It will create a temporary data frame (e.g) <code>plot.data</code> that you then provide to <code>ggplot()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>plot.data <span class="ot">&lt;-</span> NCbirths <span class="sc">%&gt;%</span> <span class="fu">select</span>(marital) <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span>
-<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot.data, <span class="fu">aes</span>(<span class="at">x=</span>marital)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>plot.data <span class="ot">&lt;-</span> NCbirths <span class="sc">%&gt;%</span> <span class="fu">select</span>(marital) <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot.data, <span class="fu">aes</span>(<span class="at">x=</span>marital)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-96-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-95-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2923,8 +2912,8 @@ Solution:
 </div>
 </div>
 </section>
-<section id="problem-got-numerical-binary-01-data-but-want-to-plot-it-as-categorical" class="level3" data-number="2.12.2">
-<h3 data-number="2.12.2" class="anchored" data-anchor-id="problem-got-numerical-binary-01-data-but-want-to-plot-it-as-categorical"><span class="header-section-number">2.12.2</span> Problem: Got numerical binary 0/1 data but want to plot it as categorical?</h3>
+<section id="problem-got-numerical-binary-01-data-but-want-to-plot-it-as-categorical" class="level3" data-number="2.11.2">
+<h3 data-number="2.11.2" class="anchored" data-anchor-id="problem-got-numerical-binary-01-data-but-want-to-plot-it-as-categorical"><span class="header-section-number">2.11.2</span> Problem: Got numerical binary 0/1 data but want to plot it as categorical?</h3>
 <blockquote class="blockquote">
 <p>Other related error messages: Continuous x aesthetic – did you forget aes(group=…)?</p>
 </blockquote>
@@ -2943,12 +2932,12 @@ Solution:
 <div class="callout-body-container callout-body">
 <p>Create a second variable <code>var_factor</code> for plotting and keep the binary <code>var</code> as 0/1 for analysis.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>email<span class="sc">$</span>spam_cat <span class="ot">&lt;-</span> <span class="fu">factor</span>(email<span class="sc">$</span>spam, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Ham"</span>, <span class="st">"Spam"</span>))</span>
-<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">y=</span>num_char, <span class="at">x=</span>spam_cat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>email<span class="sc">$</span>spam_cat <span class="ot">&lt;-</span> <span class="fu">factor</span>(email<span class="sc">$</span>spam, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Ham"</span>, <span class="st">"Spam"</span>))</span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">y=</span>num_char, <span class="at">x=</span>spam_cat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-97-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-96-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2957,8 +2946,8 @@ Solution:
 </div>
 </div>
 </section>
-<section id="problem-you-want-to-change-the-legend-title-for-a-fill-or-color-scale." class="level3" data-number="2.12.3">
-<h3 data-number="2.12.3" class="anchored" data-anchor-id="problem-you-want-to-change-the-legend-title-for-a-fill-or-color-scale."><span class="header-section-number">2.12.3</span> Problem: You want to change the legend title for a <code>fill</code> or <code>color</code> scale.</h3>
+<section id="problem-you-want-to-change-the-legend-title-for-a-fill-or-color-scale." class="level3" data-number="2.11.3">
+<h3 data-number="2.11.3" class="anchored" data-anchor-id="problem-you-want-to-change-the-legend-title-for-a-fill-or-color-scale."><span class="header-section-number">2.11.3</span> Problem: You want to change the legend title for a <code>fill</code> or <code>color</code> scale.</h3>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2973,8 +2962,20 @@ Solution:
 <div class="callout-body-container callout-body">
 <p>Add the <code>name=</code> argument to whatever layer you added that created the legend. Here I speciefied a <code>fill</code>, and it was a <code>discrete</code> variable. So I use the <code>scale_fill_discrete()</code> layer.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">y=</span>num_char, <span class="at">x=</span>spam_cat, <span class="at">fill=</span>spam_cat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
-<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">name=</span><span class="st">"Ya like Spam?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">y=</span>num_char, <span class="at">x=</span>spam_cat, <span class="at">fill=</span>spam_cat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">name=</span><span class="st">"Ya like Spam?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_viz_files/figure-html/unnamed-chunk-97-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Here, I <code>col</code>ored the points by a discrete variable, so the layer is <code>scale_color_discrete()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">x=</span>num_char, <span class="at">y=</span>line_breaks, <span class="at">col=</span>spam_cat)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name=</span><span class="st">"Ya like Spam?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2983,33 +2984,21 @@ Solution:
 </div>
 </div>
 </div>
-<p>Here, I <code>col</code>ored the points by a discrete variable, so the layer is <code>scale_color_discrete()</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">x=</span>num_char, <span class="at">y=</span>line_breaks, <span class="at">col=</span>spam_cat)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name=</span><span class="st">"Ya like Spam?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-99-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>
 </section>
-<section id="problem-you-want-to-add-means-to-boxplots." class="level3" data-number="2.12.4">
-<h3 data-number="2.12.4" class="anchored" data-anchor-id="problem-you-want-to-add-means-to-boxplots."><span class="header-section-number">2.12.4</span> Problem: You want to add means to boxplots.</h3>
+<section id="problem-you-want-to-add-means-to-boxplots." class="level3" data-number="2.11.4">
+<h3 data-number="2.11.4" class="anchored" data-anchor-id="problem-you-want-to-add-means-to-boxplots."><span class="header-section-number">2.11.4</span> Problem: You want to add means to boxplots.</h3>
 <p>Boxplots are great. Even better with violin overlays. Know what makes them even better than butter? Adding a point for the mean. <code>stat_summary</code> is the layer you want to add. Check out <a href="https://stackoverflow.com/questions/23942959/ggplot2-show-separate-mean-values-in-box-plot-for-grouped-data">this stack overflow post</a> for more context.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">x=</span>spam_cat, <span class="at">y=</span>num_char, <span class="at">fill=</span>spam_cat)) <span class="sc">+</span></span>
-<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y=</span><span class="st">"mean"</span>, <span class="at">geom=</span><span class="st">"point"</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">pch=</span><span class="dv">17</span>,<span class="at">color=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">x=</span>spam_cat, <span class="at">y=</span>num_char, <span class="at">fill=</span>spam_cat)) <span class="sc">+</span></span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y=</span><span class="st">"mean"</span>, <span class="at">geom=</span><span class="st">"point"</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">pch=</span><span class="dv">17</span>,<span class="at">color=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-100-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-99-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -3032,27 +3021,27 @@ Solution:
 </div>
 </section>
 </section>
-<section id="but-what-about" class="level2" data-number="2.13">
-<h2 data-number="2.13" class="anchored" data-anchor-id="but-what-about"><span class="header-section-number">2.13</span> But what about…</h2>
+<section id="but-what-about" class="level2" data-number="2.12">
+<h2 data-number="2.12" class="anchored" data-anchor-id="but-what-about"><span class="header-section-number">2.12</span> But what about…</h2>
 <ul>
 <li>Legend adjustment: remove it, move it to another side, rename it</li>
 <li>Custom specified colors and shapes</li>
 </ul>
-<p>Go <a href="http://www.cookbook-r.com/Graphs/">here</a> for these.</p>
+<p>Go to the <a href="https://r-graphics.org">R Graphics Cookbook, 2e</a> for these.</p>
 <ul>
 <li><a href="https://www.r-bloggers.com/how-to-make-a-simple-heatmap-in-ggplot2/">Heat maps</a></li>
 <li><a href="https://rpubs.com/brandonkopp/creating-word-clouds-in-r">Word clouds</a>, or <a href="http://dangoldin.com/2016/06/06/word-clouds-in-r/">simpler</a></li>
 <li>Interactive plots - Look into <code>plotly()</code> and <code>ggplotly()</code>, start with their guide directed towards R users <a href="https://plotly.com/ggplot2/getting-started/">here</a> or browse the <a href="https://plotly.com/r/">Plotly R open source graphing library</a></li>
 </ul>
 </section>
-<section id="additional-resources" class="level2" data-number="2.14">
-<h2 data-number="2.14" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">2.14</span> Additional Resources</h2>
+<section id="additional-resources" class="level2" data-number="2.13">
+<h2 data-number="2.13" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">2.13</span> Additional Resources</h2>
 <p>For any Google Search - be sure to limit searches to within the past year or so. R packages get updated very frequently, and many functions change or become obsolete.</p>
 <ul>
 <li>Comprehensive guides
 <ul>
 <li><a href="https://www.stat.auckland.ac.nz/~paul/RG2e/">R Graphics 2e</a>: The best book about using base graphics</li>
-<li><a href="https://r-graphics.org">R Graphics Cookbook</a>: The best book for using ggplot2</li>
+<li><a href="https://r-graphics.org">R Graphics Cookbook 2e</a>: The best book for using ggplot2</li>
 <li><a href="http://ggplot2.org/book/">ggplot2: Elegant Graphics for Data Analysis 3e</a></li>
 </ul></li>
 <li>Subject reference and tutorial sites

@@ -821,6 +821,7 @@ stripchart(body_mass_g ~ species, data=pen)
 ## ggplot
 We can reproduce the same thing by plotting one continuous variable against one categorical variable, and adding a layer of points. I'd argue that horizontal looks better due to the axis-labels. 
 ```{r}
+#| fig-width: 10
 library(gridExtra)
 a <- ggplot(pen, aes(y=body_mass_g, x=species)) + geom_point()
 b <- ggplot(pen, aes(y=species, x=body_mass_g)) + geom_point()
@@ -865,14 +866,16 @@ ggplot(pen, aes(x=species, y=bill_depth_mm, fill=species)) +
 
 ## ggplot
 By default ggplot wants to overlay all plots on the same grid. This doesn't look to good with histograms. Instead you can overlay density plots
-```{r, fig.width=10}
+```{r}
+#| fig-width: 11
 a <- ggplot(pen, aes(x=bill_depth_mm, fill=species)) + geom_histogram()
 b <- ggplot(pen, aes(x=bill_depth_mm, fill=species)) + geom_density() 
 grid.arrange(a,b, ncol=2)
 ```
 
 The solid fills are still difficult to read, so we can either turn down the alpha (turn up the transparency) or only color the lines and not the fill. 
-```{r, fig.width=10}
+```{r}
+#| fig-width: 11
 c <- ggplot(pen, aes(x=bill_depth_mm, fill=species)) + geom_density(alpha=.2)
 d <- ggplot(pen, aes(x=bill_depth_mm, fill=species)) + geom_density() 
 grid.arrange(c,d, ncol=2)
@@ -906,13 +909,14 @@ We add a `facet_wrap()` and specify that we want to panel on the species group. 
 
 ```{r}
 #| fig-height: 4
+#| fig-width: 9
 ggplot(pen, aes(x=bill_depth_mm, fill=species)) + geom_density() + facet_wrap(~species)
 ```
 
 The grid placement can be semi-controlled by using the `ncol` argument in the `facet_wrap()` statement. 
 ```{r}
 #| fig-height: 4
-
+#| fig-width: 9
 ggplot(pen, aes(x=bill_depth_mm, fill=species)) + 
   geom_density() + facet_wrap(~species, ncol=4)
 ```
@@ -920,10 +924,24 @@ ggplot(pen, aes(x=bill_depth_mm, fill=species)) +
 It is important to compare distributions across groups on the same scale, and our eyes can compare items vertically better than horizontally. So let's force `ncol=1`. 
 
 ```{r}
-#| fig-height: 4
-#| 
+
 ggplot(pen, aes(x=bill_depth_mm, fill=species)) + 
   geom_density() + facet_wrap(~species, ncol=1)
+```
+
+### Paneling on two variables
+
+Who says we're stuck with only faceting on one variable? A variant on `facet_wrap` is `facet_grid`. Here we can specify multiple variables to panel on. 
+
+```{r}
+#| fig-height: 4
+ggplot(pen, aes(x=body_mass_g, fill=sex)) + geom_density() + facet_grid(sex~island)
+```
+
+How about plotting bill length against flipper length, for all combinations of species and island, with the points further separated by sex?
+```{r}
+#| fig-height: 4
+ggplot(pen, aes(x=flipper_length_mm, y=bill_length_mm, color=sex)) + geom_point() + facet_grid(island~species)
 ```
 
 
@@ -935,6 +953,7 @@ ggplot(pen, aes(x=bill_depth_mm, fill=species)) +
 I use `par(mfrow=c(r,c))` for base graphics, where `r` is the number of rows and `c` the number of columns. 
 
 ```{r}
+#| fig-width: 11
 par(mfrow=c(1,3))
 plot(pen$bill_depth_mm)
 plot(pen$species)
@@ -946,6 +965,7 @@ Other resources including learning about `layouts`. [Multipanel plotting with ba
 ## ggplot
 Use the `grid.arrange` function in the `gridExtra` package. I've done it several times above. You assign the output of a ggplot object to an object (here it's `plot1` and `plot2`). Then you use `grid.arrange()` to arrange them either side by side or top and bottom. 
 ```{r}
+#| fig-width: 11
 a <- ggplot(pen, aes(x=bill_depth_mm, fill=species)) + geom_density(alpha=.2)
 b <- ggplot(pen, aes(x=bill_depth_mm, fill=species)) + geom_density() 
 grid.arrange(a,b, ncol=2)
@@ -990,44 +1010,13 @@ ggplot(pen, aes(x=island, y=bill_length_mm, fill=species)) + geom_violin()
 
 Best bet here would be to panel on species and change the x axis to location.  
 ```{r}
+#| fig-width: 9
 ggplot(pen, aes(x=species, y=bill_length_mm, fill=species)) + geom_violin() + facet_wrap(~island)
 ```
 
 
 
 ### Two continuous and one categorical 
-```{r}
-a <- ggplot(pen, aes(x=bill_length_mm, y=bill_depth_mm, color=species)) + geom_point() + ggtitle("Colored by species")
-d <- ggplot(pen, aes(x=bill_length_mm, y=bill_depth_mm, color=species)) + geom_point() + 
-      geom_smooth(se=FALSE) +ggtitle("Lowess line per species")
-grid.arrange(a, d, nrow=1)
-```
-
-Change the shape
-```{r}
-ggplot(pen, aes(x=bill_length_mm, y=bill_depth_mm, shape=species)) + geom_point() + ggtitle("Shape by species")
-```
-
-Or we just panel by the third variable
-
-```{r}
-ggplot(pen, aes(x=bill_length_mm, y=bill_depth_mm)) + geom_point() + facet_wrap(~species)
-```
-
-## Paneling on two variables
-> move this up as a subsection of the faceting/paneling section 
-
-
-Who says we're stuck with only faceting on one variable? A variant on `facet_wrap` is `facet_grid`. Here we can specify multiple variables to panel on. 
-
-```{r, fig.width=10, fig.height=5}
-ggplot(pen, aes(x=body_mass_g, fill=sex)) + geom_density() + facet_grid(sex~island)
-```
-
-How about plotting bill length against flipper length, for all combinations of species and island, with the points further separated by sex?
-```{r}
-ggplot(pen, aes(x=flipper_length_mm, y=bill_length_mm, color=sex)) + geom_point() + facet_grid(island~species)
-```
 
 And lastly let's look back at how we can play with scatterplots of using a third categorical variable (using `ggplot2` only). We can color the points by species, 
 
@@ -1040,7 +1029,23 @@ We could add a smoothing lowess line for each species separately,
 ggplot(pen, aes(x=flipper_length_mm, y=bill_length_mm, color=species)) + geom_point() + geom_smooth(se=FALSE)
 ```
 
-We could change the color by sex, and shape by species. 
+And using `grid.arrange` we can include both visualizations.
+```{r}
+#| fig-width: 11
+a <- ggplot(pen, aes(x=bill_length_mm, y=bill_depth_mm, color=species)) + geom_point() + ggtitle("Colored by species")
+d <- ggplot(pen, aes(x=bill_length_mm, y=bill_depth_mm, color=species)) + geom_point() + 
+      geom_smooth(se=FALSE) +ggtitle("Lowess line per species")
+grid.arrange(a, d, ncol=2, nrow=1)
+```
+
+Or we just panel by species.
+
+```{r}
+#| fig-width: 9
+ggplot(pen, aes(x=bill_length_mm, y=bill_depth_mm)) + geom_point() + facet_wrap(~species)
+```
+
+We could even change the color by sex, and shape by species. 
 ```{r}
 ggplot(pen, aes(x=flipper_length_mm, y=bill_length_mm, color=sex, shape=species)) + geom_point() 
 ```
@@ -1048,7 +1053,6 @@ ggplot(pen, aes(x=flipper_length_mm, y=bill_length_mm, color=sex, shape=species)
 That's harder to read. So note that just because you **can** change an aesthetic, doesn't mean you should. And just because you can plot things on the same axis, doesn't mean you have to. 
 
 Before you share your plot with any other eyes, always take a step back and try to explain what it is telling you. If you have to take more than a minute to get to the point then it may be too complex and simpler graphics are likely warranted. 
-
 
 -----
 
@@ -1140,8 +1144,7 @@ I suggest playing around with `size` and plotting character `pch` to get a feel 
 * Legend adjustment: remove it, move it to another side, rename it
 * Custom specified colors and shapes
 
-Go [here](http://www.cookbook-r.com/Graphs/) for these. 
-
+Go to the [R Graphics Cookbook, 2e](https://r-graphics.org) for these. 
 
 * [Heat maps](https://www.r-bloggers.com/how-to-make-a-simple-heatmap-in-ggplot2/) 
 * [Word clouds](https://rpubs.com/brandonkopp/creating-word-clouds-in-r), or [simpler](http://dangoldin.com/2016/06/06/word-clouds-in-r/)
@@ -1154,7 +1157,7 @@ For any Google Search -  be sure to limit searches to within the past year or so
 
 * Comprehensive guides
   - [R Graphics 2e](https://www.stat.auckland.ac.nz/~paul/RG2e/): The best book about using base graphics
-  - [R Graphics Cookbook](https://r-graphics.org): The best book for using ggplot2 
+  - [R Graphics Cookbook 2e](https://r-graphics.org): The best book for using ggplot2 
   - [ggplot2: Elegant Graphics for Data Analysis 3e](http://ggplot2.org/book/) 
 
 * Subject reference and tutorial sites
