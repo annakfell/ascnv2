@@ -580,7 +580,11 @@ In R, any arithmetic function (like addition, multiplication) on missing data re
 
 **Situation**: You want to add model predictions to the data set, but you have missing data that was automatically dropped prior to analysis.
 
+::: {.callout-warning appearanc=simple}
+
 > Add methods for dealing with this 
+
+:::
 
 ### Regression
 

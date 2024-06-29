@@ -109,9 +109,11 @@ There are 152 Adelie penguins, 68 Chinstrap penguins, and 124 Gentoo penguins in
 
 ## gtsummary
 
+:::{.callout-warning appearance=simple}
 > Robin add text here. 
 
 brief explanation of how it works. Defaults to creating a summary table of the entire data set, so you have to pre-select out only the variables you want to get a summary of. 
+:::
 
 ```{r}
 pen |> select(species) |> tbl_summary()
@@ -213,7 +215,12 @@ ggplot(spec.props, aes(x=Var1, y=Freq)) + geom_col() +
 
 ### Other
 
+::: {.callout-warning appearance=simple}
+
 > RAD add some intro text here. 
+
+:::  
+
 
 ::: {.panel-tabset}
 #### Cleveland Dot Plots
@@ -425,7 +432,10 @@ ggplot(pen, aes(x=1, y=bill_length_mm)) + geom_boxplot() + coord_flip()
 ## ggpubr
 
 ```{r}
-ggboxplot(pen, y="bill_length_mm", orientation = "horizontal")
+ggboxplot(pen, x=1, y="bill_length_mm", 
+          orientation = "horizontal",
+          main = "Distribution of penguin bill lengths",
+          ylab = "Bill length in mm")
 ```
 
 
@@ -527,11 +537,14 @@ ggqqplot(pen, x="body_mass_g")
 
 ### Two-way tables
 
+::: {.callout-warning appearance=simple}
 > intro to two way frequency and proportion tables
+
+:::
 
 ::: {.panel-tabset}
 
-## frequency
+## Frequency
 Cross-tabs, cross-tabulations and two-way tables (all the same thing, different names) can be created by using the `table()` function. 
 
 The frequency table is constructed using the `table()` function. 
@@ -541,7 +554,7 @@ table(pen$island, pen$species)
 
 There are 44 Adelie penguins and 124 Gentoo penguins on Biscoe Island, 56 Adelie and 68 Chinstrap penguins on Dream Island, and 52 Adelie penguins on Torgersen Island.
 
-## proportion
+## Proportion
 Choose your percentages depending on your research question. What are you wanting to compare? 
 
 Best practices: 
@@ -595,7 +608,8 @@ barplot(is)
 Stacked bars can be difficult to interpret, and very difficult to compare values between groups. A side by side barchart is preferable. 
 The `beside=TRUE` is what controls the placement of the bars. 
 ```{r}
-barplot(is, main="quick side by side barchart using base graphics", beside=TRUE)
+barplot(is, main="quick side by side barchart using base graphics", 
+        beside=TRUE)
 ```
 
 ## ggplot
@@ -632,6 +646,10 @@ calc.props <- pen %>% group_by(island, species) %>%
 calc.props
 ```
 
+::: {.panel-tabset}
+
+## ggplot
+
 Since we're plotting summary data, the height of the bars is specified using `y=pct`. 
 
 ```{r}
@@ -648,11 +666,7 @@ ggplot(calc.props, aes(x=island, fill=species, y=pct)) +
                   scale_y_continuous(limits=c(0,1), labels=percent)
 ```   
 
-
-
-::: {.panel-tabset}
-
-#### sjPlot
+## sjPlot
 
 sjPlot does a very nice job of being able to cleanly show not only n's but percents. 
 ```{r}
@@ -660,8 +674,9 @@ library(sjPlot)
 plot_xtab(pen$island, pen$species, margin="row", coord.flip = TRUE) 
 ```
 
+:::
 
-#### Mosaic plots
+### Mosaic plots
 But what if you want to know how two categorical variables are related and you don't want to look at two different barplots? Mosaic plots are a way to visualize the proportions in a table. So here's the two-way table we'll be plotting. 
 ```{r}
 table(pen$island, pen$species)
@@ -671,25 +686,22 @@ The syntax for a mosaic plot uses _model notation_, which is basically y ~ x whe
 ```{r}
 mosaicplot(island~species, data=pen)
 ```
-> Increase fig length or use dif example variable
 
 Helpful, ish. Here are two very useful options. In reverse obviousness, `color` applies shades of gray to one of the factor levels, and `shade` applies a color gradient scale to the cells in order of what is less than expected (red) to what is more than expected (blue) if these two factors were completely independent. 
 ```{r, fig.width=10}
 par(mfrow=c(1,2)) # display the plots in 1 row and 2 columns
-mosaicplot(island~species, data=pen, color=TRUE)
+mosaicplot(sex~species, data=pen, color=TRUE)
 mosaicplot(island~species, data=pen, shade=TRUE)
 ```
+::: {.callout-warning appearance=simple}
+> switch out old interpretation for penguins
 
 For example, there are fewer 'Very Good' cut diamonds that are color 'G', and fewer 'Premium' cut diamonds that are color 'H'. As you can see, knowing what your data means when trying to interpret what the plots are telling you is essential. 
+:::
 
 That's about all the ways you can plot categorical variables. 
 
-If you are wondering why there was no 3D barcharts demonstrated see  
-[here](http://faculty.atu.edu/mfinan/2043/section31.pdf),
-[here](https://www.bbc.co.uk/bitesize/articles/z7cx7yc), and 
-[here](https://en.wikipedia.org/wiki/Misleading_graph) for other ways you can really screw up your visualization.
-
-:::
+If you are wondering why there was no 3D barcharts demonstrated see [here](http://faculty.atu.edu/mfinan/2043/section31.pdf), [here](https://www.bbc.co.uk/bitesize/articles/z7cx7yc), and [here](https://en.wikipedia.org/wiki/Misleading_graph) for other ways you can really screw up your visualization.
 
 ## Continuous v. Continuous 
 
@@ -971,9 +983,12 @@ b <- ggplot(pen, aes(x=bill_depth_mm, fill=species)) + geom_density()
 grid.arrange(a,b, ncol=2)
 ```
 
-## quarto
+## Quarto
 
+::: {.callout-warning appearance=simple}
 > example or reference to https://quarto.org/docs/get-started/computations/rstudio.html#multiple-figures 
+
+:::
 
 :::
 
@@ -994,15 +1009,24 @@ ggplot(pen, aes(x=bill_length_mm, y=bill_depth_mm, size=body_mass_g)) + geom_poi
 A scatterplot matrix allows you to look at the bivariate comparison of multiple pairs of variables simultaneously. First we need to trim down the data set to only include the variables we want to plot, then we use the `pairs()` function.
 
 ```{r}
-c.vars <- pen[,c('flipper_length_mm', 'bill_length_mm', 'bill_depth_mm', 'body_mass_g')]
+c.vars <- pen[,c('flipper_length_mm', 'bill_length_mm', 'bill_depth_mm', 
+                 'body_mass_g')]
 pairs(c.vars)
 ```
-> Original comment- We can see price has a non-linear relationship with X, Y and Z and x & y have a near perfect linear relationship. 
+
+::: {.callout-warning appearance=simple}
+> Replace original interpretation- We can see price has a non-linear relationship with X, Y and Z and x & y have a near perfect linear relationship. 
+
+:::
 
 
 ### Two categorical and one continuous
 This is very similar to side by side boxplots, one violin plot per `sex`, within each island 
-> Original comment - This is difficult to really see due to the large number of categories each factor has. The categorical variables in the penguins dataset have less categories w less combinations 
+
+::: {.callout-warning appearance=simple}
+> Replace original interpretation- This is difficult to really see due to the large number of categories each factor has. The categorical variables in the penguins dataset have less categories w less combinations 
+
+:::
 
 ```{r}
 ggplot(pen, aes(x=island, y=bill_length_mm, fill=species)) + geom_violin()
@@ -1083,7 +1107,10 @@ ggplot(plot.data, aes(x=marital)) + geom_bar()
 
 ### Problem: Got numerical binary 0/1 data but want to plot it as categorical? 
 
-> Other related error messages: Continuous x aesthetic -- did you forget aes(group=...)?  
+::: {.callout-warning appearance=simple}
+> Include other related error messages: Continuous x aesthetic -- did you forget aes(group=...)?  
+
+:::
 
 Consider a continuous variable for the number of characters in an email `num_char`, and a 0/1 binary variable `spam`. 
 
@@ -1146,6 +1173,7 @@ I suggest playing around with `size` and plotting character `pch` to get a feel 
 
 Go to the [R Graphics Cookbook, 2e](https://r-graphics.org) for these. 
 
+Other visualizations:
 * [Heat maps](https://www.r-bloggers.com/how-to-make-a-simple-heatmap-in-ggplot2/) 
 * [Word clouds](https://rpubs.com/brandonkopp/creating-word-clouds-in-r), or [simpler](http://dangoldin.com/2016/06/06/word-clouds-in-r/)
 * Interactive plots - Look into `plotly()` and `ggplotly()`, start with their guide directed towards R users [here](https://plotly.com/ggplot2/getting-started/) or browse the [Plotly R open source graphing library](https://plotly.com/r/)
