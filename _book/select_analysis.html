@@ -6,11 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Robin Donatello, Edward Roualdes">
-<meta name="dcterms.date" content="2024-06-28">
 <meta name="description" content="Course notes for various Applied Statistics courses at CSU Chico">
 
-<title>Applied Statistics</title>
+<title>3&nbsp; Selecting Appropriate Analyses – Applied Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./dataprep.html" rel="next">
+<link href="./foundations.html" rel="next">
+<link href="./data_viz.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -85,7 +84,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dataprep.html">Preparing Data for Analysis</a></li><li class="breadcrumb-item"><a href="./select_analysis.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Selecting Appropriate Analyses</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -121,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -148,7 +147,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./select_analysis.html" class="sidebar-item-text sidebar-link">
+  <a href="./select_analysis.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Selecting Appropriate Analyses</span></span></a>
   </div>
 </li>
@@ -182,48 +181,22 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
-  <ul>
-  <li><a href="#acknowledgments" id="toc-acknowledgments" class="nav-link" data-scroll-target="#acknowledgments">Acknowledgments</a></li>
-  </ul></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dataprep.html">Preparing Data for Analysis</a></li><li class="breadcrumb-item"><a href="./select_analysis.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Selecting Appropriate Analyses</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Applied Statistics</h1>
+<h1 class="title"><span id="sec-select-analysis" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Selecting Appropriate Analyses</span></span></h1>
 </div>
 
-<div>
-  <div class="description">
-    Course notes for various Applied Statistics courses at CSU Chico
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Robin Donatello, Edward Roualdes </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">June 28, 2024</p>
-    </div>
-  </div>
   
     
   </div>
@@ -233,18 +206,43 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>This document is a set of course notes for several Applied Statistics courses at California State University, Chico. This is not a textbook replacement, and topics covered will vary depending on the instructor. To make this clear we use the term <em>notebook</em> to refer to this document so as not to be confused with a traditional textbook.</p>
-<p>Some data and examples in this notebook are drawn from <a href="https://www.crcpress.com/Practical-Multivariate-Analysis/Afifi-May-Donatello-Clark/p/book/9781138702226"><em>Practical Multivariate Analysis, 6th ed, Afifi, May, Donatello, Clark</em></a> and used with permission by the authors.</p>
-<p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" alt="Creative Commons License" style="border-width:0"></a><br>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.</p>
-<section id="acknowledgments" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="acknowledgments">Acknowledgments</h2>
-<p>Annabelle Feller (<a href="https://github.com/annakfell">@annakfell</a>)</p>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Section in progress</p>
+</div>
+</div>
+</div>
+<p>This section covers how to choose appropriate analyses for any number and type of measurements. Think like, flow chart.</p>
+<p><strong>Considerations:</strong></p>
+<ul>
+<li>Purpose of analysis.<br>
+</li>
+<li>Types of variables in data set.<br>
+</li>
+<li>Data used in analysis.<br>
+</li>
+<li>Assumptions needed; satisfied?<br>
+</li>
+<li>Choice of analyses is often arbitrary: consider several</li>
+</ul>
+<p><strong>Example:</strong></p>
+<p>5 independent variables: 3 interval, 1 ordinal, 1 nominal</p>
+<p>1 dependent variable: interval</p>
+<p>Analysis options</p>
+<ul>
+<li>Multiple regression: pretend independent ordinal variable is an interval variable use dummy (0 /1) variables for nominal variables</li>
+<li>Analysis of variance: categorize all independent variables</li>
+<li>Analysis of covariance: leave variables as is, check assumptions</li>
+<li>Logistic regression: Categorize dependent variable: high, low</li>
+<li>Survival analysis: IF dependent variable is time to an event</li>
+</ul>
+<p>Unsure? Do several and compare results.</p>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -813,10 +811,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./data_viz.html" class="pagination-link" aria-label="Visualizing Data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Visualizing Data</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./dataprep.html" class="pagination-link" aria-label="Workflow and Data Cleaning">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Workflow and Data Cleaning</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./foundations.html" class="pagination-link" aria-label="Foundations for Inference">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Foundations for Inference</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -828,7 +829,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/select_analysis.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a></p>
 </div>

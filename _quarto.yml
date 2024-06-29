@@ -24,6 +24,11 @@ book:
       chapters:
         - dataprep.qmd
         - data_viz.qmd
+        - select_analysis.qmd
+    - part: "Statistical Inference"
+      chapters: 
+        - foundations.qmd
+        - bivariate_analysis.qmd
 
 format:
   html:

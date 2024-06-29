@@ -1,0 +1,5 @@
+# Foundations for Inference {#sec-foundations}
+
+:::{.callout-warning appearance=simple}
+Nothing here yet
+:::
