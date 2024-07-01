@@ -16,12 +16,12 @@ The goal is to create an exact record of what was done to a data set to produce 
 2.  The processed data are connected directly to other software code file(s) that perform the analyses.
 3.  All data and code files are self-contained such that they could be given to another researcher to execute the code commands on a separate computer and achieve the same results as the original author.
 
-![PrepareData](images/Afifi_Fig3_1.png)
+![](images/Afifi_Fig3_1.png)
 
 ::: {.callout-caution}
 ## Think about it
  
-**Why do we need a codebook?**
+Why do we need a codebook?
 
 -   You are your own collaborator 6 months from now. Make sure you will be able to understand what you were doing.
 -   Investing the time to do things clearly and in a reproducible manner will make your future self happy.
@@ -130,7 +130,10 @@ library(dplyr)
 depress <- depress_raw %>% janitor::clean_names()
 ```
 
-> Here is where a note about loading a specific function rather than the whole package with :: could go
+::: {.callout-warning appearance=simple}
+> Here, or below tabset in main text, is where a note about loading a specific function rather than the whole package with :: could go
+
+:::
 
 :::
 
@@ -348,7 +351,10 @@ Dichotomous variables tend to be binary indicator variables where a code of `1` 
 
 ## Example 1
 
+::: {.callout-warning appearance=simple}
 > Switch example from binary gender to different characteristic
+
+:::
 
 In this study gender is coded as 2=Female and 1=Male. (*This data was collected in the '70s, and so only two genders were provided as options*). We want to convert this 1=Female and 0=Male.
 
