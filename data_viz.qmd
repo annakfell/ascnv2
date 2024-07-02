@@ -996,7 +996,7 @@ grid.arrange(a,b, ncol=2)
 ## Quarto
 
 ::: {.callout-warning appearance=simple}
-> example or reference to https://quarto.org/docs/get-started/computations/rstudio.html#multiple-figures 
+> add example or reference to https://quarto.org/docs/get-started/computations/rstudio.html#multiple-figures 
 
 :::
 
@@ -1184,6 +1184,7 @@ I suggest playing around with `size` and plotting character `pch` to get a feel 
 Go to the [R Graphics Cookbook, 2e](https://r-graphics.org) for these. 
 
 Other visualizations:
+
 * [Heat maps](https://www.r-bloggers.com/how-to-make-a-simple-heatmap-in-ggplot2/) 
 * [Word clouds](https://rpubs.com/brandonkopp/creating-word-clouds-in-r), or [simpler](http://dangoldin.com/2016/06/06/word-clouds-in-r/)
 * Interactive plots - Look into `plotly()` and `ggplotly()`, start with their guide directed towards R users [here](https://plotly.com/ggplot2/getting-started/) or browse the [Plotly R open source graphing library](https://plotly.com/r/)
@@ -1199,15 +1200,19 @@ For any Google Search -  be sure to limit searches to within the past year or so
   - [ggplot2: Elegant Graphics for Data Analysis 3e](http://ggplot2.org/book/) 
 
 * Subject reference and tutorial sites
+
   - [Math 130 Lesson 07 - Creating graphics](https://norcalbiostat.github.io/MATH130/notes/07_plots.html#The_syntax_of_ggplot) - more on ggplot2 syntax
+  
   - [STHDA](http://www.sthda.com/english/): Statistical tools for high-throughput data analysis.
     - [ggplot2 essentials](http://www.sthda.com/english/wiki/ggplot2-essentials)
-    - [Other graphics options](http://www.sthda.com/english/articles/32-r-graphics-essentials/)
     - [ggplot2 qq plot (quantile - quantile graph) : Quick start guide](http://www.sthda.com/english/wiki/ggplot2-qq-plot-quantile-quantile-graph-quick-start-guide-r-software-and-data-visualization)
+    - [Other graphics options](http://www.sthda.com/english/articles/32-r-graphics-essentials/)
+    
   - [Quick-R / Datacamp](https://www.statmethods.net): 
     - [Basic Graphs](http://www.statmethods.net/graphs/index.html)
     - [ggplot2](http://www.statmethods.net/advgraphs/ggplot2.html)
-    - [Scatterplots](http://www.statmethods.net/graphs/scatterplot.html)  
+    - [Scatterplots](http://www.statmethods.net/graphs/scatterplot.html) 
+    
   - [R-bloggers](https://www.r-bloggers.com)
     - [Waffle charts](https://www.r-bloggers.com/making-waffle-charts-in-r-with-the-new-waffle-package/)
     - [Scatterplot matrices](https://www.r-bloggers.com/scatterplot-matrices/)
