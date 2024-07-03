@@ -482,7 +482,14 @@ exams. No intervention was made during the following 25 years of the study,
 and we'll consider death resulting from breast cancer over the full 30-year
 period. Results from the study are summarized in the following table. 
 
-[mammo]:Twenty five year follow-up for breast cancer incidence and mortality of the Canadian National Breast Screening Study: randomized screening trial. BMJ 2014;348:g366.
+:::{.callout-important}
+footnote not working
+
+mammo Twenty five year follow-up for breast cancer incidence and mortality of the Canadian National Breast Screening Study: randomized screening trial. BMJ 2014;348:g366.
+
+:::
+
+
 
 
 ```{r, echo=FALSE}

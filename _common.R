@@ -52,13 +52,17 @@ theme_set(theme_bw())
 
 # Loading Datasets ----
 
-depress <- read.delim("data/depress_081217.txt")
-names(depress) <- tolower(names(depress))
+depress_raw <- read.delim("data/Depress.txt")
+
+#load("data/depress_clean.Rdata")
+
+
+
 
 pen <- palmerpenguins::penguins
 
 load("data/addhealth_clean.Rdata")
 addhealth$smoke <- ifelse(addhealth$eversmoke_c=="Smoker", 1, 0)
 
-fev <- read.delim("data/Lung_081217.txt", sep="\t", header=TRUE)
+fev <- read.delim("data/Lung.txt", sep="\t", header=TRUE)
 

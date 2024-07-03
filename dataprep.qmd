@@ -1,5 +1,17 @@
 # Workflow and Data Cleaning {#sec-data-prep}
 
+:::{.callout-note}
+#### Packages Used
+This chapter uses the following packages: forcats, car, janitor
+:::
+
+```{r, echo=FALSE}
+library(forcats)
+library(dplyr)
+load("data/addhealth_clean.Rdata")
+fev <- read.delim(here::here("data/Lung.txt"), sep="\t", header=TRUE)
+```
+
 Once the data are available from a study there are still a number of steps that must be undertaken to get them into shape for analysis.
 
 One of the most misunderstood parts of the analysis process is the data preparation stage. To say that 70% of any analysis is spent on the data management stage is not an understatement.
@@ -79,7 +91,7 @@ What stages of the pipeline shown above can we conduct using literate programmin
 
 This section uses the raw `depression` data set from the Afifi et. al. textbook. This is a tab-delimited data set, so we opt to use `read.table` here. We include arguments `sep="\t"` to indicate columns are separated with tabs and `header=TRUE` to indicate the first row of the data is the variable names.
 
-```{r start2, warning=FALSE, message=FALSE}
+```{r import_depress}
 depress_raw <- read.table(here::here("data/Depress.txt"), 
                       sep="\t", header=TRUE)  
 ```
@@ -110,29 +122,35 @@ The next sections go over a *few* of the common data management processes, but i
 
 ### Renaming variable names for sanity's sake
 
+```{r}
+head(names(depress_raw))
+```
+
+Peeking at the names of the variables we note that they are all in upper case. If that is fine with you, awesome. I prefer to have everything lower case so that I don't ever have to remember which are the capital letters. Here are two ways to accomplish this: 
+
 ::: panel-tabset
 
 ## base
 
 A base R solution is to use `tolower()` to turn all variable names to lower case.
+This code is not run here because it would overwrite the variable names in the same data set (`depress_raw`). Keep the imported (aka. "raw") data untouched, and then make a copy of the data once you start making changes. 
 
-```{r, eval=2}
-names(depress) <- tolower(names(depress))
-tolower("ThIs MIXTure of CAPS and lowercase WILL alL be conVERteD to LoWeR CAsE")
+```{r, eval=FALSE}
+names(depress_raw) <- tolower(names(depress_raw))
 ```
 
 ## janitor
 
-The best method is to use the `clean_names()` function from the [janitor](https://sfirke.github.io/janitor/) package.
+A highly recommended method is to use the `clean_names()` function from the [janitor](https://sfirke.github.io/janitor/) package. This will also remove any special characters, spaces and capital letters from your variable names. 
 
 ```{r}
-library(dplyr)
 depress <- depress_raw %>% janitor::clean_names()
 ```
 
-::: {.callout-warning appearance=simple}
-> Here, or below tabset in main text, is where a note about loading a specific function rather than the whole package with :: could go
+I am "staging" the data set at this point because i'm making a major change away from the 'raw' data. So i'm saving the changes to the variable names in a new data set called `depress`. 
 
+::: {.callout-warning appearance=simple}
+Note the use of `::` between the package name `janitor` and the function within that package `clean_names`. This is a shortcut that allows you to use a function from a specific package without loading the entire package. This can also reduce in function name conflicts that we'll mention below.
 :::
 
 :::
@@ -185,12 +203,14 @@ depress$marital <- factor(depress$marital,
       labels = c("Never Married", "Married", "Divorced", "Separated", "Widowed"))
 ```
 
-It is important to confirm the recode worked. If it did not you will have to re-read in the raw data set again since the variable `marital` was replaced.
+Note that I am not making a new variable here, but overwriting the same `marital` variable. If If it did not you will have to re-run the lread in the raw data set again since the variable `marital` was replaced.
+
+It is important to confirm the recode worked. I do this by creating a two-way table between the variable as it exists on the raw data, and how it exists after this line of code. What we are looking for is that all values on the left/rows (original version) line up with what we want them to say on the right (new version), and that no missing data was created or destroyed. 
 
 ```{r}
-table(depress$marital)
-class(depress$marital)
+table(depress_raw$MARITAL, depress$marital, useNA = "always")
 ```
+
 
 ::: {.callout-tip}
 
@@ -202,6 +222,10 @@ See more examples on [Math 130 Lesson 06](https://norcalbiostat.github.io/MATH13
 ### Identifying outliers
 
 Let's look at the age variable in the `depression` data set.
+```{r, echo=FALSE}
+#which(depress$age == 19)
+depress$age[41] <- 9
+```
 
 ```{r, fig.width=10, fig.height=6}
 par(mfrow=c(1,2))
@@ -229,7 +253,7 @@ While there is at least one potential outliers (denoted by the dots), there are 
 
 ### Changing numeric values
 
-As an example of a common data entry error, and for demonstration purposes, I went in and changed a 19 to a 9. So the correct thing to do here is to change that 9, back to a 19.
+What you didn't know until now, is that for demonstration purposes I went in and changed a 19 to a 9. So the correct thing to do here is to change that 9, back to a 19. 
 
 ::: panel-tabset
 ## ifelse()
@@ -261,6 +285,17 @@ Looks like it worked.
 
 ### Creating secondary variables
 
+### Create a binary indicator
+
+For analysis purposes you may need to have a numeric binary indicator (0/1) of a variable. 
+
+```{r}
+table(addhealth$eversmoke_c)
+addhealth$smoker <- ifelse(addhealth$eversmoke_c=="Smoker", 1, 0)
+table(addhealth$eversmoke_c, addhealth$smoker, useNA="always")
+```
+
+
 ::: {.callout-tip}
 ### Learn more
 See [Math 130 lesson 05](https://norcalbiostat.github.io/MATH130/notes/05_dm.html#Creating_new_variables_(Video)) for now.
@@ -279,57 +314,53 @@ For unbiased and accurate results of a statistical analysis, sufficient data has
 
 For example, consider marital status again. There are only 13 people who report being separated. This could potentially be too small of a group size for valid statistical analysis. One way to deal with insufficient data within a certain category is to collapse categories.
 
+:::{.callout-note}
+Note I am choosing to 'stage' my data here. So if I mess something up in this section, I don't have to re-read in the raw data again or go back and rerun ALL the code, but just up until `depress1` is created. 
+
+:::
+
+```{r}
+depress1 <- depress
+```
+
+
 ::: {.panel-tabset}
 
 ## car
 
- The following example code uses the `recode()` function from the `car` package to create a new variable that I am calling `marital2` that combines the `Divorced` and `Separated` levels.
+The following example code uses the `recode()` function from the `car` package to create a new variable that I am calling `marital2` that combines the `Divorced` and `Separated` levels. 
 
 ```{r recode_marital, message=FALSE, warning=FALSE}
-marital2 <- car::recode(depress$marital, "'Divorced' = 'Sep/Div'; 'Separated' = 'Sep/Div'")
+depress1$marital <- car::recode(depress1$marital, "'Divorced' = 'Sep/Div'; 'Separated' = 'Sep/Div'")
 ```
 
 ::: {.callout-warning appearance=simple}
 
-> warning about package conflicts as example of why :: is used
+Note the use of the `::` again. Here it is even more important to use this shortcut because the specific `recode` function we want to use comes from the `car` package. There are other packages (probably `dplyr`) that also have a function called `recode`. So here I use `::` as a way to be SUPER EXPLICIT on which function I want to use. 
 
 :::
 
-Always confirm your recodes. Check a table of the old variable (`marital`) against the new one `marital2`.
+Always confirm your recodes. Check a table of the old variable (`depress$marital`) against the new one `depress1$marital`.
 
 ```{r confirm_marital_recode}
-table(depress$marital, marital2, useNA="always")
+table(depress$marital, depress1$marital , useNA="always")
 ```
 
-This confirms that records where `marital` (rows) is `Divorced` or `Separated` have the value of `Sep/Div` for `marital2` (columns). And that no missing data crept up in the process. Now I can drop the temporary `marital2` variable and actually fix `marital`. (keeping it clean)
+This confirms that records where `depress$marital` (rows) is `Divorced` or `Separated` have the value of `Sep/Div` for `depress1$marital` (columns). And that no missing data crept up in the process.
 
-```{r recode_marital2, eval=FALSE}
-depress$marital <- recode(depress$marital, "'Divorced' = 'Sep/Div'; 'Separated' = 'Sep/Div'")
-rm(marital2)
-```
 
 ## forcats
 
-The `fct_collapse()` function from the `forcats` package is a more efficient way to collapse categories. Here we store the changes in the variable `marital2` before applying them to the dataframe.
+The `fct_collapse()` function from the `forcats` package can do the same process, without worrying about a package/function conflict. 
 
 ```{r, message=FALSE, warning=FALSE}
-library(forcats)
-marital2 <- fct_collapse(depress$marital, 
-                         SepDiv = c("Divorced", "Separated"))
+depress1$marital <- fct_collapse(depress$marital, SepDiv = c("Divorced", "Separated"))
 ```
 
-Again, you should always confirm your recodes. Check a table of the old variable (`marital`) against the new one `marital2`.
+Again, you should always confirm your recodes. Check a table of the old variable (`depress$marital`) against the new one `depress1$marital`
 
 ```{r}
-table(depress$marital, marital2, useNA = "always")
-```
-
-Now that we've confirmed no missing data crept up in the process, we can drop the temporary `marital2` variable and actually fix `marital` with `forcats::fct_collapse`.
-
-```{r, message=FALSE, warning=FALSE}
-depress$marital <- fct_collapse(depress$marital, 
-                         SepDiv = c("Divorced", "Separated"))
-rm(marital2)
+table(depress$marital, depress1$marital , useNA="always")
 ```
 
 :::
@@ -339,8 +370,8 @@ rm(marital2)
 We can use the `cut` function to create a new variable that categorizes income into the following ranges: \<30, \[30, 40), \[40,50), \[50, 60), 60+.
 
 ```{r}
-depress$inc_cut <- cut(depress$income, breaks=c(0, 30,40,50,60, 100))
-table(depress$inc_cut)
+depress1$inc_cut <- cut(depress1$income, breaks=c(0, 30,40,50,60, 100))
+table(depress1$inc_cut)
 ```
 
 ### Dichotomizing a measure into 2 categories
@@ -356,17 +387,17 @@ Dichotomous variables tend to be binary indicator variables where a code of `1` 
 
 :::
 
-In this study gender is coded as 2=Female and 1=Male. (*This data was collected in the '70s, and so only two genders were provided as options*). We want to convert this 1=Female and 0=Male.
+In this study gender is coded as 2=Female and 1=Male. (*This data was collected in the '70s, and so only two genders were provided as options*). We want to convert this be a binary indicator of female, where 1=Female and 0=Male.
 
 ```{r recode_depress_sex}
-depress$sex <- depress$sex -1 
-table(depress$sex)
+depress1$female <- depress1$sex -1 
+table(depress1$female)
 ```
 
 0/1 binary coding is mandatory for many analyses. One simple reason is that now you can calculate the mean and interpret it as a proportion.
 
 ```{r mean_depress_sex}
-mean(depress$sex)
+mean(depress1$female)
 ```
 
 62% of individuals in this data set are female.
@@ -376,154 +407,116 @@ mean(depress$sex)
 Sometimes the data is recorded as 1/2 (Yes/No), so just subtracting from 1 doesn't create a positive indicator of the variable. For example, `drink=1` if they are a regular drinker, and `drink=2` if they are not. We want not drinking to be coded as `0`, not `2`.
 
 ```{r tab_depress_drink}
-table(depress$drink)
+table(depress_raw$DRINK)
 ```
 
 The `ifelse()` function says that if `depress$drink` has a value equal to 2 `==2`, then change the value to 0. Otherwise leave it alone.
 
 ```{r fix_depress_drink}
-depress$drink <- ifelse(depress$drink==2, 0, depress$drink)
-table(depress$drink)
+depress1$drink <- ifelse(depress1$drink==2, 0, depress1$drink)
+table(depress1$drink, depress$dri)
 ```
 
 :::
 
-### Sum or average values across multiple variables
+## Combining values across multiple variables
+
+Let's stage the data again for this section. 
+```{r}
+depress2 <- depress1
+```
+
+### Row-wise sum or average
 
 The Center for Epidemiological Studies Depression Scale (CESD) is series of questions asked to a person to measure their level of depression. `CESD` is calculated as the sum of all 20 component variables, and is already on this data set. Let's create a new variable named `sleep` as subscale for sleep quality by adding up question numbers 5, 11, and 19.
 
 Reference: [CESD-R](https://cesd-r.com/cesdr/)
 
-```{r create_depress_sleep, eval=1}
-depress$sleep <- depress$c5 + depress$c11 + depress$c19
-# depress <- depress %>% mutate(sleep = c5+c11+c19) # Not run. dplyr example
-# depress <- depress %>% mutate(across(c(c5, c11, c19), mean)) # Not run, across() example
-```
-
-```{r summ_depress_sleep}
-summary(depress$sleep)
-```
-
-### Transformations for normality
-
-::: panel-tabset
-## Histogram and density Plot
-
-Let's look at assessing normal distributions using the **cleaned** depression data set.
+::: {.panel-tabset}
+## Base
 
 ```{r}
-hist(depress$income, prob=TRUE, xlab="Annual income (in thousands)", 
+depress2$sleep <- depress2$c5 + depress2$c11 + depress2$c19
+```
+
+I'll confirm it works by looking at a few rows and making sure they all add up. 
+```{r}
+head(depress2[c('c5', 'c11', 'c19', 'sleep')])
+```
+
+## mutate + manual
+
+```{r}
+depress2 <- depress %>% mutate(sleep = c5+c11+c19)
+head(depress2[c('c5', 'c11', 'c19', 'sleep')])
+```
+
+:::
+
+
+## Assessing Normality
+
+### Histogram and density plots
+
+```{r}
+hist(depress2$income, prob=TRUE, xlab="Annual income (in thousands)", 
      main="Histogram and Density curve of Income", ylab="")
-lines(density(depress$income), col="blue")
-summary(depress$income)
+lines(density(depress2$income), col="blue")
+summary(depress2$income)
 ```
 
 The distribution of annual income is slightly skewed right with a mean of \$20.5k per year and a median of \$15k per year income. The range of values goes from \$2k to \$65k. Reported income above \$40k appear to have been rounded to the nearest \$10k, because there are noticeable peaks at \$40k, \$50k, and \$60k.
 
-## Q-Q plot
+### Q-Q plot
 
 Another common method of assessing normality is to create a normal probability (or normal quantile) plot.
 
 ```{r}
-qqnorm(depress$income);qqline(depress$income, col="red")
+qqnorm(depress2$income);qqline(depress2$income, col="red")
 ```
 
 The points on the normal probability plot do not follow the red reference line very well. The dots show a more curved, or `U` shaped form rather than following a linear line. This is another indication that the data is skewed and a transformation for normality should be created.
 
--   Create three new variables: `log10inc` as the log base 10 of Income, `loginc` as the natural log of Income, and `xincome` which is equal to the negative of one divided by the cubic root of income.
+#### Transformations
+
+As a demonstration of transformations that can be used to shift a distribution more towards a normal shape, here we create three new variables: `log10inc` as the log base 10 of Income, `loginc` as the natural log of Income, and `xincome` which is equal to the negative of one divided by the cubic root of income.
 
 ```{r}
-log10inc <- log10(depress$income)
-loginc   <- log(depress$income)
-xincome  <- -1/(depress$income)^(-1/3)
+log10inc <- log10(depress2$income)
+loginc   <- log(depress2$income)
+xincome  <- -1/(depress2$income)^(-1/3)
 ```
 
--   Create a single plot that display normal probability plots for the original, and each of the three transformations of income. Use the base graphics grid organizer `par(mfrow=c(r,c))` where `r` is the number of rows and `c` is the number of columns. Which transformation does a better job of normalizing the distribution of Income?
+Create a single plot that display normal probability plots for the original, and each of the three transformations of income. Use the base graphics grid organizer `par(mfrow=c(r,c))` where `r` is the number of rows and `c` is the number of columns. Which transformation does a better job of normalizing the distribution of Income?
 
 ```{r, fig.width=10, fig.height=10}
 par(mfrow=c(2,2)) # Try (4,1) and (1,4) to see how this works. 
-qqnorm(depress$income, main="Income"); qqline(depress$income,col="blue")
+qqnorm(depress2$income, main="Income"); qqline(depress2$income,col="blue")
 qqnorm(log10inc, main="Log 10"); qqline(log10inc, col="blue")
 qqnorm(loginc, main = "Natural Log"); qqline(loginc, col="blue")
 qqnorm(xincome, main="-1/cuberoot(income)"); qqline(xincome, col="blue")
 ```
 
-## To transform or not to transform
+:::{.callout-tip}
+#### To transform or not to transform
 
 In general, transformations are more effective when the the standard deviation is large relative to the mean. One rule of thumb is if the sd/mean ratio is less than 1/4, a transformation may not be necessary.
 
 ```{r}
-sd(depress$income) / mean(depress$income)
+sd(depress2$income) / mean(depress2$income)
 ```
 
 Alternatively Hoaglin, Mosteller and Tukey (1985) showed that if the largest observation divided by the smallest observation is over 2, then the data may not be sufficiently variable for the transformation to be decisive.
 
 ```{r}
-max(depress$income) / (min(depress$income)+.1)
+max(depress2$income) / (min(depress2$income)+.1)
 ```
 
 Note that these rules are not meaningful for data without a natural zero.
-:::
 
-## Export and save
-
-You've just made a ton of changes!
-
--   Save or export the new data set to your computer.
--   Edit the codebook to reflect the changes that you made.
--   Keep the data, codebook and data management file in the same folder.
-
-```{r save_clean_depress, eval=FALSE}
-depress_clean <- depress %>% select(var1, var2, var3)
-
-# Save as a .Rdata file for later use in R
-save(depress_clean, "data/depress_clean.Rdata") 
-```
-
-Now every time you run your data cleaning script file, it will make all the changes and save/overwrite the `depress_clean.Rdata` data file. This ensures that any analysis script that uses this data has the most up to date variables.
-
-We can use `dplyr::select` to select and save individual variables without storing the entire data frame.
-```{r eval=FALSE}
-var1 <- depress %>% select(var1)
-save(var1, "data/var1.Rdata")
-```
-
-
-::: {.callout-tip}
-
-## Learn more
-
-Need to export to a different software program? Look into the [haven](https://haven.tidyverse.org) package.
 
 :::
 
-## Wide vs. long data {#wide-long}
-
-The data on Lung function originally was recorded in *wide* format, with separate variables for mother's and father's FEV1 score (`MFEV1` and `FFEV`). In this format, the data is one record per family.
-
-```{r}
-fev <- read.delim(here::here("data/Lung_081217.txt"), 
-                    sep="\t", header=TRUE)
-head(fev)
-```
-
-To analyze the effect of gender on FEV, the data need to be in *long* format, with a single variable for `fev` and a separate variable for gender. The following code chunk demonstrates one method of combining data on height, gender, age and FEV1 for both males and females.
-
-```{r}
-fev2 <- data.frame(gender = c(fev$FSEX, fev$MSEX), 
-                   rev = c(fev$FFEV1, fev$MFEV1), 
-                   ht = c(fev$FHEIGHT, fev$MHEIGHT), 
-                   age = c(fev$FAGE, fev$MAGE))
-fev2$gender <- factor(fev2$gender, labels=c("M", "F"))
-head(fev2)  
-```
-
-Nearly all analysis procedures and most graphing procedures require the data to be in long format. There are several `R` packages that can help with this including `reshape2` and `tidyr`.
-
-::: {.callout-tip}
-### Learn more
-Read more on tidy data in [R for Data Science 2e](https://r4ds.hadley.nz/data-tidy), or look into the [mice](https://www.gerkovink.com/miceVignettes/) package vignettes.
-:::
 
 ## Missing data
 
@@ -539,13 +532,13 @@ Why would data be missing? Other than the obvious data entry errors, tech glitch
 Lets look at the religion variable in the depression data set.
 
 ```{r relig_tab}
-table(depress$relig, useNA="always")
+table(depress2$relig, useNA="always")
 ```
 
 Looking at the codebook, there is no category `6` for religion. Let's change all values to `NA`.
 
 ```{r relig_fix}
-depress$relig[depress$relig==6] <- NA
+depress2$relig[depress2$relig==6] <- NA
 ```
 
 This code says take all rows where `relig` is equal to 6, and change them to `NA`.
@@ -553,13 +546,13 @@ This code says take all rows where `relig` is equal to 6, and change them to `NA
 Confirm recode.
 
 ```{r relig_tab2}
-table(depress$relig, useNA="always")
+table(depress2$relig, useNA="always")
 ```
 
 Notice the use of the `useNA="always"` argument. If we just looked at the base table without this argument, we would have never known there was missing data!
 
 ```{r relig_tab2_nona}
-table(depress$relig)
+table(depress2$relig)
 ```
 
 ## Continuous
@@ -582,6 +575,67 @@ mean(y, na.rm=TRUE)
 In R, any arithmetic function (like addition, multiplication) on missing data results in a missing value. The `na.rm=TRUE` toggle tells R to calculate the *complete case* mean. This is a biased measure of the mean, but missing data is a topic worthy of it's own course and is introduced in @sec-classification.
 :::
 
+
+
+## Export and save
+
+You've just made a ton of changes!
+
+-   Save or export the new data set to your computer.
+-   Edit the codebook to reflect the changes that you made.
+-   Keep the data, codebook and data management file in the same folder.
+
+
+```{r save_clean_depress}
+depress_clean <- depress2
+
+# Save as a .Rdata file for later use in R
+save(depress_clean, file = "data/depress_clean.Rdata") 
+```
+
+Now every time you run your data cleaning script file, it will make all the changes and save/overwrite the `depress_clean.Rdata` data file. This ensures that any analysis script that uses this data has the most up to date variables.
+
+We can use `dplyr::select` to select and save individual variables without storing the entire data frame.
+```{r eval=FALSE}
+out <- depress %>% select(list of variables)
+save(out, "data/var1.Rdata")
+```
+
+
+::: {.callout-tip}
+
+## Learn more
+
+Need to export to a different software program? Look into the [haven](https://haven.tidyverse.org) package.
+
+:::
+
+## Wide vs. long data {#wide-long}
+
+The data on Lung function originally was recorded in *wide* format, with separate variables for mother's and father's FEV1 score (`MFEV1` and `FFEV`). In this format, the data is one record per family.
+
+```{r}
+head(fev[,1:15])
+```
+
+To analyze the effect of gender on FEV, the data need to be in *long* format, with a single variable for `fev` and a separate variable for gender. The following code chunk demonstrates one method of combining data on height, gender, age and FEV1 for both males and females.
+
+```{r}
+fev2 <- data.frame(gender = c(fev$FSEX, fev$MSEX), 
+                   rev = c(fev$FFEV1, fev$MFEV1), 
+                   ht = c(fev$FHEIGHT, fev$MHEIGHT), 
+                   age = c(fev$FAGE, fev$MAGE))
+fev2$gender <- factor(fev2$gender, labels=c("M", "F"))
+head(fev2)  
+```
+
+Nearly all analysis procedures and most graphing procedures require the data to be in long format. There are several `R` packages that can help with this including `reshape2` and `tidyr`.
+
+::: {.callout-tip}
+### Learn more
+Read more on tidy data in [R for Data Science 2e](https://r4ds.hadley.nz/data-tidy), or look into the [mice](https://www.gerkovink.com/miceVignettes/) package vignettes.
+:::
+
 ### Model predictions
 
 **Situation**: You want to add model predictions to the data set, but you have missing data that was automatically dropped prior to analysis.
@@ -591,8 +645,6 @@ In R, any arithmetic function (like addition, multiplication) on missing data re
 > Add methods for dealing with this 
 
 :::
-
-### Regression
 
 R objects created by methods such as `lm` and `glm` will store the data used in the model in the model object itself in `model$data`. See @sec-classification for an example.
 
