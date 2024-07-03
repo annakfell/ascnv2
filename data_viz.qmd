@@ -2,7 +2,7 @@
 
 :::{.callout-note}
 #### Packages Used
-This chapter uses the following packages: `ggplot2`, `sjPlot`, `gtsummary`, `waffle`, `ggpubr`, `ggridges`, `scales`, `gridExtra`. 
+This chapter uses the following packages: `ggplot2`, [sjPlot](https://strengejacke.github.io/sjPlot/), `gtsummary`, `waffle`, `ggpubr`, `ggridges`, `scales`, `gridExtra` and the [penguins](https://allisonhorst.github.io/palmerpenguins/index.html) data. 
 :::
 
 ```{r, echo=FALSE}
@@ -119,7 +119,7 @@ There are 152 Adelie penguins, 68 Chinstrap penguins, and 124 Gentoo penguins in
 :::{.callout-warning appearance=simple}
 > Robin add text here. 
 
-brief explanation of how it works. Defaults to creating a summary table of the entire data set, so you have to pre-select out only the variables you want to get a summary of. 
+brief explanation of how it works. Defaults to creating a summary table of the entire data set, so you have to pre-select out only the variables you want to get a summary of.  Direct link to function [tbl_summary](https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html)
 :::
 
 ```{r}
