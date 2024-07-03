@@ -32,6 +32,8 @@ These graphs are for getting a quick look at the data and are meant for
 people who are already familiar with the data.
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 #| fig-height: 4
 #| fig-weight: 3 
 plot_frq(pen$island)
@@ -45,6 +47,8 @@ were to end up being published as-is without your knowledge, you
 wouldn't be completely embarrassed to see them in print.
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 #| fig-height: 4
 #| fig-weight: 3 
 plot_frq(pen$island, title = "Count of Penguins by Island") +
@@ -61,6 +65,8 @@ interpreted by people not familiar with the project or data analysis, even
 without reading the rest of the report.
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 #| fig-height: 4
 #| fig-weight: 3 
 plot_frq(pen$island, title = "Count of Penguins by Island") +
