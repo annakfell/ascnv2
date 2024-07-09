@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.53">
+<meta name="generator" content="quarto-1.5.54">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -265,9 +265,8 @@ window.Quarto = {
   <li><a href="#analysis-of-variance-table" id="toc-analysis-of-variance-table" class="nav-link" data-scroll-target="#analysis-of-variance-table"><span class="header-section-number">5.4.2</span> Analysis of Variance Table*:</a></li>
   <li><a href="#the-f-distribution" id="toc-the-f-distribution" class="nav-link" data-scroll-target="#the-f-distribution"><span class="header-section-number">5.4.3</span> The F-distribution</a></li>
   <li><a href="#assumptions-1" id="toc-assumptions-1" class="nav-link" data-scroll-target="#assumptions-1"><span class="header-section-number">5.4.4</span> Assumptions</a></li>
-  <li><a href="#example-a-comparison-of-plant-species-under-low-water-conditions" id="toc-example-a-comparison-of-plant-species-under-low-water-conditions" class="nav-link" data-scroll-target="#example-a-comparison-of-plant-species-under-low-water-conditions"><span class="header-section-number">5.4.5</span> Example: A comparison of plant species under low water conditions</a></li>
-  <li><a href="#coefficient-of-determination-r2" id="toc-coefficient-of-determination-r2" class="nav-link" data-scroll-target="#coefficient-of-determination-r2"><span class="header-section-number">5.4.6</span> Coefficient of determination <span class="math inline">\(R^{2}\)</span></a></li>
-  <li><a href="#multiple-comparisons" id="toc-multiple-comparisons" class="nav-link" data-scroll-target="#multiple-comparisons"><span class="header-section-number">5.4.7</span> Multiple Comparisons</a></li>
+  <li><a href="#coefficient-of-determination-r2" id="toc-coefficient-of-determination-r2" class="nav-link" data-scroll-target="#coefficient-of-determination-r2"><span class="header-section-number">5.4.5</span> Coefficient of determination <span class="math inline">\(R^{2}\)</span></a></li>
+  <li><a href="#multiple-comparisons" id="toc-multiple-comparisons" class="nav-link" data-scroll-target="#multiple-comparisons"><span class="header-section-number">5.4.6</span> Multiple Comparisons</a></li>
   </ul></li>
   <li><a href="#bv-chisq" id="toc-bv-chisq" class="nav-link" data-scroll-target="#bv-chisq"><span class="header-section-number">5.5</span> (C~C) Multiple Proportions: <span class="math inline">\(\chi^{2}\)</span></a>
   <ul>
@@ -601,10 +600,19 @@ SST =  \sum_{i=1}^{I}\sum_{j=1}^{n_{i}}(y_{ij}-\bar{y}..)^{2} = (N-1)Var(Y)
 <li>The variability across the groups is about equal.</li>
 </ul>
 <p>When these three conditions are met, we may perform an ANOVA to determine whether the data provide strong evidence against the null hypothesis that all the <span class="math inline">\(\mu_i\)</span> are equal.</p>
-</section>
-<section id="example-a-comparison-of-plant-species-under-low-water-conditions" class="level3" data-number="5.4.5">
-<h3 data-number="5.4.5" class="anchored" data-anchor-id="example-a-comparison-of-plant-species-under-low-water-conditions"><span class="header-section-number">5.4.5</span> Example: A comparison of plant species under low water conditions</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example: A comparison of plant species under low water conditions
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>The <code>PLANTS1</code> data file gives the percent of nitrogen in four different species of plants grown in a laboratory. The researchers collected these data in parts of the country where there is very little rainfall. To examine the effect of water, they varied the amount per day from 50mm to 650mm in 100mm increments. There were 9 plants per species-by-water combination. Because the plants are to be used primarily for animal food, with some parts that can be consumed by people, a high nitrogen content is very desirable. Let’s formally test to see if the nitrogen content in the plants differ across species.</p>
+</div>
+</div>
 <p><strong>1. Identify response and explanatory variables.</strong></p>
 <ul>
 <li>The quantitative response variable is % nitrogen (<code>pctnit</code>)</li>
@@ -754,8 +762,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p><strong>5. Write a conclusion in the context of the problem.</strong> The results of the ANOVA test indicate that at least one species has a different average nitrogen content than the other varieties (<span class="math inline">\(p&lt;\)</span>.001).</p>
 </section>
-<section id="coefficient-of-determination-r2" class="level3" data-number="5.4.6">
-<h3 data-number="5.4.6" class="anchored" data-anchor-id="coefficient-of-determination-r2"><span class="header-section-number">5.4.6</span> Coefficient of determination <span class="math inline">\(R^{2}\)</span></h3>
+<section id="coefficient-of-determination-r2" class="level3" data-number="5.4.5">
+<h3 data-number="5.4.5" class="anchored" data-anchor-id="coefficient-of-determination-r2"><span class="header-section-number">5.4.5</span> Coefficient of determination <span class="math inline">\(R^{2}\)</span></h3>
 <p>The coefficient of determination is defined as <span class="math inline">\(R^{2} = \frac{SSG}{SST}\)</span> and can be interpreted as the % of the variation seen in the outcome that is due to subject level variation within each of the treatment groups. The strength of this measure can be thought of in a similar manner as the correlation coefficient <span class="math inline">\(r\)</span>: <span class="math inline">\(&lt; .3\)</span> indicates a poor fit, <span class="math inline">\(&lt; .5\)</span> indicates a medium fit, and <span class="math inline">\(&gt; .7\)</span> indicates a good fit.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fl">172.39</span><span class="sc">/</span>(<span class="fl">172.39+17.22</span>)<span class="sc">*</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -765,8 +773,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>A large amount (91%) of the variation seen in nitrogen content in the plant can be explained by the species of plant.</p>
 </section>
-<section id="multiple-comparisons" class="level3" data-number="5.4.7">
-<h3 data-number="5.4.7" class="anchored" data-anchor-id="multiple-comparisons"><span class="header-section-number">5.4.7</span> Multiple Comparisons</h3>
+<section id="multiple-comparisons" class="level3" data-number="5.4.6">
+<h3 data-number="5.4.6" class="anchored" data-anchor-id="multiple-comparisons"><span class="header-section-number">5.4.6</span> Multiple Comparisons</h3>
 <p>Suppose that an ANOVA test reveals that there is a difference in at least one of the means. How can we determine which groups are significantly different without increasing our chance of a Type I error?</p>
 <p>Simple! We perform all the pairwise comparisons but using a test statistic that retains a <strong>family-wise error rate</strong> of 0.05 (or our chosen <span class="math inline">\(\alpha\)</span>). There are different methods to adjust for multiple comparisons, we will be using the <strong>Tukey HSD (honest significant difference) test</strong>. Continuing on with the analysis of nitrogen across plant species.</p>
 <div class="cell">
@@ -824,7 +832,21 @@ t^{*} =  \frac{\left( \hat{p}_{1} - \hat{p}_{2} \right) - d_{0}}
 <section id="example-are-mammograms-effective" class="level3" data-number="5.5.2">
 <h3 data-number="5.5.2" class="anchored" data-anchor-id="example-are-mammograms-effective"><span class="header-section-number">5.5.2</span> Example: Are Mammograms effective?</h3>
 <p>This example comes from the <a href="https://www.openintro.org/stat/textbook.php?stat_book=os">OpenIntro Statistics</a> textbook (3rd ed).</p>
-<p>A 30-year study was conducted with nearly 90,000 female participants. <a href="Twenty five year follow-up for breast cancer incidence and mortality of the Canadian National Breast Screening Study: randomized screening trial. BMJ 2014;348:g366.">(Miller AB. 2014)</a> During a 5-year screening period, each woman was randomized to one of two groups: in the first group, women received regular mammograms to screen for breast cancer, and in the second group, women received regular non-mammogram breast cancer exams. No intervention was made during the following 25 years of the study, and we’ll consider death resulting from breast cancer over the full 30-year period. Results from the study are summarized in the following table.</p>
+<p>A 30-year study was conducted with nearly 90,000 female participants. [(Miller AB. 2014)][mammo] During a 5-year screening period, each woman was randomized to one of two groups: in the first group, women received regular mammograms to screen for breast cancer, and in the second group, women received regular non-mammogram breast cancer exams. No intervention was made during the following 25 years of the study, and we’ll consider death resulting from breast cancer over the full 30-year period. Results from the study are summarized in the following table.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>footnote not working</p>
+<p>mammo Twenty five year follow-up for breast cancer incidence and mortality of the Canadian National Breast Screening Study: randomized screening trial. BMJ 2014;348:g366.</p>
+</div>
+</div>
 <div class="cell">
 <div class="cell-output-display">
 <table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
