@@ -2,7 +2,7 @@
 
 :::{.callout-note}
 #### Packages Used
-This chapter uses the following packages: `ggplot2`, [sjPlot](https://strengejacke.github.io/sjPlot/), `gtsummary`, `waffle`, `ggpubr`, `ggridges`, `scales`, `gridExtra` and the [penguins](https://allisonhorst.github.io/palmerpenguins/index.html) data. 
+This chapter uses the following packages: [ggplot2](https://ggplot2.tidyverse.org), [sjPlot](https://strengejacke.github.io/sjPlot/), [gtsummary](https://www.danieldsjoberg.com/gtsummary/), [waffle](https://github.com/hrbrmstr/waffle), [ggpubr](https://rpkgs.datanovia.com/ggpubr/), [ggridges](https://wilkelab.org/ggridges/), [scales](https://scales.r-lib.org), [gridExtra](https://cran.r-project.org/web/packages/gridExtra/index.html), and the [penguins](https://allisonhorst.github.io/palmerpenguins/index.html) data. 
 :::
 
 ```{r, echo=FALSE}
