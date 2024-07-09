@@ -272,9 +272,10 @@ window.Quarto = {
   <li><a href="#categorical-v.-categorical" id="toc-categorical-v.-categorical" class="nav-link" data-scroll-target="#categorical-v.-categorical"><span class="header-section-number">2.5</span> Categorical v. Categorical</a>
   <ul>
   <li><a href="#two-way-tables" id="toc-two-way-tables" class="nav-link" data-scroll-target="#two-way-tables"><span class="header-section-number">2.5.1</span> Two-way tables</a></li>
-  <li><a href="#grouped-bar-charts" id="toc-grouped-bar-charts" class="nav-link" data-scroll-target="#grouped-bar-charts"><span class="header-section-number">2.5.2</span> Grouped bar charts</a></li>
-  <li><a href="#grouped-bar-charts-with-percentages" id="toc-grouped-bar-charts-with-percentages" class="nav-link" data-scroll-target="#grouped-bar-charts-with-percentages"><span class="header-section-number">2.5.3</span> Grouped bar charts with percentages</a></li>
-  <li><a href="#mosaic-plots" id="toc-mosaic-plots" class="nav-link" data-scroll-target="#mosaic-plots"><span class="header-section-number">2.5.4</span> Mosaic plots</a></li>
+  <li><a href="#grouped-bar-charts-stacked" id="toc-grouped-bar-charts-stacked" class="nav-link" data-scroll-target="#grouped-bar-charts-stacked"><span class="header-section-number">2.5.2</span> Grouped bar charts: stacked</a></li>
+  <li><a href="#grouped-bar-charts-side-by-side" id="toc-grouped-bar-charts-side-by-side" class="nav-link" data-scroll-target="#grouped-bar-charts-side-by-side"><span class="header-section-number">2.5.3</span> Grouped bar charts: side by side</a></li>
+  <li><a href="#grouped-bar-charts-with-percentages" id="toc-grouped-bar-charts-with-percentages" class="nav-link" data-scroll-target="#grouped-bar-charts-with-percentages"><span class="header-section-number">2.5.4</span> Grouped bar charts with percentages</a></li>
+  <li><a href="#mosaic-plots" id="toc-mosaic-plots" class="nav-link" data-scroll-target="#mosaic-plots"><span class="header-section-number">2.5.5</span> Mosaic plots</a></li>
   </ul></li>
   <li><a href="#continuous-v.-continuous" id="toc-continuous-v.-continuous" class="nav-link" data-scroll-target="#continuous-v.-continuous"><span class="header-section-number">2.6</span> Continuous v. Continuous</a>
   <ul>
@@ -470,23 +471,23 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pen <span class="sc">|&gt;</span> <span class="fu">select</span>(species) <span class="sc">|&gt;</span> <span class="fu">tbl_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="judecbbcci" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#judecbbcci table {
+<div id="dqzrchmlll" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#dqzrchmlll table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#judecbbcci thead, #judecbbcci tbody, #judecbbcci tfoot, #judecbbcci tr, #judecbbcci td, #judecbbcci th {
+#dqzrchmlll thead, #dqzrchmlll tbody, #dqzrchmlll tfoot, #dqzrchmlll tr, #dqzrchmlll td, #dqzrchmlll th {
   border-style: none;
 }
 
-#judecbbcci p {
+#dqzrchmlll p {
   margin: 0;
   padding: 0;
 }
 
-#judecbbcci .gt_table {
+#dqzrchmlll .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -512,12 +513,12 @@ Packages Used
   border-left-color: #D3D3D3;
 }
 
-#judecbbcci .gt_caption {
+#dqzrchmlll .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#judecbbcci .gt_title {
+#dqzrchmlll .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -529,7 +530,7 @@ Packages Used
   border-bottom-width: 0;
 }
 
-#judecbbcci .gt_subtitle {
+#dqzrchmlll .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -541,7 +542,7 @@ Packages Used
   border-top-width: 0;
 }
 
-#judecbbcci .gt_heading {
+#dqzrchmlll .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -553,13 +554,13 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#judecbbcci .gt_bottom_border {
+#dqzrchmlll .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#judecbbcci .gt_col_headings {
+#dqzrchmlll .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -574,7 +575,7 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#judecbbcci .gt_col_heading {
+#dqzrchmlll .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -594,7 +595,7 @@ Packages Used
   overflow-x: hidden;
 }
 
-#judecbbcci .gt_column_spanner_outer {
+#dqzrchmlll .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -606,15 +607,15 @@ Packages Used
   padding-right: 4px;
 }
 
-#judecbbcci .gt_column_spanner_outer:first-child {
+#dqzrchmlll .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#judecbbcci .gt_column_spanner_outer:last-child {
+#dqzrchmlll .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#judecbbcci .gt_column_spanner {
+#dqzrchmlll .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -626,11 +627,11 @@ Packages Used
   width: 100%;
 }
 
-#judecbbcci .gt_spanner_row {
+#dqzrchmlll .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#judecbbcci .gt_group_heading {
+#dqzrchmlll .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -656,7 +657,7 @@ Packages Used
   text-align: left;
 }
 
-#judecbbcci .gt_empty_group_heading {
+#dqzrchmlll .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -671,15 +672,15 @@ Packages Used
   vertical-align: middle;
 }
 
-#judecbbcci .gt_from_md > :first-child {
+#dqzrchmlll .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#judecbbcci .gt_from_md > :last-child {
+#dqzrchmlll .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#judecbbcci .gt_row {
+#dqzrchmlll .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -698,7 +699,7 @@ Packages Used
   overflow-x: hidden;
 }
 
-#judecbbcci .gt_stub {
+#dqzrchmlll .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -711,7 +712,7 @@ Packages Used
   padding-right: 5px;
 }
 
-#judecbbcci .gt_stub_row_group {
+#dqzrchmlll .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -725,15 +726,15 @@ Packages Used
   vertical-align: top;
 }
 
-#judecbbcci .gt_row_group_first td {
+#dqzrchmlll .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#judecbbcci .gt_row_group_first th {
+#dqzrchmlll .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#judecbbcci .gt_summary_row {
+#dqzrchmlll .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -743,16 +744,16 @@ Packages Used
   padding-right: 5px;
 }
 
-#judecbbcci .gt_first_summary_row {
+#dqzrchmlll .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#judecbbcci .gt_first_summary_row.thick {
+#dqzrchmlll .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#judecbbcci .gt_last_summary_row {
+#dqzrchmlll .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -762,7 +763,7 @@ Packages Used
   border-bottom-color: #D3D3D3;
 }
 
-#judecbbcci .gt_grand_summary_row {
+#dqzrchmlll .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -772,7 +773,7 @@ Packages Used
   padding-right: 5px;
 }
 
-#judecbbcci .gt_first_grand_summary_row {
+#dqzrchmlll .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -782,7 +783,7 @@ Packages Used
   border-top-color: #D3D3D3;
 }
 
-#judecbbcci .gt_last_grand_summary_row_top {
+#dqzrchmlll .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -792,11 +793,11 @@ Packages Used
   border-bottom-color: #D3D3D3;
 }
 
-#judecbbcci .gt_striped {
+#dqzrchmlll .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#judecbbcci .gt_table_body {
+#dqzrchmlll .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -805,7 +806,7 @@ Packages Used
   border-bottom-color: #D3D3D3;
 }
 
-#judecbbcci .gt_footnotes {
+#dqzrchmlll .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -819,7 +820,7 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#judecbbcci .gt_footnote {
+#dqzrchmlll .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -828,7 +829,7 @@ Packages Used
   padding-right: 5px;
 }
 
-#judecbbcci .gt_sourcenotes {
+#dqzrchmlll .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -842,7 +843,7 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#judecbbcci .gt_sourcenote {
+#dqzrchmlll .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -850,63 +851,63 @@ Packages Used
   padding-right: 5px;
 }
 
-#judecbbcci .gt_left {
+#dqzrchmlll .gt_left {
   text-align: left;
 }
 
-#judecbbcci .gt_center {
+#dqzrchmlll .gt_center {
   text-align: center;
 }
 
-#judecbbcci .gt_right {
+#dqzrchmlll .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#judecbbcci .gt_font_normal {
+#dqzrchmlll .gt_font_normal {
   font-weight: normal;
 }
 
-#judecbbcci .gt_font_bold {
+#dqzrchmlll .gt_font_bold {
   font-weight: bold;
 }
 
-#judecbbcci .gt_font_italic {
+#dqzrchmlll .gt_font_italic {
   font-style: italic;
 }
 
-#judecbbcci .gt_super {
+#dqzrchmlll .gt_super {
   font-size: 65%;
 }
 
-#judecbbcci .gt_footnote_marks {
+#dqzrchmlll .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#judecbbcci .gt_asterisk {
+#dqzrchmlll .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#judecbbcci .gt_indent_1 {
+#dqzrchmlll .gt_indent_1 {
   text-indent: 5px;
 }
 
-#judecbbcci .gt_indent_2 {
+#dqzrchmlll .gt_indent_2 {
   text-indent: 10px;
 }
 
-#judecbbcci .gt_indent_3 {
+#dqzrchmlll .gt_indent_3 {
   text-indent: 15px;
 }
 
-#judecbbcci .gt_indent_4 {
+#dqzrchmlll .gt_indent_4 {
   text-indent: 20px;
 }
 
-#judecbbcci .gt_indent_5 {
+#dqzrchmlll .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -952,23 +953,23 @@ Packages Used
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pen <span class="sc">|&gt;</span> <span class="fu">select</span>(species, island) <span class="sc">|&gt;</span> <span class="fu">tbl_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="gognoukmip" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gognoukmip table {
+<div id="ssfaepnvxd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ssfaepnvxd table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gognoukmip thead, #gognoukmip tbody, #gognoukmip tfoot, #gognoukmip tr, #gognoukmip td, #gognoukmip th {
+#ssfaepnvxd thead, #ssfaepnvxd tbody, #ssfaepnvxd tfoot, #ssfaepnvxd tr, #ssfaepnvxd td, #ssfaepnvxd th {
   border-style: none;
 }
 
-#gognoukmip p {
+#ssfaepnvxd p {
   margin: 0;
   padding: 0;
 }
 
-#gognoukmip .gt_table {
+#ssfaepnvxd .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -994,12 +995,12 @@ Packages Used
   border-left-color: #D3D3D3;
 }
 
-#gognoukmip .gt_caption {
+#ssfaepnvxd .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gognoukmip .gt_title {
+#ssfaepnvxd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1011,7 +1012,7 @@ Packages Used
   border-bottom-width: 0;
 }
 
-#gognoukmip .gt_subtitle {
+#ssfaepnvxd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1023,7 +1024,7 @@ Packages Used
   border-top-width: 0;
 }
 
-#gognoukmip .gt_heading {
+#ssfaepnvxd .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1035,13 +1036,13 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#gognoukmip .gt_bottom_border {
+#ssfaepnvxd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gognoukmip .gt_col_headings {
+#ssfaepnvxd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1056,7 +1057,7 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#gognoukmip .gt_col_heading {
+#ssfaepnvxd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1076,7 +1077,7 @@ Packages Used
   overflow-x: hidden;
 }
 
-#gognoukmip .gt_column_spanner_outer {
+#ssfaepnvxd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1088,15 +1089,15 @@ Packages Used
   padding-right: 4px;
 }
 
-#gognoukmip .gt_column_spanner_outer:first-child {
+#ssfaepnvxd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gognoukmip .gt_column_spanner_outer:last-child {
+#ssfaepnvxd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gognoukmip .gt_column_spanner {
+#ssfaepnvxd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1108,11 +1109,11 @@ Packages Used
   width: 100%;
 }
 
-#gognoukmip .gt_spanner_row {
+#ssfaepnvxd .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gognoukmip .gt_group_heading {
+#ssfaepnvxd .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1138,7 +1139,7 @@ Packages Used
   text-align: left;
 }
 
-#gognoukmip .gt_empty_group_heading {
+#ssfaepnvxd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1153,15 +1154,15 @@ Packages Used
   vertical-align: middle;
 }
 
-#gognoukmip .gt_from_md > :first-child {
+#ssfaepnvxd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gognoukmip .gt_from_md > :last-child {
+#ssfaepnvxd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gognoukmip .gt_row {
+#ssfaepnvxd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1180,7 +1181,7 @@ Packages Used
   overflow-x: hidden;
 }
 
-#gognoukmip .gt_stub {
+#ssfaepnvxd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1193,7 +1194,7 @@ Packages Used
   padding-right: 5px;
 }
 
-#gognoukmip .gt_stub_row_group {
+#ssfaepnvxd .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1207,15 +1208,15 @@ Packages Used
   vertical-align: top;
 }
 
-#gognoukmip .gt_row_group_first td {
+#ssfaepnvxd .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gognoukmip .gt_row_group_first th {
+#ssfaepnvxd .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gognoukmip .gt_summary_row {
+#ssfaepnvxd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1225,16 +1226,16 @@ Packages Used
   padding-right: 5px;
 }
 
-#gognoukmip .gt_first_summary_row {
+#ssfaepnvxd .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gognoukmip .gt_first_summary_row.thick {
+#ssfaepnvxd .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gognoukmip .gt_last_summary_row {
+#ssfaepnvxd .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1244,7 +1245,7 @@ Packages Used
   border-bottom-color: #D3D3D3;
 }
 
-#gognoukmip .gt_grand_summary_row {
+#ssfaepnvxd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1254,7 +1255,7 @@ Packages Used
   padding-right: 5px;
 }
 
-#gognoukmip .gt_first_grand_summary_row {
+#ssfaepnvxd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1264,7 +1265,7 @@ Packages Used
   border-top-color: #D3D3D3;
 }
 
-#gognoukmip .gt_last_grand_summary_row_top {
+#ssfaepnvxd .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1274,11 +1275,11 @@ Packages Used
   border-bottom-color: #D3D3D3;
 }
 
-#gognoukmip .gt_striped {
+#ssfaepnvxd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gognoukmip .gt_table_body {
+#ssfaepnvxd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1287,7 +1288,7 @@ Packages Used
   border-bottom-color: #D3D3D3;
 }
 
-#gognoukmip .gt_footnotes {
+#ssfaepnvxd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1301,7 +1302,7 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#gognoukmip .gt_footnote {
+#ssfaepnvxd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1310,7 +1311,7 @@ Packages Used
   padding-right: 5px;
 }
 
-#gognoukmip .gt_sourcenotes {
+#ssfaepnvxd .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1324,7 +1325,7 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#gognoukmip .gt_sourcenote {
+#ssfaepnvxd .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1332,63 +1333,63 @@ Packages Used
   padding-right: 5px;
 }
 
-#gognoukmip .gt_left {
+#ssfaepnvxd .gt_left {
   text-align: left;
 }
 
-#gognoukmip .gt_center {
+#ssfaepnvxd .gt_center {
   text-align: center;
 }
 
-#gognoukmip .gt_right {
+#ssfaepnvxd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gognoukmip .gt_font_normal {
+#ssfaepnvxd .gt_font_normal {
   font-weight: normal;
 }
 
-#gognoukmip .gt_font_bold {
+#ssfaepnvxd .gt_font_bold {
   font-weight: bold;
 }
 
-#gognoukmip .gt_font_italic {
+#ssfaepnvxd .gt_font_italic {
   font-style: italic;
 }
 
-#gognoukmip .gt_super {
+#ssfaepnvxd .gt_super {
   font-size: 65%;
 }
 
-#gognoukmip .gt_footnote_marks {
+#ssfaepnvxd .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gognoukmip .gt_asterisk {
+#ssfaepnvxd .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gognoukmip .gt_indent_1 {
+#ssfaepnvxd .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gognoukmip .gt_indent_2 {
+#ssfaepnvxd .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gognoukmip .gt_indent_3 {
+#ssfaepnvxd .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gognoukmip .gt_indent_4 {
+#ssfaepnvxd .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gognoukmip .gt_indent_5 {
+#ssfaepnvxd .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1540,10 +1541,8 @@ Packages Used
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_frq</span>(pen, species,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Count of penguins by species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_frq</span>(pen, species,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Count of penguins by species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1680,11 +1679,9 @@ Packages Used
 <div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
 <p>This type of chart is not natively found in the <code>ggplot2</code> package, but its own <code>waffle</code> package. These are great for infographics.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(waffle)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">waffle</span>(ps<span class="sc">/</span><span class="dv">10</span>, <span class="at">rows=</span><span class="dv">5</span>, <span class="at">size=</span><span class="fl">0.5</span>, </span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">"Species of penguins"</span>, </span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">"1 square == 10 penguins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">waffle</span>(ps<span class="sc">/</span><span class="dv">10</span>, <span class="at">rows=</span><span class="dv">5</span>, <span class="at">size=</span><span class="fl">0.5</span>, </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">"Species of penguins"</span>, </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">"1 square == 10 penguins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2237,8 +2234,8 @@ Packages Used
 </div>
 </div>
 </section>
-<section id="grouped-bar-charts" class="level3" data-number="2.5.2">
-<h3 data-number="2.5.2" class="anchored" data-anchor-id="grouped-bar-charts"><span class="header-section-number">2.5.2</span> Grouped bar charts</h3>
+<section id="grouped-bar-charts-stacked" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="grouped-bar-charts-stacked"><span class="header-section-number">2.5.2</span> Grouped bar charts: stacked</h3>
 <p>To compare proportions of one categorical variable within the same level of another, we can use grouped barcharts.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-14-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-1" role="tab" aria-controls="tabset-14-1" aria-selected="true">base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-2" role="tab" aria-controls="tabset-14-2" aria-selected="false">ggplot</a></li></ul>
@@ -2256,10 +2253,11 @@ Packages Used
 </div>
 </div>
 </div>
-<p>Stacked bars can be difficult to interpret, and very difficult to compare values between groups. A side by side barchart is preferable. The <code>beside=TRUE</code> is what controls the placement of the bars.</p>
+</div>
+<div id="tabset-14-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-2-tab">
+<p>Again plot the cut on the x axis, but then <code>fill</code> using the second categorical variable. This has the effect of visualizing the <strong>row</strong> percents from the table above, or the percent of species on each island.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(is, <span class="at">main=</span><span class="st">"quick side by side barchart using base graphics"</span>, </span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">beside=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>island, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2269,10 +2267,19 @@ Packages Used
 </div>
 </div>
 </div>
-<div id="tabset-14-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-2-tab">
-<p>Again plot the cut on the x axis, but then <code>fill</code> using the second categorical variable. This has the effect of visualizing the <strong>row</strong> percents from the table above, or the percent of species on each island.</p>
+</div>
+</div>
+</section>
+<section id="grouped-bar-charts-side-by-side" class="level3" data-number="2.5.3">
+<h3 data-number="2.5.3" class="anchored" data-anchor-id="grouped-bar-charts-side-by-side"><span class="header-section-number">2.5.3</span> Grouped bar charts: side by side</h3>
+<p>Stacked bars can be difficult to interpret, and very difficult to compare values between groups. A side by side barchart is preferable. The <code>beside=TRUE</code> is what controls the placement of the bars.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-15-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-1" role="tab" aria-controls="tabset-15-1" aria-selected="true">base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-15-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-2" role="tab" aria-controls="tabset-15-2" aria-selected="false">ggplot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-15-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-15-1-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>island, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(is, <span class="at">main=</span><span class="st">"quick side by side barchart using base graphics"</span>, </span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">beside=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2281,6 +2288,8 @@ Packages Used
 </div>
 </div>
 </div>
+</div>
+<div id="tabset-15-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-15-2-tab">
 <p>Again the default is a stacked barchart. So we just specify <code>position=dodge</code> to put the bars side by side.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>island, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2309,15 +2318,14 @@ Packages Used
 </div>
 </div>
 </section>
-<section id="grouped-bar-charts-with-percentages" class="level3" data-number="2.5.3">
-<h3 data-number="2.5.3" class="anchored" data-anchor-id="grouped-bar-charts-with-percentages"><span class="header-section-number">2.5.3</span> Grouped bar charts with percentages</h3>
+<section id="grouped-bar-charts-with-percentages" class="level3" data-number="2.5.4">
+<h3 data-number="2.5.4" class="anchored" data-anchor-id="grouped-bar-charts-with-percentages"><span class="header-section-number">2.5.4</span> Grouped bar charts with percentages</h3>
 <p>Not as easy as one would hope, but the solution is to calculate the desired percentages first and then plot the summary data using either <code>geom_bar(stat='identity')</code> or <code>geom_col()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>calc.props <span class="ot">&lt;-</span> pen <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(island, species) <span class="sc">%&gt;%</span></span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">count=</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">pct=</span><span class="fu">round</span>(count<span class="sc">/</span><span class="fu">sum</span>(count),<span class="dv">3</span>))</span>
-<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>calc.props</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>calc.props <span class="ot">&lt;-</span> pen <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(island, species) <span class="sc">%&gt;%</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">count=</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">pct=</span><span class="fu">round</span>(count<span class="sc">/</span><span class="fu">sum</span>(count),<span class="dv">3</span>))</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>calc.props</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 4
 # Groups:   island [3]
@@ -2331,9 +2339,9 @@ Packages Used
 </div>
 </div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-15-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-1" role="tab" aria-controls="tabset-15-1" aria-selected="true">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-15-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-2" role="tab" aria-controls="tabset-15-2" aria-selected="false">sjPlot</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-16-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-1" role="tab" aria-controls="tabset-16-1" aria-selected="true">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-16-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-2" role="tab" aria-controls="tabset-16-2" aria-selected="false">sjPlot</a></li></ul>
 <div class="tab-content">
-<div id="tabset-15-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-15-1-tab">
+<div id="tabset-16-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-16-1-tab">
 <p>Since we’re plotting summary data, the height of the bars is specified using <code>y=pct</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(calc.props, <span class="fu">aes</span>(<span class="at">x=</span>island, <span class="at">fill=</span>species, <span class="at">y=</span>pct)) <span class="sc">+</span></span>
@@ -2348,10 +2356,9 @@ Packages Used
 </div>
 <p>Now set some options to the y axis using <code>scale_y_continuous()</code> to make the graph more accurate and readable. The <code>labels=percent</code> comes from the <code>scales</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(calc.props, <span class="fu">aes</span>(<span class="at">x=</span>island, <span class="at">fill=</span>species, <span class="at">y=</span>pct)) <span class="sc">+</span></span>
-<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">geom_col</span>(<span class="at">position=</span><span class="st">"dodge"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">scale_y_continuous</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">labels=</span>percent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(calc.props, <span class="fu">aes</span>(<span class="at">x=</span>island, <span class="at">fill=</span>species, <span class="at">y=</span>pct)) <span class="sc">+</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">geom_col</span>(<span class="at">position=</span><span class="st">"dodge"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">scale_y_continuous</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">labels=</span>percent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2361,7 +2368,7 @@ Packages Used
 </div>
 </div>
 </div>
-<div id="tabset-15-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-15-2-tab">
+<div id="tabset-16-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-16-2-tab">
 <p>sjPlot does a very nice job of being able to cleanly show not only n’s but percents.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_xtab</span>(pen<span class="sc">$</span>island, pen<span class="sc">$</span>species, <span class="at">margin=</span><span class="st">"row"</span>, <span class="at">coord.flip =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2377,8 +2384,8 @@ Packages Used
 </div>
 </div>
 </section>
-<section id="mosaic-plots" class="level3" data-number="2.5.4">
-<h3 data-number="2.5.4" class="anchored" data-anchor-id="mosaic-plots"><span class="header-section-number">2.5.4</span> Mosaic plots</h3>
+<section id="mosaic-plots" class="level3" data-number="2.5.5">
+<h3 data-number="2.5.5" class="anchored" data-anchor-id="mosaic-plots"><span class="header-section-number">2.5.5</span> Mosaic plots</h3>
 <p>But what if you want to know how two categorical variables are related and you don’t want to look at two different barplots? Mosaic plots are a way to visualize the proportions in a table. So here’s the two-way table we’ll be plotting.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(pen<span class="sc">$</span>island, pen<span class="sc">$</span>species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2437,9 +2444,9 @@ Packages Used
 <h3 data-number="2.6.1" class="anchored" data-anchor-id="scatterplot"><span class="header-section-number">2.6.1</span> Scatterplot</h3>
 <p>The most common method of visualizing the relationship between two continuous variables is by using a scatterplot.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-16-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-1" role="tab" aria-controls="tabset-16-1" aria-selected="true">base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-16-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-2" role="tab" aria-controls="tabset-16-2" aria-selected="false">ggplot</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-17-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-1" role="tab" aria-controls="tabset-17-1" aria-selected="true">base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-2" role="tab" aria-controls="tabset-17-2" aria-selected="false">ggplot</a></li></ul>
 <div class="tab-content">
-<div id="tabset-16-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-16-1-tab">
+<div id="tabset-17-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-17-1-tab">
 <p>Back to the <code>plot()</code> command. Here we use model notation again, so it’s <span class="math inline">\(y~x\)</span>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(flipper_length_mm<span class="sc">~</span>body_mass_g, <span class="at">data=</span>pen)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2453,7 +2460,7 @@ Packages Used
 </div>
 <p>Looks like for the most part as penguin body mass increases so does flipper length. That makes sense.</p>
 </div>
-<div id="tabset-16-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-16-2-tab">
+<div id="tabset-17-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-2-tab">
 <p>With ggplot we specify both the x and y variables, and add a point.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>body_mass_g, <span class="at">y=</span>flipper_length_mm)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2473,9 +2480,9 @@ Packages Used
 <h3 data-number="2.6.2" class="anchored" data-anchor-id="adding-lines-to-the-scatterplots"><span class="header-section-number">2.6.2</span> Adding lines to the scatterplots</h3>
 <p>Two most common trend lines added to a scatterplots are the “best fit” straight line and the “lowess” smoother line.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-17-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-1" role="tab" aria-controls="tabset-17-1" aria-selected="true">base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-2" role="tab" aria-controls="tabset-17-2" aria-selected="false">ggplot</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-18-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-18-1" role="tab" aria-controls="tabset-18-1" aria-selected="true">base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-18-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-18-2" role="tab" aria-controls="tabset-18-2" aria-selected="false">ggplot</a></li></ul>
 <div class="tab-content">
-<div id="tabset-17-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-17-1-tab">
+<div id="tabset-18-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-18-1-tab">
 <p>The best fit line (in blue) gets added by using the <code>abline()</code> function wrapped around the linear model function <code>lm()</code>. Note it uses the same model notation syntax and the <code>data=</code> statement as the <code>plot()</code> function does. The lowess line is added using the <code>lines()</code> function, but the <code>lowess()</code> function itself doesn’t allow for the <code>data=</code> statement so we have to use <code>$</code> sign notation.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(flipper_length_mm<span class="sc">~</span>body_mass_g, <span class="at">data=</span>pen)</span>
@@ -2491,7 +2498,7 @@ Packages Used
 </div>
 </div>
 </div>
-<div id="tabset-17-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-2-tab">
+<div id="tabset-18-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-18-2-tab">
 <p>With ggplot, we just add a <code>geom_smooth()</code> layer.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>body_mass_g, <span class="at">y=</span>flipper_length_mm)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2526,13 +2533,12 @@ Packages Used
 <p>Line plots connect each dot with a straight line. This is most often done when measuring trends of the response as the value of x increases (such as a time series)</p>
 <p>We saw earlier that <code>body_mass_g</code> and <code>flipper_length_mm</code> seemed possibly linear. Let see how the average flipper length changes with body mass.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>mm.per.g <span class="ot">&lt;-</span> pen <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(body_mass_g) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(flipper_length_mm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>mm.per.g <span class="ot">&lt;-</span> pen <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(body_mass_g) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(flipper_length_mm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-18-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-18-1" role="tab" aria-controls="tabset-18-1" aria-selected="true">base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-18-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-18-2" role="tab" aria-controls="tabset-18-2" aria-selected="false">ggplot</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-19-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-19-1" role="tab" aria-controls="tabset-19-1" aria-selected="true">base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-19-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-19-2" role="tab" aria-controls="tabset-19-2" aria-selected="false">ggplot</a></li></ul>
 <div class="tab-content">
-<div id="tabset-18-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-18-1-tab">
+<div id="tabset-19-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-19-1-tab">
 <p>For base graphics, type=‘b’ means both points and lines, ‘l’ gives you just lines and ‘p’ gives you only points. You can find more plotting character options under <code>?pch</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mean<span class="sc">~</span>body_mass_g, <span class="at">data=</span>mm.per.g, <span class="at">type=</span><span class="st">'l'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2545,7 +2551,7 @@ Packages Used
 </div>
 </div>
 </div>
-<div id="tabset-18-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-18-2-tab">
+<div id="tabset-19-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-19-2-tab">
 <p>With ggplot we specify that we want a line geometry only.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mm.per.g, <span class="fu">aes</span>(<span class="at">x=</span>body_mass_g, <span class="at">y=</span>mean)) <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2565,9 +2571,9 @@ Packages Used
 <div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>mmpgs <span class="ot">&lt;-</span> pen <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(body_mass_g, species) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(flipper_length_mm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-19-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-19-1" role="tab" aria-controls="tabset-19-1" aria-selected="true">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-19-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-19-2" role="tab" aria-controls="tabset-19-2" aria-selected="false">base</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-20-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-20-1" role="tab" aria-controls="tabset-20-1" aria-selected="true">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-20-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-20-2" role="tab" aria-controls="tabset-20-2" aria-selected="false">base</a></li></ul>
 <div class="tab-content">
-<div id="tabset-19-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-19-1-tab">
+<div id="tabset-20-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-20-1-tab">
 <p>This is where ggplot starts to excel in it’s ease of creating more complex plots. All we have to do is specify that we want the lines colored by the cut variable.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mmpgs, <span class="fu">aes</span>(<span class="at">x=</span>body_mass_g, <span class="at">y=</span>mean, <span class="at">col=</span>species)) <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2581,7 +2587,7 @@ Packages Used
 </div>
 <p>And we get one line per species</p>
 </div>
-<div id="tabset-19-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-19-2-tab">
+<div id="tabset-20-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-20-2-tab">
 <p>This plot can be created in base graphics, but it takes an advanced knowledge of the graphics system to do so. So I do not show it here.</p>
 </div>
 </div>
@@ -2595,9 +2601,9 @@ Packages Used
 <h3 data-number="2.7.1" class="anchored" data-anchor-id="dotplotstrip-chart"><span class="header-section-number">2.7.1</span> Dotplot/strip chart</h3>
 <p>Dotplots can be very useful when plotting dots against several categories. They can also be called stripcharts.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-20-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-20-1" role="tab" aria-controls="tabset-20-1" aria-selected="true">base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-20-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-20-2" role="tab" aria-controls="tabset-20-2" aria-selected="false">ggplot</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-21-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-21-1" role="tab" aria-controls="tabset-21-1" aria-selected="true">base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-21-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-21-2" role="tab" aria-controls="tabset-21-2" aria-selected="false">ggplot</a></li></ul>
 <div class="tab-content">
-<div id="tabset-20-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-20-1-tab">
+<div id="tabset-21-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-21-1-tab">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stripchart</span>(body_mass_g <span class="sc">~</span> species, <span class="at">data=</span>pen)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -2609,13 +2615,12 @@ Packages Used
 </div>
 </div>
 </div>
-<div id="tabset-20-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-20-2-tab">
+<div id="tabset-21-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-21-2-tab">
 <p>We can reproduce the same thing by plotting one continuous variable against one categorical variable, and adding a layer of points. I’d argue that horizontal looks better due to the axis-labels.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
-<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">y=</span>body_mass_g, <span class="at">x=</span>species)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
-<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">y=</span>species, <span class="at">x=</span>body_mass_g)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
-<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(a, b, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">y=</span>body_mass_g, <span class="at">x=</span>species)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">y=</span>species, <span class="at">x=</span>body_mass_g)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(a, b, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2631,9 +2636,9 @@ Packages Used
 <section id="grouped-boxplots" class="level3" data-number="2.7.2">
 <h3 data-number="2.7.2" class="anchored" data-anchor-id="grouped-boxplots"><span class="header-section-number">2.7.2</span> Grouped boxplots</h3>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-21-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-21-1" role="tab" aria-controls="tabset-21-1" aria-selected="true">base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-21-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-21-2" role="tab" aria-controls="tabset-21-2" aria-selected="false">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-21-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-21-3" role="tab" aria-controls="tabset-21-3" aria-selected="false">Adding violins</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-22-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-22-1" role="tab" aria-controls="tabset-22-1" aria-selected="true">base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-22-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-22-2" role="tab" aria-controls="tabset-22-2" aria-selected="false">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-22-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-22-3" role="tab" aria-controls="tabset-22-3" aria-selected="false">Adding violins</a></li></ul>
 <div class="tab-content">
-<div id="tabset-21-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-21-1-tab">
+<div id="tabset-22-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-22-1-tab">
 <p>Base graphics plots grouped boxplots with also just the addition of a twiddle (tilde) <code>~</code>. Another example of where model notation works.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(bill_length_mm<span class="sc">~</span>species, <span class="at">data=</span>pen)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2646,7 +2651,7 @@ Packages Used
 </div>
 </div>
 </div>
-<div id="tabset-21-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-21-2-tab">
+<div id="tabset-22-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-22-2-tab">
 <p>A simple addition, just define your x and y accordingly.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span>bill_depth_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2659,7 +2664,7 @@ Packages Used
 </div>
 </div>
 </div>
-<div id="tabset-21-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-21-3-tab">
+<div id="tabset-22-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-22-3-tab">
 <p>Violin plots can be overlaid here as well.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span>bill_depth_mm, <span class="at">fill=</span>species)) <span class="sc">+</span></span>
@@ -2680,9 +2685,9 @@ Packages Used
 <section id="grouped-histograms" class="level3" data-number="2.7.3">
 <h3 data-number="2.7.3" class="anchored" data-anchor-id="grouped-histograms"><span class="header-section-number">2.7.3</span> Grouped histograms</h3>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-22-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-22-1" role="tab" aria-controls="tabset-22-1" aria-selected="true">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-22-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-22-2" role="tab" aria-controls="tabset-22-2" aria-selected="false">base</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-23-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-23-1" role="tab" aria-controls="tabset-23-1" aria-selected="true">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-23-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-23-2" role="tab" aria-controls="tabset-23-2" aria-selected="false">base</a></li></ul>
 <div class="tab-content">
-<div id="tabset-22-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-22-1-tab">
+<div id="tabset-23-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-23-1-tab">
 <p>By default ggplot wants to overlay all plots on the same grid. This doesn’t look to good with histograms. Instead you can overlay density plots</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_depth_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span>
@@ -2710,7 +2715,7 @@ Packages Used
 </div>
 </div>
 </div>
-<div id="tabset-22-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-22-2-tab">
+<div id="tabset-23-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-23-2-tab">
 <p>There is no easy way to create grouped histograms in base graphics, so we will skip it.</p>
 </div>
 </div>
@@ -2730,8 +2735,7 @@ Packages Used
 </div>
 <p>Somewhat new (2017), ridgeline plots have not been added to the base distribution of <code>ggplot2</code> yet. For now it’s available in the <code>ggridges</code> package. Really good way to visualize density plots without the overlapping issue.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggridges)</span>
-<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_depth_mm, <span class="at">y=</span>species)) <span class="sc">+</span> <span class="fu">geom_density_ridges</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_depth_mm, <span class="at">y=</span>species)) <span class="sc">+</span> <span class="fu">geom_density_ridges</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2809,9 +2813,9 @@ Packages Used
 <section id="multiple-plots-per-window" class="level2" data-number="2.9">
 <h2 data-number="2.9" class="anchored" data-anchor-id="multiple-plots-per-window"><span class="header-section-number">2.9</span> Multiple plots per window</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-23-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-23-1" role="tab" aria-controls="tabset-23-1" aria-selected="true">base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-23-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-23-2" role="tab" aria-controls="tabset-23-2" aria-selected="false">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-23-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-23-3" role="tab" aria-controls="tabset-23-3" aria-selected="false">Quarto</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-24-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-24-1" role="tab" aria-controls="tabset-24-1" aria-selected="true">base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-24-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-24-2" role="tab" aria-controls="tabset-24-2" aria-selected="false">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-24-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-24-3" role="tab" aria-controls="tabset-24-3" aria-selected="false">Quarto</a></li></ul>
 <div class="tab-content">
-<div id="tabset-23-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-23-1-tab">
+<div id="tabset-24-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-24-1-tab">
 <p>I use <code>par(mfrow=c(r,c))</code> for base graphics, where <code>r</code> is the number of rows and <code>c</code> the number of columns.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
@@ -2828,7 +2832,7 @@ Packages Used
 </div>
 <p>Other resources including learning about <code>layouts</code>. <a href="http://seananderson.ca/courses/11-multipanel/multipanel.pdf">Multipanel plotting with base graphics</a></p>
 </div>
-<div id="tabset-23-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-23-2-tab">
+<div id="tabset-24-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-24-2-tab">
 <p>Use the <code>grid.arrange</code> function in the <code>gridExtra</code> package. I’ve done it several times above. You assign the output of a ggplot object to an object (here it’s <code>plot1</code> and <code>plot2</code>). Then you use <code>grid.arrange()</code> to arrange them either side by side or top and bottom.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_depth_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_density</span>(<span class="at">alpha=</span>.<span class="dv">2</span>)</span>
@@ -2843,7 +2847,7 @@ Packages Used
 </div>
 </div>
 </div>
-<div id="tabset-23-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-23-3-tab">
+<div id="tabset-24-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-24-3-tab">
 <div class="callout callout-style-simple callout-warning">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">

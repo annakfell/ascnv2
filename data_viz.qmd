@@ -10,6 +10,7 @@ source("_common.R")
 library(waffle)
 library(gridExtra)
 library(ggridges)
+library(scales)
 ```
 
 
@@ -182,8 +183,6 @@ ggplot(pen, aes(x=species)) + theme_bw() +
 :::  
 
 ```{r}
-library(sjPlot)
-
 plot_frq(pen, species,
          title = "Count of penguins by species")
 ```
@@ -275,8 +274,6 @@ This type of chart is not natively found in the `ggplot2` package, but its own `
 
 
 ```{r}
-library(waffle)
-
 waffle(ps/10, rows=5, size=0.5, 
        title="Species of penguins", 
        xlab="1 square == 10 penguins")
@@ -610,7 +607,8 @@ round(prop.table(table(pen$island, pen$species), margin=2),3)
 
 :::
 
-### Grouped bar charts
+### Grouped bar charts: stacked
+
 To compare proportions of one categorical variable within the same level of another, we can use grouped barcharts. 
 
 ::: {.panel-tabset}
@@ -622,13 +620,6 @@ is <- table(pen$island, pen$species)
 barplot(is)
 ```
 
-Stacked bars can be difficult to interpret, and very difficult to compare values between groups. A side by side barchart is preferable. 
-The `beside=TRUE` is what controls the placement of the bars. 
-```{r}
-barplot(is, main="quick side by side barchart using base graphics", 
-        beside=TRUE)
-```
-
 ## ggplot
 Again plot the cut on the x axis, but then `fill` using the second categorical variable. This has the effect of visualizing the **row** percents from the table above, or the percent of species on each island. 
 
@@ -636,6 +627,22 @@ Again plot the cut on the x axis, but then `fill` using the second categorical v
 ggplot(pen, aes(x=island, fill=species)) + geom_bar()
 ```
 
+:::
+
+### Grouped bar charts: side by side
+
+Stacked bars can be difficult to interpret, and very difficult to compare values between groups. A side by side barchart is preferable. 
+The `beside=TRUE` is what controls the placement of the bars. 
+
+::: {.panel-tabset}
+
+## base
+```{r}
+barplot(is, main="quick side by side barchart using base graphics", 
+        beside=TRUE)
+```
+
+## ggplot
 Again the default is a stacked barchart. So we just specify `position=dodge` to put the bars side by side. 
 ```{r}
 ggplot(pen, aes(x=island, fill=species)) + geom_bar(position = "dodge")
@@ -656,7 +663,6 @@ And this easy change is why we love `ggplot2`.
 Not as easy as one would hope, but the solution is to calculate the desired percentages first and then plot the summary data using either `geom_bar(stat='identity')` or `geom_col()`. 
 
 ```{r}
-library(dplyr)
 calc.props <- pen %>% group_by(island, species) %>%
               summarise(count=n()) %>%
               mutate(pct=round(count/sum(count),3))
@@ -677,7 +683,6 @@ ggplot(calc.props, aes(x=island, fill=species, y=pct)) +
 Now set some options to the y axis using `scale_y_continuous()` to make the graph more accurate and readable. The `labels=percent` comes from the `scales` package. 
 
 ```{r}
-library(scales)
 ggplot(calc.props, aes(x=island, fill=species, y=pct)) +
                   geom_col(position="dodge") + theme_bw() +
                   scale_y_continuous(limits=c(0,1), labels=percent)
@@ -782,7 +787,6 @@ Line plots connect each dot with a straight line. This is most often done when m
 
 We saw earlier that `body_mass_g` and `flipper_length_mm` seemed possibly linear. Let see how the average flipper length changes with body mass. 
 ```{r}
-library(dplyr)
 mm.per.g <- pen %>% group_by(body_mass_g) %>% summarise(mean = mean(flipper_length_mm))
 ```
 
@@ -850,7 +854,6 @@ stripchart(body_mass_g ~ species, data=pen)
 We can reproduce the same thing by plotting one continuous variable against one categorical variable, and adding a layer of points. I'd argue that horizontal looks better due to the axis-labels. 
 ```{r}
 #| fig-width: 10
-library(gridExtra)
 a <- ggplot(pen, aes(y=body_mass_g, x=species)) + geom_point()
 b <- ggplot(pen, aes(y=species, x=body_mass_g)) + geom_point()
 grid.arrange(a, b, ncol=2)
@@ -924,7 +927,6 @@ check this section for updates - has this changed?
 Somewhat new (2017), ridgeline plots have not been added to the base distribution of `ggplot2` yet. For now it's available in the `ggridges` package. Really good way to visualize density plots without the overlapping issue. 
 
 ```{r, fig.width=10}
-library(ggridges)
 ggplot(pen, aes(x=bill_depth_mm, y=species)) + geom_density_ridges()
 ```
 
