@@ -6,11 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Robin Donatello, Edward Roualdes">
-<meta name="dcterms.date" content="2024-07-10">
 <meta name="description" content="Course notes for various Applied Statistics courses at CSU Chico">
 
-<title>Applied Statistics</title>
+<title>Appendix – Applied Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +31,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./dataprep.html" rel="next">
+<link href="./bivariate_analysis.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -73,6 +71,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -85,7 +112,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appendix.html">Appendix</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -121,7 +148,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -179,7 +206,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix.html" class="sidebar-item-text sidebar-link">
+  <a href="./appendix.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Appendix</span></a>
   </div>
 </li>
@@ -193,44 +220,30 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
+  <li><a href="#common-error-messages" id="toc-common-error-messages" class="nav-link active" data-scroll-target="#common-error-messages">Common error messages</a>
   <ul>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
-  <li><a href="#acknowledgments" id="toc-acknowledgments" class="nav-link" data-scroll-target="#acknowledgments">Acknowledgments</a></li>
+  <li><a href="#function-not-found" id="toc-function-not-found" class="nav-link" data-scroll-target="#function-not-found">Function not found</a></li>
+  <li><a href="#object-not-found" id="toc-object-not-found" class="nav-link" data-scroll-target="#object-not-found">Object not found</a></li>
+  <li><a href="#object-of-length-0" id="toc-object-of-length-0" class="nav-link" data-scroll-target="#object-of-length-0">Object of length 0</a></li>
+  <li><a href="#discrete-scale-applied-to-continuous-object" id="toc-discrete-scale-applied-to-continuous-object" class="nav-link" data-scroll-target="#discrete-scale-applied-to-continuous-object">Discrete scale applied to continuous object</a></li>
+  <li><a href="#package-inputenc-error-unicode-char-not-set-up-for-use-with" id="toc-package-inputenc-error-unicode-char-not-set-up-for-use-with" class="nav-link" data-scroll-target="#package-inputenc-error-unicode-char-not-set-up-for-use-with">Package inputenc Error: Unicode char not set up for use with </a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/appendix.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Applied Statistics</h1>
+<h1 class="title">Appendix</h1>
 </div>
 
-<div>
-  <div class="description">
-    Course notes for various Applied Statistics courses at CSU Chico
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Robin Donatello, Edward Roualdes </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">July 10, 2024</p>
-    </div>
-  </div>
   
     
   </div>
@@ -240,17 +253,40 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>This document is a set of course notes for several Applied Statistics courses at California State University, Chico. This is not a textbook replacement, and topics covered will vary depending on the instructor. To make this clear we use the term <em>notebook</em> to refer to this document so as not to be confused with a traditional textbook.</p>
-<section id="data" class="level2">
-<h2 class="anchored" data-anchor-id="data">Data</h2>
-<p>Some data and examples in this notebook are drawn from <a href="https://www.crcpress.com/Practical-Multivariate-Analysis/Afifi-May-Donatello-Clark/p/book/9781138702226"><em>Practical Multivariate Analysis, 6th ed, Afifi, May, Donatello, Clark</em></a> and used with permission by the authors. The data with corresponding codebooks can be downloaded from <a href="https://norcalbiostat.github.io/pma6_code/">https://norcalbiostat.github.io/pma6_code/</a></p>
-<p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" alt="Creative Commons License" style="border-width:0"></a><br>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.</p>
+<section id="common-error-messages" class="level2">
+<h2 class="anchored" data-anchor-id="common-error-messages">Common error messages</h2>
+<p><img src="images/monster_debugging.png" class="img-fluid"></p>
+<section id="function-not-found" class="level3">
+<h3 class="anchored" data-anchor-id="function-not-found">Function not found</h3>
+<ul>
+<li>Check the spelling and capitalization.</li>
+<li>Did you load the package in your first code chunk?</li>
+</ul>
 </section>
-<section id="acknowledgments" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="acknowledgments">Acknowledgments</h2>
-<p>Annabelle Feller (<a href="https://github.com/annakfell">@annakfell</a>)</p>
+<section id="object-not-found" class="level3">
+<h3 class="anchored" data-anchor-id="object-not-found">Object not found</h3>
+<p>R can’t find the object you are referring to. Here are some debugging steps:</p>
+<ul>
+<li>Check the spelling and capitalization.</li>
+<li>If you are referring to a variable inside a data set, did you use $ notation?</li>
+<li>Can you find this variable in some other manner? (i.e.&nbsp;)</li>
+<li>If this piece of code works when you are working interactively, but not when you knit, then check where you created this variable. Is it written either in this current code file or your data management file?</li>
+<li>Did you create this variable in your data management file, and then forget to run the entire code document (hence recreating the analysis data set with this new variable)</li>
+<li>Shut down and restart R studio entirely.</li>
+</ul>
+</section>
+<section id="object-of-length-0" class="level3">
+<h3 class="anchored" data-anchor-id="object-of-length-0">Object of length 0</h3>
+<p>This object does not exist, or is empty. Check how you created this object initially.</p>
+</section>
+<section id="discrete-scale-applied-to-continuous-object" class="level3">
+<h3 class="anchored" data-anchor-id="discrete-scale-applied-to-continuous-object">Discrete scale applied to continuous object</h3>
+<p>Read that error message carefully. It explains exactly what the problem is. It is up to you to problem solve to figure out which variable you are trying to apply a scale to (like color or fill), what it’s data type is.</p>
+</section>
+<section id="package-inputenc-error-unicode-char-not-set-up-for-use-with" class="level3">
+<h3 class="anchored" data-anchor-id="package-inputenc-error-unicode-char-not-set-up-for-use-with">Package inputenc Error: Unicode char not set up for use with </h3>
+<p>When you want to use certain symbols in math notation, such as Greek letters or the tilde (<span class="math inline">\(\sim\)</span>), it is important that you type in the commands for them (e.g., to write <span class="math inline">\(\sim\)</span>, type or for the Greek letter <span class="math inline">\(\mu\)</span>, type ). If you get this error message, there are a couple of possibilities. Either you omitted a around the notation, or you copied and pasted symbols straight from the course notes. In the latter case, find the symbol and replace it with its command (these are usually pretty self-explanatory but when in doubt, Google it).</p>
+<p><img src="images/monster_abort.png" class="img-fluid"></p>
 
 
 </section>
@@ -823,11 +859,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./bivariate_analysis.html" class="pagination-link" aria-label="Bivariate Analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bivariate Analysis</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./dataprep.html" class="pagination-link" aria-label="Workflow and Data Cleaning">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Workflow and Data Cleaning</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
@@ -838,7 +874,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/appendix.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a></p>
 </div>

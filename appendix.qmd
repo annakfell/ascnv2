@@ -1,0 +1,32 @@
+# Appendix {.unnumbered}
+
+## Common error messages
+
+![](images/monster_debugging.png)
+
+### Function not found
+
+- Check the spelling and capitalization. 
+- Did you load the package in your first code chunk?
+
+### Object not found
+R can't find the object you are referring to. Here are some debugging steps:
+
+- Check the spelling and capitalization. 
+- If you are referring to a variable inside a data set, did you use \$ notation?
+- Can you find this variable in some other manner? (i.e. \R{head(var)})
+- If this piece of code works when you are working interactively, but not when you knit, then check where you created this variable. Is it written either in this current code file or your data management file? 
+- Did you create this variable in your data management file, and then forget to run the entire code document (hence recreating the analysis data set with this new variable)
+- Shut down and restart R studio entirely. 
+
+### Object of length 0
+This object does not exist, or is empty. Check how you created this object initially. 
+
+### Discrete scale applied to continuous object
+Read that error message carefully. It explains exactly what the problem is. It is up to you to problem solve to figure out which variable you are trying to apply a scale to (like color or fill), what it's data type is. 
+
+### Package inputenc Error: Unicode char not set up for use with \LaTeX
+
+When you want to use certain symbols in math notation, such as Greek letters or the tilde ($\sim$), it is important that you type in the \LaTeX  commands for them (e.g., to write $\sim$, type \verb!$\sim$! or for the Greek letter $\mu$, type \verb!$\mu$!). If you get this error message, there are a couple of possibilities. Either you omitted a \R{\$} around the notation, or you copied and pasted symbols straight from the course notes. In the latter case, find the symbol and replace it with its \LaTeX  command (these are usually pretty self-explanatory but when in doubt, Google it).
+
+![](images/monster_abort.png)

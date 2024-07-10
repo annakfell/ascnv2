@@ -785,6 +785,11 @@ ggplot(pen, aes(x=body_mass_g, y=flipper_length_mm)) + geom_point() +
 
 Line plots connect each dot with a straight line. This is most often done when measuring trends of the response as the value of x increases (such as a time series)
 
+::: {.callout-warning appearance=simple}
+> switch out example for time series
+
+:::
+
 We saw earlier that `body_mass_g` and `flipper_length_mm` seemed possibly linear. Let see how the average flipper length changes with body mass. 
 ```{r}
 mm.per.g <- pen %>% group_by(body_mass_g) %>% summarise(mean = mean(flipper_length_mm))

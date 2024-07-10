@@ -2,7 +2,7 @@
 
 :::{.callout-note}
 #### Packages Used
-This chapter uses the following packages: forcats, car, janitor
+This chapter uses the following packages: [forcats](https://forcats.tidyverse.org), [car](https://cran.r-project.org/web/packages/car/index.html), [janitor](https://sfirke.github.io/janitor/index.html)
 :::
 
 ```{r, echo=FALSE}

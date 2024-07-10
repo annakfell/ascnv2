@@ -19,7 +19,6 @@ book:
 
   chapters:
     - index.qmd
-    
     - part: "Preparing Data for Analysis"
       chapters:
         - dataprep.qmd
@@ -29,7 +28,7 @@ book:
       chapters: 
         - foundations.qmd
         - bivariate_analysis.qmd
-
+    - appendix.qmd
 format:
   html:
     theme:
