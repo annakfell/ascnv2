@@ -226,7 +226,8 @@ window.Quarto = {
   <li><a href="#object-not-found" id="toc-object-not-found" class="nav-link" data-scroll-target="#object-not-found">Object not found</a></li>
   <li><a href="#object-of-length-0" id="toc-object-of-length-0" class="nav-link" data-scroll-target="#object-of-length-0">Object of length 0</a></li>
   <li><a href="#discrete-scale-applied-to-continuous-object" id="toc-discrete-scale-applied-to-continuous-object" class="nav-link" data-scroll-target="#discrete-scale-applied-to-continuous-object">Discrete scale applied to continuous object</a></li>
-  <li><a href="#package-inputenc-error-unicode-char-not-set-up-for-use-with" id="toc-package-inputenc-error-unicode-char-not-set-up-for-use-with" class="nav-link" data-scroll-target="#package-inputenc-error-unicode-char-not-set-up-for-use-with">Package inputenc Error: Unicode char not set up for use with </a></li>
+  <li><a href="#package-inputenc-error-unicode-char-not-set-up-for-use-with" id="toc-package-inputenc-error-unicode-char-not-set-up-for-use-with" class="nav-link" data-scroll-target="#package-inputenc-error-unicode-char-not-set-up-for-use-with">Package inputenc error: Unicode char not set up for use with </a></li>
+  <li><a href="#continuous-x-aesthetic-did-you-forget-aesgroup" id="toc-continuous-x-aesthetic-did-you-forget-aesgroup" class="nav-link" data-scroll-target="#continuous-x-aesthetic-did-you-forget-aesgroup">Continuous x aesthetic – did you forget aes(group=…)?</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/appendix.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -274,6 +275,7 @@ window.Quarto = {
 <li>Did you create this variable in your data management file, and then forget to run the entire code document (hence recreating the analysis data set with this new variable)</li>
 <li>Shut down and restart R studio entirely.</li>
 </ul>
+<p><img src="images/monster_abort.png" class="img-fluid"></p>
 </section>
 <section id="object-of-length-0" class="level3">
 <h3 class="anchored" data-anchor-id="object-of-length-0">Object of length 0</h3>
@@ -284,9 +286,16 @@ window.Quarto = {
 <p>Read that error message carefully. It explains exactly what the problem is. It is up to you to problem solve to figure out which variable you are trying to apply a scale to (like color or fill), what it’s data type is.</p>
 </section>
 <section id="package-inputenc-error-unicode-char-not-set-up-for-use-with" class="level3">
-<h3 class="anchored" data-anchor-id="package-inputenc-error-unicode-char-not-set-up-for-use-with">Package inputenc Error: Unicode char not set up for use with </h3>
+<h3 class="anchored" data-anchor-id="package-inputenc-error-unicode-char-not-set-up-for-use-with">Package inputenc error: Unicode char not set up for use with </h3>
 <p>When you want to use certain symbols in math notation, such as Greek letters or the tilde (<span class="math inline">\(\sim\)</span>), it is important that you type in the commands for them (e.g., to write <span class="math inline">\(\sim\)</span>, type or for the Greek letter <span class="math inline">\(\mu\)</span>, type ). If you get this error message, there are a couple of possibilities. Either you omitted a around the notation, or you copied and pasted symbols straight from the course notes. In the latter case, find the symbol and replace it with its command (these are usually pretty self-explanatory but when in doubt, Google it).</p>
-<p><img src="images/monster_abort.png" class="img-fluid"></p>
+</section>
+<section id="continuous-x-aesthetic-did-you-forget-aesgroup" class="level3">
+<h3 class="anchored" data-anchor-id="continuous-x-aesthetic-did-you-forget-aesgroup">Continuous x aesthetic – did you forget aes(group=…)?</h3>
+<p>This <code>ggplot2</code> error message will show up when the aesthetics of a plot don’t map to the geometry of your data. Try either of these solutions depending on your variable type:</p>
+<ul>
+<li>Change your x variable to a discrete data type, such as a factor.</li>
+<li>Add the argument <code>group=1</code> to the aesthetics of the plot, <code>aes()</code>.</li>
+</ul>
 
 
 </section>
