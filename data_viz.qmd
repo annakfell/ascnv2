@@ -1130,11 +1130,6 @@ ggplot(plot.data, aes(x=marital)) + geom_bar()
 
 ### Problem: Got numerical binary 0/1 data but want to plot it as categorical? 
 
-::: {.callout-warning appearance=simple}
-> Include other related error messages: Continuous x aesthetic -- did you forget aes(group=...)?  
-
-:::
-
 Consider a continuous variable for the number of characters in an email `num_char`, and a 0/1 binary variable `spam`. 
 
 ::: {.callout-tip appearance=minimal collapse=true}

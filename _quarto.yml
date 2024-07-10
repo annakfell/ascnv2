@@ -29,6 +29,7 @@ book:
         - foundations.qmd
         - bivariate_analysis.qmd
     - appendix.qmd
+
 format:
   html:
     theme:
