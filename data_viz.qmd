@@ -430,6 +430,14 @@ boxplot(pen$bill_length_mm, horizontal = TRUE, main="Distribution of penguin bil
 
 Horizontal is a bit easier to read in my opinion. 
 
+**Adding the mean**
+A boxplot displays the median, so if we want to add more statistical detail and see any discrepancies between parameters we can add the mean as a point. 
+
+```{r}
+boxplot(pen$bill_length_mm, horizontal = TRUE, main="Distribution of penguin bill lengths", xlab="Bill length in mm")
+points(mean(na.omit(pen$bill_length_mm)), 1, col = "red", pch = 19)
+```
+
 ## ggplot
 What about ggplot? ggplot doesn't really like to do univariate boxplots. We can get around that by specifying that we want the box placed at a specific x value. 
 
@@ -443,6 +451,13 @@ To flip it horizontal you may think to simply swap x and y? Good thinking. Of co
 ggplot(pen, aes(x=1, y=bill_length_mm)) + geom_boxplot() + coord_flip()
 ```
 
+**Adding the mean**
+
+```{r}
+ggplot(pen, aes(x=1, y=bill_length_mm)) + geom_boxplot() + coord_flip() +
+  geom_hline(yintercept = mean(na.omit(pen$bill_length_mm)), color="red", linetype="dashed")
+```
+
 ## ggpubr
 
 ```{r}
@@ -452,6 +467,15 @@ ggboxplot(pen, x=1, y="bill_length_mm",
           ylab = "Bill length in mm")
 ```
 
+**Adding the mean**
+
+```{r}
+ggboxplot(pen, x=1, y="bill_length_mm", 
+          orientation = "horizontal",
+          main = "Distribution of penguin bill lengths",
+          ylab = "Bill length in mm",
+          add = 'mean')
+```
 
 :::
 
@@ -470,10 +494,25 @@ ggboxplot(pen, x=1, y="bill_length_mm",
 ggplot(pen, aes(x=1, y=bill_length_mm)) + geom_violin()
 ```
 
+**Adding the mean**
+
+```{r}
+ggplot(pen, aes(x=1, y=bill_length_mm)) + geom_violin() +
+  geom_hline(yintercept = mean(na.omit(pen$bill_length_mm)), color="red", linetype="dashed")
+```
+
+
 ## ggpubr
 
 ```{r}
 ggviolin(pen, x=1, y="bill_length_mm")
+```
+
+**Adding the mean**
+
+```{r}
+ggviolin(pen, x=1, y="bill_length_mm",
+         add = 'mean')
 ```
 
 
@@ -502,12 +541,34 @@ ggplot(pen, aes(x=1, y=bill_length_mm)) + xlab("") + theme_bw() +
               axis.ticks.x=element_blank())
 ```
 
+**Adding the mean**
+
+```{r}
+ggplot(pen, aes(x=1, y=bill_length_mm)) + xlab("") + theme_bw() + 
+              geom_violin(fill="blue", alpha=.1) + 
+              geom_boxplot(fill="blue", alpha=.5, width=.2) + 
+              geom_hline(yintercept = mean(na.omit(pen$bill_length_mm)), color="red", linetype="dashed")
+              theme(axis.title.x=element_blank(),
+              axis.text.x=element_blank(),
+              axis.ticks.x=element_blank())
+```
+
 ## ggpubr
 
 ```{r}
 ggviolin(pen, x=1, y="bill_length_mm", 
          alpha=.2, fill="blue", 
          add = "boxplot", add.params = list(alpha=.4),
+         xlab="") 
+```
+
+**Adding the mean**
+
+```{r}
+ggviolin(pen, x=1, y="bill_length_mm", 
+         alpha=.2, fill="blue", 
+         add = c('boxplot', 'mean'),
+         add.params = list(alpha=.4),
          xlab="") 
 ```
 
