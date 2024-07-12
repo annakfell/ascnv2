@@ -2,7 +2,10 @@
 
 :::{.callout-note}
 #### Packages Used
-This chapter uses the following packages: [ggplot2](https://ggplot2.tidyverse.org), [sjPlot](https://strengejacke.github.io/sjPlot/), [gtsummary](https://www.danieldsjoberg.com/gtsummary/), [waffle](https://github.com/hrbrmstr/waffle), [ggpubr](https://rpkgs.datanovia.com/ggpubr/), [ggridges](https://wilkelab.org/ggridges/), [scales](https://scales.r-lib.org), [gridExtra](https://cran.r-project.org/web/packages/gridExtra/index.html), and the [penguins](https://allisonhorst.github.io/palmerpenguins/index.html) data. 
+This chapter uses the following packages: [ggplot2](https://ggplot2.tidyverse.org), [sjPlot](https://strengejacke.github.io/sjPlot/), [gtsummary](https://www.danieldsjoberg.com/gtsummary/), [waffle](https://github.com/hrbrmstr/waffle), [ggpubr](https://rpkgs.datanovia.com/ggpubr/),
+[ggdist](https://mjskay.github.io/ggdist/index.html),
+[ggridges](https://wilkelab.org/ggridges/), [scales](https://scales.r-lib.org), [gridExtra](https://cran.r-project.org/web/packages/gridExtra/index.html), 
+and the [penguins](https://allisonhorst.github.io/palmerpenguins/index.html) data. 
 :::
 
 ```{r, echo=FALSE}
@@ -10,6 +13,7 @@ source("_common.R")
 library(waffle)
 library(gridExtra)
 library(ggridges)
+library(ggdist)
 library(scales)
 ```
 
@@ -946,6 +950,11 @@ A simple addition, just define your x and y accordingly.
 ggplot(pen, aes(x=species, y=bill_depth_mm, fill=species)) + geom_boxplot()
 ```
 
+:::
+
+**Descriptive additions**
+
+::: {.panel-tabset}
 ## Adding violins
 
 Violin plots can be overlaid here as well. 
@@ -955,6 +964,30 @@ ggplot(pen, aes(x=species, y=bill_depth_mm, fill=species)) +
         geom_boxplot(alpha=.5, width=.2)
 ```
 
+## Adding jittered points
+
+```{r}
+ggplot(pen, aes(x=species, y=bill_depth_mm, fill=species)) + 
+         geom_boxplot() +
+         geom_jitter()
+```
+
+## Adding ridge plots
+
+```{r}
+
+pen %>%
+  select(species,
+         bill_depth_mm) %>%
+  na.omit() %>%
+  ggplot(aes(x=species,
+             y=bill_depth_mm,
+             fill = species)) +
+  geom_boxplot(alpha=.5, width=.2) +
+  stat_summary(fun="mean") +
+  stat_slab(alpha = .3)
+
+```
 :::
 
 ### Grouped histograms
@@ -985,12 +1018,7 @@ There is no easy way to create grouped histograms in base graphics, so we will s
 
 ### Ridgeline plots
 
-:::{.callout-warning appearance=simple}
-check this section for updates - has this changed?
-
-:::
-
-Somewhat new (2017), ridgeline plots have not been added to the base distribution of `ggplot2` yet. For now it's available in the `ggridges` package. Really good way to visualize density plots without the overlapping issue. 
+Ridgeline plots have not been added to the base distribution of `ggplot2` yet. For now it's available in the `ggridges` package. Really good way to visualize density plots without the overlapping issue. 
 
 ```{r, fig.width=10}
 ggplot(pen, aes(x=bill_depth_mm, y=species)) + geom_density_ridges()
