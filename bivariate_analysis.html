@@ -257,9 +257,9 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#assumption-of-independent-observations" id="toc-assumption-of-independent-observations" class="nav-link active" data-scroll-target="#assumption-of-independent-observations"><span class="header-section-number">5.1</span> Assumption of Independent Observations</a></li>
+  <li><a href="#assumption-of-independent-observations" id="toc-assumption-of-independent-observations" class="nav-link active" data-scroll-target="#assumption-of-independent-observations"><span class="header-section-number">5.1</span> Assumption of independent observations</a></li>
   <li><a href="#choosing-appropriate-bivariate-analysis" id="toc-choosing-appropriate-bivariate-analysis" class="nav-link" data-scroll-target="#choosing-appropriate-bivariate-analysis"><span class="header-section-number">5.2</span> Choosing appropriate bivariate analysis</a></li>
-  <li><a href="#bv-ttest" id="toc-bv-ttest" class="nav-link" data-scroll-target="#bv-ttest"><span class="header-section-number">5.3</span> (Q~B) Two means: T-Test</a>
+  <li><a href="#qb-two-means-t-test" id="toc-qb-two-means-t-test" class="nav-link" data-scroll-target="#qb-two-means-t-test"><span class="header-section-number">5.3</span> (Q~B) Two means: T-Test</a>
   <ul>
   <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions"><span class="header-section-number">5.3.1</span> Assumptions</a></li>
   <li><a href="#sampling-distribution-for-the-difference" id="toc-sampling-distribution-for-the-difference" class="nav-link" data-scroll-target="#sampling-distribution-for-the-difference"><span class="header-section-number">5.3.2</span> Sampling Distribution for the difference</a></li>
@@ -323,24 +323,12 @@ window.Quarto = {
 </blockquote>
 <p>The <code>MODEL</code> is a mathematical formula (like <span class="math inline">\(y = f(x)\)</span>). The formulation of the <code>MODEL</code> will change depending on the number of, and data types of explanatory variables. One goal of inferential analysis is to explain the variation in our data, using information contained in other measures.</p>
 <section id="assumption-of-independent-observations" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="assumption-of-independent-observations"><span class="header-section-number">5.1</span> Assumption of Independent Observations</h2>
+<h2 data-number="5.1" class="anchored" data-anchor-id="assumption-of-independent-observations"><span class="header-section-number">5.1</span> Assumption of independent observations</h2>
 <p>The primary assumption of most standard statistical procedures is that observations are independent of each other. That is, the value of one observation does not change or affect another observation. However, there are many examples where measurements are made on subjects before and after a certain exposure or treatment (pre-post), or an experiment to compare two cell phone packages might use pairs of subjects that are the same age, sex and income level. One subject would be randomly assigned to the first phone package, the other in the pair would get the second phone package. This chapter only deals with non-correlated analyses, leaving that topic for a later chapter.</p>
 </section>
 <section id="choosing-appropriate-bivariate-analysis" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="choosing-appropriate-bivariate-analysis"><span class="header-section-number">5.2</span> Choosing appropriate bivariate analysis</h2>
 <p>Choosing which statistical analyses procedure is appropriate completely depending on the data types of the explanatory and response variable. This is a simplified table, only covering the common/standard types of bivariate analysis.</p>
-<blockquote class="blockquote">
-<p>figure out how to get table here.</p>
-</blockquote>
-<p>For this set of notes, the variable types are referred to using the first letter, e.g.&nbsp;<em>Q</em> for quantitative, <em>B</em> for binary, and <em>C</em> for categorical. Thus a T-test is a (Q <span class="math inline">\(\sim\)</span> B) analysis, and a correlation analysis is (Q <span class="math inline">\(\sim\)</span> Q) analysis.</p>
-<p>Links to the example data used in this chapter.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"_common.R"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">'data'</span>, <span class="st">'addhealth_clean.Rdata'</span>))</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>county <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://www.norcalbiostat.com/data/countyComplete.csv"</span>, <span class="at">header=</span><span class="cn">TRUE</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <div class="callout callout-style-simple callout-warning">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -348,15 +336,27 @@ window.Quarto = {
 </div>
 <div class="callout-body-container">
 <blockquote class="blockquote">
-<p>county dataset will need to be replaced or example switched - no longer included in openintro &amp; the csv on https://www.norcalbiostat.com/data/#countyComplete is missing federal spending column</p>
+<p>figure out how to get table here. knitr in quarto?</p>
 </blockquote>
 </div>
 </div>
 </div>
-<hr>
+<p>For this set of notes, the variable types are referred to using the first letter, e.g.&nbsp;<em>Q</em> for quantitative, <em>B</em> for binary, and <em>C</em> for categorical. Thus a T-test is a (Q <span class="math inline">\(\sim\)</span> B) analysis, and a correlation analysis is (Q <span class="math inline">\(\sim\)</span> Q) analysis.</p>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<blockquote class="blockquote">
+<p>county dataset will need to be replaced or example switched - no longer included in openintro &amp; the csv on https://www.norcalbiostat.com/data/#countyComplete is missing federal spending column also - clean up unused(?) library() calls and then move to top as package vignette and dataset links as in previous chapters</p>
+</blockquote>
+</div>
+</div>
+</div>
 </section>
-<section id="bv-ttest" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="bv-ttest"><span class="header-section-number">5.3</span> (Q~B) Two means: T-Test</h2>
+<section id="qb-two-means-t-test" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="qb-two-means-t-test"><span class="header-section-number">5.3</span> (Q~B) Two means: T-Test</h2>
 <p>It is common to compare means from different samples. For instance, we might investigate the effectiveness of a certain educational intervention by looking for evidence of greater reading ability in the treatment group against a control group. That is, our research hypothesis is that reading ability of a child is associated with an educational intervention.</p>
 <p>The null hypothesis states that there is no relationship, or no effect, of the educational intervention (binary explanatory variable) on the reading ability of the child (quantitative response variable). This can be written in symbols as follows:</p>
 <p><span class="math display">\[H_{0}: \mu_{1} = \mu_{2}\mbox{ or }\qquad  H_{0}: \mu_{1} -\mu_{2}=0\]</span></p>
@@ -403,28 +403,15 @@ SE_{\bar{x}_1 - \bar{x}_2}
 <li>The binary explanatory variable is whether the person has ever smoked a cigarette (variable )</li>
 </ul>
 <p><strong>2. Visualize and summarize bivariate relationship.</strong></p>
-<div class="callout callout-style-simple callout-warning">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Using <code>na.omit()</code> is dangerous! This will remove ALL rows with ANY missing data in it. Regardless if the missing values are contained in the variables you are interested in. The example below employs a trick/work around to not have NA values show in the output. We take the data set <code>addhealth</code> <em>and then</em> <code>select</code> the variables we want to plot, <em>and then</em> we use <code>na.omit()</code> to delete all rows with missing data. Then that is saved as a new, temporary data frame specifically named for this case (<code>plot.bmi.smoke</code>).</p>
-</div>
-</div>
-</div>
-<blockquote class="blockquote">
-<p>note for later. Move this explanation into data viz section.</p>
-</blockquote>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plot.bmi.smoke <span class="ot">&lt;-</span> addhealth <span class="sc">%&gt;%</span> <span class="fu">select</span>(eversmoke_c, BMI) <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot.bmi.smoke, <span class="fu">aes</span>(<span class="at">x=</span>eversmoke_c, <span class="at">y=</span>BMI, <span class="at">fill=</span>eversmoke_c)) <span class="sc">+</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_boxplot</span>(<span class="at">width=</span>.<span class="dv">3</span>) <span class="sc">+</span> <span class="fu">geom_violin</span>(<span class="at">alpha=</span>.<span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Smoking status"</span>) <span class="sc">+</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_fill_viridis_d</span>(<span class="at">guide=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stat_summary</span>(<span class="at">fun.y=</span><span class="st">"mean"</span>, <span class="at">geom=</span><span class="st">"point"</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">pch=</span><span class="dv">17</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="at">width=</span><span class="fl">0.75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>plot.bmi.smoke <span class="ot">&lt;-</span> addhealth <span class="sc">%&gt;%</span> <span class="fu">select</span>(eversmoke_c, BMI) <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot.bmi.smoke, <span class="fu">aes</span>(<span class="at">x=</span>eversmoke_c, <span class="at">y=</span>BMI, <span class="at">fill=</span>eversmoke_c)) <span class="sc">+</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_boxplot</span>(<span class="at">width=</span>.<span class="dv">3</span>) <span class="sc">+</span> <span class="fu">geom_violin</span>(<span class="at">alpha=</span>.<span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Smoking status"</span>) <span class="sc">+</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_fill_viridis_d</span>(<span class="at">guide=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stat_summary</span>(<span class="at">fun.y=</span><span class="st">"mean"</span>, <span class="at">geom=</span><span class="st">"point"</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">pch=</span><span class="dv">17</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="at">width=</span><span class="fl">0.75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -434,10 +421,10 @@ SE_{\bar{x}_1 - \bar{x}_2}
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plot.bmi.smoke <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(eversmoke_c) <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(BMI, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">sd =</span> <span class="fu">sd</span>(BMI, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">IQR =</span> <span class="fu">IQR</span>(BMI, <span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plot.bmi.smoke <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(eversmoke_c) <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(BMI, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">sd =</span> <span class="fu">sd</span>(BMI, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">IQR =</span> <span class="fu">IQR</span>(BMI, <span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   eversmoke_c  mean    sd   IQR
@@ -460,7 +447,7 @@ SE_{\bar{x}_1 - \bar{x}_2}
 <li><p>We use the <code>t.test</code> function, but use model notation of the format <code>outcome</code> <span class="math inline">\(\sim\)</span> <code>category</code>. Here, <code>BMI</code> is our continuous outcome that we’re testing across the (binary) categorical predictor <code>eversmoke_c</code>.</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(BMI <span class="sc">~</span> eversmoke_c, <span class="at">data=</span>addhealth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(BMI <span class="sc">~</span> eversmoke_c, <span class="at">data=</span>addhealth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -627,14 +614,14 @@ Example: A comparison of plant species under low water conditions
 </ul>
 <p><strong>2. Visualize and summarize bivariate relationship.</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plot.nitrogen.species <span class="ot">&lt;-</span> plants1 <span class="sc">%&gt;%</span> <span class="fu">select</span>(species, pctnit) <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot.nitrogen.species, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y =</span> pctnit, <span class="at">fill=</span>species)) <span class="sc">+</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_boxplot</span>(<span class="at">width=</span>.<span class="dv">3</span>) <span class="sc">+</span> <span class="fu">geom_violin</span>(<span class="at">alpha=</span>.<span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Species"</span>) <span class="sc">+</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_fill_viridis_d</span>(<span class="at">guide=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stat_summary</span>(<span class="at">fun.y=</span><span class="st">"mean"</span>, <span class="at">geom=</span><span class="st">"point"</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">pch=</span><span class="dv">17</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="at">width=</span><span class="fl">0.75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plot.nitrogen.species <span class="ot">&lt;-</span> plants1 <span class="sc">%&gt;%</span> <span class="fu">select</span>(species, pctnit) <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot.nitrogen.species, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y =</span> pctnit, <span class="at">fill=</span>species)) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_boxplot</span>(<span class="at">width=</span>.<span class="dv">3</span>) <span class="sc">+</span> <span class="fu">geom_violin</span>(<span class="at">alpha=</span>.<span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Species"</span>) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_fill_viridis_d</span>(<span class="at">guide=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stat_summary</span>(<span class="at">fun.y=</span><span class="st">"mean"</span>, <span class="at">geom=</span><span class="st">"point"</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">pch=</span><span class="dv">17</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="at">width=</span><span class="fl">0.75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -644,10 +631,10 @@ Example: A comparison of plant species under low water conditions
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plot.nitrogen.species <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(pctnit, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">sd =</span> <span class="fu">sd</span>(pctnit, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">IQR =</span> <span class="fu">IQR</span>(pctnit, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plot.nitrogen.species <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(pctnit, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">sd =</span> <span class="fu">sd</span>(pctnit, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">IQR =</span> <span class="fu">IQR</span>(pctnit, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -703,10 +690,10 @@ Example: A comparison of plant species under low water conditions
 <p><strong>Independence:</strong> We are assuming that each plant was sampled independently of each other, and that the species themselves are independent of each other.</p>
 <p><strong>Normality:</strong> With grouped data it’s easier to look at the histograms than qqplots.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plants1, <span class="fu">aes</span>(<span class="at">x=</span>pctnit, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(species<span class="sc">~</span>.) <span class="sc">+</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"bottom"</span>) <span class="sc">+</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks=</span><span class="cn">NULL</span>) <span class="sc">+</span> <span class="fu">scale_fill_viridis_d</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plants1, <span class="fu">aes</span>(<span class="at">x=</span>pctnit, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(species<span class="sc">~</span>.) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks=</span><span class="cn">NULL</span>) <span class="sc">+</span> <span class="fu">scale_fill_viridis_d</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -718,7 +705,7 @@ Example: A comparison of plant species under low water conditions
 <p>The distributions per group tend to follow an approximate normal distribution.</p>
 <p><strong>Equal variances:</strong> One way to assess if the groups have approximately equal variances is by comparing the IQR across groups.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plants1 <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">IQR =</span> <span class="fu">IQR</span>(pctnit), <span class="at">SD =</span> <span class="fu">sd</span>(pctnit)) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plants1 <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">IQR =</span> <span class="fu">IQR</span>(pctnit), <span class="at">SD =</span> <span class="fu">sd</span>(pctnit)) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -758,7 +745,7 @@ Example: A comparison of plant species under low water conditions
 <li>We use the <code>aov(response $\sim$ predictor)</code> function on the relationship between the nitrogen levels and tree species. We then pipe in <code>summary()</code> to make the output display nicely.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(pctnit<span class="sc">~</span>species, <span class="at">data=</span>plants1) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(pctnit<span class="sc">~</span>species, <span class="at">data=</span>plants1) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Df Sum Sq Mean Sq F value Pr(&gt;F)    
 species       3 172.39   57.46   827.5 &lt;2e-16 ***
@@ -773,7 +760,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h3 data-number="5.4.5" class="anchored" data-anchor-id="coefficient-of-determination-r2"><span class="header-section-number">5.4.5</span> Coefficient of determination <span class="math inline">\(R^{2}\)</span></h3>
 <p>The coefficient of determination is defined as <span class="math inline">\(R^{2} = \frac{SSG}{SST}\)</span> and can be interpreted as the % of the variation seen in the outcome that is due to subject level variation within each of the treatment groups. The strength of this measure can be thought of in a similar manner as the correlation coefficient <span class="math inline">\(r\)</span>: <span class="math inline">\(&lt; .3\)</span> indicates a poor fit, <span class="math inline">\(&lt; .5\)</span> indicates a medium fit, and <span class="math inline">\(&gt; .7\)</span> indicates a good fit.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fl">172.39</span><span class="sc">/</span>(<span class="fl">172.39+17.22</span>)<span class="sc">*</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fl">172.39</span><span class="sc">/</span>(<span class="fl">172.39+17.22</span>)<span class="sc">*</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 90.9182</code></pre>
 </div>
@@ -785,7 +772,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>Suppose that an ANOVA test reveals that there is a difference in at least one of the means. How can we determine which groups are significantly different without increasing our chance of a Type I error?</p>
 <p>Simple! We perform all the pairwise comparisons but using a test statistic that retains a <strong>family-wise error rate</strong> of 0.05 (or our chosen <span class="math inline">\(\alpha\)</span>). There are different methods to adjust for multiple comparisons, we will be using the <strong>Tukey HSD (honest significant difference) test</strong>. Continuing on with the analysis of nitrogen across plant species.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(<span class="fu">aov</span>(pctnit<span class="sc">~</span>species, <span class="at">data=</span>plants1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(<span class="fu">aov</span>(pctnit<span class="sc">~</span>species, <span class="at">data=</span>plants1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Tukey multiple comparisons of means
     95% family-wise confidence level
@@ -1014,8 +1001,8 @@ Important
 </ul>
 <p><strong>2. Visualize and summarise bivariate relationship.</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>sjPlot<span class="sc">::</span><span class="fu">plot_xtab</span>(<span class="at">grp=</span>addhealth<span class="sc">$</span>eversmoke_c, <span class="at">x=</span>addhealth<span class="sc">$</span>genhealth, </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">show.total =</span> <span class="cn">FALSE</span>, <span class="at">margin=</span><span class="st">"row"</span>, <span class="at">legend.title=</span><span class="st">""</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>sjPlot<span class="sc">::</span><span class="fu">plot_xtab</span>(<span class="at">grp=</span>addhealth<span class="sc">$</span>eversmoke_c, <span class="at">x=</span>addhealth<span class="sc">$</span>genhealth, </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">show.total =</span> <span class="cn">FALSE</span>, <span class="at">margin=</span><span class="st">"row"</span>, <span class="at">legend.title=</span><span class="st">""</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1047,8 +1034,8 @@ Important
 <li><p>Conduct the test.</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>health.smoke.model <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(addhealth<span class="sc">$</span>genhealth, addhealth<span class="sc">$</span>eversmoke_c)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>health.smoke.model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>health.smoke.model <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(addhealth<span class="sc">$</span>genhealth, addhealth<span class="sc">$</span>eversmoke_c)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>health.smoke.model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's Chi-squared test
@@ -1065,7 +1052,7 @@ X-squared = 30.795, df = 4, p-value = 3.371e-06</code></pre>
 <p>Just like with ANOVA, if we find that the chi-squared test indicates that at least one proportion is different from the others, it’s our job to figure out which ones might be different! We will analyze the residuals to accomplish this. Not by hand! Never again! You’re not learning how to code for nothing.</p>
 <p>The residuals are automatically stored in the model output. You can either print them out and look at the values directly:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>health.smoke.model<span class="sc">$</span>residuals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>health.smoke.model<span class="sc">$</span>residuals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   addhealth$eversmoke_c
 addhealth$genhealth Non Smoker     Smoker
@@ -1078,9 +1065,9 @@ addhealth$genhealth Non Smoker     Smoker
 </div>
 <p>Or you can extract them and save them as a data frame. Then use ggplot with <code>geom_raster</code> to fill in your squares.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>plot.residuals <span class="ot">&lt;-</span> health.smoke.model<span class="sc">$</span>residuals <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>()</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot.residuals, <span class="fu">aes</span>(<span class="at">x=</span>addhealth.genhealth, <span class="at">y=</span>addhealth.eversmoke_c)) <span class="sc">+</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_raster</span>(<span class="fu">aes</span>(<span class="at">fill=</span>Freq)) <span class="sc">+</span>  <span class="fu">scale_fill_viridis_c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>plot.residuals <span class="ot">&lt;-</span> health.smoke.model<span class="sc">$</span>residuals <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>()</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot.residuals, <span class="fu">aes</span>(<span class="at">x=</span>addhealth.genhealth, <span class="at">y=</span>addhealth.eversmoke_c)) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_raster</span>(<span class="fu">aes</span>(<span class="at">fill=</span>Freq)) <span class="sc">+</span>  <span class="fu">scale_fill_viridis_c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1110,10 +1097,10 @@ addhealth$genhealth Non Smoker     Smoker
 <section id="example-federal-spending-per-capita-and-poverty-rate" class="level3" data-number="5.6.2">
 <h3 data-number="5.6.2" class="anchored" data-anchor-id="example-federal-spending-per-capita-and-poverty-rate"><span class="header-section-number">5.6.2</span> Example: Federal spending per capita and poverty rate</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggplot(county, aes(x=poverty, y=fed_spend00)) +</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  geom_point() + ylab("federal spending per capita") +</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  xlab("poverty rate")</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#cor(county$poverty, county$fed_spend00, use="complete.obs")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggplot(county, aes(x=poverty, y=fed_spend00)) +</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  geom_point() + ylab("federal spending per capita") +</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  xlab("poverty rate")</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">#cor(county$poverty, county$fed_spend00, use="complete.obs")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>There is a negligible, positive, linear relationship between poverty rate and per capita federal spending (<span class="math inline">\(r = 0.03\)</span>).</li>
@@ -1122,7 +1109,7 @@ addhealth$genhealth Non Smoker     Smoker
 <li>We can use the <code>cor.test()</code> function to analyze the evidence in favor of this alternative hypothesis.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#cor.test(county$poverty, county$fed_spend00)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#cor.test(county$poverty, county$fed_spend00)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We conclude from this that there was a non-statistically significant, negligible correlation between poverty and federal spending (<span class="math inline">\(r = 0.03 (-0.0003, .069), p = 0.05\)</span>).</p>
 
