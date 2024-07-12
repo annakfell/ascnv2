@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.45">
+<meta name="generator" content="quarto-1.3.319">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="description" content="Course notes for various Applied Statistics courses at CSU Chico">
 
-<title>2&nbsp; Visualizing Data – Applied Statistics</title>
+<title>Applied Statistics - 2&nbsp; Visualizing Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -34,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -84,13 +84,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -99,42 +93,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-submit-button-title": "Submit"
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -144,12 +109,12 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dataprep.html">Preparing Data for Analysis</a></li><li class="breadcrumb-item"><a href="./data_viz.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Visualizing Data</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dataprep.html">Preparing Data for Analysis</a></li><li class="breadcrumb-item"><a href="./data_viz.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Visualizing Data</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -159,7 +124,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Applied Statistics</a> 
@@ -189,9 +154,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text">Preparing Data for Analysis</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -218,9 +183,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
  <span class="menu-text">Statistical Inference</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -248,7 +213,7 @@ window.Quarto = {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -318,12 +283,12 @@ window.Quarto = {
   <li><a href="#but-what-about" id="toc-but-what-about" class="nav-link" data-scroll-target="#but-what-about"><span class="header-section-number">2.12</span> But what about…</a></li>
   <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">2.13</span> Additional Resources</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/data_viz.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/annakfell/ascnv2/edit/main/data_viz.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dataprep.html">Preparing Data for Analysis</a></li><li class="breadcrumb-item"><a href="./data_viz.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Visualizing Data</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title"><span id="sec-data-viz" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Visualizing Data</span></span></h1>
 </div>
@@ -338,9 +303,7 @@ window.Quarto = {
   </div>
   
 
-
 </header>
-
 
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -366,41 +329,33 @@ Packages Used
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <p>Graphs/tables for yourself and/or your working team can be “quick and dirty.” These graphs are for getting a quick look at the data and are meant for people who are already familiar with the data.</p>
 <div class="cell" data-fig-weight="3">
-<details class="code-fold">
+<details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_frq</span>(pen<span class="sc">$</span>island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <p>When presenting for an audience with some familiarity with the project and the data analysis process, your graphs don’t have to be completely perfect, but they should be fairly polished and be understandable. A good rule of thumb for these graphs is if they were to end up being published as-is without your knowledge, you wouldn’t be completely embarrassed to see them in print.</p>
 <div class="cell" data-fig-weight="3">
-<details class="code-fold">
+<details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_frq</span>(pen<span class="sc">$</span>island, <span class="at">title =</span> <span class="st">"Count of Penguins by Island"</span>) <span class="sc">+</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">xlab</span>(<span class="st">"Island"</span>) <span class="sc">+</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
 <p>Professional quality graphs and tables have the highest amount of detail and take the most amount of time to make. They should be able to be interpreted by people not familiar with the project or data analysis, even without reading the rest of the report.</p>
 <div class="cell" data-fig-weight="3">
-<details class="code-fold">
+<details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_frq</span>(pen<span class="sc">$</span>island, <span class="at">title =</span> <span class="st">"Count of Penguins by Island"</span>) <span class="sc">+</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Includes penguins of Adelie, Gentoo, and Chinstrap species"</span>) <span class="sc">+</span></span>
@@ -409,11 +364,7 @@ Packages Used
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>          <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -477,23 +428,24 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pen <span class="sc">|&gt;</span> <span class="fu">select</span>(species) <span class="sc">|&gt;</span> <span class="fu">tbl_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="qosqvvcuxs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qosqvvcuxs table {
+
+<div id="zswyhgfsjh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zswyhgfsjh table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qosqvvcuxs thead, #qosqvvcuxs tbody, #qosqvvcuxs tfoot, #qosqvvcuxs tr, #qosqvvcuxs td, #qosqvvcuxs th {
+#zswyhgfsjh thead, #zswyhgfsjh tbody, #zswyhgfsjh tfoot, #zswyhgfsjh tr, #zswyhgfsjh td, #zswyhgfsjh th {
   border-style: none;
 }
 
-#qosqvvcuxs p {
+#zswyhgfsjh p {
   margin: 0;
   padding: 0;
 }
 
-#qosqvvcuxs .gt_table {
+#zswyhgfsjh .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -519,12 +471,12 @@ Packages Used
   border-left-color: #D3D3D3;
 }
 
-#qosqvvcuxs .gt_caption {
+#zswyhgfsjh .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qosqvvcuxs .gt_title {
+#zswyhgfsjh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -536,7 +488,7 @@ Packages Used
   border-bottom-width: 0;
 }
 
-#qosqvvcuxs .gt_subtitle {
+#zswyhgfsjh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -548,7 +500,7 @@ Packages Used
   border-top-width: 0;
 }
 
-#qosqvvcuxs .gt_heading {
+#zswyhgfsjh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -560,13 +512,13 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#qosqvvcuxs .gt_bottom_border {
+#zswyhgfsjh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qosqvvcuxs .gt_col_headings {
+#zswyhgfsjh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -581,7 +533,7 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#qosqvvcuxs .gt_col_heading {
+#zswyhgfsjh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -601,7 +553,7 @@ Packages Used
   overflow-x: hidden;
 }
 
-#qosqvvcuxs .gt_column_spanner_outer {
+#zswyhgfsjh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -613,15 +565,15 @@ Packages Used
   padding-right: 4px;
 }
 
-#qosqvvcuxs .gt_column_spanner_outer:first-child {
+#zswyhgfsjh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qosqvvcuxs .gt_column_spanner_outer:last-child {
+#zswyhgfsjh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qosqvvcuxs .gt_column_spanner {
+#zswyhgfsjh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -633,11 +585,11 @@ Packages Used
   width: 100%;
 }
 
-#qosqvvcuxs .gt_spanner_row {
+#zswyhgfsjh .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qosqvvcuxs .gt_group_heading {
+#zswyhgfsjh .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -663,7 +615,7 @@ Packages Used
   text-align: left;
 }
 
-#qosqvvcuxs .gt_empty_group_heading {
+#zswyhgfsjh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -678,15 +630,15 @@ Packages Used
   vertical-align: middle;
 }
 
-#qosqvvcuxs .gt_from_md > :first-child {
+#zswyhgfsjh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qosqvvcuxs .gt_from_md > :last-child {
+#zswyhgfsjh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qosqvvcuxs .gt_row {
+#zswyhgfsjh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -705,7 +657,7 @@ Packages Used
   overflow-x: hidden;
 }
 
-#qosqvvcuxs .gt_stub {
+#zswyhgfsjh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -718,7 +670,7 @@ Packages Used
   padding-right: 5px;
 }
 
-#qosqvvcuxs .gt_stub_row_group {
+#zswyhgfsjh .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -732,15 +684,15 @@ Packages Used
   vertical-align: top;
 }
 
-#qosqvvcuxs .gt_row_group_first td {
+#zswyhgfsjh .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qosqvvcuxs .gt_row_group_first th {
+#zswyhgfsjh .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qosqvvcuxs .gt_summary_row {
+#zswyhgfsjh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -750,16 +702,16 @@ Packages Used
   padding-right: 5px;
 }
 
-#qosqvvcuxs .gt_first_summary_row {
+#zswyhgfsjh .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qosqvvcuxs .gt_first_summary_row.thick {
+#zswyhgfsjh .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qosqvvcuxs .gt_last_summary_row {
+#zswyhgfsjh .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -769,7 +721,7 @@ Packages Used
   border-bottom-color: #D3D3D3;
 }
 
-#qosqvvcuxs .gt_grand_summary_row {
+#zswyhgfsjh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -779,7 +731,7 @@ Packages Used
   padding-right: 5px;
 }
 
-#qosqvvcuxs .gt_first_grand_summary_row {
+#zswyhgfsjh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -789,7 +741,7 @@ Packages Used
   border-top-color: #D3D3D3;
 }
 
-#qosqvvcuxs .gt_last_grand_summary_row_top {
+#zswyhgfsjh .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -799,11 +751,11 @@ Packages Used
   border-bottom-color: #D3D3D3;
 }
 
-#qosqvvcuxs .gt_striped {
+#zswyhgfsjh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qosqvvcuxs .gt_table_body {
+#zswyhgfsjh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -812,7 +764,7 @@ Packages Used
   border-bottom-color: #D3D3D3;
 }
 
-#qosqvvcuxs .gt_footnotes {
+#zswyhgfsjh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -826,7 +778,7 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#qosqvvcuxs .gt_footnote {
+#zswyhgfsjh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -835,7 +787,7 @@ Packages Used
   padding-right: 5px;
 }
 
-#qosqvvcuxs .gt_sourcenotes {
+#zswyhgfsjh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -849,7 +801,7 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#qosqvvcuxs .gt_sourcenote {
+#zswyhgfsjh .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -857,125 +809,112 @@ Packages Used
   padding-right: 5px;
 }
 
-#qosqvvcuxs .gt_left {
+#zswyhgfsjh .gt_left {
   text-align: left;
 }
 
-#qosqvvcuxs .gt_center {
+#zswyhgfsjh .gt_center {
   text-align: center;
 }
 
-#qosqvvcuxs .gt_right {
+#zswyhgfsjh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qosqvvcuxs .gt_font_normal {
+#zswyhgfsjh .gt_font_normal {
   font-weight: normal;
 }
 
-#qosqvvcuxs .gt_font_bold {
+#zswyhgfsjh .gt_font_bold {
   font-weight: bold;
 }
 
-#qosqvvcuxs .gt_font_italic {
+#zswyhgfsjh .gt_font_italic {
   font-style: italic;
 }
 
-#qosqvvcuxs .gt_super {
+#zswyhgfsjh .gt_super {
   font-size: 65%;
 }
 
-#qosqvvcuxs .gt_footnote_marks {
+#zswyhgfsjh .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qosqvvcuxs .gt_asterisk {
+#zswyhgfsjh .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qosqvvcuxs .gt_indent_1 {
+#zswyhgfsjh .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qosqvvcuxs .gt_indent_2 {
+#zswyhgfsjh .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qosqvvcuxs .gt_indent_3 {
+#zswyhgfsjh .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qosqvvcuxs .gt_indent_4 {
+#zswyhgfsjh .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qosqvvcuxs .gt_indent_5 {
+#zswyhgfsjh .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header gt_col_headings">
-<th id="<strong>Characteristic</strong>" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Characteristic</strong></th>
-<th id="<strong>N = 344</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>N = 344</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">species</td>
-<td class="gt_row gt_center" headers="stat_0"><br>
-</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Adelie</td>
-<td class="gt_row gt_center" headers="stat_0">152 (44%)</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Chinstrap</td>
-<td class="gt_row gt_center" headers="stat_0">68 (20%)</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Gentoo</td>
-<td class="gt_row gt_center" headers="stat_0">124 (36%)</td>
-</tr>
-</tbody><tfoot class="gt_footnotes">
-<tr class="odd">
-<td colspan="2" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> n (%)</td>
-</tr>
-</tfoot>
-
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<strong>Characteristic</strong>"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>N = 344</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>"><strong>N = 344</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left">species</td>
+<td headers="stat_0" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Adelie</td>
+<td headers="stat_0" class="gt_row gt_center">152 (44%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Chinstrap</td>
+<td headers="stat_0" class="gt_row gt_center">68 (20%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Gentoo</td>
+<td headers="stat_0" class="gt_row gt_center">124 (36%)</td></tr>
+  </tbody>
+  
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="2"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> n (%)</td>
+    </tr>
+  </tfoot>
 </table>
-
 </div>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pen <span class="sc">|&gt;</span> <span class="fu">select</span>(species, island) <span class="sc">|&gt;</span> <span class="fu">tbl_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="bsithaccxy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bsithaccxy table {
+
+<div id="eobahzgmji" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#eobahzgmji table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#bsithaccxy thead, #bsithaccxy tbody, #bsithaccxy tfoot, #bsithaccxy tr, #bsithaccxy td, #bsithaccxy th {
+#eobahzgmji thead, #eobahzgmji tbody, #eobahzgmji tfoot, #eobahzgmji tr, #eobahzgmji td, #eobahzgmji th {
   border-style: none;
 }
 
-#bsithaccxy p {
+#eobahzgmji p {
   margin: 0;
   padding: 0;
 }
 
-#bsithaccxy .gt_table {
+#eobahzgmji .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1001,12 +940,12 @@ Packages Used
   border-left-color: #D3D3D3;
 }
 
-#bsithaccxy .gt_caption {
+#eobahzgmji .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#bsithaccxy .gt_title {
+#eobahzgmji .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1018,7 +957,7 @@ Packages Used
   border-bottom-width: 0;
 }
 
-#bsithaccxy .gt_subtitle {
+#eobahzgmji .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1030,7 +969,7 @@ Packages Used
   border-top-width: 0;
 }
 
-#bsithaccxy .gt_heading {
+#eobahzgmji .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1042,13 +981,13 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#bsithaccxy .gt_bottom_border {
+#eobahzgmji .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bsithaccxy .gt_col_headings {
+#eobahzgmji .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1063,7 +1002,7 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#bsithaccxy .gt_col_heading {
+#eobahzgmji .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1083,7 +1022,7 @@ Packages Used
   overflow-x: hidden;
 }
 
-#bsithaccxy .gt_column_spanner_outer {
+#eobahzgmji .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1095,15 +1034,15 @@ Packages Used
   padding-right: 4px;
 }
 
-#bsithaccxy .gt_column_spanner_outer:first-child {
+#eobahzgmji .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bsithaccxy .gt_column_spanner_outer:last-child {
+#eobahzgmji .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bsithaccxy .gt_column_spanner {
+#eobahzgmji .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1115,11 +1054,11 @@ Packages Used
   width: 100%;
 }
 
-#bsithaccxy .gt_spanner_row {
+#eobahzgmji .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#bsithaccxy .gt_group_heading {
+#eobahzgmji .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1145,7 +1084,7 @@ Packages Used
   text-align: left;
 }
 
-#bsithaccxy .gt_empty_group_heading {
+#eobahzgmji .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1160,15 +1099,15 @@ Packages Used
   vertical-align: middle;
 }
 
-#bsithaccxy .gt_from_md > :first-child {
+#eobahzgmji .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bsithaccxy .gt_from_md > :last-child {
+#eobahzgmji .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bsithaccxy .gt_row {
+#eobahzgmji .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1187,7 +1126,7 @@ Packages Used
   overflow-x: hidden;
 }
 
-#bsithaccxy .gt_stub {
+#eobahzgmji .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1200,7 +1139,7 @@ Packages Used
   padding-right: 5px;
 }
 
-#bsithaccxy .gt_stub_row_group {
+#eobahzgmji .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1214,15 +1153,15 @@ Packages Used
   vertical-align: top;
 }
 
-#bsithaccxy .gt_row_group_first td {
+#eobahzgmji .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#bsithaccxy .gt_row_group_first th {
+#eobahzgmji .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#bsithaccxy .gt_summary_row {
+#eobahzgmji .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1232,16 +1171,16 @@ Packages Used
   padding-right: 5px;
 }
 
-#bsithaccxy .gt_first_summary_row {
+#eobahzgmji .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#bsithaccxy .gt_first_summary_row.thick {
+#eobahzgmji .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#bsithaccxy .gt_last_summary_row {
+#eobahzgmji .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1251,7 +1190,7 @@ Packages Used
   border-bottom-color: #D3D3D3;
 }
 
-#bsithaccxy .gt_grand_summary_row {
+#eobahzgmji .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1261,7 +1200,7 @@ Packages Used
   padding-right: 5px;
 }
 
-#bsithaccxy .gt_first_grand_summary_row {
+#eobahzgmji .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1271,7 +1210,7 @@ Packages Used
   border-top-color: #D3D3D3;
 }
 
-#bsithaccxy .gt_last_grand_summary_row_top {
+#eobahzgmji .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1281,11 +1220,11 @@ Packages Used
   border-bottom-color: #D3D3D3;
 }
 
-#bsithaccxy .gt_striped {
+#eobahzgmji .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bsithaccxy .gt_table_body {
+#eobahzgmji .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1294,7 +1233,7 @@ Packages Used
   border-bottom-color: #D3D3D3;
 }
 
-#bsithaccxy .gt_footnotes {
+#eobahzgmji .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1308,7 +1247,7 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#bsithaccxy .gt_footnote {
+#eobahzgmji .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1317,7 +1256,7 @@ Packages Used
   padding-right: 5px;
 }
 
-#bsithaccxy .gt_sourcenotes {
+#eobahzgmji .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1331,7 +1270,7 @@ Packages Used
   border-right-color: #D3D3D3;
 }
 
-#bsithaccxy .gt_sourcenote {
+#eobahzgmji .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1339,121 +1278,98 @@ Packages Used
   padding-right: 5px;
 }
 
-#bsithaccxy .gt_left {
+#eobahzgmji .gt_left {
   text-align: left;
 }
 
-#bsithaccxy .gt_center {
+#eobahzgmji .gt_center {
   text-align: center;
 }
 
-#bsithaccxy .gt_right {
+#eobahzgmji .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bsithaccxy .gt_font_normal {
+#eobahzgmji .gt_font_normal {
   font-weight: normal;
 }
 
-#bsithaccxy .gt_font_bold {
+#eobahzgmji .gt_font_bold {
   font-weight: bold;
 }
 
-#bsithaccxy .gt_font_italic {
+#eobahzgmji .gt_font_italic {
   font-style: italic;
 }
 
-#bsithaccxy .gt_super {
+#eobahzgmji .gt_super {
   font-size: 65%;
 }
 
-#bsithaccxy .gt_footnote_marks {
+#eobahzgmji .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#bsithaccxy .gt_asterisk {
+#eobahzgmji .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#bsithaccxy .gt_indent_1 {
+#eobahzgmji .gt_indent_1 {
   text-indent: 5px;
 }
 
-#bsithaccxy .gt_indent_2 {
+#eobahzgmji .gt_indent_2 {
   text-indent: 10px;
 }
 
-#bsithaccxy .gt_indent_3 {
+#eobahzgmji .gt_indent_3 {
   text-indent: 15px;
 }
 
-#bsithaccxy .gt_indent_4 {
+#eobahzgmji .gt_indent_4 {
   text-indent: 20px;
 }
 
-#bsithaccxy .gt_indent_5 {
+#eobahzgmji .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header gt_col_headings">
-<th id="<strong>Characteristic</strong>" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Characteristic</strong></th>
-<th id="<strong>N = 344</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>N = 344</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">species</td>
-<td class="gt_row gt_center" headers="stat_0"><br>
-</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Adelie</td>
-<td class="gt_row gt_center" headers="stat_0">152 (44%)</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Chinstrap</td>
-<td class="gt_row gt_center" headers="stat_0">68 (20%)</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Gentoo</td>
-<td class="gt_row gt_center" headers="stat_0">124 (36%)</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">island</td>
-<td class="gt_row gt_center" headers="stat_0"><br>
-</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Biscoe</td>
-<td class="gt_row gt_center" headers="stat_0">168 (49%)</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Dream</td>
-<td class="gt_row gt_center" headers="stat_0">124 (36%)</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Torgersen</td>
-<td class="gt_row gt_center" headers="stat_0">52 (15%)</td>
-</tr>
-</tbody><tfoot class="gt_footnotes">
-<tr class="odd">
-<td colspan="2" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> n (%)</td>
-</tr>
-</tfoot>
-
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<strong>Characteristic</strong>"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>N = 344</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>"><strong>N = 344</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left">species</td>
+<td headers="stat_0" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Adelie</td>
+<td headers="stat_0" class="gt_row gt_center">152 (44%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Chinstrap</td>
+<td headers="stat_0" class="gt_row gt_center">68 (20%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Gentoo</td>
+<td headers="stat_0" class="gt_row gt_center">124 (36%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">island</td>
+<td headers="stat_0" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Biscoe</td>
+<td headers="stat_0" class="gt_row gt_center">168 (49%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Dream</td>
+<td headers="stat_0" class="gt_row gt_center">124 (36%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Torgersen</td>
+<td headers="stat_0" class="gt_row gt_center">52 (15%)</td></tr>
+  </tbody>
+  
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="2"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> n (%)</td>
+    </tr>
+  </tfoot>
 </table>
-
 </div>
 </div>
 </div>
@@ -1486,11 +1402,7 @@ Packages Used
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ps <span class="ot">&lt;-</span> <span class="fu">table</span>(pen<span class="sc">$</span>species)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(ps, <span class="at">main=</span><span class="st">"Barchart using base graphics"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning">
@@ -1511,11 +1423,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>species)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p><strong>Adding Annotation</strong></p>
@@ -1525,11 +1433,7 @@ Packages Used
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..count..)) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Frequency of penguins by species"</span>) <span class="sc">+</span> </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">y=</span>..count.. <span class="sc">+</span> <span class="dv">10</span>, <span class="at">label=</span>..count..), <span class="at">stat=</span><span class="st">'count'</span>, <span class="at">size =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1550,11 +1454,7 @@ Packages Used
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_frq</span>(pen, species,</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Count of penguins by species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1581,11 +1481,7 @@ Packages Used
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Proportion"</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Species"</span>) <span class="sc">+</span> </span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Proportion of penguins by species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1609,11 +1505,7 @@ Packages Used
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_frq</span>(pen, species,</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Count of penguins by species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1645,11 +1537,7 @@ Packages Used
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Species"</span>) <span class="sc">+</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="dv">0</span>, <span class="at">xend=</span>Freq, <span class="at">y=</span>Var1, <span class="at">yend=</span>Var1), <span class="at">color=</span><span class="st">'grey50'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1660,22 +1548,14 @@ Packages Used
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ps <span class="ot">&lt;-</span> <span class="fu">table</span>(pen<span class="sc">$</span>species)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(ps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Pie charts are my <em>least</em> favorite plotting type. Human eyeballs can’t distinguish between angles as well as we can with heights. A mandatory piece needed to make the wedges readable is to add the percentages of each wedge.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(ps, <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="fu">names</span>(ps), <span class="st">' ('</span>, <span class="fu">prop.table</span>(ps)<span class="sc">*</span><span class="dv">100</span>, <span class="st">"%)"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p><strong>ggplot</strong></p>
@@ -1689,11 +1569,7 @@ Packages Used
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">"Species of penguins"</span>, </span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">"1 square == 10 penguins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1721,11 +1597,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pen<span class="sc">$</span>bill_length_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>The base function <code>plot()</code> creates a <strong>dotplot</strong> for a continuous variable. The value of the variable is plotted on the y axis, and the index, or row number, is plotted on the x axis. This gives you a nice, quick way to see the values of the data.</p>
@@ -1753,22 +1625,14 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pen<span class="sc">$</span>bill_length_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>And it doesn’t take too much to clean it up. Here you can specify the number of bins by specifying how many <code>breaks</code> should be made in the data (the number of breaks controls the number of bins, and bin width) and use <code>col</code> for the fill color.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pen<span class="sc">$</span>bill_length_mm, <span class="at">xlab=</span><span class="st">"Bill length in mm"</span>, <span class="at">main=</span><span class="st">"Histogram of penguin bill lengths"</span>, <span class="at">col=</span><span class="st">"cyan"</span>, <span class="at">breaks=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1776,11 +1640,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">2.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>The binwidth here is set by looking at the cut points above that were used to create 7 bins. Notice that darkgrey is the default fill color, but makes it hard to differentiate between the bars. So we’ll make the outline black using <code>colour</code>, and <code>fill</code> the bars with white.</p>
@@ -1788,11 +1648,7 @@ Packages Used
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">colour=</span><span class="st">"black"</span>, <span class="at">fill=</span><span class="st">"white"</span>) <span class="sc">+</span> </span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Distribution of penguin bill lengths"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Note I did <strong>not</strong> specify the <code>binwidth</code> argument here. The size of the bins can hide features from your graph, the default value for ggplot2 is range/30 and usually is a good choice.</p>
@@ -1803,11 +1659,7 @@ Packages Used
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gghistogram</span>(pen, <span class="at">x =</span> <span class="st">"bill_length_mm"</span>,</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">title =</span> <span class="st">"Distribution of penguin bill lengths"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1825,11 +1677,7 @@ Packages Used
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(density(na.omit(pen$bill_length_mm))) </span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>pen<span class="sc">$</span>bill_length_mm <span class="sc">|&gt;</span> <span class="fu">na.omit</span>() <span class="sc">|&gt;</span> <span class="fu">density</span>() <span class="sc">|&gt;</span> <span class="fu">plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Awesome title huh? (NOT)</p>
@@ -1851,11 +1699,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm)) <span class="sc">+</span> <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1863,11 +1707,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdensity</span>(pen, <span class="at">x =</span> <span class="st">"bill_length_mm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1886,11 +1726,7 @@ Packages Used
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pen<span class="sc">$</span>bill_length_mm, <span class="at">prob=</span><span class="cn">TRUE</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(<span class="fu">na.omit</span>(pen<span class="sc">$</span>bill_length_mm)), <span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1900,11 +1736,7 @@ Packages Used
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm)) <span class="sc">+</span> <span class="fu">geom_density</span>(<span class="at">col=</span><span class="st">"blue"</span>) <span class="sc">+</span> </span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span>..density..), <span class="at">colour=</span><span class="st">"black"</span>, <span class="at">fill=</span><span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1915,11 +1747,7 @@ Packages Used
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">add_density =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">add.params =</span> <span class="fu">list</span>(<span class="at">color=</span><span class="st">"blue"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1936,22 +1764,14 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(pen<span class="sc">$</span>bill_length_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Notice that the only axis labeled is the y=axis. Like a dotplot the x axis, or “width”, of the boxplot is meaningless here. We can make the axis more readable by flipping the plot on it’s side.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(pen<span class="sc">$</span>bill_length_mm, <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">main=</span><span class="st">"Distribution of penguin bill lengths"</span>, <span class="at">xlab=</span><span class="st">"Bill length in mm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Horizontal is a bit easier to read in my opinion.</p>
@@ -1960,11 +1780,7 @@ Packages Used
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(pen<span class="sc">$</span>bill_length_mm, <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">main=</span><span class="st">"Distribution of penguin bill lengths"</span>, <span class="at">xlab=</span><span class="st">"Bill length in mm"</span>)</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">mean</span>(<span class="fu">na.omit</span>(pen<span class="sc">$</span>bill_length_mm)), <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1973,22 +1789,14 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span>, <span class="at">y=</span>bill_length_mm)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>To flip it horizontal you may think to simply swap x and y? Good thinking. Of course it wouldn’t be that easy. So let’s just flip the whole darned plot on it’s coordinate axis.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span>, <span class="at">y=</span>bill_length_mm)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p><strong>Adding the mean</strong></p>
@@ -1996,11 +1804,7 @@ Packages Used
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span>, <span class="at">y=</span>bill_length_mm)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(<span class="fu">na.omit</span>(pen<span class="sc">$</span>bill_length_mm)), <span class="at">color=</span><span class="st">"red"</span>, <span class="at">linetype=</span><span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2011,11 +1815,7 @@ Packages Used
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">"Distribution of penguin bill lengths"</span>,</span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">"Bill length in mm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p><strong>Adding the mean</strong></p>
@@ -2026,11 +1826,7 @@ Packages Used
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">"Bill length in mm"</span>,</span>
 <span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">add =</span> <span class="st">'mean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2058,11 +1854,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span>, <span class="at">y=</span>bill_length_mm)) <span class="sc">+</span> <span class="fu">geom_violin</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p><strong>Adding the mean</strong></p>
@@ -2070,11 +1862,7 @@ Packages Used
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span>, <span class="at">y=</span>bill_length_mm)) <span class="sc">+</span> <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(<span class="fu">na.omit</span>(pen<span class="sc">$</span>bill_length_mm)), <span class="at">color=</span><span class="st">"red"</span>, <span class="at">linetype=</span><span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2082,11 +1870,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggviolin</span>(pen, <span class="at">x=</span><span class="dv">1</span>, <span class="at">y=</span><span class="st">"bill_length_mm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p><strong>Adding the mean</strong></p>
@@ -2094,11 +1878,7 @@ Packages Used
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggviolin</span>(pen, <span class="at">x=</span><span class="dv">1</span>, <span class="at">y=</span><span class="st">"bill_length_mm"</span>,</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">add =</span> <span class="st">'mean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2115,11 +1895,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span>, <span class="at">y=</span>bill_length_mm)) <span class="sc">+</span> <span class="fu">geom_violin</span>() <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Better appearance - different levels of transparency of the box and violin.</p>
@@ -2131,11 +1907,7 @@ Packages Used
 <span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.text.x=</span><span class="fu">element_blank</span>(),</span>
 <span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.ticks.x=</span><span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p><strong>Adding the mean</strong></p>
@@ -2145,11 +1917,7 @@ Packages Used
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">width=</span>.<span class="dv">2</span>) <span class="sc">+</span> </span>
 <span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(<span class="fu">na.omit</span>(pen<span class="sc">$</span>bill_length_mm)), <span class="at">color=</span><span class="st">"red"</span>, <span class="at">linetype=</span><span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>              <span class="fu">theme</span>(<span class="at">axis.title.x=</span><span class="fu">element_blank</span>(),</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.text.x=</span><span class="fu">element_blank</span>(),</span>
@@ -2175,11 +1943,7 @@ Packages Used
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">add =</span> <span class="st">"boxplot"</span>, <span class="at">add.params =</span> <span class="fu">list</span>(<span class="at">alpha=</span>.<span class="dv">4</span>),</span>
 <span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab=</span><span class="st">""</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p><strong>Adding the mean</strong></p>
@@ -2190,11 +1954,7 @@ Packages Used
 <span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">add.params =</span> <span class="fu">list</span>(<span class="at">alpha=</span>.<span class="dv">4</span>),</span>
 <span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab=</span><span class="st">""</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2212,11 +1972,7 @@ Packages Used
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(pen<span class="sc">$</span>body_mass_g)</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(pen<span class="sc">$</span>body_mass_g, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>The line I make red because it is a reference line. The closer the points are to following this line, the more “normal” the shape of the distribution is. Price has some pretty strong deviation away from that line. Below I have plotted what a normal distribution looks like as an example of a “perfect” fit.</p>
@@ -2225,11 +1981,7 @@ Packages Used
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(z)</span>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(z, <span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2238,11 +1990,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">sample=</span>body_mass_g)) <span class="sc">+</span> <span class="fu">stat_qq</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2250,11 +1998,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggqqplot</span>(pen, <span class="at">x=</span><span class="st">"body_mass_g"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2360,11 +2104,7 @@ Packages Used
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>is <span class="ot">&lt;-</span> <span class="fu">table</span>(pen<span class="sc">$</span>island, pen<span class="sc">$</span>species)</span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(is)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2373,11 +2113,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>island, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-57-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-57-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2395,11 +2131,7 @@ Packages Used
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(is, <span class="at">main=</span><span class="st">"quick side by side barchart using base graphics"</span>, </span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">beside=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2408,22 +2140,14 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>island, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-59-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-59-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>And look, an automatic legend. What if I wanted to better compare island population proportions within species? This is the <strong>column</strong> percentages. Just switch which variable is the x axis and which one is used to fill the colors!</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">fill=</span>island)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-60-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-60-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>For more than 2 colors I do not recommend choosing the colors yourself. I know little about color theory so I use the built-in color palettes. Here is a <a href="https://www.nceas.ucsb.edu/~frazier/RSpatialGuides/colorPaletteCheatsheet.pdf">great cheatsheet</a> about using color palettes.</p>
@@ -2461,11 +2185,7 @@ Packages Used
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(calc.props, <span class="fu">aes</span>(<span class="at">x=</span>island, <span class="at">fill=</span>species, <span class="at">y=</span>pct)) <span class="sc">+</span></span>
 <span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">geom_col</span>(<span class="at">position=</span><span class="st">"dodge"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-62-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-62-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Now set some options to the y axis using <code>scale_y_continuous()</code> to make the graph more accurate and readable. The <code>labels=percent</code> comes from the <code>scales</code> package.</p>
@@ -2474,11 +2194,7 @@ Packages Used
 <span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">geom_col</span>(<span class="at">position=</span><span class="st">"dodge"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">scale_y_continuous</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">labels=</span>percent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-63-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-63-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2487,11 +2203,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_xtab</span>(pen<span class="sc">$</span>island, pen<span class="sc">$</span>species, <span class="at">margin=</span><span class="st">"row"</span>, <span class="at">coord.flip =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-64-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-64-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2515,11 +2227,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(island<span class="sc">~</span>species, <span class="at">data=</span>pen)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-66-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-66-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Helpful, ish. Here are two very useful options. In reverse obviousness, <code>color</code> applies shades of gray to one of the factor levels, and <code>shade</code> applies a color gradient scale to the cells in order of what is less than expected (red) to what is more than expected (blue) if these two factors were completely independent.</p>
@@ -2528,11 +2236,7 @@ Packages Used
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(sex<span class="sc">~</span>species, <span class="at">data=</span>pen, <span class="at">color=</span><span class="cn">TRUE</span>)</span>
 <span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(island<span class="sc">~</span>species, <span class="at">data=</span>pen, <span class="at">shade=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-67-1.png" class="img-fluid figure-img" width="960"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-67-1.png" class="img-fluid" width="960"></p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning">
@@ -2565,11 +2269,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(flipper_length_mm<span class="sc">~</span>body_mass_g, <span class="at">data=</span>pen)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-68-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-68-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Looks like for the most part as penguin body mass increases so does flipper length. That makes sense.</p>
@@ -2579,11 +2279,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>body_mass_g, <span class="at">y=</span>flipper_length_mm)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-69-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-69-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2604,11 +2300,7 @@ Packages Used
 <span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(<span class="fu">na.omit</span>(pen<span class="sc">$</span>flipper_length_mm)<span class="sc">~</span><span class="fu">na.omit</span>(pen<span class="sc">$</span>body_mass_g)),</span>
 <span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-70-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-70-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2617,11 +2309,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>body_mass_g, <span class="at">y=</span>flipper_length_mm)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-71-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-71-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Here the point-wise confidence interval for this lowess line is shown in grey. If you want to turn the confidence interval off, use <code>se=FALSE</code>. Also notice that the smoothing geom uses a different function or window than the <code>lowess</code> function used in base graphics.</p>
@@ -2631,11 +2319,7 @@ Packages Used
 <span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">method=</span><span class="st">"lm"</span>, <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span> </span>
 <span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">color=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-72-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-72-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2669,11 +2353,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mean<span class="sc">~</span>body_mass_g, <span class="at">data=</span>mm.per.g, <span class="at">type=</span><span class="st">'l'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-74-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-74-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2682,11 +2362,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mm.per.g, <span class="fu">aes</span>(<span class="at">x=</span>body_mass_g, <span class="at">y=</span>mean)) <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-75-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-75-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2704,11 +2380,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mmpgs, <span class="fu">aes</span>(<span class="at">x=</span>body_mass_g, <span class="at">y=</span>mean, <span class="at">col=</span>species)) <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-77-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-77-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>And we get one line per species</p>
@@ -2733,11 +2405,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stripchart</span>(body_mass_g <span class="sc">~</span> species, <span class="at">data=</span>pen)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-78-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-78-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2748,11 +2416,7 @@ Packages Used
 <span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">y=</span>species, <span class="at">x=</span>body_mass_g)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
 <span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(a, b, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-79-1.png" class="img-fluid figure-img" width="960"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-79-1.png" class="img-fluid" width="960"></p>
 </div>
 </div>
 </div>
@@ -2769,11 +2433,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(bill_length_mm<span class="sc">~</span>species, <span class="at">data=</span>pen)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-80-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-80-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2782,11 +2442,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span>bill_depth_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-81-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-81-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2803,11 +2459,7 @@ Packages Used
 <span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_violin</span>(<span class="at">alpha=</span>.<span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">width=</span>.<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-82-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-82-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2817,11 +2469,7 @@ Packages Used
 <span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">geom_jitter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-83-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-83-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2838,11 +2486,7 @@ Packages Used
 <span id="cb96-9"><a href="#cb96-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun=</span><span class="st">"mean"</span>) <span class="sc">+</span></span>
 <span id="cb96-10"><a href="#cb96-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_slab</span>(<span class="at">alpha =</span> .<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-84-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-84-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -2861,11 +2505,7 @@ Packages Used
 <span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_depth_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_density</span>() </span>
 <span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(a,b, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-85-1.png" class="img-fluid figure-img" width="1056"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-85-1.png" class="img-fluid" width="1056"></p>
 </div>
 </div>
 <p>The solid fills are still difficult to read, so we can either turn down the alpha (turn up the transparency) or only color the lines and not the fill.</p>
@@ -2874,11 +2514,7 @@ Packages Used
 <span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_depth_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_density</span>() </span>
 <span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(c,d, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-86-1.png" class="img-fluid figure-img" width="1056"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-86-1.png" class="img-fluid" width="1056"></p>
 </div>
 </div>
 </div>
@@ -2894,11 +2530,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_depth_mm, <span class="at">y=</span>species)) <span class="sc">+</span> <span class="fu">geom_density_ridges</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-87-1.png" class="img-fluid figure-img" width="960"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-87-1.png" class="img-fluid" width="960"></p>
 </div>
 </div>
 </section>
@@ -2910,11 +2542,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_depth_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-88-1.png" class="img-fluid figure-img" width="864"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-88-1.png" class="img-fluid" width="864"></p>
 </div>
 </div>
 <p>The grid placement can be semi-controlled by using the <code>ncol</code> argument in the <code>facet_wrap()</code> statement.</p>
@@ -2922,11 +2550,7 @@ Packages Used
 <div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_depth_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> </span>
 <span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">ncol=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-89-1.png" class="img-fluid figure-img" width="864"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-89-1.png" class="img-fluid" width="864"></p>
 </div>
 </div>
 <p>It is important to compare distributions across groups on the same scale, and our eyes can compare items vertically better than horizontally. So let’s force <code>ncol=1</code>.</p>
@@ -2934,11 +2558,7 @@ Packages Used
 <div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_depth_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> </span>
 <span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">ncol=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-90-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-90-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <section id="paneling-on-two-variables" class="level3" data-number="2.8.1">
@@ -2947,22 +2567,14 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>body_mass_g, <span class="at">fill=</span>sex)) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(sex<span class="sc">~</span>island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-91-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-91-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>How about plotting bill length against flipper length, for all combinations of species and island, with the points further separated by sex?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>flipper_length_mm, <span class="at">y=</span>bill_length_mm, <span class="at">color=</span>sex)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(island<span class="sc">~</span>species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-92-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-92-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -2980,11 +2592,7 @@ Packages Used
 <span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pen<span class="sc">$</span>species)</span>
 <span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pen<span class="sc">$</span>bill_length_mm <span class="sc">~</span> pen<span class="sc">$</span>bill_depth_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-93-1.png" class="img-fluid figure-img" width="1056"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-93-1.png" class="img-fluid" width="1056"></p>
 </div>
 </div>
 <p>Other resources including learning about <code>layouts</code>. <a href="http://seananderson.ca/courses/11-multipanel/multipanel.pdf">Multipanel plotting with base graphics</a></p>
@@ -2996,11 +2604,7 @@ Packages Used
 <span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_depth_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_density</span>() </span>
 <span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(a,b, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-94-1.png" class="img-fluid figure-img" width="1056"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-94-1.png" class="img-fluid" width="1056"></p>
 </div>
 </div>
 </div>
@@ -3031,11 +2635,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm, <span class="at">y=</span>bill_depth_mm, <span class="at">size=</span>body_mass_g)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">alpha=</span>.<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-95-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-95-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -3047,11 +2647,7 @@ Packages Used
 <span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>                 <span class="st">'body_mass_g'</span>)]</span>
 <span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(c.vars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-96-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-96-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning">
@@ -3085,22 +2681,14 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>island, <span class="at">y=</span>bill_length_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_violin</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-97-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-97-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Best bet here would be to panel on species and change the x axis to location.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y=</span>bill_length_mm, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">geom_violin</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-98-1.png" class="img-fluid figure-img" width="864"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-98-1.png" class="img-fluid" width="864"></p>
 </div>
 </div>
 </section>
@@ -3110,22 +2698,14 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>flipper_length_mm, <span class="at">y=</span>bill_length_mm, <span class="at">color=</span>species)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-99-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-99-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We could add a smoothing lowess line for each species separately,</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>flipper_length_mm, <span class="at">y=</span>bill_length_mm, <span class="at">color=</span>species)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">se=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-100-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-100-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>And using <code>grid.arrange</code> we can include both visualizations.</p>
@@ -3135,33 +2715,21 @@ Packages Used
 <span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_smooth</span>(<span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span><span class="fu">ggtitle</span>(<span class="st">"Lowess line per species"</span>)</span>
 <span id="cb113-4"><a href="#cb113-4" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(a, d, <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">nrow=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-101-1.png" class="img-fluid figure-img" width="1056"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-101-1.png" class="img-fluid" width="1056"></p>
 </div>
 </div>
 <p>Or we just panel by species.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm, <span class="at">y=</span>bill_depth_mm)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-102-1.png" class="img-fluid figure-img" width="864"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-102-1.png" class="img-fluid" width="864"></p>
 </div>
 </div>
 <p>We could even change the color by sex, and shape by species.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">x=</span>flipper_length_mm, <span class="at">y=</span>bill_length_mm, <span class="at">color=</span>sex, <span class="at">shape=</span>species)) <span class="sc">+</span> <span class="fu">geom_point</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-103-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-103-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>That’s harder to read. So note that just because you <strong>can</strong> change an aesthetic, doesn’t mean you should. And just because you can plot things on the same axis, doesn’t mean you have to.</p>
@@ -3177,11 +2745,7 @@ Packages Used
 <div class="cell">
 <div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(NCbirths, <span class="fu">aes</span>(<span class="at">x=</span>marital)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-105-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-105-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled">
@@ -3201,11 +2765,7 @@ Solution:
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>plot.data <span class="ot">&lt;-</span> NCbirths <span class="sc">%&gt;%</span> <span class="fu">select</span>(marital) <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span>
 <span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot.data, <span class="fu">aes</span>(<span class="at">x=</span>marital)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-106-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-106-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -3232,11 +2792,7 @@ Solution:
 <div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>email<span class="sc">$</span>spam_cat <span class="ot">&lt;-</span> <span class="fu">factor</span>(email<span class="sc">$</span>spam, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Ham"</span>, <span class="st">"Spam"</span>))</span>
 <span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">y=</span>num_char, <span class="at">x=</span>spam_cat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-107-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-107-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -3262,11 +2818,7 @@ Solution:
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">y=</span>num_char, <span class="at">x=</span>spam_cat, <span class="at">fill=</span>spam_cat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
 <span id="cb119-2"><a href="#cb119-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">name=</span><span class="st">"Ya like Spam?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-108-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-108-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Here, I <code>col</code>ored the points by a discrete variable, so the layer is <code>scale_color_discrete()</code>.</p>
@@ -3274,11 +2826,7 @@ Solution:
 <div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(email, <span class="fu">aes</span>(<span class="at">x=</span>num_char, <span class="at">y=</span>line_breaks, <span class="at">col=</span>spam_cat)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name=</span><span class="st">"Ya like Spam?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-109-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-109-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -3293,11 +2841,7 @@ Solution:
 <span id="cb121-2"><a href="#cb121-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb121-3"><a href="#cb121-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y=</span><span class="st">"mean"</span>, <span class="at">geom=</span><span class="st">"point"</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">pch=</span><span class="dv">17</span>,<span class="at">color=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_viz_files/figure-html/unnamed-chunk-110-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="data_viz_files/figure-html/unnamed-chunk-110-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled">
@@ -3425,33 +2969,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
   }
-  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-    let newTheme = '';
-    if(darkModeDefault) {
-      newTheme = isAlternate ? baseTheme : alternateTheme;
-    } else {
-      newTheme = isAlternate ? alternateTheme : baseTheme;
-    }
-    const changeGiscusTheme = () => {
-      // From: https://github.com/giscus/giscus/issues/336
-      const sendMessage = (message) => {
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (!iframe) return;
-        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-      }
-      sendMessage({
-        setConfig: {
-          theme: newTheme
-        }
-      });
-    }
-    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-    if (isGiscussLoaded) {
-      changeGiscusTheme();
-    }
-  }
   const toggleColorMode = (alternate) => {
     // Switch the stylesheets
     const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
@@ -3518,15 +3035,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  const darkModeDefault = false;
-  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  let localAlternateSentinel = 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
-    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -3561,7 +3076,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -3593,50 +3119,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/annakfell\.github\.io\/ascnv2\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -3646,17 +3133,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -3668,130 +3146,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -3835,7 +3190,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -3861,32 +3215,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -3948,12 +3276,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./dataprep.html" class="pagination-link" aria-label="Workflow and Data Cleaning">
+      <a href="./dataprep.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Workflow and Data Cleaning</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./select_analysis.html" class="pagination-link" aria-label="Selecting Appropriate Analyses">
+      <a href="./select_analysis.html" class="pagination-link">
         <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Selecting Appropriate Analyses</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -3966,13 +3294,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/data_viz.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
-    <div class="nav-footer-right">
-<p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a></p>
-</div>
+    </div>
+    <div class="nav-footer-right">This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>
-
 
 
 

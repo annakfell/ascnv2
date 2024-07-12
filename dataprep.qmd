@@ -9,7 +9,7 @@ This chapter uses the following packages: [forcats](https://forcats.tidyverse.or
 library(forcats)
 library(dplyr)
 load("data/addhealth_clean.Rdata")
-fev <- read.delim(here::here("data/Lung.txt"), sep="\t", header=TRUE)
+
 ```
 
 Once the data are available from a study there are still a number of steps that must be undertaken to get them into shape for analysis.
@@ -615,6 +615,7 @@ Need to export to a different software program? Look into the [haven](https://ha
 The data on Lung function originally was recorded in *wide* format, with separate variables for mother's and father's FEV1 score (`MFEV1` and `FFEV`). In this format, the data is one record per family.
 
 ```{r}
+fev <- read.delim(here::here("data/Lung.txt"), sep="\t", header=TRUE)
 head(fev[,1:15])
 ```
 
