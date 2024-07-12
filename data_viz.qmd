@@ -369,8 +369,11 @@ Awesome title huh? (NOT)
 
 > discuss why na.omit and nesting vs pipe example
 
-:::  
+Using `na.omit()` is dangerous! This will remove ALL rows with ANY missing data in it. Regardless if the missing values are contained in the variables you are interested in. 
+The example below employs a trick/work around to not have NA values show in the output.
+We take the data set `addhealth` _and then_ `select` the variables we want to plot, _and then_ we use `na.omit()` to delete all rows with missing data. Then that is saved as a new, temporary data frame specifically named for this case (`plot.bmi.smoke`). 
 
+:::
 
 ## ggplot2
 
@@ -384,7 +387,7 @@ ggplot(pen, aes(x=bill_length_mm)) + geom_density()
 ggdensity(pen, x = "bill_length_mm")
 ```
 
-:::
+:::  
 
 ### Histograms + density 
 Often is is more helpful to have the density (or kernel density) plot _on top of_ a histogram plot. 

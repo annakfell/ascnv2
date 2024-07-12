@@ -17,7 +17,7 @@ The `MODEL` is a mathematical formula (like $y = f(x)$).
 The formulation of the `MODEL` will change depending on the number of, and data types of explanatory variables. One goal of inferential analysis is to explain the variation in our data, using information contained in other measures. 
 
 
-## Assumption of Independent Observations
+## Assumption of independent observations
 
 The primary assumption of most standard statistical procedures is that observations are
 independent of each other. That is, the value of one observation does not change or affect another observation. 
@@ -32,16 +32,16 @@ This chapter only deals with non-correlated analyses, leaving that topic for a l
 
 Choosing which statistical analyses procedure is appropriate completely depending on the data types of the explanatory and response variable. This is a simplified table, only covering the common/standard types of bivariate analysis. 
 
+::: {.callout-warning appearance=simple}
+> figure out how to get table here. knitr in quarto?
 
-> figure out how to get table here. 
+:::
 
 For this set of notes, the variable types are referred to using the first letter, 
 e.g. *Q* for quantitative, *B* for binary, and *C* for categorical. 
 Thus a T-test is a (Q $\sim$ B) analysis, and a correlation analysis is (Q $\sim$ Q) analysis. 
 
-
-Links to the example data used in this chapter. 
-```{r}
+```{r echo=FALSE}
 source("_common.R")
 library(knitr)
 library(kableExtra)
@@ -52,13 +52,11 @@ county <- read.csv("https://www.norcalbiostat.com/data/countyComplete.csv", head
 ::: {.callout-warning appearance=simple}
 > county dataset will need to be replaced or example switched - no longer included in openintro & the csv on https://www.norcalbiostat.com/data/#countyComplete is missing 
 federal spending column
+> also - clean up unused(?) library() calls and then move to top as package vignette and dataset links as in previous chapters
 
 :::
 
-----
-
-## (Q~B) Two means: T-Test {#bv-ttest}
-
+## (Q~B) Two means: T-Test 
 
 It is common to compare means from different samples. For instance, we
 might investigate the effectiveness of a certain educational intervention
@@ -134,15 +132,6 @@ We would like to know, is there convincing evidence that the average BMI differs
 * The binary explanatory variable is whether the person has ever smoked a cigarette (variable \R{eversmoke\_c})
 
 **2. Visualize and summarize bivariate relationship.**
-
-::: {.callout-warning appearance=simple}
-
-Using `na.omit()` is dangerous! This will remove ALL rows with ANY missing data in it. Regardless if the missing values are contained in the variables you are interested in. 
-The example below employs a trick/work around to not have NA values show in the output.
-We take the data set `addhealth` _and then_ `select` the variables we want to plot, _and then_ we use `na.omit()` to delete all rows with missing data. Then that is saved as a new, temporary data frame specifically named for this case (`plot.bmi.smoke`). 
-:::
-
-> note for later. Move this explanation into data viz section. 
 
 ```{r}
 plot.bmi.smoke <- addhealth %>% select(eversmoke_c, BMI) %>% na.omit()
