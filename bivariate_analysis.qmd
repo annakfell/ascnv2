@@ -1,9 +1,3 @@
----
-editor: 
-  markdown: 
-    wrap: 72
----
-
 # Bivariate Analysis {#sec-bivariate-analysis}
 
 ::: callout-note

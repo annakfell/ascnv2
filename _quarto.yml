@@ -28,6 +28,9 @@ book:
       chapters: 
         - foundations.qmd
         - bivariate_analysis.qmd
+    - part: "Regression Modeling"
+      chapters: 
+        - reg_intro.qmd
     - appendix.qmd
 
 format:
