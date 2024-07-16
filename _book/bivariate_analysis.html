@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.319">
+<meta name="generator" content="quarto-1.5.45">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="description" content="Course notes for various Applied Statistics courses at CSU Chico">
 
-<title>Applied Statistics - 5&nbsp; Bivariate Analysis</title>
+<title>5&nbsp; Bivariate Analysis – Applied Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -34,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -84,7 +84,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -93,16 +99,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
-
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -112,12 +146,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./foundations.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./bivariate_analysis.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bivariate Analysis</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./foundations.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./bivariate_analysis.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bivariate Analysis</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -127,7 +161,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Applied Statistics</a> 
@@ -157,9 +191,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Preparing Data for Analysis</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -186,9 +220,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Statistical Inference</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -216,7 +250,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -233,13 +267,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#bv-anova" id="toc-bv-anova" class="nav-link" data-scroll-target="#bv-anova"><span class="header-section-number">5.4</span> (Q~C) Multiple means: ANOVA</a>
   <ul>
-  <li><a href="#example-visual-comparison" id="toc-example-visual-comparison" class="nav-link" data-scroll-target="#example-visual-comparison"><span class="header-section-number">5.4.0.1</span> Example: Visual Comparison</a></li>
-  <li><a href="#formulation-of-the-one-way-anova-model" id="toc-formulation-of-the-one-way-anova-model" class="nav-link" data-scroll-target="#formulation-of-the-one-way-anova-model"><span class="header-section-number">5.4.1</span> Formulation of the One-way ANOVA model</a></li>
-  <li><a href="#analysis-of-variance-table" id="toc-analysis-of-variance-table" class="nav-link" data-scroll-target="#analysis-of-variance-table"><span class="header-section-number">5.4.2</span> Analysis of Variance Table*:</a></li>
-  <li><a href="#the-f-distribution" id="toc-the-f-distribution" class="nav-link" data-scroll-target="#the-f-distribution"><span class="header-section-number">5.4.3</span> The F-distribution</a></li>
-  <li><a href="#assumptions-1" id="toc-assumptions-1" class="nav-link" data-scroll-target="#assumptions-1"><span class="header-section-number">5.4.4</span> Assumptions</a></li>
-  <li><a href="#coefficient-of-determination-r2" id="toc-coefficient-of-determination-r2" class="nav-link" data-scroll-target="#coefficient-of-determination-r2"><span class="header-section-number">5.4.5</span> Coefficient of determination <span class="math inline">\(R^{2}\)</span></a></li>
-  <li><a href="#multiple-comparisons" id="toc-multiple-comparisons" class="nav-link" data-scroll-target="#multiple-comparisons"><span class="header-section-number">5.4.6</span> Multiple Comparisons</a></li>
+  <li><a href="#example-visual-comparison" id="toc-example-visual-comparison" class="nav-link" data-scroll-target="#example-visual-comparison"><span class="header-section-number">5.4.1</span> Example: Visual comparison</a></li>
+  <li><a href="#formulation-of-the-one-way-anova-model" id="toc-formulation-of-the-one-way-anova-model" class="nav-link" data-scroll-target="#formulation-of-the-one-way-anova-model"><span class="header-section-number">5.4.2</span> Formulation of the One-way ANOVA model</a></li>
+  <li><a href="#analysis-of-variance-table" id="toc-analysis-of-variance-table" class="nav-link" data-scroll-target="#analysis-of-variance-table"><span class="header-section-number">5.4.3</span> Analysis of Variance table</a></li>
+  <li><a href="#the-f-distribution" id="toc-the-f-distribution" class="nav-link" data-scroll-target="#the-f-distribution"><span class="header-section-number">5.4.4</span> The F-distribution</a></li>
+  <li><a href="#assumptions-1" id="toc-assumptions-1" class="nav-link" data-scroll-target="#assumptions-1"><span class="header-section-number">5.4.5</span> Assumptions</a></li>
+  <li><a href="#example-a-comparison-of-plant-species-under-low-water-conditions" id="toc-example-a-comparison-of-plant-species-under-low-water-conditions" class="nav-link" data-scroll-target="#example-a-comparison-of-plant-species-under-low-water-conditions"><span class="header-section-number">5.4.6</span> Example: A comparison of plant species under low water conditions</a></li>
+  <li><a href="#coefficient-of-determination-r2" id="toc-coefficient-of-determination-r2" class="nav-link" data-scroll-target="#coefficient-of-determination-r2"><span class="header-section-number">5.4.7</span> Coefficient of determination <span class="math inline">\(R^{2}\)</span></a></li>
+  <li><a href="#multiple-comparisons" id="toc-multiple-comparisons" class="nav-link" data-scroll-target="#multiple-comparisons"><span class="header-section-number">5.4.8</span> Multiple Comparisons</a></li>
   </ul></li>
   <li><a href="#bv-chisq" id="toc-bv-chisq" class="nav-link" data-scroll-target="#bv-chisq"><span class="header-section-number">5.5</span> (C~C) Multiple Proportions: <span class="math inline">\(\chi^{2}\)</span></a>
   <ul>
@@ -254,12 +289,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#example-federal-spending-per-capita-and-poverty-rate" id="toc-example-federal-spending-per-capita-and-poverty-rate" class="nav-link" data-scroll-target="#example-federal-spending-per-capita-and-poverty-rate"><span class="header-section-number">5.6.2</span> Example: Federal spending per capita and poverty rate</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/annakfell/ascnv2/edit/main/bivariate_analysis.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/bivariate_analysis.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./foundations.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./bivariate_analysis.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bivariate Analysis</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span id="sec-bivariate-analysis" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bivariate Analysis</span></span></h1>
 </div>
@@ -274,7 +309,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -286,7 +323,7 @@ Packages Used
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This chapter uses the following packages:</p>
+<p>This chapter uses the following packages: <a href="https://yihui.org/knitr/#overview">knitr</a>, <a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html">kableExtra</a>, and the <a href="https://www.norcalbiostat.com/data/#AddHealth">Addhealth</a> dataset.</p>
 </div>
 </div>
 <p>So far we have been concerned with making inference about a single population parameter. Many problems deal with comparing a parameter across two or more groups. Research questions include questions like:</p>
@@ -301,7 +338,8 @@ Packages Used
 <p>The <code>MODEL</code> is a mathematical formula (like <span class="math inline">\(y = f(x)\)</span>). The formulation of the <code>MODEL</code> will change depending on the number of, and data types of explanatory variables. One goal of inferential analysis is to explain the variation in our data, using information contained in other measures.</p>
 <section id="assumption-of-independent-observations" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="assumption-of-independent-observations"><span class="header-section-number">5.1</span> Assumption of independent observations</h2>
-<p>The primary assumption of most standard statistical procedures is that observations are independent of each other. That is, the value of one observation does not change or affect another observation. However, there are many examples where measurements are made on subjects before and after a certain exposure or treatment (pre-post), or an experiment to compare two cell phone packages might use pairs of subjects that are the same age, sex and income level. One subject would be randomly assigned to the first phone package, the other in the pair would get the second phone package. This chapter only deals with non-correlated analyses, leaving that topic for a later chapter.</p>
+<p>The primary assumption of most standard statistical procedures is that observations are independent of each other. That is, the value of one observation does not change or affect another observation.</p>
+<p>However, there are many examples where measurements are made on subjects before and after a certain exposure or treatment (pre-post), or an experiment to compare two cell phone packages might use pairs of subjects that are the same age, sex and income level. One subject would be randomly assigned to the first phone package, the other in the pair would get the second phone package. This chapter only deals with non-correlated analyses, leaving that topic for a later chapter.</p>
 </section>
 <section id="choosing-appropriate-bivariate-analysis" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="choosing-appropriate-bivariate-analysis"><span class="header-section-number">5.2</span> Choosing appropriate bivariate analysis</h2>
@@ -313,29 +351,11 @@ Packages Used
 </div>
 <div class="callout-body-container">
 <blockquote class="blockquote">
-<p>figure out how to get table here. knitr in quarto?</p>
+<p>figure out how to get table here. latex doesnt work. - some options: raw markdown, knitr::kable, mermaid diagram</p>
 </blockquote>
 </div>
 </div>
 </div>
-<p><span class="math display">\[
-\begin{table}[h!]
-\centering
-\caption{Choosing Appropriate Statistical Analysis Procedures.}
-\label{tab:choose}
-\begin{tabular}{@{}l|cc@{}}
-\toprule
-             &amp; \multicolumn{2}{c}{\textbf{Response}}                            \\
-             \midrule
-\textbf{Explanatory}  &amp; \textbf{Binary}     &amp; \textbf{Quantitative}                      \\
-\hline
-Binary       &amp; Chi-squared         &amp; T-Test                            \\
-Categorical  &amp; Chi-squared         &amp; ANOVA                             \\
-Quantitative &amp; Logistic Regression &amp; Linear Regression, Correlation \\
-\bottomrule
-\end{tabular}
-\end{table}
-\]</span></p>
 <p>For this set of notes, the variable types are referred to using the first letter, e.g.&nbsp;<em>Q</em> for quantitative, <em>B</em> for binary, and <em>C</em> for categorical. Thus a T-test is a (Q <span class="math inline">\(\sim\)</span> B) analysis, and a correlation analysis is (Q <span class="math inline">\(\sim\)</span> Q) analysis.</p>
 <div class="callout callout-style-simple callout-warning">
 <div class="callout-body d-flex">
@@ -362,7 +382,7 @@ Quantitative &amp; Logistic Regression &amp; Linear Regression, Correlation \\
 <ul>
 <li>The data distribution for each group is approximately normal.</li>
 <li>The scores are independent within each group.</li>
-<li>The scores from the two groups are independent of each other (i.e.&nbsp;the two samples are independent).</li>
+<li>The scores from the two groups are independent of each other (i.e. the two samples are independent).</li>
 </ul>
 </section>
 <section id="sampling-distribution-for-the-difference" class="level3" data-number="5.3.2">
@@ -397,7 +417,7 @@ SE_{\bar{x}_1 - \bar{x}_2}
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>We would like to know, is there convincing evidence that the average BMI differs between those who have ever smoked a cigarette in their life compared to those who have never smoked? This example uses the Addhealth dataset.</p>
+<p>We would like to know, <strong>is there convincing evidence that the average BMI differs between those who have ever smoked a cigarette in their life compared to those who have never smoked?</strong> This example uses the Addhealth dataset.</p>
 </div>
 </div>
 </div>
@@ -417,7 +437,11 @@ SE_{\bar{x}_1 - \bar{x}_2}
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stat_summary</span>(<span class="at">fun.y=</span><span class="st">"mean"</span>, <span class="at">geom=</span><span class="st">"point"</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">pch=</span><span class="dv">17</span>,</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="at">width=</span><span class="fl">0.75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="bivariate_analysis_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="bivariate_analysis_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
@@ -475,24 +499,39 @@ mean in group Non Smoker     mean in group Smoker
 </div>
 </div>
 </div>
-<hr>
 </section>
 </section>
 <section id="bv-anova" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="bv-anova"><span class="header-section-number">5.4</span> (Q~C) Multiple means: ANOVA</h2>
 <p>Frequently, a researcher wants to compare the means of an outcome across three or more treatments in a single experiment. We might initially think to do pairwise comparisons (1v2, 1v3, 2v3) for a total of three comparisons. However, this strategy can be treacherous. If we have many groups and do many comparisons, it is likely that we will eventually find a difference just by chance, even if there is no difference in the populations.</p>
 <p>When we analyze a conventional two-treatment experiment, we are prepared to run a 1 in 20 risk of an apparently significant result arising purely by accident (the 5% chance of a Type I error). We regard such a risk as being fairly unlikely and feel justified in accepting with confidence any significant results we obtain.</p>
-<p>Analyzing a single experiment as a series of 10 treatment pairs is a very different proposition. The chance of an apparently significant result arising purely by chance somewhere in the 10 analyses increases dramatically. Using a 5% error rate, the chance of NOT making at Type I error is .95. To not make a Type I error 10 times is <span class="math inline">\(.95^{10} = .6\)</span>. That means there is a 40% of making a Type I error! </p>
-<section id="example-visual-comparison" class="level4" data-number="5.4.0.1">
-<h4 data-number="5.4.0.1" class="anchored" data-anchor-id="example-visual-comparison"><span class="header-section-number">5.4.0.1</span> Example: Visual Comparison</h4>
+<p>Analyzing a single experiment as a series of 10 treatment pairs is a very different proposition. The chance of an apparently significant result arising purely by chance somewhere in the 10 analyses increases dramatically. Using a 5% error rate, the chance of NOT making at Type I error is .95. To not make a Type I error 10 times is <span class="math inline">\(.95^{10} = .6\)</span>. That means there is a 40% chance of making a Type I error!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://xkcd.com/882"><img src="https://imgs.xkcd.com/comics/significant.png" class="img-fluid figure-img" alt="Significant - xkcd webcomic"></a></p>
+<figcaption>Significant - xkcd webcomic</figcaption>
+</figure>
+</div>
+<section id="example-visual-comparison" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="example-visual-comparison"><span class="header-section-number">5.4.1</span> Example: Visual comparison</h3>
 <p>Examine the figure below. Compare groups I, II, and III. Can you visually determine if the differences in the group centers is due to chance or not? What about groups IV, V, and VI?</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/toyANOVA.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Side-by-side dot plot for the outcomes for six groups.</figcaption><p></p>
+<figcaption>Side-by-side dot plot for the outcomes for six groups.</figcaption>
 </figure>
 </div>
-<p>So we need some method of comparing treatments for more than two groups at a time. This is done using an Analysis of Variance (ANOVA) model. ### Terminology</p>
+<p>So we need some method of comparing treatments for more than two groups at a time. This is done using an Analysis of Variance (ANOVA) model.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Terminology
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li><strong>Response Variable</strong>: The response variable in the ANOVA setting is the quantitative (continuous) variable that we want to compare among the different treatments.</li>
 <li><strong>Factor/Treatment</strong>: A property or characteristic (categorical variable) that allows us to distinguish the different populations from one another. An independent variable to be studied in an investigation such as temperature, type of plant, color of flower, location.</li>
@@ -500,10 +539,12 @@ mean in group Non Smoker     mean in group Smoker
 <li><strong>Within-sample Variation</strong>: Variation within a sample from one population. Individuals who receive the same treatment will experience identical experimental conditions. The variation within each of the treatment groups must therefore be a consequence of solely random variation.</li>
 <li><strong>Between-sample Variation</strong>: Variation between samples. This is the difference between the group means. If some treatments are genuinely more effective than others, then we would expect to see relatively large differences between the treatment means and a relatively large between-treatments variation.</li>
 </ul>
+</div>
+</div>
 </section>
-<section id="formulation-of-the-one-way-anova-model" class="level3" data-number="5.4.1">
-<h3 data-number="5.4.1" class="anchored" data-anchor-id="formulation-of-the-one-way-anova-model"><span class="header-section-number">5.4.1</span> Formulation of the One-way ANOVA model</h3>
-<p>ANOVA is a mathematical technique which uses a model based approach to partition the variance in an experiment into different sources of variance. This technique enables us to test if most the variation in the treatment means is due to differences between the groups.</p>
+<section id="formulation-of-the-one-way-anova-model" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="formulation-of-the-one-way-anova-model"><span class="header-section-number">5.4.2</span> Formulation of the One-way ANOVA model</h3>
+<p>ANOVA is a mathematical technique which uses a model based approach to partition the variance in an experiment into different sources of variance. This technique enables us to test if most the variation in the treatment means is due to differences between the groups rather than random chance.</p>
 <p>Starting with our generic conceptual understanding of statistical models:</p>
 <blockquote class="blockquote">
 <p>DATA = MODEL + RESIDUAL</p>
@@ -519,7 +560,7 @@ y_{ij} = \mu_{i} + \epsilon_{ij} \qquad \qquad
 <li><span class="math inline">\(H_0\)</span>: The mean outcome is the same across all groups. <span class="math inline">\(\mu_1 = \mu_2 = \cdots = \mu_k\)</span></li>
 <li><span class="math inline">\(H_A\)</span>: At least one mean is different.</li>
 </ul>
-<p>How do we compare means using an <strong>AN</strong>alysis <strong>O</strong>f <strong>VA</strong>riance? By comparing the portion of the variance in the outcome that is explained by the groups, to the portion that’s leftover due to unexplained randomness. Essentially we’re comparing the ratio of <code>MODEL</code> to <code>RESIDUAL</code>.</p>
+<p>How do we compare means using an <strong>AN</strong>alysis <strong>O</strong>f <strong>VA</strong>riance? By comparing the portion of the variance in the outcome that is explained by the groups, to the portion that’s leftover is due to unexplained randomness. Essentially we’re comparing the ratio of <code>MODEL</code> to <code>RESIDUAL</code>.</p>
 <p>The total variation of the observed data is broken down into 2 parts:</p>
 <blockquote class="blockquote">
 <p>Total Variation = Between Group Variation + Within Group Variation</p>
@@ -535,58 +576,66 @@ SSE = \sum_{i=1}^{I}\sum_{j=1}^{n_{i}}(y_{ij}-\bar{y}_{i.})^{2} = \sum_{i=1}^{I}
 SST =  \sum_{i=1}^{I}\sum_{j=1}^{n_{i}}(y_{ij}-\bar{y}..)^{2} = (N-1)Var(Y)
 \]</span></p>
 </section>
-<section id="analysis-of-variance-table" class="level3" data-number="5.4.2">
-<h3 data-number="5.4.2" class="anchored" data-anchor-id="analysis-of-variance-table"><span class="header-section-number">5.4.2</span> Analysis of Variance Table*:</h3>
+<section id="analysis-of-variance-table" class="level3" data-number="5.4.3">
+<h3 data-number="5.4.3" class="anchored" data-anchor-id="analysis-of-variance-table"><span class="header-section-number">5.4.3</span> Analysis of Variance table</h3>
 <p>The results of an analysis of variance test are always summarized in an ANOVA table. The format of an ANOVA table is as follows:</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
-<col style="width: 13%">
-<col style="width: 11%">
-<col style="width: 10%">
-<col style="width: 35%">
-<col style="width: 25%">
+<col style="width: 15%">
+<col style="width: 12%">
+<col style="width: 9%">
+<col style="width: 36%">
+<col style="width: 26%">
 </colgroup>
+<thead>
+<tr class="header">
+<th>Source</th>
+<th>SS</th>
+<th><span class="math inline">\(df\)</span></th>
+<th>MS</th>
+<th>F</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td rowspan="2">Source :========= Groups</td>
-<td rowspan="2">SS :======: SSG</td>
-<td rowspan="2">df :=====: <span class="math inline">\(I-1\)</span></td>
-<td rowspan="2">MS :=========================: MSG = <span class="math inline">\(\frac{SSG}{I-1}\)</span></td>
-<td rowspan="2">F | :=====:+ <span class="math inline">\(\frac{MSG}{MSE}\)</span></td>
+<td>Groups</td>
+<td>SSG</td>
+<td><span class="math inline">\(I-1\)</span></td>
+<td>MSG = <span class="math inline">\(\frac{SSG}{I-1}\ \)</span></td>
+<td><span class="math inline">\(\frac{MSG}{MSE}\)</span></td>
 </tr>
 <tr class="even">
-</tr>
-<tr class="odd">
 <td>Error</td>
 <td>SSE</td>
 <td><span class="math inline">\(N-I\)</span></td>
-<td>MSE = <span class="math inline">\(\frac{MSG}{N-I}\)</span></td>
+<td>MSE = <span class="math inline">\(\frac{MSG}{N-I}\ \)</span></td>
 <td></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Total</strong></td>
 <td><strong>SST</strong></td>
 <td><span class="math inline">\(N-1\)</span></td>
-<td colspan="2"><pre><code>  |</code></pre></td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="the-f-distribution" class="level3" data-number="5.4.3">
-<h3 data-number="5.4.3" class="anchored" data-anchor-id="the-f-distribution"><span class="header-section-number">5.4.3</span> The F-distribution</h3>
+<section id="the-f-distribution" class="level3" data-number="5.4.4">
+<h3 data-number="5.4.4" class="anchored" data-anchor-id="the-f-distribution"><span class="header-section-number">5.4.4</span> The F-distribution</h3>
 <p>The <span class="math inline">\(p\)</span>-value of the test is the <strong>area to the right</strong> of the F statistic density curve. This is always to the right because the F-distribution is not symmetric, truncated at 0 and skewed right. This is true regardless of the <span class="math inline">\(df\)</span>.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="bivariate_analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="480"></p>
+<p><img src="bivariate_analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-fig-pos="!h" width="480"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="assumptions-1" class="level3" data-number="5.4.4">
-<h3 data-number="5.4.4" class="anchored" data-anchor-id="assumptions-1"><span class="header-section-number">5.4.4</span> Assumptions</h3>
+<section id="assumptions-1" class="level3" data-number="5.4.5">
+<h3 data-number="5.4.5" class="anchored" data-anchor-id="assumptions-1"><span class="header-section-number">5.4.5</span> Assumptions</h3>
 <p>Generally we must check three conditions on the data before performing ANOVA:</p>
 <ul>
 <li>The observations are independent within and across groups</li>
@@ -594,17 +643,17 @@ SST =  \sum_{i=1}^{I}\sum_{j=1}^{n_{i}}(y_{ij}-\bar{y}..)^{2} = (N-1)Var(Y)
 <li>The variability across the groups is about equal.</li>
 </ul>
 <p>When these three conditions are met, we may perform an ANOVA to determine whether the data provide strong evidence against the null hypothesis that all the <span class="math inline">\(\mu_i\)</span> are equal.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
+</section>
+<section id="example-a-comparison-of-plant-species-under-low-water-conditions" class="level3" data-number="5.4.6">
+<h3 data-number="5.4.6" class="anchored" data-anchor-id="example-a-comparison-of-plant-species-under-low-water-conditions"><span class="header-section-number">5.4.6</span> Example: A comparison of plant species under low water conditions</h3>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
-Example: A comparison of plant species under low water conditions
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<div class="callout-body-container">
 <p>The <code>PLANTS1</code> data file gives the percent of nitrogen in four different species of plants grown in a laboratory. The researchers collected these data in parts of the country where there is very little rainfall. To examine the effect of water, they varied the amount per day from 50mm to 650mm in 100mm increments. There were 9 plants per species-by-water combination. Because the plants are to be used primarily for animal food, with some parts that can be consumed by people, a high nitrogen content is very desirable. Let’s formally test to see if the nitrogen content in the plants differ across species.</p>
+</div>
 </div>
 </div>
 <p><strong>1. Identify response and explanatory variables.</strong></p>
@@ -614,35 +663,35 @@ Example: A comparison of plant species under low water conditions
 </ul>
 <p><strong>2. Visualize and summarize bivariate relationship.</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plot.nitrogen.species <span class="ot">&lt;-</span> plants1 <span class="sc">%&gt;%</span> <span class="fu">select</span>(species, pctnit) <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot.nitrogen.species, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y =</span> pctnit, <span class="at">fill=</span>species)) <span class="sc">+</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_boxplot</span>(<span class="at">width=</span>.<span class="dv">3</span>) <span class="sc">+</span> <span class="fu">geom_violin</span>(<span class="at">alpha=</span>.<span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Species"</span>) <span class="sc">+</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_fill_viridis_d</span>(<span class="at">guide=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stat_summary</span>(<span class="at">fun.y=</span><span class="st">"mean"</span>, <span class="at">geom=</span><span class="st">"point"</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">pch=</span><span class="dv">17</span>,</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="at">width=</span><span class="fl">0.75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plot.nitrogen.species <span class="ot">&lt;-</span> plants1 <span class="sc">%&gt;%</span> <span class="fu">select</span>(species, pctnit) <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot.nitrogen.species, <span class="fu">aes</span>(<span class="at">x=</span>species, <span class="at">y =</span> pctnit, <span class="at">fill=</span>species)) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_boxplot</span>(<span class="at">width=</span>.<span class="dv">3</span>) <span class="sc">+</span> <span class="fu">geom_violin</span>(<span class="at">alpha=</span>.<span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Species"</span>) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_fill_viridis_d</span>(<span class="at">guide=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stat_summary</span>(<span class="at">fun.y=</span><span class="st">"mean"</span>, <span class="at">geom=</span><span class="st">"point"</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">pch=</span><span class="dv">17</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="at">width=</span><span class="fl">0.75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="bivariate_analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="480"></p>
+<p><img src="bivariate_analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-fig-pos="!h" width="480"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plot.nitrogen.species <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(pctnit, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">sd =</span> <span class="fu">sd</span>(pctnit, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">IQR =</span> <span class="fu">IQR</span>(pctnit, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plot.nitrogen.species <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(pctnit, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">sd =</span> <span class="fu">sd</span>(pctnit, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">IQR =</span> <span class="fu">IQR</span>(pctnit, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th">species</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">mean</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">sd</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">IQR</th>
+<th style="text-align: left;">species</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">IQR</th>
 </tr>
 </thead>
 <tbody>
@@ -672,8 +721,6 @@ Example: A comparison of plant species under low water conditions
 </tr>
 </tbody>
 </table>
-
-
 </div>
 </div>
 <p>While the standard deviations are relatively similar across all species, the means are different (3.04 v. 2.09 v. 3.28 v. 1.20), with species 3 having the largest mean nitrogen content and species 4 the smallest. Species 3 has the highest IQR and species 1 has the lowest 0.506 v.&nbsp;0.269).</p>
@@ -689,28 +736,32 @@ Example: A comparison of plant species under low water conditions
 <span class="math inline">\(H_{A}:\)</span> At least one mean is different.</p></li>
 <li><p>We are comparing means from multiple groups, so an ANOVA is the appropriate procedure. We need to check for independence, approximate normality and approximately equal variances across groups.</p></li>
 </ol>
-<p><strong>Independence:</strong> We are assuming that each plant was sampled independently of each other, and that the species themselves are independent of each other.</p>
-<p><strong>Normality:</strong> With grouped data it’s easier to look at the histograms than qqplots.</p>
+<p>Independence: We are assuming that each plant was sampled independently of each other, and that the species themselves are independent of each other.</p>
+<p>Normality: With grouped data it’s easier to look at the histograms than qqplots.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plants1, <span class="fu">aes</span>(<span class="at">x=</span>pctnit, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(species<span class="sc">~</span>.) <span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"bottom"</span>) <span class="sc">+</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks=</span><span class="cn">NULL</span>) <span class="sc">+</span> <span class="fu">scale_fill_viridis_d</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plants1, <span class="fu">aes</span>(<span class="at">x=</span>pctnit, <span class="at">fill=</span>species)) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(species<span class="sc">~</span>.) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks=</span><span class="cn">NULL</span>) <span class="sc">+</span> <span class="fu">scale_fill_viridis_d</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="bivariate_analysis_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="288"></p>
+<div>
+<figure class="figure">
+<p><img src="bivariate_analysis_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="288"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>The distributions per group tend to follow an approximate normal distribution.</p>
-<p><strong>Equal variances:</strong> One way to assess if the groups have approximately equal variances is by comparing the IQR across groups.</p>
+<p>Equal variances: One way to assess if the groups have approximately equal variances is by comparing the IQR across groups.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plants1 <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">IQR =</span> <span class="fu">IQR</span>(pctnit), <span class="at">SD =</span> <span class="fu">sd</span>(pctnit)) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plants1 <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">IQR =</span> <span class="fu">IQR</span>(pctnit), <span class="at">SD =</span> <span class="fu">sd</span>(pctnit)) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th">species</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">IQR</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">SD</th>
+<th style="text-align: left;">species</th>
+<th style="text-align: right;">IQR</th>
+<th style="text-align: right;">SD</th>
 </tr>
 </thead>
 <tbody>
@@ -736,8 +787,6 @@ Example: A comparison of plant species under low water conditions
 </tr>
 </tbody>
 </table>
-
-
 </div>
 </div>
 <p>The IQRs are similar so assumption of equal variances is not grossly violated. We can proceed with the ANOVA procedure.</p>
@@ -745,7 +794,7 @@ Example: A comparison of plant species under low water conditions
 <li>We use the <code>aov(response $\sim$ predictor)</code> function on the relationship between the nitrogen levels and tree species. We then pipe in <code>summary()</code> to make the output display nicely.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(pctnit<span class="sc">~</span>species, <span class="at">data=</span>plants1) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(pctnit<span class="sc">~</span>species, <span class="at">data=</span>plants1) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Df Sum Sq Mean Sq F value Pr(&gt;F)    
 species       3 172.39   57.46   827.5 &lt;2e-16 ***
@@ -756,23 +805,23 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p><strong>5. Write a conclusion in the context of the problem.</strong> The results of the ANOVA test indicate that at least one species has a different average nitrogen content than the other varieties (<span class="math inline">\(p&lt;\)</span>.001).</p>
 </section>
-<section id="coefficient-of-determination-r2" class="level3" data-number="5.4.5">
-<h3 data-number="5.4.5" class="anchored" data-anchor-id="coefficient-of-determination-r2"><span class="header-section-number">5.4.5</span> Coefficient of determination <span class="math inline">\(R^{2}\)</span></h3>
+<section id="coefficient-of-determination-r2" class="level3" data-number="5.4.7">
+<h3 data-number="5.4.7" class="anchored" data-anchor-id="coefficient-of-determination-r2"><span class="header-section-number">5.4.7</span> Coefficient of determination <span class="math inline">\(R^{2}\)</span></h3>
 <p>The coefficient of determination is defined as <span class="math inline">\(R^{2} = \frac{SSG}{SST}\)</span> and can be interpreted as the % of the variation seen in the outcome that is due to subject level variation within each of the treatment groups. The strength of this measure can be thought of in a similar manner as the correlation coefficient <span class="math inline">\(r\)</span>: <span class="math inline">\(&lt; .3\)</span> indicates a poor fit, <span class="math inline">\(&lt; .5\)</span> indicates a medium fit, and <span class="math inline">\(&gt; .7\)</span> indicates a good fit.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fl">172.39</span><span class="sc">/</span>(<span class="fl">172.39+17.22</span>)<span class="sc">*</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fl">172.39</span><span class="sc">/</span>(<span class="fl">172.39+17.22</span>)<span class="sc">*</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 90.9182</code></pre>
 </div>
 </div>
 <p>A large amount (91%) of the variation seen in nitrogen content in the plant can be explained by the species of plant.</p>
 </section>
-<section id="multiple-comparisons" class="level3" data-number="5.4.6">
-<h3 data-number="5.4.6" class="anchored" data-anchor-id="multiple-comparisons"><span class="header-section-number">5.4.6</span> Multiple Comparisons</h3>
+<section id="multiple-comparisons" class="level3" data-number="5.4.8">
+<h3 data-number="5.4.8" class="anchored" data-anchor-id="multiple-comparisons"><span class="header-section-number">5.4.8</span> Multiple Comparisons</h3>
 <p>Suppose that an ANOVA test reveals that there is a difference in at least one of the means. How can we determine which groups are significantly different without increasing our chance of a Type I error?</p>
 <p>Simple! We perform all the pairwise comparisons but using a test statistic that retains a <strong>family-wise error rate</strong> of 0.05 (or our chosen <span class="math inline">\(\alpha\)</span>). There are different methods to adjust for multiple comparisons, we will be using the <strong>Tukey HSD (honest significant difference) test</strong>. Continuing on with the analysis of nitrogen across plant species.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(<span class="fu">aov</span>(pctnit<span class="sc">~</span>species, <span class="at">data=</span>plants1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(<span class="fu">aov</span>(pctnit<span class="sc">~</span>species, <span class="at">data=</span>plants1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Tukey multiple comparisons of means
     95% family-wise confidence level
@@ -789,8 +838,7 @@ $species
 4-3 -2.0887778 -2.2102252 -1.9673304 0.0e+00</code></pre>
 </div>
 </div>
-<p>The results from Tukey’s HSD for all pairwise comparisons indicate that the average nitrogen content in one species is significantly different from each of the three other species. The nice benefit of this procedure is that the difference between the means of the two groups are compared, and a 95confidence interval for each difference is included. So specifically, species 2 has on average 0.94 (0.82, 1.09) lower percent nitrogen compared to species 1 (<span class="math inline">\(p&lt;.0001\)</span>). Also, species 3 has on average 1.19 (1.07, 1.31) higher percent nitrogen compared to species 2 (<span class="math inline">\(p&lt;.0001\)</span>).</p>
-<hr>
+<p>The results from Tukey’s HSD for all pairwise comparisons indicate that the average nitrogen content in one species is significantly different from each of the three other species. The nice benefit of this procedure is that the difference between the means of the two groups are compared, and a 95 percent confidence interval for each difference is included. So specifically, species 2 has on average 0.94 (0.82, 1.09) lower percent nitrogen compared to species 1 (<span class="math inline">\(p&lt;.0001\)</span>). Also, species 3 has on average 1.19 (1.07, 1.31) higher percent nitrogen compared to species 2 (<span class="math inline">\(p&lt;.0001\)</span>).</p>
 </section>
 </section>
 <section id="bv-chisq" class="level2" data-number="5.5">
@@ -825,8 +873,17 @@ t^{*} =  \frac{\left( \hat{p}_{1} - \hat{p}_{2} \right) - d_{0}}
 </section>
 <section id="example-are-mammograms-effective" class="level3" data-number="5.5.2">
 <h3 data-number="5.5.2" class="anchored" data-anchor-id="example-are-mammograms-effective"><span class="header-section-number">5.5.2</span> Example: Are Mammograms effective?</h3>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <p>This example comes from the <a href="https://www.openintro.org/stat/textbook.php?stat_book=os">OpenIntro Statistics</a> textbook (3rd ed).</p>
 <p>A 30-year study was conducted with nearly 90,000 female participants. [(Miller AB. 2014)][mammo] During a 5-year screening period, each woman was randomized to one of two groups: in the first group, women received regular mammograms to screen for breast cancer, and in the second group, women received regular non-mammogram breast cancer exams. No intervention was made during the following 25 years of the study, and we’ll consider death resulting from breast cancer over the full 30-year period. Results from the study are summarized in the following table.</p>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -843,7 +900,7 @@ Important
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th"></th>
@@ -883,38 +940,66 @@ Important
 <p>What we need to do is to figure out how many deaths would be <strong>expected</strong>, if there was no relationship between treatment death by breast cancer, and then examine the <strong>residuals</strong> - the difference between the observed (<span class="math inline">\(O_{ij}\)</span>) and expected (<span class="math inline">\(E_{ij}\)</span>).</p>
 <p>In our DATA = MODEL + RESIDUAL framework, the DATA is the observed counts <span class="math inline">\(O_{ij}\)</span>, and the MODEL is the expected counts <span class="math inline">\(E_{ij}\)</span>.</p>
 <p>To see how the expected counts are calculated, we need to define a few more symbols, so we can find our way around the cells of a table. Just like rows and columns in a matrix, rows are indexed first (as <span class="math inline">\(i\)</span> and columns indexed as <span class="math inline">\(j\)</span>). So the cell in the top left is <span class="math inline">\(i=1\)</span> and <span class="math inline">\(j=1\)</span>.</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
-<col style="width: 15%">
-<col style="width: 13%">
-<col style="width: 15%">
-<col style="width: 1%">
-<col style="width: 12%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;"><span class="math inline">\(O_{ij}\)</span></th>
-<th style="text-align: center;">Alive</th>
-<th style="text-align: center;">Dead</th>
-<th colspan="2" style="text-align: center;">Total</th>
+<th style="text-align: left;"><span class="math inline">\(O_
+    {
+    i
+    j}\)</span></th>
+<th style="text-align: center;">A l ive</th>
+<th style="text-align: center;">D ead</th>
+<th style="text-align: center;">T o tal</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Mammo</td>
-<td style="text-align: center;"><span class="math inline">\(n_{11}\)</span></td>
-<td colspan="3" style="text-align: center;"><span class="math inline">\(n_{12}\)</span> | <span class="math inline">\(n_{1.}\)</span></td>
+<td style="text-align: left;">M a mmo</td>
+<td style="text-align: center;"><span class="math inline">\(n_
+                                                    {
+                                                    1
+                                                 1}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n_
+                                                                                                                                                                      {
+                                                                                                                                                                      1
+                                                                                                                                                              2}\)</span> | <span class="math inline">\(n_
+                                                                                                                                                                      {
+                                                                                                                                                                      1
+                                                                                                                                                                   .}\)</span></td>
+<td style="text-align: center;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Control</td>
-<td style="text-align: center;"><span class="math inline">\(n_{21}\)</span></td>
-<td colspan="3" style="text-align: center;"><span class="math inline">\(n_{22}\)</span> | <span class="math inline">\(n_{2.}\)</span></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;">Co n t rol</td>
+<td style="text-align: center;"><span class="math inline">\(n_
+                                                                                                                                                                      {
+                                                                                                                                                                      2
+                                                                                                                                                                   1}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n_
+                                                                                                                                                                                                                                                                                                                                                                                                                   {
+                                                                                                                                                                                                                                                                                                                                                                                                                   2
+                                                                                                                                                                                                                                                                                                                                                                                                           2}\)</span> | <span class="math inline">\(n_
+                                                                                                                                                                                                                                                                                                                                                                                                                   {
+                                                                                                                                                                                                                                                                                                                                                                                                                   2
+                                                                                                                                                                                                                                                                                                                                                                                                                .}\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Total</td>
-<td style="text-align: center;"><span class="math inline">\(n_{.1}\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(n_{.2}\)</span></td>
-<td colspan="2" style="text-align: center;"><span class="math inline">\(N\)</span></td>
+<td style="text-align: left;">T o tal</td>
+<td style="text-align: center;"><span class="math inline">\(n_
+                                                    {
+                                                    .
+                                                 1}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n_
+                                                                                                                                                                      {
+                                                                                                                                                                      .
+                                                                                                                                                                   2}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(N\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -922,7 +1007,7 @@ Important
 <p><span class="math display">\[E_{ij} = \frac{n_{i.}n_{.j}}{N}\]</span></p>
 <div class="cell">
 <div class="cell-output-display">
-<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th"></th>
@@ -950,7 +1035,7 @@ Important
 <p>The residuals are calculated as <span class="math display">\[ RESIDUALS = (O_{ij} - E_{ij})\]</span></p>
 <div class="cell">
 <div class="cell-output-display">
-<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th"></th>
@@ -984,7 +1069,7 @@ Important
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="bivariate_analysis_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="bivariate_analysis_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-fig-pos="!h" width="672"></p>
 </figure>
 </div>
 </div>
@@ -993,7 +1078,16 @@ Important
 <section id="example-smoking-and-general-health" class="level3" data-number="5.5.3">
 <h3 data-number="5.5.3" class="anchored" data-anchor-id="example-smoking-and-general-health"><span class="header-section-number">5.5.3</span> Example: Smoking and General Health</h3>
 <p>More often than not, we will have the full data available. That is, data at each individual record not just a summary table like in the previous example. Let’s work through an example.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <p>Using the Addhealth data set, what can we say about the relationship between smoking and a person’s perceived general level of general health?</p>
+</div>
+</div>
+</div>
 <p><strong>1. Identify response and explanatory variables.</strong></p>
 <ul>
 <li>The binary explanatory variable is whether the person has ever smoked an entire cigarette (<code>eversmoke_c</code>)</li>
@@ -1001,10 +1095,14 @@ Important
 </ul>
 <p><strong>2. Visualize and summarise bivariate relationship.</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>sjPlot<span class="sc">::</span><span class="fu">plot_xtab</span>(<span class="at">grp=</span>addhealth<span class="sc">$</span>eversmoke_c, <span class="at">x=</span>addhealth<span class="sc">$</span>genhealth, </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">show.total =</span> <span class="cn">FALSE</span>, <span class="at">margin=</span><span class="st">"row"</span>, <span class="at">legend.title=</span><span class="st">""</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>sjPlot<span class="sc">::</span><span class="fu">plot_xtab</span>(<span class="at">grp=</span>addhealth<span class="sc">$</span>eversmoke_c, <span class="at">x=</span>addhealth<span class="sc">$</span>genhealth, </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">show.total =</span> <span class="cn">FALSE</span>, <span class="at">margin=</span><span class="st">"row"</span>, <span class="at">legend.title=</span><span class="st">""</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="bivariate_analysis_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="768"></p>
+<div>
+<figure class="figure">
+<p><img src="bivariate_analysis_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>The percentage of smokers seems to increase as the general health status decreases. Almost three-quarters (73%, n=40) of those reporting poor health have smoked an entire cigarette at least once in their life compared to 59% (n=573) of those reporting excellent health.</p>
@@ -1030,8 +1128,8 @@ Important
 <li><p>Conduct the test.</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>health.smoke.model <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(addhealth<span class="sc">$</span>genhealth, addhealth<span class="sc">$</span>eversmoke_c)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>health.smoke.model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>health.smoke.model <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(addhealth<span class="sc">$</span>genhealth, addhealth<span class="sc">$</span>eversmoke_c)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>health.smoke.model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's Chi-squared test
@@ -1048,7 +1146,7 @@ X-squared = 30.795, df = 4, p-value = 3.371e-06</code></pre>
 <p>Just like with ANOVA, if we find that the chi-squared test indicates that at least one proportion is different from the others, it’s our job to figure out which ones might be different! We will analyze the residuals to accomplish this. Not by hand! Never again! You’re not learning how to code for nothing.</p>
 <p>The residuals are automatically stored in the model output. You can either print them out and look at the values directly:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>health.smoke.model<span class="sc">$</span>residuals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>health.smoke.model<span class="sc">$</span>residuals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   addhealth$eversmoke_c
 addhealth$genhealth Non Smoker     Smoker
@@ -1061,13 +1159,13 @@ addhealth$genhealth Non Smoker     Smoker
 </div>
 <p>Or you can extract them and save them as a data frame. Then use ggplot with <code>geom_raster</code> to fill in your squares.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>plot.residuals <span class="ot">&lt;-</span> health.smoke.model<span class="sc">$</span>residuals <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>()</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot.residuals, <span class="fu">aes</span>(<span class="at">x=</span>addhealth.genhealth, <span class="at">y=</span>addhealth.eversmoke_c)) <span class="sc">+</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_raster</span>(<span class="fu">aes</span>(<span class="at">fill=</span>Freq)) <span class="sc">+</span>  <span class="fu">scale_fill_viridis_c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>plot.residuals <span class="ot">&lt;-</span> health.smoke.model<span class="sc">$</span>residuals <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>()</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot.residuals, <span class="fu">aes</span>(<span class="at">x=</span>addhealth.genhealth, <span class="at">y=</span>addhealth.eversmoke_c)) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_raster</span>(<span class="fu">aes</span>(<span class="at">fill=</span>Freq)) <span class="sc">+</span>  <span class="fu">scale_fill_viridis_c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="bivariate_analysis_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="576"></p>
+<p><img src="bivariate_analysis_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="576"></p>
 </figure>
 </div>
 </div>
@@ -1092,11 +1190,23 @@ addhealth$genhealth Non Smoker     Smoker
 </section>
 <section id="example-federal-spending-per-capita-and-poverty-rate" class="level3" data-number="5.6.2">
 <h3 data-number="5.6.2" class="anchored" data-anchor-id="example-federal-spending-per-capita-and-poverty-rate"><span class="header-section-number">5.6.2</span> Example: Federal spending per capita and poverty rate</h3>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<blockquote class="blockquote">
+<p>Add intro text to example once resolved/replaced</p>
+</blockquote>
+</div>
+</div>
+</div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggplot(county, aes(x=poverty, y=fed_spend00)) +</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  geom_point() + ylab("federal spending per capita") +</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  xlab("poverty rate")</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">#cor(county$poverty, county$fed_spend00, use="complete.obs")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggplot(county, aes(x=poverty, y=fed_spend00)) +</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  geom_point() + ylab("federal spending per capita") +</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  xlab("poverty rate")</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#cor(county$poverty, county$fed_spend00, use="complete.obs")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>There is a negligible, positive, linear relationship between poverty rate and per capita federal spending (<span class="math inline">\(r = 0.03\)</span>).</li>
@@ -1105,7 +1215,7 @@ addhealth$genhealth Non Smoker     Smoker
 <li>We can use the <code>cor.test()</code> function to analyze the evidence in favor of this alternative hypothesis.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#cor.test(county$poverty, county$fed_spend00)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#cor.test(county$poverty, county$fed_spend00)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We conclude from this that there was a non-statistically significant, negligible correlation between poverty and federal spending (<span class="math inline">\(r = 0.03 (-0.0003, .069), p = 0.05\)</span>).</p>
 
@@ -1155,6 +1265,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -1223,13 +1360,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -1264,18 +1403,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1307,11 +1435,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/annakfell\.github\.io\/ascnv2\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1321,8 +1488,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1334,7 +1510,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1378,6 +1677,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1403,6 +1703,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1464,12 +1790,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./foundations.html" class="pagination-link">
+      <a href="./foundations.html" class="pagination-link" aria-label="Foundations for Inference">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Foundations for Inference</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./appendix.html" class="pagination-link">
+      <a href="./appendix.html" class="pagination-link" aria-label="Appendix">
         <span class="nav-page-text">Appendix</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1482,10 +1808,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    </div>
-    <div class="nav-footer-right">This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/bivariate_analysis.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a></p>
+</div>
   </div>
 </footer>
+
 
 
 

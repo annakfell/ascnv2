@@ -10,6 +10,7 @@ editor:
 #### Packages Used
 
 This chapter uses the following packages:
+[knitr](https://yihui.org/knitr/#overview), [kableExtra](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html), and the [Addhealth](https://www.norcalbiostat.com/data/#AddHealth) dataset.
 :::
 
 ```{r, echo=FALSE}
@@ -44,14 +45,15 @@ measures.
 
 The primary assumption of most standard statistical procedures is that
 observations are independent of each other. That is, the value of one
-observation does not change or affect another observation. However,
-there are many examples where measurements are made on subjects before
-and after a certain exposure or treatment (pre-post), or an experiment
-to compare two cell phone packages might use pairs of subjects that are
-the same age, sex and income level. One subject would be randomly
-assigned to the first phone package, the other in the pair would get the
-second phone package. This chapter only deals with non-correlated
-analyses, leaving that topic for a later chapter.
+observation does not change or affect another observation.
+
+However, there are many examples where measurements are made on subjects
+before and after a certain exposure or treatment (pre-post), or an
+experiment to compare two cell phone packages might use pairs of
+subjects that are the same age, sex and income level. One subject would
+be randomly assigned to the first phone package, the other in the pair
+would get the second phone package. This chapter only deals with
+non-correlated analyses, leaving that topic for a later chapter.
 
 ## Choosing appropriate bivariate analysis
 
@@ -61,10 +63,9 @@ This is a simplified table, only covering the common/standard types of
 bivariate analysis.
 
 ::: {.callout-warning appearance="simple"}
-> figure out how to get table here. knitr in quarto? latex doesnt work.
+> figure out how to get table here. latex doesnt work. - some options:
+> raw markdown, knitr::kable, mermaid diagram
 :::
-
-
 
 For this set of notes, the variable types are referred to using the
 first letter, e.g. *Q* for quantitative, *B* for binary, and *C* for
@@ -155,10 +156,10 @@ easily or directly.
 ### Example: Smoking and BMI
 
 ::: {.callout-tip appearance="minimal"}
-We would like to know, is there convincing evidence that the average BMI
-differs between those who have ever smoked a cigarette in their life
-compared to those who have never smoked? This example uses the Addhealth
-dataset.
+We would like to know, **is there convincing evidence that the average
+BMI differs between those who have ever smoked a cigarette in their life
+compared to those who have never smoked?** This example uses the
+Addhealth dataset.
 :::
 
 **1. Identify response and explanatory variables.**
@@ -243,8 +244,6 @@ groups A and B, R will automatically calculate the difference as A-B. In
 this example it is Nonsmoker - Smoker.
 :::
 
-------------------------------------------------------------------------
-
 ## (Q\~C) Multiple means: ANOVA {#bv-anova}
 
 Frequently, a researcher wants to compare the means of an outcome across
@@ -266,10 +265,12 @@ very different proposition. The chance of an apparently significant
 result arising purely by chance somewhere in the 10 analyses increases
 dramatically. Using a 5% error rate, the chance of NOT making at Type I
 error is .95. To not make a Type I error 10 times is $.95^{10} = .6$.
-That means there is a 40% of making a Type I error!
-\emph{See: \url{https://xkcd.com/882/}.}
+That means there is a 40% chance of making a Type I error!
 
-#### Example: Visual Comparison
+[![Significant - xkcd
+webcomic](https://imgs.xkcd.com/comics/significant.png)](https://xkcd.com/882)
+
+### Example: Visual comparison
 
 Examine the figure below. Compare groups I, II, and III. Can you
 visually determine if the differences in the group centers is due to
@@ -280,7 +281,9 @@ groups.](images/toyANOVA.png)
 
 So we need some method of comparing treatments for more than two groups
 at a time. This is done using an Analysis of Variance (ANOVA) model.
-\### Terminology
+
+::: {.callout-note icon="false"}
+## Terminology
 
 -   **Response Variable**: The response variable in the ANOVA setting is
     the quantitative (continuous) variable that we want to compare among
@@ -302,13 +305,15 @@ at a time. This is done using an Analysis of Variance (ANOVA) model.
     more effective than others, then we would expect to see relatively
     large differences between the treatment means and a relatively large
     between-treatments variation.
+:::
 
 ### Formulation of the One-way ANOVA model
 
 ANOVA is a mathematical technique which uses a model based approach to
 partition the variance in an experiment into different sources of
 variance. This technique enables us to test if most the variation in the
-treatment means is due to differences between the groups.
+treatment means is due to differences between the groups rather than
+random chance.
 
 Starting with our generic conceptual understanding of statistical
 models:
@@ -336,7 +341,7 @@ The null and alternative hypotheses are always phrased as follows:
 
 How do we compare means using an **AN**alysis **O**f **VA**riance? By
 comparing the portion of the variance in the outcome that is explained
-by the groups, to the portion that's leftover due to unexplained
+by the groups, to the portion that's leftover is due to unexplained
 randomness. Essentially we're comparing the ratio of `MODEL` to
 `RESIDUAL`.
 
@@ -363,29 +368,16 @@ the overall mean. $$
 SST =  \sum_{i=1}^{I}\sum_{j=1}^{n_{i}}(y_{ij}-\bar{y}..)^{2} = (N-1)Var(Y)
 $$
 
-### Analysis of Variance Table\*:
+### Analysis of Variance table
 
 The results of an analysis of variance test are always summarized in an
 ANOVA table. The format of an ANOVA table is as follows:
 
-+------------+------------+------------+-------------+------------+
-| Source :   | SS         | df :=====: | MS          | F \|       |
-| =========  | :======:   | $I-1$      | :========== | :=====:+   |
-| Groups     | SSG        |            | =====       | $\frac{M   |
-|            |            |            | ==========: | SG}{MSE}$  |
-|            |            |            | MSG = \$    |            |
-|            |            |            | \frac{      |            |
-|            |            |            | SSG}{I-1}\$ |            |
-+------------+------------+------------+-------------+------------+
-| Error      | SSE        | $N-I$      | MSE = \$    |            |
-|            |            |            | \frac{      |            |
-|            |            |            | MSG}{N-I}\$ |            |
-+------------+------------+------------+-------------+------------+
-| **Total**  | **SST**    | $N-1$      | `           |            |
-|            |            |            | `` CEF7FA46 |            |
-|            |            |            |   |         |            |
-|            |            |            | ```         |            |
-+------------+------------+------------+-------------+------------+
+| Source    | SS      | $df$  | MS                        | F                 |
+|-----------|---------|-------|---------------------------|-------------------|
+| Groups    | SSG     | $I-1$ | MSG = $\frac{SSG}{I-1}\ $ | $\frac{MSG}{MSE}$ |
+| Error     | SSE     | $N-I$ | MSE = $\frac{MSG}{N-I}\ $ |                   |
+| **Total** | **SST** | $N-1$ |                           |                   |
 
 ### The F-distribution
 
@@ -411,8 +403,9 @@ When these three conditions are met, we may perform an ANOVA to
 determine whether the data provide strong evidence against the null
 hypothesis that all the $\mu_i$ are equal.
 
-::: callout-tip
-#### Example: A comparison of plant species under low water conditions
+### Example: A comparison of plant species under low water conditions
+
+::: {.callout-tip appearance=minimal}
 
 The `PLANTS1` data file gives the percent of nitrogen in four different
 species of plants grown in a laboratory. The researchers collected these
@@ -482,11 +475,11 @@ III. We are comparing means from multiple groups, so an ANOVA is the
      approximate normality and approximately equal variances across
      groups.
 
-**Independence:** We are assuming that each plant was sampled
+Independence: We are assuming that each plant was sampled
 independently of each other, and that the species themselves are
 independent of each other.
 
-**Normality:** With grouped data it's easier to look at the histograms
+Normality: With grouped data it's easier to look at the histograms
 than qqplots.
 
 ```{r, fig.height=3, fig.width=3}
@@ -499,7 +492,7 @@ ggplot(plants1, aes(x=pctnit, fill=species)) + ylab("") + geom_density() +
 The distributions per group tend to follow an approximate normal
 distribution.
 
-**Equal variances:** One way to assess if the groups have approximately
+Equal variances: One way to assess if the groups have approximately
 equal variances is by comparing the IQR across groups.
 
 ```{r}
@@ -553,20 +546,16 @@ plant species.
 ```{r}
 TukeyHSD(aov(pctnit~species, data=plants1))
 ```
-
-\doublespace
-
+ 
 The results from Tukey's HSD for all pairwise comparisons indicate that
 the average nitrogen content in one species is significantly different
 from each of the three other species. The nice benefit of this procedure
 is that the difference between the means of the two groups are compared,
-and a 95confidence interval for each difference is included. So
+and a 95 percent confidence interval for each difference is included. So
 specifically, species 2 has on average 0.94 (0.82, 1.09) lower percent
 nitrogen compared to species 1 ($p<.0001$). Also, species 3 has on
 average 1.19 (1.07, 1.31) higher percent nitrogen compared to species 2
 ($p<.0001$).
-
-------------------------------------------------------------------------
 
 ## (C\~C) Multiple Proportions: $\chi^{2}$ {#bv-chisq}
 
@@ -625,6 +614,7 @@ Exact Test**.
 
 ### Example: Are Mammograms effective?
 
+::: {.callout-tip appearance=minimal}
 This example comes from the [OpenIntro
 Statistics](https://www.openintro.org/stat/textbook.php?stat_book=os)
 textbook (3rd ed).
@@ -637,6 +627,7 @@ second group, women received regular non-mammogram breast cancer exams.
 No intervention was made during the following 25 years of the study, and
 we'll consider death resulting from breast cancer over the full 30-year
 period. Results from the study are summarized in the following table.
+:::
 
 ::: callout-important
 footnote not working
@@ -680,31 +671,38 @@ more symbols, so we can find our way around the cells of a table. Just
 like rows and columns in a matrix, rows are indexed first (as $i$ and
 columns indexed as $j$). So the cell in the top left is $i=1$ and $j=1$.
 
-+------+------+------+------+
-| $O_  | A    | Dead | T    |
-| {    | live |      | otal |
-| ij}$ |      |      |      |
-+:=====+:====:+:====:+:====:+
-| M    | $n_  | $n_  |      |
-| ammo | {    | {    |      |
-|      | 11}$ | 12}$ |      |
-|      |      | \|   |      |
-|      |      | $n_  |      |
-|      |      | {    |      |
-|      |      | 1.}$ |      |
-+------+------+------+------+
-|      | Co   | $n_  | $n_  |
-|      | n    | {    | {    |
-|      | trol | 21}$ | 22}$ |
-|      |      |      | \|   |
-|      |      |      | $n_  |
-|      |      |      | {    |
-|      |      |      | 2.}$ |
-+------+------+------+------+
-| T    | $n_  | $n_  | $N$  |
-| otal | {    | {    |      |
-|      | .1}$ | .2}$ |      |
-+------+------+------+------+
+| $O_     
+    {     
+    i     
+    j}$   |                  A l ive                  |                                                      D ead                                                       |                                                                                                                  T o tal                                                                                                                   |
+|:-----------------|:----------------:|:----------------:|:----------------:|
+| M a mmo |                    $n_                    
+                                                    { 
+                                                    1 
+                                                 1}$  |                                                        $n_                                                       
+                                                                                                                                                                      {  
+                                                                                                                                                                      1  
+                                                                                                                                                              2}$ \| $n_ 
+                                                                                                                                                                      {  
+                                                                                                                                                                      1  
+                                                                                                                                                                   .}$   |                                                                                                                                                                                                                                            |
+|         |                Co n t rol                 |                                                        $n_                                                       
+                                                                                                                                                                      {  
+                                                                                                                                                                      2  
+                                                                                                                                                                   1}$   |                                                                                                                     $n_                                                                                                                    
+                                                                                                                                                                                                                                                                                                                                                                                                                   {  
+                                                                                                                                                                                                                                                                                                                                                                                                                   2  
+                                                                                                                                                                                                                                                                                                                                                                                                           2}$ \| $n_ 
+                                                                                                                                                                                                                                                                                                                                                                                                                   {  
+                                                                                                                                                                                                                                                                                                                                                                                                                   2  
+                                                                                                                                                                                                                                                                                                                                                                                                                .}$   |
+| T o tal |                    $n_                    
+                                                    { 
+                                                    . 
+                                                 1}$  |                                                        $n_                                                       
+                                                                                                                                                                      {  
+                                                                                                                                                                      .  
+                                                                                                                                                                   2}$   |                                                                                                                    $N$                                                                                                                     |
 
 The expected count for each cell is calculated as the row total times
 the column total for that cell, divided by the overall total. Yes this
@@ -758,9 +756,11 @@ More often than not, we will have the full data available. That is, data
 at each individual record not just a summary table like in the previous
 example. Let's work through an example.
 
+::: {.callout-tip appearance=minimal}
 Using the Addhealth data set, what can we say about the relationship
 between smoking and a person's perceived general level of general
 health?
+:::
 
 **1. Identify response and explanatory variables.**
 
@@ -886,6 +886,10 @@ based on the magnitude of $r$.
 -   $|r| < 0.2:$ Negligible or no relationship
 
 ### Example: Federal spending per capita and poverty rate
+
+::: {.callout-tip appearance=minimal}
+> Add intro text to example once resolved/replaced
+:::
 
 ```{r}
 #ggplot(county, aes(x=poverty, y=fed_spend00)) +
