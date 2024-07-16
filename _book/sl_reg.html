@@ -8,7 +8,7 @@
 
 <meta name="description" content="Course notes for various Applied Statistics courses at CSU Chico">
 
-<title>4&nbsp; Foundations for Inference – Applied Statistics</title>
+<title>7&nbsp; Simple Linear Regression – Applied Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,8 +65,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./bivariate_analysis.html" rel="next">
-<link href="./select_analysis.html" rel="prev">
+<link href="./appendix.html" rel="next">
+<link href="./reg_intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -72,6 +106,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -84,7 +147,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./foundations.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./foundations.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Foundations for Inference</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./reg_intro.html">Regression Modeling</a></li><li class="breadcrumb-item"><a href="./sl_reg.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -164,7 +227,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./foundations.html" class="sidebar-item-text sidebar-link active">
+  <a href="./foundations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Foundations for Inference</span></span></a>
   </div>
 </li>
@@ -193,7 +256,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sl_reg.html" class="sidebar-item-text sidebar-link">
+  <a href="./sl_reg.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
   </div>
 </li>
@@ -210,15 +273,25 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#example" id="toc-example" class="nav-link active" data-scroll-target="#example"><span class="header-section-number">7.1</span> Example</a>
+  <ul>
+  <li><a href="#caution-on-out-of-range-predictions" id="toc-caution-on-out-of-range-predictions" class="nav-link" data-scroll-target="#caution-on-out-of-range-predictions"><span class="header-section-number">7.1.1</span> Caution on out of range predictions</a></li>
+  </ul></li>
+  <li><a href="#mathematical-model" id="toc-mathematical-model" class="nav-link" data-scroll-target="#mathematical-model"><span class="header-section-number">7.2</span> Mathematical Model</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/sl_reg.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./foundations.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./foundations.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Foundations for Inference</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./reg_intro.html">Regression Modeling</a></li><li class="breadcrumb-item"><a href="./sl_reg.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-foundations" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Foundations for Inference</span></span></h1>
+<h1 class="title"><span id="sec-sl-reg" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></h1>
 </div>
 
 
@@ -235,18 +308,99 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-simple callout-warning">
-<div class="callout-body d-flex">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
+<div class="callout-title-container flex-fill">
+Packages Used
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This chapter uses the following packages: <a href="https://ggplot2.tidyverse.org">ggplot2</a>, <a href="https://mjskay.github.io/ggdist/index.html">ggdist</a>, <a href="https://strengejacke.github.io/sjPlot/">sjPlot</a>, <a href="https://cran.r-project.org/web/packages/gridExtra/index.html">gridExtra</a>, <a href="https://broom.tidymodels.org">broom</a>, <a href="https://easystats.github.io/performance/">performance</a>, and the <a href="https://www.norcalbiostat.com/data/#Lung_Function">Lung function</a> dataset.</p>
+</div>
+</div>
+<p>The goal of linear regression is to describe the relationship between an independent variable X and a continuous dependent variable <span class="math inline">\(Y\)</span> as a straight line.</p>
+<p>Data for this type of model can arise in two ways;</p>
+<ul>
+<li>Fixed-<span class="math inline">\(X\)</span>: values of <span class="math inline">\(X\)</span> are preselected by investigator</li>
+<li>Variable-<span class="math inline">\(X\)</span>: have random sample of <span class="math inline">\((X,Y)\)</span> values</li>
+</ul>
+<p>Both Regression and Correlation can be used for two main purposes:</p>
+<ul>
+<li><strong>Descriptive</strong>: Draw inferences regarding the relationship</li>
+<li><strong>Predictive</strong>: Predict value of <span class="math inline">\(Y\)</span> for a given value of <span class="math inline">\(X\)</span></li>
+</ul>
+<p>Simple Linear Regression is an example of a Bivariate analysis since there is only one covariate (explanatory variable) under consideration.</p>
+<section id="example" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="example"><span class="header-section-number">7.1</span> Example</h2>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
 <div class="callout-body-container">
-<p>Nothing here yet</p>
+<p>Lung function data were obtained from an epidemiological study of households living in four areas with different amounts and types of air pollution. The data set used in this book is a subset of the total data. In this chapter we use only the data taken on the fathers, all of whom are nonsmokers (see PMA6 Appendix A for more details).</p>
 </div>
 </div>
+</div>
+<p>One of the major early indicators of reduced respiratory function is FEV1 or forced expiratory volume in the first second (amount of air exhaled in 1 second). Since it is known that taller males tend to have higher FEV1, we wish to determine the relationship between height and FEV1. We can use regression analysis for both a descriptive and predictive purpose.</p>
+<ul>
+<li><strong>Descriptive</strong>: Describing the relationship between FEV1 and height</li>
+<li><strong>Predictive</strong>: Use the equation to determine expected or normal FEV1 for a given height</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fev, <span class="fu">aes</span>(<span class="at">y=</span>FFEV1, <span class="at">x=</span>FHEIGHT)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">xlab</span>(<span class="st">"Height"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"FEV1"</span>) <span class="sc">+</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ggtitle</span>(<span class="st">"Scatterplot and Regression line of FEV1 Versus Height for Males."</span>) <span class="sc">+</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">col=</span><span class="st">"blue"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="sl_reg_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In this graph, height is given on the horizontal axis since it is the independent or predictor variable and FEV1 is given on the vertical axis since it is the dependent or outcome variable.</p>
+<p><strong>Interpretation</strong>: There does appear to be a tendency for taller men to have higher FEV1. The <strong>regression line</strong> is also added to the graph. The line is tilted upwards, indicating that we expect larger values of FEV1 with larger values of height.</p>
+<p>Specifically the equation of the regression line is <span class="math display">\[
+Y = -4.087 + 0.118 X
+\]</span></p>
+<p>The quantity 0.118 in front of <span class="math inline">\(X\)</span> is greater than zero, indicating that as we increase <span class="math inline">\(X, Y\)</span> will increase. For example, we would expect a father who is 70 inches tall to have an FEV1 value of</p>
+<p><span class="math display">\[\mbox{FEV1} = -4.087 + (0.118) (70) = 4.173\]</span></p>
+<p>If the height was 66 inches then we would expect an FEV1 value of only 3.70.</p>
+<section id="caution-on-out-of-range-predictions" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="caution-on-out-of-range-predictions"><span class="header-section-number">7.1.1</span> Caution on out of range predictions</h3>
+<p>To take an extreme example, suppose a father was 2 feet tall. Then the equation would predict a negative value of FEV1 (<span class="math inline">\(-1.255\)</span>).</p>
+<p>A safe policy is to restrict the use of the equation to the range of the <span class="math inline">\(X\)</span> observed in the sample.</p>
+</section>
+</section>
+<section id="mathematical-model" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="mathematical-model"><span class="header-section-number">7.2</span> Mathematical Model</h2>
+<p>The mathematical model that we use for regression has three features.</p>
+<ol type="1">
+<li><span class="math inline">\(Y\)</span> values are normally distributed at any given <span class="math inline">\(X\)</span></li>
+<li>The mean of <span class="math inline">\(Y\)</span> values at any given <span class="math inline">\(X\)</span> follows a straight line <span class="math inline">\(Y = \beta_{0} + \beta_{1} X\)</span>.</li>
+<li>The variance of <span class="math inline">\(Y\)</span> values at any <span class="math inline">\(X\)</span> is <span class="math inline">\(\sigma^2\)</span> (same for all X). This is known as <em>homoscedasticity</em>, or <em>homogeneity of variance</em>.</li>
+</ol>
+<p>Mathematically this is written as:</p>
+<p><span class="math display">\[
+Y|X \sim N(\mu_{Y|X}, \sigma^{2}) \\
+\mu_{Y|X} = \beta_{0} + \beta_{1} X \\
+Var(Y|X) = \sigma^{2}
+\]</span></p>
+<p>and can be visualized as:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/slr_graph.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 6.2</figcaption>
+</figure>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -815,13 +969,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./select_analysis.html" class="pagination-link" aria-label="Selecting Appropriate Analyses">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Selecting Appropriate Analyses</span></span>
+      <a href="./reg_intro.html" class="pagination-link" aria-label="Introduction to Regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to Regression</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./bivariate_analysis.html" class="pagination-link" aria-label="Bivariate Analysis">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bivariate Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./appendix.html" class="pagination-link" aria-label="Appendix">
+        <span class="nav-page-text">Appendix</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -833,7 +987,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/foundations.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/sl_reg.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a></p>
 </div>
