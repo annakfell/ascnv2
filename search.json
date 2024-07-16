@@ -382,6 +382,17 @@
     ]
   },
   {
+    "objectID": "reg_intro.html",
+    "href": "reg_intro.html",
+    "title": "6  Introduction to Regression",
+    "section": "",
+    "text": "6.1 Opening Remarks\nThe PMA6 textbook (Chapter 7) goes into great detail on this topic, since regression is typically the basis for all advanced models.\nThe book also distinguishes between a “fixed-x” case, where the values of the explanatory variable \\(x\\) only take on pre-specified values, and a “variable-x” case, where the values of \\(x\\) are observations from a population distribution of X’s.\nThis latter case is what we will be concerning ourselves with.",
+    "crumbs": [
+      "Regression Modeling",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Introduction to Regression</span>"
+    ]
+  },
+  {
     "objectID": "appendix.html",
     "href": "appendix.html",
     "title": "Appendix",

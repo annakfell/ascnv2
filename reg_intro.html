@@ -8,7 +8,7 @@
 
 <meta name="description" content="Course notes for various Applied Statistics courses at CSU Chico">
 
-<title>Appendix – Applied Statistics</title>
+<title>6&nbsp; Introduction to Regression – Applied Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./reg_intro.html" rel="prev">
+<link href="./appendix.html" rel="next">
+<link href="./bivariate_analysis.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -112,7 +113,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appendix.html">Appendix</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./reg_intro.html">Regression Modeling</a></li><li class="breadcrumb-item"><a href="./reg_intro.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to Regression</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -215,7 +216,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_intro.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_intro.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to Regression</span></span></a>
   </div>
 </li>
@@ -223,7 +224,7 @@ window.Quarto = {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix.html" class="sidebar-item-text sidebar-link active">
+  <a href="./appendix.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Appendix</span></a>
   </div>
 </li>
@@ -237,24 +238,16 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#common-error-messages" id="toc-common-error-messages" class="nav-link active" data-scroll-target="#common-error-messages">Common error messages</a>
-  <ul>
-  <li><a href="#function-not-found" id="toc-function-not-found" class="nav-link" data-scroll-target="#function-not-found">Function not found</a></li>
-  <li><a href="#object-not-found" id="toc-object-not-found" class="nav-link" data-scroll-target="#object-not-found">Object not found</a></li>
-  <li><a href="#object-of-length-0" id="toc-object-of-length-0" class="nav-link" data-scroll-target="#object-of-length-0">Object of length 0</a></li>
-  <li><a href="#discrete-scale-applied-to-continuous-object" id="toc-discrete-scale-applied-to-continuous-object" class="nav-link" data-scroll-target="#discrete-scale-applied-to-continuous-object">Discrete scale applied to continuous object</a></li>
-  <li><a href="#package-inputenc-error-unicode-char-not-set-up-for-use-with" id="toc-package-inputenc-error-unicode-char-not-set-up-for-use-with" class="nav-link" data-scroll-target="#package-inputenc-error-unicode-char-not-set-up-for-use-with">Package inputenc error: Unicode char not set up for use with </a></li>
-  <li><a href="#continuous-x-aesthetic-did-you-forget-aesgroup" id="toc-continuous-x-aesthetic-did-you-forget-aesgroup" class="nav-link" data-scroll-target="#continuous-x-aesthetic-did-you-forget-aesgroup">Continuous x aesthetic – did you forget aes(group=…)?</a></li>
-  </ul></li>
+  <li><a href="#opening-remarks" id="toc-opening-remarks" class="nav-link active" data-scroll-target="#opening-remarks"><span class="header-section-number">6.1</span> Opening Remarks</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/appendix.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/reg_intro.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./reg_intro.html">Regression Modeling</a></li><li class="breadcrumb-item"><a href="./reg_intro.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to Regression</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Appendix</h1>
+<h1 class="title"><span id="sec-reg-intro" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to Regression</span></span></h1>
 </div>
 
 
@@ -271,51 +264,20 @@ window.Quarto = {
 </header>
 
 
-<section id="common-error-messages" class="level2">
-<h2 class="anchored" data-anchor-id="common-error-messages">Common error messages</h2>
-<p><img src="images/monster_debugging.png" class="img-fluid"></p>
-<section id="function-not-found" class="level3">
-<h3 class="anchored" data-anchor-id="function-not-found">Function not found</h3>
+<p>The general purpose of regression is to learn more about the relationship between several independent or predictor variables and a quantitative dependent variable. Multiple regression procedures are very widely used in research. In general, this inferential tool allows us to ask (and hopefully answer) the general question “<em>what is the best predictor of</em>…”, and does “<em>additional variable A</em>” or “<em>additional variable B” confound the relationship between my explanatory and response variable?</em>”</p>
 <ul>
-<li>Check the spelling and capitalization.</li>
-<li>Did you load the package in your first code chunk?</li>
+<li>Educational researchers might want to learn about the best predictors of success in high-school.</li>
+<li>Sociologists may want to find out which of the multiple social indicators best predict whether or not a new immigrant group will adapt to their new country of residence.</li>
+<li>Biologists may want to find out which factors (i.e.&nbsp;temperature, barometric pressure, humidity, etc.) best predict caterpillar reproduction.</li>
 </ul>
-</section>
-<section id="object-not-found" class="level3">
-<h3 class="anchored" data-anchor-id="object-not-found">Object not found</h3>
-<p>R can’t find the object you are referring to. Here are some debugging steps:</p>
-<ul>
-<li>Check the spelling and capitalization.</li>
-<li>If you are referring to a variable inside a data set, did you use $ notation?</li>
-<li>Can you find this variable in some other manner? (i.e.&nbsp;)</li>
-<li>If this piece of code works when you are working interactively, but not when you knit, then check where you created this variable. Is it written either in this current code file or your data management file?</li>
-<li>Did you create this variable in your data management file, and then forget to run the entire code document (hence recreating the analysis data set with this new variable)</li>
-<li>Shut down and restart R studio entirely.</li>
-</ul>
-<p><img src="images/monster_abort.png" class="img-fluid"></p>
-</section>
-<section id="object-of-length-0" class="level3">
-<h3 class="anchored" data-anchor-id="object-of-length-0">Object of length 0</h3>
-<p>This object does not exist, or is empty. Check how you created this object initially.</p>
-</section>
-<section id="discrete-scale-applied-to-continuous-object" class="level3">
-<h3 class="anchored" data-anchor-id="discrete-scale-applied-to-continuous-object">Discrete scale applied to continuous object</h3>
-<p>Read that error message carefully. It explains exactly what the problem is. It is up to you to problem solve to figure out which variable you are trying to apply a scale to (like color or fill), what it’s data type is.</p>
-</section>
-<section id="package-inputenc-error-unicode-char-not-set-up-for-use-with" class="level3">
-<h3 class="anchored" data-anchor-id="package-inputenc-error-unicode-char-not-set-up-for-use-with">Package inputenc error: Unicode char not set up for use with </h3>
-<p>When you want to use certain symbols in math notation, such as Greek letters or the tilde (<span class="math inline">\(\sim\)</span>), it is important that you type in the commands for them (e.g., to write <span class="math inline">\(\sim\)</span>, type or for the Greek letter <span class="math inline">\(\mu\)</span>, type ). If you get this error message, there are a couple of possibilities. Either you omitted a around the notation, or you copied and pasted symbols straight from the course notes. In the latter case, find the symbol and replace it with its command (these are usually pretty self-explanatory but when in doubt, Google it).</p>
-</section>
-<section id="continuous-x-aesthetic-did-you-forget-aesgroup" class="level3">
-<h3 class="anchored" data-anchor-id="continuous-x-aesthetic-did-you-forget-aesgroup">Continuous x aesthetic – did you forget aes(group=…)?</h3>
-<p>This <code>ggplot2</code> error message will show up when the aesthetics of a plot don’t map to the geometry of your data. Try either of these solutions depending on your variable type:</p>
-<ul>
-<li>Change your x variable to a discrete data type, such as a factor.</li>
-<li>Add the argument <code>group=1</code> to the aesthetics of the plot, <code>aes()</code>.</li>
-</ul>
+<p>This chapter starts by recapping notation and topics for simple linear regression, when there is only one predictor. Then we move into generalization of these concepts to many predictors, and model building topics such as stratification, interactions, and categorical predictors.</p>
+<section id="opening-remarks" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="opening-remarks"><span class="header-section-number">6.1</span> Opening Remarks</h2>
+<p>The PMA6 textbook (Chapter 7) goes into great detail on this topic, since regression is typically the basis for all advanced models.</p>
+<p>The book also distinguishes between a “fixed-x” case, where the values of the explanatory variable <span class="math inline">\(x\)</span> only take on pre-specified values, and a “variable-x” case, where the values of <span class="math inline">\(x\)</span> are observations from a population distribution of X’s.</p>
+<p>This latter case is what we will be concerning ourselves with.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -885,11 +847,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./reg_intro.html" class="pagination-link" aria-label="Introduction to Regression">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to Regression</span></span>
+      <a href="./bivariate_analysis.html" class="pagination-link" aria-label="Bivariate Analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bivariate Analysis</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./appendix.html" class="pagination-link" aria-label="Appendix">
+        <span class="nav-page-text">Appendix</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
@@ -900,7 +865,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/appendix.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/reg_intro.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a></p>
 </div>
