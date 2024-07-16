@@ -393,6 +393,39 @@
     ]
   },
   {
+    "objectID": "sl_reg.html",
+    "href": "sl_reg.html",
+    "title": "7  Simple Linear Regression",
+    "section": "",
+    "text": "7.1 Example\nOne of the major early indicators of reduced respiratory function is FEV1 or forced expiratory volume in the first second (amount of air exhaled in 1 second). Since it is known that taller males tend to have higher FEV1, we wish to determine the relationship between height and FEV1. We can use regression analysis for both a descriptive and predictive purpose.\nggplot(fev, aes(y=FFEV1, x=FHEIGHT)) + geom_point() + \n      xlab(\"Height\") + ylab(\"FEV1\") + \n      ggtitle(\"Scatterplot and Regression line of FEV1 Versus Height for Males.\") + \n      geom_smooth(method=\"lm\", se=FALSE, col=\"blue\")\nIn this graph, height is given on the horizontal axis since it is the independent or predictor variable and FEV1 is given on the vertical axis since it is the dependent or outcome variable.\nInterpretation: There does appear to be a tendency for taller men to have higher FEV1. The regression line is also added to the graph. The line is tilted upwards, indicating that we expect larger values of FEV1 with larger values of height.\nSpecifically the equation of the regression line is \\[\nY = -4.087 + 0.118 X\n\\]\nThe quantity 0.118 in front of \\(X\\) is greater than zero, indicating that as we increase \\(X, Y\\) will increase. For example, we would expect a father who is 70 inches tall to have an FEV1 value of\n\\[\\mbox{FEV1} = -4.087 + (0.118) (70) = 4.173\\]\nIf the height was 66 inches then we would expect an FEV1 value of only 3.70.",
+    "crumbs": [
+      "Regression Modeling",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Simple Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "sl_reg.html#example",
+    "href": "sl_reg.html#example",
+    "title": "7  Simple Linear Regression",
+    "section": "",
+    "text": "Lung function data were obtained from an epidemiological study of households living in four areas with different amounts and types of air pollution. The data set used in this book is a subset of the total data. In this chapter we use only the data taken on the fathers, all of whom are nonsmokers (see PMA6 Appendix A for more details).\n\n\n\n\n\nDescriptive: Describing the relationship between FEV1 and height\nPredictive: Use the equation to determine expected or normal FEV1 for a given height\n\n\n\n\n\n\n\n\n\n7.1.1 Caution on out of range predictions\nTo take an extreme example, suppose a father was 2 feet tall. Then the equation would predict a negative value of FEV1 (\\(-1.255\\)).\nA safe policy is to restrict the use of the equation to the range of the \\(X\\) observed in the sample.",
+    "crumbs": [
+      "Regression Modeling",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Simple Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "sl_reg.html#mathematical-model",
+    "href": "sl_reg.html#mathematical-model",
+    "title": "7  Simple Linear Regression",
+    "section": "7.2 Mathematical Model",
+    "text": "7.2 Mathematical Model\nThe mathematical model that we use for regression has three features.\n\n\\(Y\\) values are normally distributed at any given \\(X\\)\nThe mean of \\(Y\\) values at any given \\(X\\) follows a straight line \\(Y = \\beta_{0} + \\beta_{1} X\\).\nThe variance of \\(Y\\) values at any \\(X\\) is \\(\\sigma^2\\) (same for all X). This is known as homoscedasticity, or homogeneity of variance.\n\nMathematically this is written as:\n\\[\nY|X \\sim N(\\mu_{Y|X}, \\sigma^{2}) \\\\\n\\mu_{Y|X} = \\beta_{0} + \\beta_{1} X \\\\\nVar(Y|X) = \\sigma^{2}\n\\]\nand can be visualized as:\n\n\n\nFigure 6.2",
+    "crumbs": [
+      "Regression Modeling",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Simple Linear Regression</span>"
+    ]
+  },
+  {
     "objectID": "appendix.html",
     "href": "appendix.html",
     "title": "Appendix",
