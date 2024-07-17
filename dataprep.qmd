@@ -414,7 +414,7 @@ The `ifelse()` function says that if `depress$drink` has a value equal to 2 `==2
 
 ```{r fix_depress_drink}
 depress1$drink <- ifelse(depress1$drink==2, 0, depress1$drink)
-table(depress1$drink, depress$dri)
+table(depress1$drink, depress$drink)
 ```
 
 :::
@@ -477,7 +477,7 @@ qqnorm(depress2$income);qqline(depress2$income, col="red")
 
 The points on the normal probability plot do not follow the red reference line very well. The dots show a more curved, or `U` shaped form rather than following a linear line. This is another indication that the data is skewed and a transformation for normality should be created.
 
-#### Transformations
+### Transformations
 
 As a demonstration of transformations that can be used to shift a distribution more towards a normal shape, here we create three new variables: `log10inc` as the log base 10 of Income, `loginc` as the natural log of Income, and `xincome` which is equal to the negative of one divided by the cubic root of income.
 
@@ -630,7 +630,7 @@ fev2$gender <- factor(fev2$gender, labels=c("M", "F"))
 head(fev2)  
 ```
 
-Nearly all analysis procedures and most graphing procedures require the data to be in long format. There are several `R` packages that can help with this including `reshape2` and `tidyr`.
+Nearly all analysis procedures and most graphing procedures require the data to be in long format. There are several `R` packages that can help with this including [reshape2](https://seananderson.ca/2013/10/19/reshape/) and [tidyr](https://tidyr.tidyverse.org).
 
 ::: {.callout-tip}
 ### Learn more
@@ -643,11 +643,11 @@ Read more on tidy data in [R for Data Science 2e](https://r4ds.hadley.nz/data-ti
 
 ::: {.callout-warning appearanc=simple}
 
-> Add methods for dealing with this 
+> Add methods for dealing with this, once added reference @sec-classification
 
 :::
 
-R objects created by methods such as `lm` and `glm` will store the data used in the model in the model object itself in `model$data`. See @sec-classification for an example.
+R objects created by methods such as `lm` and `glm` will store the data used in the model in the model object itself in `model$data`. 
 
 ### Factor analysis and principal components
 

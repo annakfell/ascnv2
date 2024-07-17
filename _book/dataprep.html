@@ -306,10 +306,8 @@ window.Quarto = {
   <li><a href="#assessing-normality" id="toc-assessing-normality" class="nav-link" data-scroll-target="#assessing-normality"><span class="header-section-number">1.6</span> Assessing Normality</a>
   <ul>
   <li><a href="#histogram-and-density-plots" id="toc-histogram-and-density-plots" class="nav-link" data-scroll-target="#histogram-and-density-plots"><span class="header-section-number">1.6.1</span> Histogram and density plots</a></li>
-  <li><a href="#q-q-plot" id="toc-q-q-plot" class="nav-link" data-scroll-target="#q-q-plot"><span class="header-section-number">1.6.2</span> Q-Q plot</a>
-  <ul class="collapse">
-  <li><a href="#transformations" id="toc-transformations" class="nav-link" data-scroll-target="#transformations"><span class="header-section-number">1.6.2.1</span> Transformations</a></li>
-  </ul></li>
+  <li><a href="#q-q-plot" id="toc-q-q-plot" class="nav-link" data-scroll-target="#q-q-plot"><span class="header-section-number">1.6.2</span> Q-Q plot</a></li>
+  <li><a href="#transformations" id="toc-transformations" class="nav-link" data-scroll-target="#transformations"><span class="header-section-number">1.6.3</span> Transformations</a></li>
   </ul></li>
   <li><a href="#missing-data" id="toc-missing-data" class="nav-link" data-scroll-target="#missing-data"><span class="header-section-number">1.7</span> Missing data</a>
   <ul>
@@ -957,7 +955,7 @@ Note
 <p>The <code>ifelse()</code> function says that if <code>depress$drink</code> has a value equal to 2 <code>==2</code>, then change the value to 0. Otherwise leave it alone.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>depress1<span class="sc">$</span>drink <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(depress1<span class="sc">$</span>drink<span class="sc">==</span><span class="dv">2</span>, <span class="dv">0</span>, depress1<span class="sc">$</span>drink)</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(depress1<span class="sc">$</span>drink, depress<span class="sc">$</span>dri)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(depress1<span class="sc">$</span>drink, depress<span class="sc">$</span>drink)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   
       1   2
@@ -1057,8 +1055,9 @@ Note
 </div>
 </div>
 <p>The points on the normal probability plot do not follow the red reference line very well. The dots show a more curved, or <code>U</code> shaped form rather than following a linear line. This is another indication that the data is skewed and a transformation for normality should be created.</p>
-<section id="transformations" class="level4" data-number="1.6.2.1">
-<h4 data-number="1.6.2.1" class="anchored" data-anchor-id="transformations"><span class="header-section-number">1.6.2.1</span> Transformations</h4>
+</section>
+<section id="transformations" class="level3" data-number="1.6.3">
+<h3 data-number="1.6.3" class="anchored" data-anchor-id="transformations"><span class="header-section-number">1.6.3</span> Transformations</h3>
 <p>As a demonstration of transformations that can be used to shift a distribution more towards a normal shape, here we create three new variables: <code>log10inc</code> as the log base 10 of Income, <code>loginc</code> as the natural log of Income, and <code>xincome</code> which is equal to the negative of one divided by the cubic root of income.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>log10inc <span class="ot">&lt;-</span> <span class="fu">log10</span>(depress2<span class="sc">$</span>income)</span>
@@ -1107,7 +1106,6 @@ To transform or not to transform
 <p>Note that these rules are not meaningful for data without a natural zero.</p>
 </div>
 </div>
-</section>
 </section>
 </section>
 <section id="missing-data" class="level2" data-number="1.7">
@@ -1259,7 +1257,7 @@ Learn more
 6      M 4.91 72  44</code></pre>
 </div>
 </div>
-<p>Nearly all analysis procedures and most graphing procedures require the data to be in long format. There are several <code>R</code> packages that can help with this including <code>reshape2</code> and <code>tidyr</code>.</p>
+<p>Nearly all analysis procedures and most graphing procedures require the data to be in long format. There are several <code>R</code> packages that can help with this including <a href="https://seananderson.ca/2013/10/19/reshape/">reshape2</a> and <a href="https://tidyr.tidyverse.org">tidyr</a>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1287,11 +1285,11 @@ Warning
 </div>
 <div class="callout-body-container callout-body">
 <blockquote class="blockquote">
-<p>Add methods for dealing with this</p>
+<p>Add methods for dealing with this, once added reference <span class="quarto-unresolved-ref">?sec-classification</span></p>
 </blockquote>
 </div>
 </div>
-<p>R objects created by methods such as <code>lm</code> and <code>glm</code> will store the data used in the model in the model object itself in <code>model$data</code>. See <span class="quarto-unresolved-ref">?sec-classification</span> for an example.</p>
+<p>R objects created by methods such as <code>lm</code> and <code>glm</code> will store the data used in the model in the model object itself in <code>model$data</code>.</p>
 </section>
 <section id="factor-analysis-and-principal-components" class="level3" data-number="1.9.2">
 <h3 data-number="1.9.2" class="anchored" data-anchor-id="factor-analysis-and-principal-components"><span class="header-section-number">1.9.2</span> Factor analysis and principal components</h3>
