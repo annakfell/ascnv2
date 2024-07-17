@@ -305,7 +305,7 @@ Often you are not interested in the individual values of each data point, but th
 
 
 ### Histograms
-Rather than showing the value of each observation, we prefer to think of the value as belonging to a \emph{bin}. **The height of the bars in a histogram display the frequency of values that fall into those of those bins.** For example if we cut the bill length distribution into 7 bins of equal width, the frequency table would look like this: 
+Rather than showing the value of each observation, we prefer to think of the value as belonging to a *bin*. **The height of the bars in a histogram display the frequency of values that fall into those of those bins.** For example if we cut the bill length distribution into 7 bins of equal width, the frequency table would look like this: 
 
 ```{r}
 table(cut(pen$bill_length_mm, 7))
@@ -438,6 +438,7 @@ boxplot(pen$bill_length_mm, horizontal = TRUE, main="Distribution of penguin bil
 Horizontal is a bit easier to read in my opinion. 
 
 **Adding the mean**
+
 A boxplot displays the median, so if we want to add more statistical detail and see any discrepancies between parameters we can add the mean as a point. 
 
 ```{r}
@@ -522,7 +523,6 @@ ggviolin(pen, x=1, y="bill_length_mm",
          add = 'mean')
 ```
 
-
 :::
 
 ### Boxplot + violin plots
@@ -554,10 +554,8 @@ ggplot(pen, aes(x=1, y=bill_length_mm)) + xlab("") + theme_bw() +
 ggplot(pen, aes(x=1, y=bill_length_mm)) + xlab("") + theme_bw() + 
               geom_violin(fill="blue", alpha=.1) + 
               geom_boxplot(fill="blue", alpha=.5, width=.2) + 
-              geom_hline(yintercept = mean(na.omit(pen$bill_length_mm)), color="red", linetype="dashed")
-              theme(axis.title.x=element_blank(),
-              axis.text.x=element_blank(),
-              axis.ticks.x=element_blank())
+              geom_hline(yintercept = mean(na.omit(pen$bill_length_mm)),
+                         color="red", linetype="dashed")
 ```
 
 ## ggpubr
@@ -898,7 +896,7 @@ colored by the cut variable.
 ggplot(mmpgs, aes(x=body_mass_g, y=mean, col=species)) + geom_line()
 ```
 
-And we get one line per species 
+And we get one line per species. 
 
 ## base
 This plot can be created in base graphics, but it takes an advanced 
@@ -1032,7 +1030,7 @@ ggplot(pen, aes(x=bill_depth_mm, y=species)) + geom_density_ridges()
 
 This is a good place to introduce a term called `faceting`. The definition is _a particular aspect or feature of something_, or _one side of something many-sided, especially of a cut gem_. Basically instead of plotting the grouped graphics on the same plotting area, we let each group have it's own plot, or facet.  
 
-We add a `facet_wrap()` and specify that we want to panel on the species group. Note the twiddle in front of species 
+We add a `facet_wrap()` and specify that we want to panel on the species group. Note the twiddle in front of species. 
 
 ```{r}
 #| fig-height: 4
@@ -1193,8 +1191,6 @@ That's harder to read. So note that just because you **can** change an aesthetic
 
 Before you share your plot with any other eyes, always take a step back and try to explain what it is telling you. If you have to take more than a minute to get to the point then it may be too complex and simpler graphics are likely warranted. 
 
------
-
 ## Troubleshooting 
 
 ### Problem: Missing data showing up as a category in ggplot? 
@@ -1242,7 +1238,7 @@ ggplot(email, aes(y=num_char, x=spam_cat)) + geom_boxplot()
 ::: {.callout-tip appearance=minimal collapse=true}
 
 ## Solution:
-Add the `name=` argument to whatever layer you added that created the legend. Here I speciefied a `fill`, and it was a `discrete` variable. So I use the `scale_fill_discrete()` layer. 
+Add the `name=` argument to whatever layer you added that created the legend. Here I specified a `fill`, and it was a `discrete` variable. So I use the `scale_fill_discrete()` layer. 
 
 ```{r}
 ggplot(email, aes(y=num_char, x=spam_cat, fill=spam_cat)) + geom_boxplot() + 
