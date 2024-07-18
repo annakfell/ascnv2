@@ -171,8 +171,8 @@ ggplot(plot.bmi.smoke, aes(x=eversmoke_c, y=BMI, fill=eversmoke_c)) +
       geom_boxplot(width=.3) + geom_violin(alpha=.4) +
       labs(x="Smoking status") +
       scale_fill_viridis_d(guide=FALSE) +
-      stat_summary(fun.y="mean", geom="point", size=3, pch=17,
-      position=position_dodge(width=0.75))
+      stat_summary(fun.y="mean", geom="point", size=3, pch=17, 
+                   position=position_dodge(width=0.75))
 ```
 
 ```{r}
@@ -445,8 +445,8 @@ plot.nitrogen.species %>% group_by(species) %>%
 While the standard deviations are relatively similar across all species,
 the means are different (3.04 v. 2.09 v. 3.28 v. 1.20), with species 3
 having the largest mean nitrogen content and species 4 the smallest.
-Species 3 has the highest IQR and species 1 has the lowest 0.506
-v. 0.269).
+Species 3 has the highest IQR and species 1 has the lowest (0.506
+v. 0.269).
 
 **3. Write the relationship you want to examine in the form of a
 research question.**
@@ -496,7 +496,7 @@ plants1 %>% group_by(species) %>% summarise(IQR = IQR(pctnit), SD = sd(pctnit)) 
 The IQRs are similar so assumption of equal variances is not grossly
 violated. We can proceed with the ANOVA procedure.
 
-IV. We use the `aov(response $\sim$ predictor)` function on the
+IV. We use the `aov(response ~ predictor)` function on the
     relationship between the nitrogen levels and tree species. We then
     pipe in `summary()` to make the output display nicely.
 
@@ -614,21 +614,13 @@ Statistics](https://www.openintro.org/stat/textbook.php?stat_book=os)
 textbook (3rd ed).
 
 A 30-year study was conducted with nearly 90,000 female participants.
-\[(Miller AB. 2014)\]\[mammo\] During a 5-year screening period, each
+[Miller AB. 2014](https://doi.org/10.1136/bmj.g366) During a 5-year screening period, each
 woman was randomized to one of two groups: in the first group, women
 received regular mammograms to screen for breast cancer, and in the
 second group, women received regular non-mammogram breast cancer exams.
 No intervention was made during the following 25 years of the study, and
 we'll consider death resulting from breast cancer over the full 30-year
 period. Results from the study are summarized in the following table.
-:::
-
-::: callout-important
-footnote not working
-
-mammo Twenty five year follow-up for breast cancer incidence and
-mortality of the Canadian National Breast Screening Study: randomized
-screening trial. BMJ 2014;348:g366.
 :::
 
 ```{r, echo=FALSE}
