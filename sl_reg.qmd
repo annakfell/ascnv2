@@ -72,12 +72,14 @@ $$\mbox{FEV1} = -4.087 + (0.118) (70) = 4.173$$
 
 If the height was 66 inches then we would expect an FEV1 value of only 3.70.
 
-### Caution on out of range predictions
+::: {.callout-caution}
+## Caution on out of range predictions
 
 To take an extreme example, suppose a father was 2 feet tall. Then the equation would predict a negative value of FEV1 ($-1.255$).
 
 A safe policy is to restrict the use of the equation to the range of the $X$ observed in the sample.
 
+:::
 
 ## Mathematical Model
 
