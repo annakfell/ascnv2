@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.54">
+<meta name="generator" content="quarto-1.5.55">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -278,10 +278,7 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#example" id="toc-example" class="nav-link active" data-scroll-target="#example"><span class="header-section-number">7.1</span> Example</a>
-  <ul>
-  <li><a href="#caution-on-out-of-range-predictions" id="toc-caution-on-out-of-range-predictions" class="nav-link" data-scroll-target="#caution-on-out-of-range-predictions"><span class="header-section-number">7.1.1</span> Caution on out of range predictions</a></li>
-  </ul></li>
+  <li><a href="#example" id="toc-example" class="nav-link active" data-scroll-target="#example"><span class="header-section-number">7.1</span> Example</a></li>
   <li><a href="#mathematical-model" id="toc-mathematical-model" class="nav-link" data-scroll-target="#mathematical-model"><span class="header-section-number">7.2</span> Mathematical Model</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/sl_reg.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -371,11 +368,20 @@ Y = -4.087 + 0.118 X
 <p>The quantity 0.118 in front of <span class="math inline">\(X\)</span> is greater than zero, indicating that as we increase <span class="math inline">\(X, Y\)</span> will increase. For example, we would expect a father who is 70 inches tall to have an FEV1 value of</p>
 <p><span class="math display">\[\mbox{FEV1} = -4.087 + (0.118) (70) = 4.173\]</span></p>
 <p>If the height was 66 inches then we would expect an FEV1 value of only 3.70.</p>
-<section id="caution-on-out-of-range-predictions" class="level3" data-number="7.1.1">
-<h3 data-number="7.1.1" class="anchored" data-anchor-id="caution-on-out-of-range-predictions"><span class="header-section-number">7.1.1</span> Caution on out of range predictions</h3>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution on out of range predictions
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>To take an extreme example, suppose a father was 2 feet tall. Then the equation would predict a negative value of FEV1 (<span class="math inline">\(-1.255\)</span>).</p>
 <p>A safe policy is to restrict the use of the equation to the range of the <span class="math inline">\(X\)</span> observed in the sample.</p>
-</section>
+</div>
+</div>
 </section>
 <section id="mathematical-model" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="mathematical-model"><span class="header-section-number">7.2</span> Mathematical Model</h2>
