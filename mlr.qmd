@@ -1,0 +1,404 @@
+# Multiple Linear Regression {#mlr}
+
+Hopefully by now you have some motivation for why we need to have a robust model that can incorporate information from multiple variables at the same time. Multiple linear regression is our tool to expand our MODEL to better fit the DATA. 
+
+* Extends simple linear regression.
+* Describes a linear relationship between a single continuous $Y$ variable, and several $X$ variables.
+* Predicts $Y$ from $X_{1}, X_{2}, \ldots , X_{P}$.
+* X's can be continuous or discrete (categorical)
+* X's can be transformations of other X's, e.g., $log(x), x^{2}$. 
+
+
+Now it's no longer a 2D regression _line_, but a $p$ dimensional regression plane. 
+
+![](images/regression_plane.png)
+
+>This section uses functions from the `dotwhisker` and `gtsummary` visualize results from multiple regression models. 
+
+::: callout-note
+#### Packages Used
+
+This chapter uses the following packages:
+[gtsummary](https://www.danieldsjoberg.com/gtsummary/), 
+[performance](https://easystats.github.io/performance/),
+[broom](https://broom.tidymodels.org), 
+[knitr](https://yihui.org/knitr/#overview),
+[dotwhisker](https://fsolt.org/dotwhisker/)
+:::
+
+```{r, echo=FALSE}
+source('_common.R')
+library(performance); library(gtsummary); library(knitr); 
+library(broom); library(dotwhisker)
+pen <- palmerpenguins::penguins
+```
+
+## Mathematical Model
+
+The mathematical model for multiple linear regression equates the value of the continuous outcome $y_{i}$ to a **linear combination** of multiple predictors $x_{1} \ldots x_{p}$ each with their own slope coefficient $\beta_{1} \ldots \beta_{p}$. 
+
+$$ y_{i} = \beta_{0} + \beta_{1}x_{1i} + \ldots + \beta_{p}x_{pi} + \epsilon_{i}$$
+
+where $i$ indexes the observations $i = 1 \ldots n$, and $j$ indexes the number of parameters $j=1 \ldots p$. This linear combination is often written using _summation notation_: $\sum_{i=1}^{p}X_{ij}\beta_{j}$. 
+
+The assumptions on the residuals $\epsilon_{i}$ still hold:   
+
+* They have mean zero  
+* They are homoscedastic, that is all have the same finite variance: $Var(\epsilon_{i})=\sigma^{2}<\infty$  
+* Distinct error terms are uncorrelated (Independent): $\text{Cov}(\epsilon_{i},\epsilon_{j})=0,\forall i\neq j.$  
+
+
+In matrix notation the linear combination of $X$'s and $\beta$'s is written as $\mathbf{x}_{i}^{'}\mathbf{\beta}$, (the inner product between the vectors $\mathbf{x}_{i}$ and $\mathbf{\beta}$). Then the model is written as: 
+
+$$ \textbf{y} = \textbf{X} \mathbf{\beta} + \mathbf{\epsilon} ,$$ 
+
+and we say the regression model relates $y$ to a function of $\textbf{X}$ and $\mathbf{\beta}$, where $\textbf{X}$ is a $n \times p$ matrix of $p$ covariates on $n$ observations and $\mathbf{\beta}$ is a length $p$ vector of regression coefficients.
+
+_Note: Knowledge of Matricies or Linear Algebra is not required to conduct or understand multiple regression, but it is foundational and essential for Statistics and Data Science majors to understand the theory behind linear models._
+
+_Learners in other domains should attempt to understand matricies at a high level, as some of the places models can fail is due to problems doing math on matricies._
+
+## Parameter Estimation
+
+Recall the goal of regression analysis is to minimize the unexplained/residual error. That is, to minimize the difference between the value of the dependent variable predicted by the model and the true value of the dependent variable.
+
+$$ \hat{y_{i}} - y_{i}, $$
+
+where the predicted values $\hat{y}_{i}$ are calculated as 
+
+$$\hat{y}_{i}  = \sum_{i=1}^{p}X_{ij}\beta_{j}$$
+
+The sum of the squared residual errors (the distance between the observed point $y_{i}$ and the fitted value) now has the following form: 
+
+$$ \sum_{i=1}^{n} |y_{i} - \sum_{i=1}^{p}X_{ij}\beta_{j}|^{2}$$
+
+Or in matrix notation
+
+$$ || \mathbf{Y} - \mathbf{X}\mathbf{\beta} ||^{2} $$ 
+
+Solving this least squares problem for multiple regression requires knowledge of multivariable calculus and linear algebra, and so is left to a course in mathematical statistics. 
+
+## Fitting the model
+
+The analysis in example @sec-slr-fev concluded that FEV1 in fathers significantly increases by 0.12 (95% CI:0.09, 0.15) liters per additional inch in height (p<.0001). Looking at the multiple $R^{2}$ (correlation of determination), this simple model explains 25% of the variance seen in the outcome $y$. 
+
+However, FEV tends to decrease with age for adults, so we should be able to predict it better if we use both height and age as independent variables in a multiple regression equation. 
+
+::: {.callout-caution}
+## Think about it
+What direction do you expect the slope coefficient for age to be? For height?
+:::
+
+Fitting a regression model in R with more than 1 predictor is done by adding each variable to the right hand side of the model notation connected with a `+`. 
+
+```{r}
+lm(FFEV1 ~ FAGE + FHEIGHT, data=fev)
+```
+
+
+## Interpreting Coefficients
+
+Similar to simple linear regression, each $\beta_{j}$ coefficient is considered a slope. That is, the amount $Y$ will change for every 1 unit increase in $X_{j}$. In a multiple variable regression model, $b_{j}$ is the estimated change in $Y$ _after controlling for other predictors in the model_. 
+
+### Continuous predictors
+
+```{r}
+mlr.dad.model <- lm(FFEV1 ~ FAGE + FHEIGHT, data=fev)
+summary(mlr.dad.model)
+confint(mlr.dad.model)
+```
+
+* Holding height constant, a father who is one year older is expected to have a FEV value 0.03 (0.01, 0.04) liters less than another man (p<.0001).
+* Holding age constant, a father who is 1cm taller than another man is expected to have a FEV value of 0.11 (.08, 0.15) liter greater than the other man (p<.0001). 
+
+For the model that includes age, the coefficient for height is now `r round(mlr.dad.model$coefficients[3],2)`, which is interpreted as the rate of change of FEV1 as a function of height **after adjusting for age**. This is also called the **partial regression coefficient** of FEV1 on height after adjusting for age. 
+
+
+### Binary predictors
+
+Binary predictors (categorical variables with only 2 levels) get converted to a numeric _binary indicator_ variable which only has the values 0 and 1. Whichever level gets assigned to be 0 is called the _reference_ group or level. The regression estimate $b$ then is the effect of being in group ($x=1$) _compared to_ being in the reference ($x=0$) group.
+
+Does gender also play a roll in FEV? Let's look at how gender may impact or change the relationship between FEV and either height or age. 
+
+> Note, the `fev` data set is in _wide_ form right now, with different columns for mothers and fathers. First I need to reshape the data into _long_ format, so gender is it's own variable. 
+
+```{r}
+# a pivot_longer() probably would have worked here as well
+fev_long <- data.frame(gender = c(fev$FSEX, fev$MSEX), 
+                   fev1 = c(fev$FFEV1, fev$MFEV1), 
+                   ht = c(fev$FHEIGHT, fev$MHEIGHT), 
+                   age = c(fev$FAGE, fev$MAGE), 
+                   area = c(fev$AREA, fev$AREA))
+fev_long$gender <- factor(fev_long$gender, labels=c("M", "F"))
+fev_long$area   <- factor(fev_long$area, labels=c("Burbank", "Lancaster", "Long Beach", "Glendora"))
+```
+
+So the model being fit looks like: 
+
+$$ y_{i} = \beta_{0} + \beta_{1}x_{1i} + \beta_{2}x_{2i} +\beta_{3}x_{3i} + \epsilon_{i}$$
+
+where 
+
+* $x_{1}$: Age
+* $x_{2}$: height
+* $x_{3}$: 0 if Male, 1 if Female
+
+```{r}
+lm(fev1 ~ age + ht + gender, data=fev_long)
+```
+
+In this model gender is a binary categorical variable, with reference group "Male". This is detected because the variable that shows up in the regression model output is `genderF`. So the estimate shown is for males, compared to females. 
+
+Note that I **DID NOT** have to convert the categorical variable `gender` to a binary numeric variable before fitting it into the model. R (and any other software program) will do this for you already. 
+
+
+The regression equation for the model with gender is 
+
+$$ y = -2.24 - 0.02 age + 0.11 height - 0.64genderF $$
+
+
+* $b_{0}:$ For a male who is 0 years old and 0 cm tall, their FEV is -2.24L.
+* $b_{1}:$ For every additional year older an individual is, their FEV1 decreases by 0.02L. 
+* $b_{2}:$ For every additional cm taller an individual is, their FEV1 increases by 0.16L. 
+* $b_{3}:$ Females have 0.64L lower FEV compared to males. 
+
+**Note**: The interpretation of categorical variables still falls under the template language of "for every one unit increase in $X_{p}$, $Y$ changes by $b_{p}$". Here, $X_{3}=0$ for males, and 1 for females. So a 1 "unit" change is females _compared to_ males. 
+
+
+
+### Categorical Predictors {#sec-cat-predictors}
+
+Let's continue to model the FEV for individuals living in Southern California, but now we also consider the effect of city they live in. For those unfamiliar with the region, these cities represent very different environmental profiles. 
+
+```{r}
+table(fev_long$area)
+```
+
+Let's fit a model with `area`, notice again I do not do anything to the variable `area` itself aside from add it into the model. 
+```{r}
+lm(fev1 ~ age + ht + gender + area, data=fev_long) |> summary()
+```
+
+Examine the coefficient names, `areaLancaster`, `areaLong Beach` and `areaGlendora`. Again R automatically take a categorical variable and turn it into a series of binary indicator variables where a 1 indicates if a person is from that area. Notice how someone from Burbank has 0's for all of the three indicator variables, someone from Lancaster only has a 1 in the `areaLancaster` variable and 0 otherwise. And etc. for each other area.
+
+```{r, echo=FALSE}
+a <- model.matrix(fev1 ~ area, data=fev_long)
+b <- data.frame(a, area=fev_long$area)[c(1,51,75,101),-1]
+kable(b)
+```
+
+* Most commonly known as "Dummy coding". Not an informative term to use. 
+* Better used term: Indicator variable
+* Math notation: **I(gender == "Female")**. 
+* A.k.a "reference coding" or "one hot encoding"
+* For a nominal X with K categories, define K indicator variables.
+    - Choose a reference (referent) category:
+    - Leave it out
+    - Use remaining K-1 in the regression.
+    - Often, the largest category is chosen as the reference category.
+
+Interpreting the regression coefficients are going to be **compared to the reference group**. In this case, it is the Burbank area. Why Burbank? Because that is what R sees as the first level. If you want something different, you need to change the factor ordering. 
+
+```{r}
+levels(fev_long$area)
+```
+
+The mathematical model is now written as follows, 
+
+$$ Y_{i} = \beta_{0} + \beta_{1}x_{1i} + \beta_{2}x_{2i} +\beta_{3}x_{3i} + \beta_{4}x_{4i} + \beta_{5}x_{5i} +\beta_{6}x_{6i}\epsilon_{i}$$
+
+where 
+
+* $x_{1}$: Age
+* $x_{2}$: height
+* $x_{3}$: 0 if Male, 1 if Female
+* $x_{4}$: 1 if living in Lancaster, 0 otherwise 
+* $x_{5}$: 1 if living in Long Beach, 0 otherwise
+* $x_{6}$: 1 if living in Glendora, 0 otherwise
+
+
+For someone living in Burbank, $x_{4}=x_{5}=x_{6} =0$ so the model then is
+
+$$Y_{i} = \beta_{0} + \beta_{1}x_{1i} + \beta_{2}x_{2i} +\beta_{3}x_{3i} + \epsilon_{i}$$
+
+For someone living in Lancaster, $x_{4}=1, x_{5}=0, x_{6} =0$ so the model then is
+
+$$ 
+Y_{i} = \beta_{0} + \beta_{1}x_{1i} + \beta_{2}x_{2i} +\beta_{3}x_{3i} + \beta_{4}(1) \\
+Y_{i} \sim (\beta_{0} + \beta_{4}) + \beta_{1}x_{i} + \beta_{2}x_{2i} +\beta_{3}x_{3i} \epsilon_{i}
+$$
+
+For someone living in Long Beach, $x_{4}=0, x_{5}=1, x_{6} =0$ so the model then is
+
+$$ 
+Y_{i} = \beta_{0} + \beta_{1}x_{1i} + \beta_{2}x_{2i} +\beta_{3}x_{3i} + \beta_{5}(1) \\
+Y_{i} \sim (\beta_{0} + \beta_{5}) + \beta_{1}x_{i} + \beta_{2}x_{2i} +\beta_{3}x_{3i} \epsilon_{i}
+$$
+
+
+and the model for someone living in Glendora $x_{4}=0, x_{5}=0, x_{6} =1$ is
+
+$$ 
+Y_{i} = \beta_{0} + \beta_{1}x_{1i} + \beta_{2}x_{2i} +\beta_{3}x_{3i} + \beta_{6}(1) \\
+Y_{i} \sim (\beta_{0} + \beta_{6}) + \beta_{1}x_{i} + \beta_{2}x_{2i} +\beta_{3}x_{3i} \epsilon_{i}
+$$
+
+
+In summary, each area gets it's own intercept, but still has a common slope for all other variables. 
+
+$$y_{i.Burbank} = -2.25 - 0.023(age) + 0.10(ht) -0.64(female)$$
+$$y_{i.Lancaster} = -2.22 - 0.023(age) + 0.10(ht) -0.64(female)$$
+$$y_{i.Long.Beach} = -2.19 - 0.023(age) + 0.10(ht) -0.64(female)$$
+$$y_{i.Glendora} = -2.13 - 0.023(age) + 0.10(ht) -0.64(female)$$ 
+
+Let's look interpret the regression coefficients and their 95% confidence intervals from the main effects model again. 
+
+```{r}
+lm(fev1 ~ age + ht + gender + area, data=fev_long) |> tbl_regression()
+```
+
+* $b_{4}$: After controlling for age, height and gender, those that live in Lancaster have 0.03 (-0.14, 0.20) higher FEV1 compared to someone living in Burbank (p=0.7). 
+* $b_{5}$: After controlling for age, height and gender, those that live in Long Beach have 0.06 (-0.14, 0.27) higher FEV1 compared to someone living in Burbank (p=0.6). 
+* $b_{6}$: After controlling for age, height and gender, those that live in Glendora have 0.12 (-0.04, 0.28) higher FEV1 compared to someone living in Burbank (p=0.14). 
+
+Beta coefficients for categorical variables are always interpreted as the difference between that particular level and the reference group.
+
+## Presenting results
+
+The direct software output always tells you more information than what you are wanting to share with an audience. Here are some ways to "prettify" your regression output. 
+
+::: {.panel-tabset}
+## broom + knitr
+```{r}
+tidy(mlr.dad.model) |> kable(digits=3)
+```
+
+## gtsummary
+```{r}
+tbl_regression(mlr.dad.model)
+```
+
+Consult the [vignette](https://www.danieldsjoberg.com/gtsummary/) for additional ways to modify the output to show measures such as `AIC`, $R^{2}$ and the number of observations being used to fit the model. 
+
+## dotwhisker
+
+With the function `dwplot` in the [dotwhisker](https://cran.r-project.org/web/packages/dotwhisker/vignettes/dotwhisker-vignette.html) package we can create a _forest plot_. 
+
+```{r}
+dwplot(mlr.dad.model)
+```
+
+Further improvement on `dwplot` - extract the point estimate & CI into a data table, then add it as a `geom_text` layer. 
+
+```{r}
+text <- data.frame(                               # create a data frame
+  estimate = coef(mlr.dad.model),                 # by extracting the coefficients,
+  CI.low = confint(mlr.dad.model)[,1],            # with their lower
+  CI.high = confint(mlr.dad.model)[,2]) %>%       # and upper confidence interval values
+  round(2)                                        # round digits
+
+# create the string for the label
+text$label <- paste0(text$estimate, "(", text$CI.low, ", " , text$CI.high, ")")
+
+text                                              # view the results to check for correctness
+text <- text[-1, ]                                # drop the intercept row
+
+# ---- create plot ------
+mlr.dad.model %>%                                  # start with a model
+  tidy() %>%                                       # tidy up the output
+  relabel_predictors("(Intercept)" = "Intercept",  # convert to sensible names
+                     FAGE = "Age", 
+                     FHEIGHT = "Height") %>% 
+  filter(term != "Intercept") %>%                  # drop the intercept 
+  dwplot() +                                       # create the ggplot 
+  geom_text(aes(x=text$estimate, y = term,         # add the estimates and CI's
+                label = text$label), 
+            nudge_y = .1) +                        # move it up a smidge
+  geom_vline(xintercept = 0, col = "grey",         # add a reference line at 0
+             lty = "dashed", linewidth=1.2) +      # make it dashed and a little larger
+  scale_x_continuous(limits = c(-.15, .15))        # expand the x axis limits for readability
+
+```
+
+:::
+
+## Confounding 
+
+One primary purpose of a multivariable model is to assess the relationship between a particular explanatory variable $x$ and your response variable $y$, _after controlling for other factors_. 
+
+
+![All the ways covariates can affect response variables](images/confounder.png)
+
+Credit: [A blog about statistical musings](https://significantlystatistical.wordpress.com/2014/12/12/confounders-mediators-moderators-and-covariates/)
+
+
+
+::: {.callout-tip}
+## Learn more
+Easy to read short [article](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4017459/) from a Gastroenterology journal on how to control confounding effects by statistical analysis.
+:::
+
+Other factors (characteristics/variables) could also be explaining part of the variability seen in $y$. 
+
+::: {.callout-note}
+## Confounders
+If the relationship between $x_{1}$ and $y$ is bivariately significant, but then no longer significant once $x_{2}$ has been added to the model, then $x_{2}$ is said to explain, or **confound**, the relationship between $x_{1}$ and $y$.
+:::
+
+Steps to determine if a variable $x_{2}$ is a confounder. 
+
+1. Fit a regression model on $y \sim x_{1}$. 
+2. If $x_{1}$ is not significantly associated with $y$, STOP. Re-read the "IF" part of the definition of a confounder. 
+3. Fit a regression model on $y \sim x_{1} + x_{2}$. 
+4. Look at the p-value for $x_{1}$. One of two things will have happened. 
+    - If $x_{1}$ is still significant, then $x_{2}$ does NOT confound (or explain) the relationship between $y$ and $x_{1}$. 
+    - If $x_{1}$ is NO LONGER significantly associated with $y$, then $x_{2}$ IS a confounder. 
+    
+
+This means that the third variable is explaining the relationship between the explanatory variable and the response variable.
+        
+Note that this is a two way relationship. The order of $x_{1}$ and $x_{2}$ is invariant. If you were to add $x_{2}$ to the model before $x_{1}$ you may see the same thing occur. That is - both variables are explaining the same portion of the variance in $y$. 
+
+<!---
+### Example: Does smoking affect pulse rate? 
+
+Prior studies have indicate that smoking is associated with high blood pressure. Is smoking also associated with your pulse rate? 
+
+```{r, echo=FALSE}
+addhealth$H4TO5[addhealth$H4TO5 > 30 | addhealth$H4TO5==0] <- NA
+addhealth$H4TO6[addhealth$H4TO6 > 30] <- NA
+addhealth$H4PR[addhealth$H4PR > 200] <- NA
+```
+
+First we consider the bivariate relationship between pulse rate (`H4PR`) and cigarette smoking as measured by the quantity of cigarettes smoked each day during the past 30 days (`H4TO6`). 
+```{r}
+lm(H4PR ~ H4TO6 , data=addhealth) %>% summary()
+```
+
+As the number of cigarettes smoked each day increases by one, a persons pulse rate significantly increases by 0.13. 
+
+However, there are more ways to assess the amount someone smokes. Consider a different measure of smoking, "during the past 30 days, on how many days did you smoke cigarettes?" (`H4TO5`). So here we are measuring the # of days smoked, not the # of cigarettes per day. If we include both in the model, we note that the earlier measure of smoking `H4TO6` is no longer significant (at the 0.05 level). 
+
+```{r}
+lm(H4PR ~ H4TO5 +  H4TO6 , data=addhealth) %>% summary()
+```
+
+Thus, the number of days smoked _confounds_ the relationship between the number of cigarettes smoked per day, and the person's pulse rate. 
+
+
+--->
+
+## What to watch out for
+* Representative sample 
+* Range of prediction should match observed range of X in sample
+* Use of nominal or ordinal, rather than interval or ratio data
+* Errors-in-variables
+* Correlation does not imply causation 
+* Violation of assumptions
+* Influential points
+* Appropriate model
+* Multicollinearity
+
+
+
+

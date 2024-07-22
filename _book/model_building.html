@@ -1,0 +1,3213 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.45">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Course notes for various Applied Statistics courses at CSU Chico">
+
+<title>10&nbsp; Model Building – Applied Statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./appendix.html" rel="next">
+<link href="./mlr.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./reg_intro.html">Regression Modeling</a></li><li class="breadcrumb-item"><a href="./model_building.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Model Building</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Applied Statistics</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/annakfell/ascnv2" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Preparing Data for Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dataprep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Workflow and Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Visualizing Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./select_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Selecting Appropriate Analyses</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Foundations for Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bivariate_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bivariate Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Regression Modeling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reg_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sl_reg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./moderation_stratification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Moderation and Stratification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mlr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./model_building.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Model Building</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Appendix</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#interactions-pma6-8.8" id="toc-interactions-pma6-8.8" class="nav-link active" data-scroll-target="#interactions-pma6-8.8"><span class="header-section-number">10.1</span> Interactions (PMA6 8.8)</a>
+  <ul>
+  <li><a href="#fitting-interaction-models-interpreting-coefficients" id="toc-fitting-interaction-models-interpreting-coefficients" class="nav-link" data-scroll-target="#fitting-interaction-models-interpreting-coefficients"><span class="header-section-number">10.1.1</span> Fitting interaction models &amp; interpreting coefficients</a></li>
+  <li><a href="#interactions-catvars" id="toc-interactions-catvars" class="nav-link" data-scroll-target="#interactions-catvars"><span class="header-section-number">10.1.2</span> Categorical Interaction variables</a></li>
+  <li><a href="#example-2" id="toc-example-2" class="nav-link" data-scroll-target="#example-2"><span class="header-section-number">10.1.3</span> Example 2</a></li>
+  <li><a href="#example-3" id="toc-example-3" class="nav-link" data-scroll-target="#example-3"><span class="header-section-number">10.1.4</span> Example 3:</a></li>
+  </ul></li>
+  <li><a href="#general-F" id="toc-general-F" class="nav-link" data-scroll-target="#general-F"><span class="header-section-number">10.2</span> Simultaneous test of multiple variables (PMA6 9.5)</a>
+  <ul>
+  <li><a href="#example-modeling-depression-score" id="toc-example-modeling-depression-score" class="nav-link" data-scroll-target="#example-modeling-depression-score"><span class="header-section-number">10.2.1</span> Example: Modeling depression score</a></li>
+  <li><a href="#testing-for-a-moderation-effect-in-a-multiple-regression-model." id="toc-testing-for-a-moderation-effect-in-a-multiple-regression-model." class="nav-link" data-scroll-target="#testing-for-a-moderation-effect-in-a-multiple-regression-model."><span class="header-section-number">10.2.2</span> Testing for a moderation effect in a multiple regression model.</a></li>
+  </ul></li>
+  <li><a href="#multicollinearity-pma6-8.9" id="toc-multicollinearity-pma6-8.9" class="nav-link" data-scroll-target="#multicollinearity-pma6-8.9"><span class="header-section-number">10.3</span> Multicollinearity (PMA6 8.9)</a></li>
+  <li><a href="#variable-selection-process" id="toc-variable-selection-process" class="nav-link" data-scroll-target="#variable-selection-process"><span class="header-section-number">10.4</span> Variable Selection Process</a>
+  <ul>
+  <li><a href="#automated-selection-procedures-pma6-9.6" id="toc-automated-selection-procedures-pma6-9.6" class="nav-link" data-scroll-target="#automated-selection-procedures-pma6-9.6"><span class="header-section-number">10.4.1</span> Automated selection procedures (PMA6 9.6)</a>
+  <ul class="collapse">
+  <li><a href="#forward-selection-variables-are-added-one-at-a-time-until-optimal-model-reached." id="toc-forward-selection-variables-are-added-one-at-a-time-until-optimal-model-reached." class="nav-link" data-scroll-target="#forward-selection-variables-are-added-one-at-a-time-until-optimal-model-reached."><span class="header-section-number">10.4.1.1</span> Forward selection: Variables are added one at a time until optimal model reached.</a></li>
+  <li><a href="#backward-elimination-variables-are-removed-one-at-a-time-until-optimal-model-reached" id="toc-backward-elimination-variables-are-removed-one-at-a-time-until-optimal-model-reached" class="nav-link" data-scroll-target="#backward-elimination-variables-are-removed-one-at-a-time-until-optimal-model-reached"><span class="header-section-number">10.4.1.2</span> Backward elimination: Variables are removed one at a time until optimal model reached</a></li>
+  <li><a href="#stepwise-selection-combination-of-forward-and-backward." id="toc-stepwise-selection-combination-of-forward-and-backward." class="nav-link" data-scroll-target="#stepwise-selection-combination-of-forward-and-backward."><span class="header-section-number">10.4.1.3</span> Stepwise selection: Combination of forward and backward.</a></li>
+  <li><a href="#best-subsets" id="toc-best-subsets" class="nav-link" data-scroll-target="#best-subsets"><span class="header-section-number">10.4.1.4</span> Best Subsets</a></li>
+  </ul></li>
+  <li><a href="#lasso-regression-pma6-9.7" id="toc-lasso-regression-pma6-9.7" class="nav-link" data-scroll-target="#lasso-regression-pma6-9.7"><span class="header-section-number">10.4.2</span> LASSO Regression (PMA6 9.7)</a>
+  <ul class="collapse">
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">10.4.2.1</span> Example</a></li>
+  <li><a href="#ridge-regression-pma6-10.6" id="toc-ridge-regression-pma6-10.6" class="nav-link" data-scroll-target="#ridge-regression-pma6-10.6"><span class="header-section-number">10.4.2.2</span> Ridge Regression (PMA6 10.6)</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#model-fit-criteria" id="toc-model-fit-criteria" class="nav-link" data-scroll-target="#model-fit-criteria"><span class="header-section-number">10.5</span> Comparing between models (PMA6 9.4)</a>
+  <ul>
+  <li><a href="#rss-residual-sum-of-squares" id="toc-rss-residual-sum-of-squares" class="nav-link" data-scroll-target="#rss-residual-sum-of-squares"><span class="header-section-number">10.5.1</span> RSS: Residual Sum of Squares</a></li>
+  <li><a href="#general-f-test" id="toc-general-f-test" class="nav-link" data-scroll-target="#general-f-test"><span class="header-section-number">10.5.2</span> General F Test</a></li>
+  <li><a href="#likelihood-function" id="toc-likelihood-function" class="nav-link" data-scroll-target="#likelihood-function"><span class="header-section-number">10.5.3</span> Likelihood function</a></li>
+  <li><a href="#multiple-r2" id="toc-multiple-r2" class="nav-link" data-scroll-target="#multiple-r2"><span class="header-section-number">10.5.4</span> Multiple <span class="math inline">\(R^{2}\)</span></a></li>
+  <li><a href="#adjusted-r2" id="toc-adjusted-r2" class="nav-link" data-scroll-target="#adjusted-r2"><span class="header-section-number">10.5.5</span> Adjusted <span class="math inline">\(R^{2}\)</span></a></li>
+  <li><a href="#mallows-c_p" id="toc-mallows-c_p" class="nav-link" data-scroll-target="#mallows-c_p"><span class="header-section-number">10.5.6</span> Mallows <span class="math inline">\(C_{p}\)</span></a></li>
+  <li><a href="#akaike-information-criterion-aic" id="toc-akaike-information-criterion-aic" class="nav-link" data-scroll-target="#akaike-information-criterion-aic"><span class="header-section-number">10.5.7</span> Akaike Information Criterion (AIC)</a></li>
+  <li><a href="#bayesian-information-criterion-bic" id="toc-bayesian-information-criterion-bic" class="nav-link" data-scroll-target="#bayesian-information-criterion-bic"><span class="header-section-number">10.5.8</span> Bayesian Information Criterion (BIC)</a></li>
+  <li><a href="#aic-vs-bic" id="toc-aic-vs-bic" class="nav-link" data-scroll-target="#aic-vs-bic"><span class="header-section-number">10.5.9</span> AIC vs BIC</a></li>
+  </ul></li>
+  <li><a href="#model-diagnostics" id="toc-model-diagnostics" class="nav-link" data-scroll-target="#model-diagnostics"><span class="header-section-number">10.6</span> Model Diagnostics</a>
+  <ul>
+  <li><a href="#linearity" id="toc-linearity" class="nav-link" data-scroll-target="#linearity"><span class="header-section-number">10.6.1</span> Linearity</a></li>
+  <li><a href="#normality-of-residuals." id="toc-normality-of-residuals." class="nav-link" data-scroll-target="#normality-of-residuals."><span class="header-section-number">10.6.2</span> Normality of residuals.</a></li>
+  <li><a href="#homogeneity-of-variance" id="toc-homogeneity-of-variance" class="nav-link" data-scroll-target="#homogeneity-of-variance"><span class="header-section-number">10.6.3</span> Homogeneity of variance</a></li>
+  <li><a href="#posterior-predictions" id="toc-posterior-predictions" class="nav-link" data-scroll-target="#posterior-predictions"><span class="header-section-number">10.6.4</span> Posterior Predictions</a></li>
+  <li><a href="#all-at-once" id="toc-all-at-once" class="nav-link" data-scroll-target="#all-at-once"><span class="header-section-number">10.6.5</span> All at once</a></li>
+  </ul></li>
+  <li><a href="#general-advice-pma6-9.9" id="toc-general-advice-pma6-9.9" class="nav-link" data-scroll-target="#general-advice-pma6-9.9"><span class="header-section-number">10.7</span> General Advice (PMA6 9.9)</a></li>
+  <li><a href="#what-to-watch-out-for-pma6-9.10" id="toc-what-to-watch-out-for-pma6-9.10" class="nav-link" data-scroll-target="#what-to-watch-out-for-pma6-9.10"><span class="header-section-number">10.8</span> What to watch out for (PMA6 9.10)</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/model_building.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./reg_intro.html">Regression Modeling</a></li><li class="breadcrumb-item"><a href="./model_building.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Model Building</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-model-building" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Model Building</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Model building methods are used mainly in exploratory situations where many independent variables have been measured, but a final model explaining the dependent variable has not been reached. You want to build a model that contains enough covariates to explain the model well, but still be parsimonious such that the model is still interpretable.</p>
+<p>This chapter introduces how to use and interpret different types of covariates, how to choose covariates, and then cover some methods to compare between competing models using measures of model fit.</p>
+<blockquote class="blockquote">
+<p>This section uses functions from the <code>gtsummary</code> and <code>survey</code> packages to help tidy and visualize results from regression models. It also uses functions from the <code>performance</code> and <code>glmnet</code> packages to perform model selection and assessment.</p>
+</blockquote>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Packages Used
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This chapter uses the following packages: <a href="https://www.danieldsjoberg.com/gtsummary/">gtsummary</a>, <a href="http://r-survey.r-forge.r-project.org/survey/">survey</a>, <a href="https://easystats.github.io/performance/">performance</a>, <a href="https://glmnet.stanford.edu/articles/glmnet.html">glmnet</a>, <a href="https://easystats.github.io/see/">see</a>, <a href="https://www.rdocumentation.org/packages/leaps/versions/3.2">leaps</a></p>
+</div>
+</div>
+<section id="interactions-pma6-8.8" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="interactions-pma6-8.8"><span class="header-section-number">10.1</span> Interactions (PMA6 8.8)</h2>
+<p>In this <em>main effects</em> model, Species only changes the intercept. The effect of species is not multiplied by Sepal length. Reviewing the scatterplot below, do you think this is a reasonable model to fit the observed relationship?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Length, <span class="at">y=</span>Petal.Length, <span class="at">color =</span> Species)) <span class="sc">+</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="model_building_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If we care about how species <em>changes</em> the relationship between petal and sepal length, we can fit a model with an <strong>interaction</strong> between sepal length (<span class="math inline">\(x_{1}\)</span>) and species. For this first example let <span class="math inline">\(x_{2}\)</span> be an indicator for when <code>species == setosa</code>. Note that both <em>main effects</em> of sepal length, and setosa species are also included in the model. Interactions are mathematically represented as a multiplication between the two variables that are interacting.</p>
+<p><span class="math display">\[ Y_{i} \sim \beta_{0} + \beta_{1}x_{i} + \beta_{2}x_{2i} + \beta_{3}x_{1i}x_{2i}\]</span></p>
+<p>If we evaluate this model for both levels of <span class="math inline">\(x_{2}\)</span>, the resulting models are the same as the stratified models.</p>
+<p>When <span class="math inline">\(x_{2} = 0\)</span>, the record is on an iris not from the <em>setosa</em> species.</p>
+<p><span class="math display">\[ Y_{i} \sim \beta_{0} + \beta_{1}x_{i} + \beta_{2}(0) + \beta_{3}x_{1i}(0)\]</span> which simplifies to <span class="math display">\[ Y_{i} \sim \beta_{0} + \beta_{1}x_{i}\]</span></p>
+<p>When <span class="math inline">\(x_{2} = 1\)</span>, the record is on an iris of the <em>setosa</em> species.</p>
+<p><span class="math display">\[ Y_{i} \sim \beta_{0} + \beta_{1}x_{i} + \beta_{2}(1) + \beta_{3}x_{1i}(1)\]</span> which simplifies to <span class="math display">\[ Y_{i} \sim (\beta_{0} + \beta_{2}) + (\beta_{1} + \beta_{3})x_{i}\]</span></p>
+<p>Each subgroup model has a different intercept and slope, but we had to estimate 4 parameters in the interaction model, and 6 for the fully stratified model.</p>
+<section id="fitting-interaction-models-interpreting-coefficients" class="level3" data-number="10.1.1">
+<h3 data-number="10.1.1" class="anchored" data-anchor-id="fitting-interaction-models-interpreting-coefficients"><span class="header-section-number">10.1.1</span> Fitting interaction models &amp; interpreting coefficients</h3>
+<p>Interactions are fit in <code>R</code> by simply multiplying <code>*</code> the two variables together in the model statement.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>setosa <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(iris<span class="sc">$</span>Species <span class="sc">==</span> <span class="st">"setosa"</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Petal.Length <span class="sc">~</span> Sepal.Length <span class="sc">+</span> setosa <span class="sc">+</span> Sepal.Length<span class="sc">*</span>setosa, <span class="at">data=</span>iris) <span class="sc">|&gt;</span> <span class="fu">tbl_regression</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="cyohpjenuw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#cyohpjenuw table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#cyohpjenuw thead, #cyohpjenuw tbody, #cyohpjenuw tfoot, #cyohpjenuw tr, #cyohpjenuw td, #cyohpjenuw th {
+  border-style: none;
+}
+
+#cyohpjenuw p {
+  margin: 0;
+  padding: 0;
+}
+
+#cyohpjenuw .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#cyohpjenuw .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#cyohpjenuw .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#cyohpjenuw .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#cyohpjenuw .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#cyohpjenuw .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#cyohpjenuw .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#cyohpjenuw .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#cyohpjenuw .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#cyohpjenuw .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#cyohpjenuw .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#cyohpjenuw .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#cyohpjenuw .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#cyohpjenuw .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#cyohpjenuw .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#cyohpjenuw .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#cyohpjenuw .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#cyohpjenuw .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#cyohpjenuw .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cyohpjenuw .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#cyohpjenuw .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#cyohpjenuw .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#cyohpjenuw .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cyohpjenuw .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#cyohpjenuw .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#cyohpjenuw .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#cyohpjenuw .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cyohpjenuw .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#cyohpjenuw .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#cyohpjenuw .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#cyohpjenuw .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#cyohpjenuw .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#cyohpjenuw .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cyohpjenuw .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#cyohpjenuw .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cyohpjenuw .gt_left {
+  text-align: left;
+}
+
+#cyohpjenuw .gt_center {
+  text-align: center;
+}
+
+#cyohpjenuw .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#cyohpjenuw .gt_font_normal {
+  font-weight: normal;
+}
+
+#cyohpjenuw .gt_font_bold {
+  font-weight: bold;
+}
+
+#cyohpjenuw .gt_font_italic {
+  font-style: italic;
+}
+
+#cyohpjenuw .gt_super {
+  font-size: 65%;
+}
+
+#cyohpjenuw .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#cyohpjenuw .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#cyohpjenuw .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#cyohpjenuw .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#cyohpjenuw .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#cyohpjenuw .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#cyohpjenuw .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_col_headings">
+<th id="<strong>Characteristic</strong>" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Characteristic</strong></th>
+<th id="<strong>Beta</strong>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>Beta</strong></th>
+<th id="<strong>95% CI</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>95% CI</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+<th id="<strong>p-value</strong>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>p-value</strong></th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">Sepal.Length</td>
+<td class="gt_row gt_center" headers="estimate">1.0</td>
+<td class="gt_row gt_center" headers="ci">0.91, 1.1</td>
+<td class="gt_row gt_center" headers="p.value">&lt;0.001</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">setosa</td>
+<td class="gt_row gt_center" headers="estimate">2.4</td>
+<td class="gt_row gt_center" headers="ci">0.61, 4.1</td>
+<td class="gt_row gt_center" headers="p.value">0.008</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">Sepal.Length * setosa</td>
+<td class="gt_row gt_center" headers="estimate">-0.90</td>
+<td class="gt_row gt_center" headers="ci">-1.2, -0.56</td>
+<td class="gt_row gt_center" headers="p.value">&lt;0.001</td>
+</tr>
+</tbody><tfoot class="gt_footnotes">
+<tr class="even">
+<td colspan="4" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> CI = Confidence Interval</td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+</div>
+</div>
+<p>The coefficient <span class="math inline">\(b_{3}\)</span> for the interaction term is significant, confirming that species changes the relationship between sepal length and petal length. Thus, species is a <strong>moderator</strong> (see <a href="moderation_stratification.html" class="quarto-xref"><span>Chapter 8</span></a>).</p>
+<p><strong>Interpreting Coefficients</strong></p>
+<ul>
+<li>If <span class="math inline">\(x_{2}=0\)</span>, then the effect of <span class="math inline">\(x_{1}\)</span> on <span class="math inline">\(Y\)</span> simplifies to: <span class="math inline">\(\beta_{1}\)</span>
+<ul>
+<li><span class="math inline">\(b_{1}\)</span> The effect of sepal length on petal length <strong>for non-setosa species of iris</strong> (<code>setosa=0</code>)</li>
+<li>For non-setosa species, the petal length increases 1.03cm for every additional cm of sepal length.</li>
+</ul></li>
+<li>If <span class="math inline">\(x_{2}=1\)</span>, then the effect of <span class="math inline">\(x_{1}\)</span> on <span class="math inline">\(Y\)</span> model simplifies to: <span class="math inline">\(\beta_{1} + \beta_{3}\)</span>
+<ul>
+<li>For setosa species, the petal length increases by <code>1.03-0.9=0.13</code> cm for every additional cm of sepal length.</li>
+</ul></li>
+</ul>
+<div class="cell" type="rmdcaution">
+
+<div class="rmdcaution">
+The main effects (<span class="math inline">\(b_{1}\)</span>, <span class="math inline">\(b_{2}\)</span>) cannot be interpreted by themselves when there is an interaction in the model.
+</div>
+</div>
+</section>
+<section id="interactions-catvars" class="level3" data-number="10.1.2">
+<h3 data-number="10.1.2" class="anchored" data-anchor-id="interactions-catvars"><span class="header-section-number">10.1.2</span> Categorical Interaction variables</h3>
+<p>Let’s up the game now and look at the full interaction model with a categorical version of species. Recall <span class="math inline">\(x_{1}\)</span> is Sepal Length, <span class="math inline">\(x_{2}\)</span> is the indicator for <em>versicolor</em>, and <span class="math inline">\(x_{3}\)</span> the indicator for <em>virginica</em> . Refer to <a href="mlr.html#sec-cat-predictors" class="quarto-xref"><span>Section 9.4.3</span></a> for information on how to interpret categorical predictors as main effects.</p>
+<p><span class="math display">\[ Y_{i} \sim \beta_{0} + \beta_{1}x_{i} + \beta_{2}x_{2i} + \beta_{3}x_{3i} + \beta_{4}x_{1i}x_{2i} + \beta_{5}x_{1i}x_{3i}+\epsilon_{i}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(Petal.Length <span class="sc">~</span> Sepal.Length <span class="sc">+</span> Species <span class="sc">+</span> Sepal.Length<span class="sc">*</span>Species, <span class="at">data=</span>iris))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Petal.Length ~ Sepal.Length + Species + Sepal.Length * 
+    Species, data = iris)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.68611 -0.13442 -0.00856  0.15966  0.79607 
+
+Coefficients:
+                               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                      0.8031     0.5310   1.512    0.133    
+Sepal.Length                     0.1316     0.1058   1.244    0.216    
+Speciesversicolor               -0.6179     0.6837  -0.904    0.368    
+Speciesvirginica                -0.1926     0.6578  -0.293    0.770    
+Sepal.Length:Speciesversicolor   0.5548     0.1281   4.330 2.78e-05 ***
+Sepal.Length:Speciesvirginica    0.6184     0.1210   5.111 1.00e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.2611 on 144 degrees of freedom
+Multiple R-squared:  0.9789,    Adjusted R-squared:  0.9781 
+F-statistic:  1333 on 5 and 144 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>The slope of the relationship between sepal length and petal length is calculated as follows, for each species:</p>
+<ul>
+<li><em>setosa</em> <span class="math inline">\((x_{2}=0, x_{3}=0): b_{1}=0.13\)</span></li>
+<li><em>versicolor</em> <span class="math inline">\((x_{2}=1, x_{3}=0): b_{1} + b_{2} + b_{4} = 0.13+0.55 = 0.68\)</span></li>
+<li><em>virginica</em> <span class="math inline">\((x_{2}=0, x_{3}=1): b_{1} + b_{3} + b_{5} = 0.13+0.62 = 0.75\)</span></li>
+</ul>
+<p>Compare this to the estimates gained from the stratified model:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">by</span>(iris, iris<span class="sc">$</span>Species, <span class="cf">function</span>(x){</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(Petal.Length <span class="sc">~</span> Sepal.Length, <span class="at">data=</span>x) <span class="sc">%&gt;%</span> <span class="fu">coef</span>()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>iris$Species: setosa
+ (Intercept) Sepal.Length 
+   0.8030518    0.1316317 
+------------------------------------------------------------ 
+iris$Species: versicolor
+ (Intercept) Sepal.Length 
+   0.1851155    0.6864698 
+------------------------------------------------------------ 
+iris$Species: virginica
+ (Intercept) Sepal.Length 
+   0.6104680    0.7500808 </code></pre>
+</div>
+</div>
+<p>They’re the same! Proof that an interaction is equivalent to stratification.</p>
+</section>
+<section id="example-2" class="level3" data-number="10.1.3">
+<h3 data-number="10.1.3" class="anchored" data-anchor-id="example-2"><span class="header-section-number">10.1.3</span> Example 2</h3>
+<p>What if we now wanted to include other predictors in the model? How does sepal length relate to petal length after controlling for petal width? We add the variable for petal width into the model</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(Petal.Length <span class="sc">~</span> Sepal.Length <span class="sc">+</span> setosa <span class="sc">+</span> Sepal.Length<span class="sc">*</span>setosa <span class="sc">+</span> Petal.Width, <span class="at">data=</span>iris))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Petal.Length ~ Sepal.Length + setosa + Sepal.Length * 
+    setosa + Petal.Width, data = iris)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.83519 -0.18278 -0.01812  0.17004  1.06968 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)         -0.86850    0.27028  -3.213  0.00162 ** 
+Sepal.Length         0.66181    0.05179  12.779  &lt; 2e-16 ***
+setosa               1.83713    0.62355   2.946  0.00375 ** 
+Petal.Width          0.97269    0.07970  12.204  &lt; 2e-16 ***
+Sepal.Length:setosa -0.61106    0.12213  -5.003 1.61e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.2769 on 145 degrees of freedom
+Multiple R-squared:  0.9761,    Adjusted R-squared:  0.9754 
+F-statistic:  1478 on 4 and 145 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>So far, petal width, and the combination of species and sepal length are both significantly associated with petal length.</p>
+<p><em>Note of caution: Stratification implies that the stratifying variable interacts with all other variables.</em> So if we were to go back to the stratified model where we fit the model of petal length on sepal length AND petal width, stratified by species, we would be implying that species interacts with both sepal length and petal width.</p>
+<p>E.g. the following stratified model</p>
+<ul>
+<li><span class="math inline">\(Y = A + B + C + D + C*D\)</span>, when D=1</li>
+<li><span class="math inline">\(Y = A + B + C + D + C*D\)</span>, when D=0</li>
+</ul>
+<p>is the same as the following interaction model:</p>
+<ul>
+<li><span class="math inline">\(Y = A + B + C + D + A*D + B*D + C*D\)</span></li>
+</ul>
+</section>
+<section id="example-3" class="level3" data-number="10.1.4">
+<h3 data-number="10.1.4" class="anchored" data-anchor-id="example-3"><span class="header-section-number">10.1.4</span> Example 3:</h3>
+<p>Let’s explore the relationship between income, employment status and depression. This example follows a logistic regression example from section @ref(mlogreg).</p>
+<p>Here I create the binary indicators of <code>lowincome</code> (annual income &lt;$10k/year) and underemployed (part time or unemployed).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>depress_clean<span class="sc">$</span>lowincome <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(depress_clean<span class="sc">$</span>income <span class="sc">&lt;</span> <span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(depress_clean<span class="sc">$</span>lowincome, depress_clean<span class="sc">$</span>income, <span class="at">useNA=</span><span class="st">"always"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      
+        2  4  5  6  7  8  9 11 12 13 15 16 18 19 20 23 24 25 26 27 28 31 32 35
+  0     0  0  0  0  0  0  0 17  2 18 24  1  1 25  3 25  2  1  1  1 19  1  1 24
+  1     7  8 10 12 18 14 22  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+  &lt;NA&gt;  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+      
+       36 37 42 45 55 65 &lt;NA&gt;
+  0     1  1  1 15  9 10    0
+  1     0  0  0  0  0  0    0
+  &lt;NA&gt;  0  0  0  0  0  0    0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>depress_clean<span class="sc">$</span>underemployed <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(depress_clean<span class="sc">$</span>employ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"PT"</span>, <span class="st">"Unemp"</span>), <span class="dv">1</span>, <span class="dv">0</span> )</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(depress_clean<span class="sc">$</span>underemployed, depress_clean<span class="sc">$</span>employ, <span class="at">useNA=</span><span class="st">"always"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      
+         1   2   3   4   5   6   7 &lt;NA&gt;
+  0    167  42  14  38  27   2   4    0
+  &lt;NA&gt;   0   0   0   0   0   0   0    0</code></pre>
+</div>
+</div>
+<p>The <strong>Main Effects</strong> model assumes that the effect of income on depression is independent of employment status, and the effect of employment status on depression is independent of income.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>me_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(cases <span class="sc">~</span> lowincome <span class="sc">+</span> underemployed, <span class="at">data=</span>depress_clean, <span class="at">family=</span><span class="st">"binomial"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(me_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = cases ~ lowincome + underemployed, family = "binomial", 
+    data = depress_clean)
+
+Coefficients: (1 not defined because of singularities)
+              Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)    -1.6393     0.1902  -8.618   &lt;2e-16 ***
+lowincome       0.1684     0.3294   0.511    0.609    
+underemployed       NA         NA      NA       NA    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 268.12  on 293  degrees of freedom
+Residual deviance: 267.87  on 292  degrees of freedom
+AIC: 271.87
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<p>To formally test whether an interaction term is necessary, we add the interaction term into the model and assess whether the coefficient for the interaction term is significantly different from zero.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>me_intx_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(cases <span class="sc">~</span> lowincome <span class="sc">+</span> underemployed <span class="sc">+</span> lowincome<span class="sc">*</span>underemployed, <span class="at">data=</span>depress_clean, <span class="at">family=</span><span class="st">"binomial"</span>) </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(me_intx_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = cases ~ lowincome + underemployed + lowincome * 
+    underemployed, family = "binomial", data = depress_clean)
+
+Coefficients: (2 not defined because of singularities)
+                        Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)              -1.6393     0.1902  -8.618   &lt;2e-16 ***
+lowincome                 0.1684     0.3294   0.511    0.609    
+underemployed                 NA         NA      NA       NA    
+lowincome:underemployed       NA         NA      NA       NA    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 268.12  on 293  degrees of freedom
+Residual deviance: 267.87  on 292  degrees of freedom
+AIC: 271.87
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="general-F" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="general-F"><span class="header-section-number">10.2</span> Simultaneous test of multiple variables (PMA6 9.5)</h2>
+<p>The General-F test is used for simultaneous tests of <span class="math inline">\(Q\)</span> variables in a model. This is used primarily in two situations:</p>
+<ol type="1">
+<li>Testing if a categorical variable (with more than 2 levels) as a whole improves model fit.</li>
+<li>Testing whether or not the regression model is helpful in predicting values of Y at all.</li>
+</ol>
+<p>Consider a model with <span class="math inline">\(P\)</span> variables and you want to test if <span class="math inline">\(Q\)</span> additional variables are useful.</p>
+<ul>
+<li><span class="math inline">\(H_{0}: Q\)</span> additional variables are useless, i.e., their <span class="math inline">\(\beta\)</span>’s all = 0<br>
+</li>
+<li><span class="math inline">\(H_{A}: Q\)</span> additional variables are useful to explain/predict <span class="math inline">\(Y\)</span></li>
+</ul>
+<p>We can leverage the ANOVA framework to compare the residual sum of squares between the model including the <span class="math inline">\(Q\)</span> variables, and the one without.</p>
+<p><span class="math display">\[
+F = \frac{({\mbox{RSS}}_P-{\mbox{RSS}_{P+Q})}/Q}{{\mbox
+{RSS}}_{P+Q}{/}(N-P-Q-1)}
+\]</span></p>
+<p>The numerator quantifies improvement in the model from adding the additional <span class="math inline">\(Q\)</span> variables. This ratio has a <span class="math inline">\(F\)</span> distribution with <span class="math inline">\(Q\)</span> and <span class="math inline">\(N-P-Q-1\)</span> degrees of freedom.</p>
+<p><strong>Example</strong> Consider the following model, where <span class="math inline">\(X_{1}\)</span> and <span class="math inline">\(X_{2}\)</span> are continuous predictors and <span class="math inline">\(X_{3}, X_{4}, X_{5}\)</span> are binary indicators from a 4 level categorical variable.</p>
+<p><span class="math display">\[
+Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + \beta_{4}x_{4} + \beta_{5}X_{5}+\epsilon_{i}
+\]</span></p>
+<p>If you wanted to test (1) whether or not the categorical variable as a whole improves model fit, then <span class="math inline">\(\mathbf{R} =
+\begin{bmatrix}
+0 , 0 ,1,1,1
+\end{bmatrix}\)</span></p>
+<p>If we want to test (2) that the regression plane is useful to predict <span class="math inline">\(Y\)</span>, then we are testing <span class="math inline">\(\beta_{1}=\beta_{2}=...\beta_{5}=0\)</span>, then <span class="math inline">\(\mathbf{R} =
+\begin{bmatrix}
+1 , 1 ,1,1,1
+\end{bmatrix}\)</span>.</p>
+<section id="example-modeling-depression-score" class="level3" data-number="10.2.1">
+<h3 data-number="10.2.1" class="anchored" data-anchor-id="example-modeling-depression-score"><span class="header-section-number">10.2.1</span> Example: Modeling depression score</h3>
+<p>Consider a model to predict depression using age, employment status and whether or not the person was chronically ill in the past year as covariates. This example uses the cleaned depression data set.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>employ.depression.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(cesd <span class="sc">~</span> age <span class="sc">+</span> chronill <span class="sc">+</span> employ, <span class="at">data=</span>depress_clean)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(employ.depression.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = cesd ~ age + chronill + employ, data = depress_clean)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-15.907  -5.601  -2.065   3.142  32.753 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 11.14724    1.33736   8.335 3.14e-15 ***
+age         -0.14439    0.03043  -4.745 3.28e-06 ***
+chronill     2.27884    1.01165   2.253    0.025 *  
+employ       1.42030    0.34798   4.082 5.79e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 8.429 on 290 degrees of freedom
+Multiple R-squared:  0.09677,   Adjusted R-squared:  0.08742 
+F-statistic: 10.36 on 3 and 290 DF,  p-value: 1.703e-06</code></pre>
+</div>
+</div>
+<p>The results of this model show that age and chronic illness are statistically associated with CESD (each p&lt;.006). However employment status shows mixed results. Some employment statuses are significantly different from the reference group, some are not. So overall, is employment status associated with depression?</p>
+<p><strong>(1) Testing if a categorical variable as a whole improves model fit</strong></p>
+<p>Since employment is a categorical variable, all the coefficient estimates shown are the effect of being in that income category has on depression <em>compared to</em> being employed full time. For example, the coefficient for PT employment is greater than zero, so they have a higher CESD score compared to someone who is fully employed.</p>
+<p>To test that employment status affects CESD we need to do a global test that all <span class="math inline">\(\beta\)</span>’s related to employment status are 0.</p>
+<p><span class="math inline">\(H_{0}: \beta_{3} = \beta_{4} = \beta_{5} = \beta_{6} = \beta_{7} = \beta_{8} = 0\)</span><br>
+<span class="math inline">\(H_{A}\)</span>: At least one <span class="math inline">\(\beta_{j}\)</span> is not 0.</p>
+<p>ANOVA to the rescue! Since ANOVA partitions the variance in our outcome <span class="math inline">\(Y\)</span> into amounts due to each variable, we get an ANOVA table that has one row per term:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(employ.depression.model) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+age           1    615   614.6   8.651  0.00353 ** 
+chronill      1    409   409.2   5.759  0.01703 *  
+employ        1   1184  1183.6  16.659 5.79e-05 ***
+Residuals   290  20605    71.1                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<ul>
+<li>The last row for <code>employ</code> is what we are interested in here.</li>
+<li>First confirm that the degrees of freedom are correct. It should equal the # of categories in the variable you are testing, minus 1.
+<ul>
+<li>Employment has 7 levels, so <span class="math inline">\(df=6\)</span>.</li>
+<li>Or equivalently, the degrees of freedom are the number of <span class="math inline">\(beta\)</span>’s you are testing to be 0.</li>
+</ul></li>
+</ul>
+<p>The p-value of this Wald test is significant, thus not <span class="math inline">\(beta\)</span>’s are equal to zero, which implies employment status significantly predicts CESD score.</p>
+<div class="cell" type="rmdcaution">
+
+<div class="rmdcaution">
+Note the p-values for the individual coefficients <code>age</code> and <code>chronill</code> are not the same as in the regression model. ANOVA models are order dependent as they describe a “reduction” in variance in the outcome due to that variable. A deeper explanation of this is not included in these notes at this time.
+</div>
+</div>
+<p><strong>(2) Testing that the regression plane is useful to predict <span class="math inline">\(Y\)</span></strong></p>
+<p>This information is provided to us directly in the last line of the summary output from a linear model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(employ.depression.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = cesd ~ age + chronill + employ, data = depress_clean)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-15.907  -5.601  -2.065   3.142  32.753 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 11.14724    1.33736   8.335 3.14e-15 ***
+age         -0.14439    0.03043  -4.745 3.28e-06 ***
+chronill     2.27884    1.01165   2.253    0.025 *  
+employ       1.42030    0.34798   4.082 5.79e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 8.429 on 290 degrees of freedom
+Multiple R-squared:  0.09677,   Adjusted R-squared:  0.08742 
+F-statistic: 10.36 on 3 and 290 DF,  p-value: 1.703e-06</code></pre>
+</div>
+</div>
+</section>
+<section id="testing-for-a-moderation-effect-in-a-multiple-regression-model." class="level3" data-number="10.2.2">
+<h3 data-number="10.2.2" class="anchored" data-anchor-id="testing-for-a-moderation-effect-in-a-multiple-regression-model."><span class="header-section-number">10.2.2</span> Testing for a moderation effect in a multiple regression model.</h3>
+<p>Moderation is introduced in Chapter @ref(mod-strat), and helps to set the motivation for stratified models. Later, in Chapter @ref(interactions-catvars), we show that an interaction term in a regression model is equivelant to stratification.</p>
+<p>Well what if you have other predictors in the model, not just the ones that you have an interaction on? We can use the Wald test to assess if a measure is a significant moderator without stratifying.</p>
+<p>Continuing with the depression example we saw that employment affects CESD depression score. What if we think that the effect (slope) of age on CESD may be different depending on their employment? That is, is the effect of age on depression different for those that are employed versus retired?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>emp.dep.intx <span class="ot">&lt;-</span> <span class="fu">lm</span>(cesd <span class="sc">~</span> age <span class="sc">+</span> chronill <span class="sc">+</span> employ <span class="sc">+</span> age<span class="sc">*</span>employ, <span class="at">data=</span>depress_clean)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(emp.dep.intx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = cesd ~ age + chronill + employ + age * employ, data = depress_clean)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-17.207  -5.506  -2.057   3.125  33.450 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)  8.21730    2.50270   3.283  0.00115 **
+age         -0.07501    0.05861  -1.280  0.20170   
+chronill     2.29855    1.01016   2.275  0.02361 * 
+employ       2.67061    0.96780   2.759  0.00616 **
+age:employ  -0.02664    0.01924  -1.384  0.16737   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 8.416 on 289 degrees of freedom
+Multiple R-squared:  0.1027,    Adjusted R-squared:  0.0903 
+F-statistic: 8.271 on 4 and 289 DF,  p-value: 2.501e-06</code></pre>
+</div>
+</div>
+<p>Let’s revisit our list of beta coefficients:</p>
+<ul>
+<li><span class="math inline">\(\beta_{1}\)</span>: Age</li>
+<li><span class="math inline">\(\beta_{2}\)</span>: Chronic illness</li>
+<li><span class="math inline">\(\beta_{3} \ldots \beta_{7}\)</span>: Effects of different levels of employment (Houseperson to Unemployed)</li>
+<li><span class="math inline">\(\beta_{8} \ldots \beta_{12}\)</span>: Multiplicative effect that levels of employment have on the slope of age.</li>
+</ul>
+<p>To see if the interaction term <code>age*employ</code> is significant, we run an F test via <code>aov()</code> and interpret the p-value for the interaction term <code>age:employ</code>. Here the pvalue is very large, so there is no reason to believe that employment moderates the relationship between age and CESD score. This is a two way relationship. There is also no reason to believe that age moderates the relationship between employment and CESD score.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(emp.dep.intx) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+age           1    615   614.6   8.678  0.00348 ** 
+chronill      1    409   409.2   5.778  0.01686 *  
+employ        1   1184  1183.6  16.712 5.64e-05 ***
+age:employ    1    136   135.7   1.916  0.16737    
+Residuals   289  20469    70.8                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>This last table is also known as a “Two Factor” or “Two way” ANOVA with an interaction term. This is quite often used in scientific experiments where two treatments (and their combination) is being investigated.</p>
+</section>
+</section>
+<section id="multicollinearity-pma6-8.9" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="multicollinearity-pma6-8.9"><span class="header-section-number">10.3</span> Multicollinearity (PMA6 8.9)</h2>
+<ul>
+<li>Occurs when some of the X variables are highly intercorrelated.</li>
+<li>Computed estimates of regression coefficients are unstable and have large standard errors.</li>
+</ul>
+<p>For example, the squared standard error of the <span class="math inline">\(i\)</span>th slope coefficient (<span class="math inline">\([SE(\beta_{i})]^2\)</span>) can be written as:</p>
+<p><span class="math display">\[
+[SE(\beta_{i})]^2 = \frac{S^{2}}{(N-1)(S_{i}^{2})}*\frac{1}{1 - (R_{i})^2}
+\]</span></p>
+<p>where <span class="math inline">\(S^{2}\)</span> is the residual mean square, <span class="math inline">\(S_{i}\)</span> the standard deviation of <span class="math inline">\(X_{i}\)</span>, and <span class="math inline">\(R_{i}\)</span> the multiple correlation between <span class="math inline">\(X_{i}\)</span> and all other <span class="math inline">\(X\)</span>’s.</p>
+<p>When <span class="math inline">\(R_{i}\)</span> is close to 1 (very large), <span class="math inline">\(1 - (R_{i})^2\)</span> becomes close to 0, which makes <span class="math inline">\(\frac{1}{1 - (R_{i})^2}\)</span> very large.</p>
+<p>This fraction is called the <strong>variance inflation factor</strong> and is available in most model diagnostics.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>big.pen.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> bill_length_mm <span class="sc">+</span> bill_depth_mm <span class="sc">+</span> flipper_length_mm, <span class="at">data=</span>pen) </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_collinearity</span>(big.pen.model) <span class="sc">|&gt;</span> <span class="fu">plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="model_building_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Solution: use variable selection to delete some X variables.</li>
+<li>Alternatively, use dimension reduction techniques such as Principal Components (Chapter @ref(pca)).</li>
+</ul>
+</section>
+<section id="variable-selection-process" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="variable-selection-process"><span class="header-section-number">10.4</span> Variable Selection Process</h2>
+<div class="cell" type="rmdnote">
+
+<div class="rmdnote">
+Corresponding PMA6 Ch 9
+</div>
+</div>
+<p>Variable selection methods such as the ones described in this section, are most often used when performing an <em>Exploratory</em> analysis, where many independent variables have been measured, but a final model to explain the variability of a dependent variable has not yet been determined.</p>
+<p>When building a model, we want to choose a set of independent variables that both will yield a good prediction using as few variables as possible (<em>parsimony</em>). We also need to consider controlling for moderators and confounders. In many situations where regression is used, the investigator has strong justification for including certain variables in the model.</p>
+<ul>
+<li>previous studies</li>
+<li>accepted theory</li>
+</ul>
+<p>The investigator may have prior justification for using certain variables but may be open to suggestions for the remaining variables.</p>
+<p>The set of independent variables can be broken down into logical subsets</p>
+<ol type="1">
+<li><strong>Factors of primary interest</strong>. (such as an exposure or treatment)</li>
+<li><strong>Potential confounders</strong>. These are measures that could be associated with both the response, and explanatory variables, and which could <em>explain</em> the relationship between the primary factor of interest and the outcome. These are typically a set of demographics such as age, gender, ethnicity, and tend to be factors found to be important in prior studies.</li>
+<li><strong>Effect Modifiers (Moderators)</strong>. A set of variables that other studies have shown to change or affect the relationship between the explanatory and response variables.</li>
+<li><strong>Precision variables (covariates)</strong>. Variables associated with the dependent variable, but not the primary factor of interest.</li>
+</ol>
+<p>How variables are chosen for inclusion into a model is heavily driven by the purpose of the model:</p>
+<ul>
+<li>descriptive</li>
+<li>predictive</li>
+</ul>
+<section id="automated-selection-procedures-pma6-9.6" class="level3" data-number="10.4.1">
+<h3 data-number="10.4.1" class="anchored" data-anchor-id="automated-selection-procedures-pma6-9.6"><span class="header-section-number">10.4.1</span> Automated selection procedures (PMA6 9.6)</h3>
+<blockquote class="blockquote">
+<p>This example uses the penguins data to model the body mass</p>
+</blockquote>
+<div class="cell" type="rmdcaution">
+
+<div class="rmdcaution">
+The model fitting must apply the models to the same dataset. This may be a problem if there are missing values. We suggest you remove the missing values first. (From the R help file)
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>pen.nomiss <span class="ot">&lt;-</span> pen <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="forward-selection-variables-are-added-one-at-a-time-until-optimal-model-reached." class="level4" data-number="10.4.1.1">
+<h4 data-number="10.4.1.1" class="anchored" data-anchor-id="forward-selection-variables-are-added-one-at-a-time-until-optimal-model-reached."><span class="header-section-number">10.4.1.1</span> Forward selection: Variables are added one at a time until optimal model reached.</h4>
+<ol type="1">
+<li>Choose the variable with the highest absolute correlation <span class="math inline">\(\mid r \mid\)</span> with the outcome.</li>
+<li>Choose the next variable that maximizes the model adjusted <span class="math inline">\(R^{2}\)</span>.</li>
+<li>Repeat until adding additional variables does not improve the model fit significantly.</li>
+</ol>
+</section>
+<section id="backward-elimination-variables-are-removed-one-at-a-time-until-optimal-model-reached" class="level4" data-number="10.4.1.2">
+<h4 data-number="10.4.1.2" class="anchored" data-anchor-id="backward-elimination-variables-are-removed-one-at-a-time-until-optimal-model-reached"><span class="header-section-number">10.4.1.2</span> Backward elimination: Variables are removed one at a time until optimal model reached</h4>
+<ol type="1">
+<li>Put all variables into the model.</li>
+<li>Remove the least useful variable in the model. This can be done by choosing the variable with the largest <span class="math inline">\(p\)</span>-value.</li>
+<li>Repeat until removing additional variables reduces the model fit significantly.</li>
+</ol>
+</section>
+<section id="stepwise-selection-combination-of-forward-and-backward." class="level4" data-number="10.4.1.3">
+<h4 data-number="10.4.1.3" class="anchored" data-anchor-id="stepwise-selection-combination-of-forward-and-backward."><span class="header-section-number">10.4.1.3</span> Stepwise selection: Combination of forward and backward.</h4>
+<ol start="0" type="1">
+<li>Start with no variables (just <span class="math inline">\(\bar{Y}\)</span>)</li>
+<li>Add the variable that results in the greatest improvement in model fit.</li>
+<li>Add another variable that results in the greatest improvement in model fit after controlling for the first.</li>
+<li>Check to see if removing any variable currently in the model improves the fit.</li>
+<li>Add another variable…</li>
+<li>Check to remove variables…</li>
+<li>Repeat until no variables can be added or removed.</li>
+</ol>
+<p>Most programs have the option to <strong>force</strong> variables to be included in the model. This is important in cases where there is a primary factor of interest such as a treatment effect.</p>
+<p><strong>Doing stepwise selection in R</strong></p>
+<p>First you need to specify your null model - just the outcome, no covariates, and the full model - the outcome against ALL of your covariates.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>null.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>pen.nomiss)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>full.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> ., <span class="at">data=</span>pen.nomiss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Forward selection</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(null.model, </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">scope=</span><span class="fu">list</span>(<span class="at">lower=</span>null.model, <span class="at">upper=</span>full.model),</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">direction=</span><span class="st">'forward'</span>, <span class="at">trace=</span><span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Start:  AIC=4457.28
+body_mass_g ~ 1
+
+                    Df Sum of Sq       RSS    AIC
++ flipper_length_mm  1 164047703  51211963 3981.1
++ species            2 145190219  70069447 4087.5
++ island             2  83740680 131518986 4297.2
++ bill_length_mm     1  74792533 140467133 4317.1
++ bill_depth_mm      1  47959592 167300074 4375.3
++ sex                1  38878897 176380769 4392.9
+&lt;none&gt;                           215259666 4457.3
++ year               1    102884 215156782 4459.1
+
+Step:  AIC=3981.13
+body_mass_g ~ flipper_length_mm
+
+                 Df Sum of Sq      RSS    AIC
++ sex             1   9416589 41795374 3915.5
++ species         2   5368818 45843144 3948.3
++ island          2   3437527 47774435 3962.0
++ year            1   2666295 48545668 3965.3
++ bill_depth_mm   1    338887 50873075 3980.9
+&lt;none&gt;                        51211963 3981.1
++ bill_length_mm  1    140000 51071963 3982.2
+
+Step:  AIC=3915.47
+body_mass_g ~ flipper_length_mm + sex
+
+                 Df Sum of Sq      RSS    AIC
++ species         2  13141806 28653568 3793.8
++ island          2   6037165 35758209 3867.5
++ bill_depth_mm   1   3667377 38127997 3886.9
++ year            1   2276715 39518658 3898.8
+&lt;none&gt;                        41795374 3915.5
++ bill_length_mm  1    144990 41650383 3916.3
+
+Step:  AIC=3793.76
+body_mass_g ~ flipper_length_mm + sex + species
+
+                 Df Sum of Sq      RSS    AIC
++ bill_depth_mm   1   1196096 27457472 3781.6
++ bill_length_mm  1    780776 27872792 3786.6
++ year            1    474080 28179488 3790.2
+&lt;none&gt;                        28653568 3793.8
++ island          2     61695 28591873 3797.0
+
+Step:  AIC=3781.56
+body_mass_g ~ flipper_length_mm + sex + species + bill_depth_mm
+
+                 Df Sum of Sq      RSS    AIC
++ bill_length_mm  1    541825 26915647 3776.9
++ year            1    272828 27184644 3780.2
+&lt;none&gt;                        27457472 3781.6
++ island          2     59488 27397984 3784.8
+
+Step:  AIC=3776.93
+body_mass_g ~ flipper_length_mm + sex + species + bill_depth_mm + 
+    bill_length_mm
+
+         Df Sum of Sq      RSS    AIC
++ year    1    319160 26596486 3775.0
+&lt;none&gt;                26915647 3776.9
++ island  2     56214 26859432 3780.2
+
+Step:  AIC=3774.95
+body_mass_g ~ flipper_length_mm + sex + species + bill_depth_mm + 
+    bill_length_mm + year
+
+         Df Sum of Sq      RSS  AIC
+&lt;none&gt;                26596486 3775
++ island  2     79468 26517018 3778</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = body_mass_g ~ flipper_length_mm + sex + species + 
+    bill_depth_mm + bill_length_mm + year, data = pen.nomiss)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-809.15 -179.43   -3.42  183.60  866.03 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       80838.770  41677.817   1.940 0.053292 .  
+flipper_length_mm    18.064      3.088   5.849 1.20e-08 ***
+sexmale             382.168     47.797   7.996 2.28e-14 ***
+speciesChinstrap   -274.496     81.558  -3.366 0.000855 ***
+speciesGentoo       929.275    136.036   6.831 4.16e-11 ***
+bill_depth_mm        60.749     19.926   3.049 0.002487 ** 
+bill_length_mm       18.997      7.086   2.681 0.007718 ** 
+year                -41.139     20.832  -1.975 0.049131 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 286.1 on 325 degrees of freedom
+Multiple R-squared:  0.8764,    Adjusted R-squared:  0.8738 
+F-statistic: 329.3 on 7 and 325 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p><strong>Backward selection</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(full.model, <span class="at">direction=</span><span class="st">'backward'</span>, <span class="at">trace=</span><span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Start:  AIC=3777.96
+body_mass_g ~ species + island + bill_length_mm + bill_depth_mm + 
+    flipper_length_mm + sex + year
+
+                    Df Sum of Sq      RSS    AIC
+- island             2     79468 26596486 3775.0
+&lt;none&gt;                           26517018 3778.0
+- year               1    342414 26859432 3780.2
+- bill_length_mm     1    583730 27100748 3783.2
+- bill_depth_mm      1    758473 27275491 3785.3
+- flipper_length_mm  1   2872068 29389086 3810.2
+- sex                1   5101785 31618803 3834.6
+- species            2   6470784 32987802 3846.7
+
+Step:  AIC=3774.95
+body_mass_g ~ species + bill_length_mm + bill_depth_mm + flipper_length_mm + 
+    sex + year
+
+                    Df Sum of Sq      RSS    AIC
+&lt;none&gt;                           26596486 3775.0
+- year               1    319160 26915647 3776.9
+- bill_length_mm     1    588158 27184644 3780.2
+- bill_depth_mm      1    760657 27357143 3782.3
+- flipper_length_mm  1   2800047 29396533 3806.3
+- sex                1   5231718 31828204 3832.8
+- species            2   9693667 36290153 3874.4</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = body_mass_g ~ species + bill_length_mm + bill_depth_mm + 
+    flipper_length_mm + sex + year, data = pen.nomiss)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-809.15 -179.43   -3.42  183.60  866.03 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       80838.770  41677.817   1.940 0.053292 .  
+speciesChinstrap   -274.496     81.558  -3.366 0.000855 ***
+speciesGentoo       929.275    136.036   6.831 4.16e-11 ***
+bill_length_mm       18.997      7.086   2.681 0.007718 ** 
+bill_depth_mm        60.749     19.926   3.049 0.002487 ** 
+flipper_length_mm    18.064      3.088   5.849 1.20e-08 ***
+sexmale             382.168     47.797   7.996 2.28e-14 ***
+year                -41.139     20.832  -1.975 0.049131 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 286.1 on 325 degrees of freedom
+Multiple R-squared:  0.8764,    Adjusted R-squared:  0.8738 
+F-statistic: 329.3 on 7 and 325 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p><strong>Stepwise</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(null.model, </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">scope=</span><span class="fu">list</span>(<span class="at">lower=</span>null.model, <span class="at">upper=</span>full.model),</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">direction=</span><span class="st">'both'</span>, <span class="at">trace=</span><span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Start:  AIC=4457.28
+body_mass_g ~ 1
+
+                    Df Sum of Sq       RSS    AIC
++ flipper_length_mm  1 164047703  51211963 3981.1
++ species            2 145190219  70069447 4087.5
++ island             2  83740680 131518986 4297.2
++ bill_length_mm     1  74792533 140467133 4317.1
++ bill_depth_mm      1  47959592 167300074 4375.3
++ sex                1  38878897 176380769 4392.9
+&lt;none&gt;                           215259666 4457.3
++ year               1    102884 215156782 4459.1
+
+Step:  AIC=3981.13
+body_mass_g ~ flipper_length_mm
+
+                    Df Sum of Sq       RSS    AIC
++ sex                1   9416589  41795374 3915.5
++ species            2   5368818  45843144 3948.3
++ island             2   3437527  47774435 3962.0
++ year               1   2666295  48545668 3965.3
++ bill_depth_mm      1    338887  50873075 3980.9
+&lt;none&gt;                            51211963 3981.1
++ bill_length_mm     1    140000  51071963 3982.2
+- flipper_length_mm  1 164047703 215259666 4457.3
+
+Step:  AIC=3915.47
+body_mass_g ~ flipper_length_mm + sex
+
+                    Df Sum of Sq       RSS    AIC
++ species            2  13141806  28653568 3793.8
++ island             2   6037165  35758209 3867.5
++ bill_depth_mm      1   3667377  38127997 3886.9
++ year               1   2276715  39518658 3898.8
+&lt;none&gt;                            41795374 3915.5
++ bill_length_mm     1    144990  41650383 3916.3
+- sex                1   9416589  51211963 3981.1
+- flipper_length_mm  1 134585395 176380769 4392.9
+
+Step:  AIC=3793.76
+body_mass_g ~ flipper_length_mm + sex + species
+
+                    Df Sum of Sq      RSS    AIC
++ bill_depth_mm      1   1196096 27457472 3781.6
++ bill_length_mm     1    780776 27872792 3786.6
++ year               1    474080 28179488 3790.2
+&lt;none&gt;                           28653568 3793.8
++ island             2     61695 28591873 3797.0
+- flipper_length_mm  1   4325617 32979185 3838.6
+- species            2  13141806 41795374 3915.5
+- sex                1  17189576 45843144 3948.3
+
+Step:  AIC=3781.56
+body_mass_g ~ flipper_length_mm + sex + species + bill_depth_mm
+
+                    Df Sum of Sq      RSS    AIC
++ bill_length_mm     1    541825 26915647 3776.9
++ year               1    272828 27184644 3780.2
+&lt;none&gt;                           27457472 3781.6
++ island             2     59488 27397984 3784.8
+- bill_depth_mm      1   1196096 28653568 3793.8
+- flipper_length_mm  1   3145834 30603306 3815.7
+- sex                1   7932472 35389944 3864.1
+- species            2  10670525 38127997 3886.9
+
+Step:  AIC=3776.93
+body_mass_g ~ flipper_length_mm + sex + species + bill_depth_mm + 
+    bill_length_mm
+
+                    Df Sum of Sq      RSS    AIC
++ year               1    319160 26596486 3775.0
+&lt;none&gt;                           26915647 3776.9
++ island             2     56214 26859432 3780.2
+- bill_length_mm     1    541825 27457472 3781.6
+- bill_depth_mm      1    957145 27872792 3786.6
+- flipper_length_mm  1   2481143 29396790 3804.3
+- sex                1   5482024 32397671 3836.7
+- species            2  11183644 38099291 3888.6
+
+Step:  AIC=3774.95
+body_mass_g ~ flipper_length_mm + sex + species + bill_depth_mm + 
+    bill_length_mm + year
+
+                    Df Sum of Sq      RSS    AIC
+&lt;none&gt;                           26596486 3775.0
+- year               1    319160 26915647 3776.9
++ island             2     79468 26517018 3778.0
+- bill_length_mm     1    588158 27184644 3780.2
+- bill_depth_mm      1    760657 27357143 3782.3
+- flipper_length_mm  1   2800047 29396533 3806.3
+- sex                1   5231718 31828204 3832.8
+- species            2   9693667 36290153 3874.4</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = body_mass_g ~ flipper_length_mm + sex + species + 
+    bill_depth_mm + bill_length_mm + year, data = pen.nomiss)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-809.15 -179.43   -3.42  183.60  866.03 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       80838.770  41677.817   1.940 0.053292 .  
+flipper_length_mm    18.064      3.088   5.849 1.20e-08 ***
+sexmale             382.168     47.797   7.996 2.28e-14 ***
+speciesChinstrap   -274.496     81.558  -3.366 0.000855 ***
+speciesGentoo       929.275    136.036   6.831 4.16e-11 ***
+bill_depth_mm        60.749     19.926   3.049 0.002487 ** 
+bill_length_mm       18.997      7.086   2.681 0.007718 ** 
+year                -41.139     20.832  -1.975 0.049131 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 286.1 on 325 degrees of freedom
+Multiple R-squared:  0.8764,    Adjusted R-squared:  0.8738 
+F-statistic: 329.3 on 7 and 325 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Warnings:</p>
+<ul>
+<li>Stopping criteria and algorithm can be different for different software programs.</li>
+<li>Can reject perfectly plausible models from later consideration</li>
+<li>Hides relationships between variables (X3 is added and now X1 is no longer significant. X1 vs X3 should be looked at)</li>
+</ul>
+<p><strong>Other references</strong> Stats 191 at Stanford. This one uses cross-validation on the <strong>stepwise procedures</strong>, and demonstrates the dangers of trusting models that come out of blind use of variable selection methods. https://web.stanford.edu/class/stats191/notebooks/Selection.html</p>
+</section>
+<section id="best-subsets" class="level4" data-number="10.4.1.4">
+<h4 data-number="10.4.1.4" class="anchored" data-anchor-id="best-subsets"><span class="header-section-number">10.4.1.4</span> Best Subsets</h4>
+<ul>
+<li>Select one X with highest simple <span class="math inline">\(r\)</span> with Y</li>
+<li>Select two X’s with highest multiple <span class="math inline">\(r\)</span> with Y</li>
+<li>Select three X’s with highest multiple <span class="math inline">\(r\)</span> with Y etc.</li>
+<li>Compute adjusted R2, AIC or BIC each time.</li>
+<li>Compare and choose among the “best subsets” of various sizes.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>oc.ht <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(body_mass_g <span class="sc">~</span> ., <span class="at">data=</span>pen.nomiss)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)) <span class="co"># set plotting window to be 1 row and 3 columns</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(oc.ht, <span class="at">scale=</span><span class="st">'adjr2'</span>);<span class="fu">plot</span>(oc.ht, <span class="at">scale=</span><span class="st">'bic'</span>);<span class="fu">plot</span>(oc.ht, <span class="at">scale=</span><span class="st">'Cp'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="model_building_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>The black squares are when the variable is in the model, the white is when it’s not</li>
+<li>The vertical axis are chosen fit metrics such as adjusted R2, BIC and Mallows Cp. The higher the better</li>
+</ul>
+<p>In this example variables that show up as improving model fit include <code>species</code>, <code>sex</code>, <code>flipper_length_mm</code>, <code>bill_length</code>, and possibly <code>year</code>. For sure island is out.</p>
+<p><strong>Other references</strong> from STDHA: http://www.sthda.com/english/articles/37-model-selection-essentials-in-r/155-best-subsets-regression-essentials-in-r/</p>
+<p><strong>Notable problems:</strong> categorical variables are not treated as a group. that is, they are not “all in” or “all out”. If at least one level is frequently chosen as improving model fit, add the entire categorical variable to the model.</p>
+</section>
+</section>
+<section id="lasso-regression-pma6-9.7" class="level3" data-number="10.4.2">
+<h3 data-number="10.4.2" class="anchored" data-anchor-id="lasso-regression-pma6-9.7"><span class="header-section-number">10.4.2</span> LASSO Regression (PMA6 9.7)</h3>
+<p><strong>L</strong>east <strong>A</strong>bsolute <strong>S</strong>hrinkage and <strong>S</strong>election <strong>O</strong>perator.</p>
+<p>The goal of LASSO is to minimize</p>
+<p><span class="math display">\[
+RSS + \lambda \sum_{j}\mid \beta_{j} \ \mid
+\]</span></p>
+<p>where <span class="math inline">\(\lambda\)</span> is a model complexity penalty parameter.</p>
+<ul>
+<li>“Shrinks” the coefficients, setting some to exactly 0.
+<ul>
+<li>Thus essentially choosing a simpler model</li>
+</ul></li>
+<li>Balances model accuracy with interpretation.</li>
+</ul>
+<p>The lasso fits many regression models and selects those variables that show the strongest association with the response variable using the data at hand. This is also described as a method of <em>selective inference</em> (Taylor and Tibshirani, 2015) and is an example of exploratory research, where the data may influence what type and how many analyses are performed.</p>
+<section id="example" class="level4" data-number="10.4.2.1">
+<h4 data-number="10.4.2.1" class="anchored" data-anchor-id="example"><span class="header-section-number">10.4.2.1</span> Example</h4>
+<div class="cell" type="rmdnote">
+
+<div class="rmdnote">
+This section uses functions <code>glmnet</code> package, and the <code>Chemical</code> data set from PMA6. Also it uses the <code>model.matrix</code> function from the <code>stats</code> package (automatically loaded). This function takes a set of input predictors and turns them into the variables that are used directly in the model. For example, categorical variables will be converted into multiple binary indicators. This typically happens in the background.
+</div>
+</div>
+<p>The <code>glmnet</code> function works best when the outcome <code>y</code> and predictors <code>x</code> are not contained within a data frame. The <code>alpha</code> argument is the tuning parameter, where a value of 1 specifies the lasso.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>chem <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"data/Chemical.txt"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> chem<span class="sc">$</span>PE</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(PE<span class="sc">~</span>., chem)[,<span class="sc">-</span><span class="dv">1</span>] <span class="co"># the -1 drops the intercept</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>chem.lasso <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can visualize the effect of the coefficient shrinkage using the following plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(chem.lasso, <span class="at">xvar =</span> <span class="st">"lambda"</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="at">side=</span><span class="dv">3</span>, <span class="st">"Number of Variables"</span>, <span class="at">line=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="model_building_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Each line represents the value of a coefficient as <span class="math inline">\(ln(\lambda)\)</span> changes.</li>
+<li>The red line on the bottom and the purple on the top must be important, since they are the last two to be shrunk to 0 and they are relatively stable.</li>
+</ul>
+<p>Examining the coefficients of the <code>chem.lasso</code> model object gives us a very large matrix (7x61), listing the coefficients for each value of <span class="math inline">\(\lambda\)</span> that was tried. A sample of columns are shown below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(chem.lasso)[,<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>7 x 8 sparse Matrix of class "dgCMatrix"
+                  s0         s1         s2        s3       s4         s5
+(Intercept) 9.366667  9.5835968  9.7812554  9.961355 10.12545 10.0399324
+ROR5        .         .          .          .         .        .        
+DE          .        -0.5206322 -0.9950129 -1.427251 -1.82109 -2.0903355
+SALESGR5    .         .          .          .         .        .        
+EPS5        .         .          .          .         .        .        
+NPM1        .         .          .          .         .        0.0157436
+PAYOUTR1    .         .          .          .         .        0.2427377
+                     s6          s7
+(Intercept)  9.59940208  9.19800729
+ROR5         .           .         
+DE          -2.21050375 -2.31999666
+SALESGR5     .           .         
+EPS5         .           .         
+NPM1         0.04642112  0.07437333
+PAYOUTR1     0.98609790  1.66341998</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(chem.lasso)[,<span class="dv">56</span><span class="sc">:</span><span class="dv">60</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>7 x 5 sparse Matrix of class "dgCMatrix"
+                    s55         s56         s57         s58         s59
+(Intercept)  1.36957827  1.35834023  1.34802448  1.34099610  1.33052382
+ROR5         0.03767492  0.03797214  0.03825501  0.03840313  0.03870172
+DE          -2.58475249 -2.58199893 -2.57937377 -2.57863116 -2.57530747
+SALESGR5     0.19961031  0.19990639  0.20017553  0.20039468  0.20064382
+EPS5        -0.03468051 -0.03483069 -0.03497088 -0.03507850 -0.03520342
+NPM1         0.34740236  0.34760738  0.34778861  0.34795977  0.34812027
+PAYOUTR1     9.78594052  9.79286717  9.79910767  9.80408094  9.81009965</code></pre>
+</div>
+</div>
+<p>Comparing the plot to the coefficient model output above, we see that the variables that show up being shrunk last are <code>DE</code> and <code>PAYOUTR1</code>.</p>
+<p><strong>Using Cross validation to find minimum lambda</strong></p>
+<p>Cross-validation is a resampling method that uses different portions of the data to test and train a model on different iterations <a href="https://en.wikipedia.org/wiki/Cross-validation_(statistics)">Wikipedia</a>.</p>
+<p>By applying a cross-validation technique, we can identify the specific value for <span class="math inline">\(\lambda\)</span> that results in the lowest cross-validated Mean Squared Error (MSE) (<span class="math inline">\(\lambda_{min}\)</span>). To ensure reproducibility of these results we set a seed for the random number generator prior to analysis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># Setting a seed to ensure I get the same results each time I knit</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>cv.lasso <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">1</span>) <span class="co"># note change in function</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the final model using the min lambda</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">lambda =</span> cv.lasso<span class="sc">$</span>lambda.min)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The resulting table of shrunk regression coefficients then is;</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>7 x 1 sparse Matrix of class "dgCMatrix"
+                      s0
+(Intercept)  2.645693621
+ROR5         0.004833458
+DE          -2.882636490
+SALESGR5     0.165581782
+EPS5        -0.017771193
+NPM1         0.323497141
+PAYOUTR1     8.986481946</code></pre>
+</div>
+</div>
+<p>In this case we would keep variables: DE, SALESGR5, NPM1 and PAYOUTR1. Estimates for ROR5 and EPS56 are very small, and so can be reasonably excluded.</p>
+<ul>
+<li>The lasso procedure normalizes the data prior to fitting a model, so the coefficient values that are returned <em>cannot</em> be interpreted directly in context of the problem.
+<ul>
+<li>This does allow us the ability to make “judgement” calls on what is a ‘small’ estimate since it’s no longer dependent on the units of the data.</li>
+</ul></li>
+<li>Appropriate inference after model selection is currently under research. No unifying theory exists yet.</li>
+<li>For now, use lasso to choose variables, then fit a model with only those selected variables in the final model.</li>
+<li>Variables chosen in this manner are important, yet biased estimates.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(PE <span class="sc">~</span> DE <span class="sc">+</span> SALESGR5 <span class="sc">+</span> NPM1 <span class="sc">+</span> PAYOUTR1, <span class="at">data =</span> chem) <span class="sc">|&gt;</span> <span class="fu">tbl_regression</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="iijwugufyb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#iijwugufyb table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#iijwugufyb thead, #iijwugufyb tbody, #iijwugufyb tfoot, #iijwugufyb tr, #iijwugufyb td, #iijwugufyb th {
+  border-style: none;
+}
+
+#iijwugufyb p {
+  margin: 0;
+  padding: 0;
+}
+
+#iijwugufyb .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#iijwugufyb .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#iijwugufyb .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#iijwugufyb .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#iijwugufyb .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#iijwugufyb .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#iijwugufyb .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#iijwugufyb .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#iijwugufyb .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#iijwugufyb .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#iijwugufyb .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#iijwugufyb .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#iijwugufyb .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#iijwugufyb .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#iijwugufyb .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#iijwugufyb .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#iijwugufyb .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#iijwugufyb .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#iijwugufyb .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#iijwugufyb .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#iijwugufyb .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#iijwugufyb .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#iijwugufyb .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#iijwugufyb .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#iijwugufyb .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#iijwugufyb .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#iijwugufyb .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#iijwugufyb .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#iijwugufyb .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#iijwugufyb .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#iijwugufyb .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#iijwugufyb .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#iijwugufyb .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#iijwugufyb .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#iijwugufyb .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#iijwugufyb .gt_left {
+  text-align: left;
+}
+
+#iijwugufyb .gt_center {
+  text-align: center;
+}
+
+#iijwugufyb .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#iijwugufyb .gt_font_normal {
+  font-weight: normal;
+}
+
+#iijwugufyb .gt_font_bold {
+  font-weight: bold;
+}
+
+#iijwugufyb .gt_font_italic {
+  font-style: italic;
+}
+
+#iijwugufyb .gt_super {
+  font-size: 65%;
+}
+
+#iijwugufyb .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#iijwugufyb .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#iijwugufyb .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#iijwugufyb .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#iijwugufyb .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#iijwugufyb .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#iijwugufyb .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_col_headings">
+<th id="<strong>Characteristic</strong>" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Characteristic</strong></th>
+<th id="<strong>Beta</strong>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>Beta</strong></th>
+<th id="<strong>95% CI</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>95% CI</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+<th id="<strong>p-value</strong>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>p-value</strong></th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">DE</td>
+<td class="gt_row gt_center" headers="estimate">-3.2</td>
+<td class="gt_row gt_center" headers="ci">-6.9, 0.58</td>
+<td class="gt_row gt_center" headers="p.value">0.094</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">SALESGR5</td>
+<td class="gt_row gt_center" headers="estimate">0.19</td>
+<td class="gt_row gt_center" headers="ci">-0.02, 0.41</td>
+<td class="gt_row gt_center" headers="p.value">0.077</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">NPM1</td>
+<td class="gt_row gt_center" headers="estimate">0.35</td>
+<td class="gt_row gt_center" headers="ci">0.12, 0.59</td>
+<td class="gt_row gt_center" headers="p.value">0.005</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">PAYOUTR1</td>
+<td class="gt_row gt_center" headers="estimate">11</td>
+<td class="gt_row gt_center" headers="ci">4.7, 17</td>
+<td class="gt_row gt_center" headers="p.value">0.001</td>
+</tr>
+</tbody><tfoot class="gt_footnotes">
+<tr class="odd">
+<td colspan="4" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> CI = Confidence Interval</td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="ridge-regression-pma6-10.6" class="level4" data-number="10.4.2.2">
+<h4 data-number="10.4.2.2" class="anchored" data-anchor-id="ridge-regression-pma6-10.6"><span class="header-section-number">10.4.2.2</span> Ridge Regression (PMA6 10.6)</h4>
+<p>Often compared to LASSO, Ridge regression also minimizes the RSS, but the penalty function is different: <span class="math display">\[
+RSS + \lambda \sum_{j} \beta_{j}^2
+\]</span></p>
+<p>Ridge regression only shrinks the magnitude of the coefficients, not set them exactly to zero.</p>
+<div class="cell" type="rmdwarning">
+
+<div class="rmdwarning">
+This means Ridge regression is <strong>not</strong> a method of variable selection.
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="model-fit-criteria" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="model-fit-criteria"><span class="header-section-number">10.5</span> Comparing between models (PMA6 9.4)</h2>
+<p>The goal: Find the subset of independent variables that optimizes (either minimize or maximize) a certain criteria. In other words, the goal is to find the optimal model.</p>
+<p><img src="images/q.png" class="img-fluid" alt="q"> How do we measure “optimal”?</p>
+<p>First we need to look at two quantities:</p>
+<section id="rss-residual-sum-of-squares" class="level3" data-number="10.5.1">
+<h3 data-number="10.5.1" class="anchored" data-anchor-id="rss-residual-sum-of-squares"><span class="header-section-number">10.5.1</span> RSS: Residual Sum of Squares</h3>
+<p>Recall the method of least squares introduced in section @ref(mlr) minimizes the residual sum of squares around the regression plane. This value is central to all following model comparison. How “far away” are the model estimates from the observed?</p>
+<p><span class="math display">\[
+\sum(Y - \bar{Y})^{2}(1-R^{2})  
+\]</span></p>
+</section>
+<section id="general-f-test" class="level3" data-number="10.5.2">
+<h3 data-number="10.5.2" class="anchored" data-anchor-id="general-f-test"><span class="header-section-number">10.5.2</span> General F Test</h3>
+<blockquote class="blockquote">
+<p>See also Section @ref(general-F).</p>
+</blockquote>
+<p>Two nested models are similar if the p-value for the General F-test is non-significant at a .15 level. <em>Nested</em>: The list of variables in one model is a subset of the list of variables from a bigger model. Similar to all other ANOVA models, you are essentially comparing the difference in RSS between nested models.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Full model</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>full.employ.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(cesd <span class="sc">~</span> age <span class="sc">+</span> chronill <span class="sc">+</span> employ, <span class="at">data=</span>depress_clean)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Reduced model</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>reduced.employ.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(cesd <span class="sc">~</span> age, <span class="at">data=</span>depress_clean)</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(reduced.employ.model, full.employ.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: cesd ~ age
+Model 2: cesd ~ age + chronill + employ
+  Res.Df   RSS Df Sum of Sq      F    Pr(&gt;F)    
+1    292 22197                                  
+2    290 20605  2    1592.8 11.209 2.046e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<div class="cell" type="rmdcaution">
+
+<div class="rmdcaution">
+Caution: this uses <code>anova()</code> not <code>aov()</code>.
+</div>
+</div>
+<p>Other references: https://online.stat.psu.edu/stat501/lesson/6/6.2</p>
+</section>
+<section id="likelihood-function" class="level3" data-number="10.5.3">
+<h3 data-number="10.5.3" class="anchored" data-anchor-id="likelihood-function"><span class="header-section-number">10.5.3</span> Likelihood function</h3>
+<p>What is the likelihood that we observed the data <span class="math inline">\(x\)</span>, given parameter values <span class="math inline">\(\theta\)</span>. <span class="math display">\[
+\mathcal{L}(\theta \mid x)=p_{\theta }(x)=P_{\theta }(X=x)
+\]</span></p>
+<ul>
+<li>For strictly convenient mathematical matters, we tend to work with the <strong>log-likelihood</strong> (LL).<br>
+</li>
+<li>Great because <span class="math inline">\(log\)</span> is a monotonic increasing function, maximizing the LL = maximizing the likelihood function.<br>
+</li>
+<li>We can compare between models using functions based off the LL.</li>
+</ul>
+<p>There are several measures we can use to compare between competing models.</p>
+</section>
+<section id="multiple-r2" class="level3" data-number="10.5.4">
+<h3 data-number="10.5.4" class="anchored" data-anchor-id="multiple-r2"><span class="header-section-number">10.5.4</span> Multiple <span class="math inline">\(R^{2}\)</span></h3>
+<p>If the model explains a large amount of variation in the outcome that’s good right? So we could consider using <span class="math inline">\(R^{2}\)</span> as a selection criteria and trying to find the model that maximizes this value.</p>
+<ul>
+<li>Problem: The multiple <span class="math inline">\(R^{2}\)</span> <em>always</em> increases as predictors are added to the model.
+<ul>
+<li>Ex. 1: N = 100, P = 1, E(<span class="math inline">\(R^{2}\)</span>) = 0.01</li>
+<li>Ex. 2: N = 21, P = 10, E(<span class="math inline">\(R^{2}\)</span>) = 0.5</li>
+</ul></li>
+<li>Problem: <span class="math inline">\(R^{2} = 1-\frac{Model SS}{Total SS}\)</span> is biased: If population <span class="math inline">\(R^{2}\)</span> is really zero, then E(<span class="math inline">\(R^{2}\)</span>) = P/(N-1).</li>
+</ul>
+<p>Reference PMA6 Figure 9.1</p>
+</section>
+<section id="adjusted-r2" class="level3" data-number="10.5.5">
+<h3 data-number="10.5.5" class="anchored" data-anchor-id="adjusted-r2"><span class="header-section-number">10.5.5</span> Adjusted <span class="math inline">\(R^{2}\)</span></h3>
+<p>To alleviate bias use Mean squares instead of SS.</p>
+<p><span class="math inline">\(R^{2} = 1-\frac{Model MS}{Total MS}\)</span></p>
+<p>equivalently,</p>
+<p><span class="math inline">\(R^{2}_{adj} = R^{2} - \frac{p(1-R^{2})}{n-p-1}\)</span></p>
+<p>Now Adjusted <span class="math inline">\(R^{2}\)</span> is approximately unbiased and won’t inflate as <span class="math inline">\(p\)</span> increases.</p>
+</section>
+<section id="mallows-c_p" class="level3" data-number="10.5.6">
+<h3 data-number="10.5.6" class="anchored" data-anchor-id="mallows-c_p"><span class="header-section-number">10.5.6</span> Mallows <span class="math inline">\(C_{p}\)</span></h3>
+<p><span class="math display">\[
+    C_{p} = (N-P-1)\left(\frac{RMSE}{\hat{\sigma}^{2}} -1 \right) + (P+1)
+\]</span></p>
+<p>where <span class="math inline">\(RMSE = \frac{RSS}{N-P-1}\)</span>.</p>
+<ul>
+<li>Smaller is better</li>
+<li>When all variables are chosen, <span class="math inline">\(P+1\)</span> is at it’s maximum but the other part of <span class="math inline">\(C_{p}\)</span> is zero since <span class="math inline">\(RMSE\)</span>==<span class="math inline">\(\hat{\sigma}^{2}\)</span></li>
+</ul>
+</section>
+<section id="akaike-information-criterion-aic" class="level3" data-number="10.5.7">
+<h3 data-number="10.5.7" class="anchored" data-anchor-id="akaike-information-criterion-aic"><span class="header-section-number">10.5.7</span> Akaike Information Criterion (AIC)</h3>
+<ul>
+<li>A penalty is applied to the deviance that increases as the number of parameters <span class="math inline">\(p\)</span> increase.</li>
+<li>Tries to find a parsimonious model that is closer to the “truth”.<br>
+</li>
+<li>Uses an information function, e.g., the likelihood function <span class="math inline">\((LL)\)</span>.</li>
+</ul>
+<p><span class="math display">\[ AIC = -2LL + 2p\]</span></p>
+<ul>
+<li>Smaller is better</li>
+<li>Can also be written as a function of the residual sum of squares (RSS) (in book)</li>
+<li>Estimates the information in one model <em>relative to other models</em>
+<ul>
+<li>So if all models suck, your AIC will just tell you which one sucks less.</li>
+</ul></li>
+<li>Built in <code>AIC()</code> function in R</li>
+<li>Rule of thumb: Model 1 and Model 2 are considered to have significantly different fit if the difference in AIC values is greater than 2.</li>
+</ul>
+<p><span class="math display">\[\mid AIC_{1} - AIC_{2}\mid &gt; 2\]</span></p>
+</section>
+<section id="bayesian-information-criterion-bic" class="level3" data-number="10.5.8">
+<h3 data-number="10.5.8" class="anchored" data-anchor-id="bayesian-information-criterion-bic"><span class="header-section-number">10.5.8</span> Bayesian Information Criterion (BIC)</h3>
+<ul>
+<li>Similar to AIC.</li>
+<li>Built in <code>BIC()</code> function in R</li>
+<li>Tries to find a parsimonious model that is more likely to be the “truth”. The smaller BIC, the better.</li>
+</ul>
+<p><span class="math display">\[ BIC = -2LL + ln(N)*(P+1)\]</span></p>
+</section>
+<section id="aic-vs-bic" class="level3" data-number="10.5.9">
+<h3 data-number="10.5.9" class="anchored" data-anchor-id="aic-vs-bic"><span class="header-section-number">10.5.9</span> AIC vs BIC</h3>
+<ul>
+<li>Both are “penalized likelihood” functions</li>
+<li>Each = -2log likelihood + penalty</li>
+<li>AIC: penalty = 2, BIC: penalty = ln(N)</li>
+<li>For any N &gt; 7, ln(N) &gt; 2</li>
+<li>Thus, BIC penalizes larger models more heavily.</li>
+<li>They often agree.
+<ul>
+<li>When they disagree, AIC chooses a larger model than BIC.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="model-diagnostics" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="model-diagnostics"><span class="header-section-number">10.6</span> Model Diagnostics</h2>
+<p>Recall from Section @ref(mathematical-model) the assumptions for linear regression model are;</p>
+<ul>
+<li><strong>Linearity</strong> The relationship between <span class="math inline">\(x_j\)</span> and <span class="math inline">\(y\)</span> is linear, for all <span class="math inline">\(j\)</span>.</li>
+<li><strong>Normality, Homogeneity of variance</strong> The residuals are identically distributed <span class="math inline">\(\epsilon_{i} \sim N(0, \sigma^{2})\)</span></li>
+<li><strong>Uncorrelated/Independent</strong> Distinct error terms are uncorrelated: <span class="math inline">\(\text{Cov}(\epsilon_{i},\epsilon_{j})=0,\forall i\neq j.\)</span></li>
+</ul>
+<p>There are a few ways to visually assess these assumptions. We’ll look at this using a penguin model of body mass as an example.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>pen.bmg.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> bill_length_mm <span class="sc">+</span> flipper_length_mm, <span class="at">data=</span>pen)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="linearity" class="level3" data-number="10.6.1">
+<h3 data-number="10.6.1" class="anchored" data-anchor-id="linearity"><span class="header-section-number">10.6.1</span> Linearity</h3>
+<p>Create a scatterplot with lowess AND linear regression line. See how close the lowess trend line is to the best fit line. Do this for all variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>bill.plot  <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">y=</span>body_mass_g, <span class="at">x=</span>bill_length_mm)) <span class="sc">+</span> </span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span>   <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span> </span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span> , <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>flipper.plot  <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pen, <span class="fu">aes</span>(<span class="at">y=</span>body_mass_g, <span class="at">x=</span>flipper_length_mm)) <span class="sc">+</span> </span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span>   <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span> </span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span> , <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(bill.plot, flipper.plot, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="model_building_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Both variables appear to have a mostly linear relationship with body mass. For penguins with bill length over 50mm the slope may decrease, but the data is sparse in the tails.</p>
+</section>
+<section id="normality-of-residuals." class="level3" data-number="10.6.2">
+<h3 data-number="10.6.2" class="anchored" data-anchor-id="normality-of-residuals."><span class="header-section-number">10.6.2</span> Normality of residuals.</h3>
+<p>There are two common ways to assess normality.</p>
+<ol type="1">
+<li>A histogram or density plot with a normal distribution curve overlaid.</li>
+<li>A qqplot. This is also known as a ‘normal probability plot’. It is used to compare the theoretical quantiles of the data <em>if it were to come from a normal distribution</em> to the observed quantiles. PMA6 Figure 5.4 has more examples and an explanation.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="fu">check_normality</span>(pen.bmg.model)), </span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="fu">check_normality</span>(pen.bmg.model), <span class="at">type =</span> <span class="st">"qq"</span>),</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol=</span><span class="dv">2</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="model_building_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In both cases you want to assess how close the dots/distribution is to the reference curve/line.</p>
+</section>
+<section id="homogeneity-of-variance" class="level3" data-number="10.6.3">
+<h3 data-number="10.6.3" class="anchored" data-anchor-id="homogeneity-of-variance"><span class="header-section-number">10.6.3</span> Homogeneity of variance</h3>
+<p>The variability of the residuals should be constant, and independent of the value of the fitted value <span class="math inline">\(\hat{y}\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">check_heteroskedasticity</span>(pen.bmg.model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="model_building_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This assumption is often the hardest to be fully upheld. Here we see a slightly downward trend. However, this is not a massive violation of assumptions.</p>
+</section>
+<section id="posterior-predictions" class="level3" data-number="10.6.4">
+<h3 data-number="10.6.4" class="anchored" data-anchor-id="posterior-predictions"><span class="header-section-number">10.6.4</span> Posterior Predictions</h3>
+<p>Not really an assumption, but we can also assess the fit of a model by how well it does to predict the outcome. Using a Bayesian sampling method, the distribution of the predictions from the model should resemble the observed distribution.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">check_posterior_predictions</span>(pen.bmg.model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="model_building_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This looks like a good fit.</p>
+</section>
+<section id="all-at-once" class="level3" data-number="10.6.5">
+<h3 data-number="10.6.5" class="anchored" data-anchor-id="all-at-once"><span class="header-section-number">10.6.5</span> All at once</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_model</span>(pen.bmg.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="model_building_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Refer to PMA6 8.8 to learn about <em>leverage</em>.</p>
+</section>
+</section>
+<section id="general-advice-pma6-9.9" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="general-advice-pma6-9.9"><span class="header-section-number">10.7</span> General Advice (PMA6 9.9)</h2>
+<ul>
+<li>Model selection is not a hard science.</li>
+<li>Some criteria have “rules of thumb” that can guide your exploration (such as difference in AIC &lt; 2)</li>
+<li><em><strong>Use common sense</strong></em>: A sub-optimal subset may make more sense than optimal one</li>
+<li>p-values: When you compare two criteria, often the difference has a known distribution.
+<ul>
+<li>Wald F Test, the difference in RSS between the two models has a F distribution.</li>
+</ul></li>
+<li>All criterion should be used as guides.</li>
+<li>Perform multiple methods of variable selection, find the commonalities.</li>
+<li>Let science and the purpose of your model be your ultimate guide
+<ul>
+<li>If the purpose of the model is for explanation/interpretation, error on the side of parsimony (smaller model) than being overly complex.</li>
+<li>If the purpose is prediction, then as long as you’re not overfitting the model (as checked using cross-validation techniques), use as much information as possible.</li>
+</ul></li>
+<li>Automated versions of variable selection processes should not be used blindly.</li>
+<li>“… perhaps the most serious source of error lies in letting statistical procedures make decisions for you.”…“Don’t be too quick to turn on the computer. Bypassing the brain to compute by reflex is a sure recipe for disaster.” <em>Good and Hardin, Common Errors in Statistics (and How to Avoid Them), p.&nbsp;3, p.&nbsp;152</em></li>
+</ul>
+</section>
+<section id="what-to-watch-out-for-pma6-9.10" class="level2" data-number="10.8">
+<h2 data-number="10.8" class="anchored" data-anchor-id="what-to-watch-out-for-pma6-9.10"><span class="header-section-number">10.8</span> What to watch out for (PMA6 9.10)</h2>
+<ul>
+<li>Multicollinearity</li>
+<li>Missing Data</li>
+<li>Use previous research as a guide</li>
+<li>Variables not included can bias the results</li>
+<li>Significance levels are only a guide</li>
+<li>Perform model diagnostics after selection to check model fit.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/annakfell\.github\.io\/ascnv2\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./mlr.html" class="pagination-link" aria-label="Multiple Linear Regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./appendix.html" class="pagination-link" aria-label="Appendix">
+        <span class="nav-page-text">Appendix</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/model_building.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

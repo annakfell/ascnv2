@@ -38,7 +38,7 @@ Both Regression and Correlation can be used for two main purposes:
 Simple Linear Regression is an example of a Bivariate analysis since there is only one covariate (explanatory variable) under consideration.  
  
 
-## Example
+## Example {#sec-slr-fev}
 
 ::: {.callout-tip appearance=minimal}
 Lung function data were obtained from an epidemiological study of households living in four areas with different amounts and types of air pollution. The data set used in this book is a subset of the total data. In this chapter we use only the data taken on the fathers, all of whom are nonsmokers (see PMA6 Appendix A for more details). 

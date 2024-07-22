@@ -32,6 +32,9 @@ book:
       chapters: 
         - reg_intro.qmd
         - sl_reg.qmd
+        - moderation_stratification.qmd
+        - mlr.qmd
+        - model_building.qmd
     - appendix.qmd
 
 format:
