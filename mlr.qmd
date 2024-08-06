@@ -1,4 +1,4 @@
-# Multiple Linear Regression {#mlr}
+# Multiple Linear Regression {#sec-mlr}
 
 Hopefully by now you have some motivation for why we need to have a robust model that can incorporate information from multiple variables at the same time. Multiple linear regression is our tool to expand our MODEL to better fit the DATA. 
 

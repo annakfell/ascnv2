@@ -81,7 +81,7 @@ A safe policy is to restrict the use of the equation to the range of the $X$ obs
 
 :::
 
-## Mathematical Model
+## Mathematical Model {#sec-mathematical-model}
 
 The mathematical model that we use for regression has three features.
 

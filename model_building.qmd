@@ -16,7 +16,7 @@ This chapter uses the following packages: [gtsummary](https://www.danieldsjoberg
 
 ```{r, echo=FALSE}
 source("_common.R")
-library(gtsummary); library(performance); library(leaps)
+library(gtsummary); library(performance); library(leaps); library(glmnet)
 pen <- palmerpenguins::penguins
 load('data/depress_clean.Rdata')
 ```
@@ -101,7 +101,7 @@ They're the same! Proof that an interaction is equivalent to stratification.
 
 ### Example 2
 
-What if we now wanted to include other predictors in the model? How does sepal length relate to petal length after controlling for petal width? We add the variable for petal width into the model
+What if we now wanted to include other predictors in the model? How does sepal length relate to petal length after controlling for petal width? We add the variable for petal width into the model:
 
 ```{r}
 summary(lm(Petal.Length ~ Sepal.Length + setosa + Sepal.Length*setosa + Petal.Width, data=iris))
@@ -123,10 +123,10 @@ is the same as the following interaction model:
 
 
 
-### Example 3: 
+### Example 3 
 
 Let's explore the relationship between income, employment status and depression. 
-This example follows a logistic regression example from section \@ref(mlogreg). 
+This example follows a logistic regression example from section @sec-mlogreg. 
 
 Here I create the binary indicators of `lowincome` (annual income <$10k/year) and underemployed (part time or unemployed).
 
@@ -174,8 +174,12 @@ $$
 
 The numerator quantifies improvement in the model from adding the additional $Q$ variables. This ratio has a $F$ distribution with $Q$ and $N-P-Q-1$ degrees of freedom.
 
-**Example**
+::: {.callout-note}
+## Example
+
 Consider the following model, where $X_{1}$ and $X_{2}$ are continuous predictors and $X_{3}, X_{4}, X_{5}$ are binary indicators from a 4 level categorical variable. 
+
+:::
 
 $$ 
 Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{3} + \beta_{4}x_{4} + \beta_{5}X_{5}+\epsilon_{i}
@@ -239,11 +243,11 @@ summary(employ.depression.model)
 
 ### Testing for a moderation effect in a multiple regression model. 
 
-Moderation is introduced in Chapter \@ref(mod-strat), and helps to set the motivation for stratified models. Later, in Chapter \@ref(interactions-catvars), we show that an interaction term in a regression model is equivelant to stratification. 
+Moderation is introduced in @sec-mod-strat, and helps to set the motivation for stratified models. Later, in @sec-interactions-catvars, we show that an interaction term in a regression model is equivalent to stratification. 
 
 Well what if you have other predictors in the model, not just the ones that you have an interaction on? We can use the Wald test to assess if a measure is a significant moderator without stratifying. 
 
-Continuing with the depression example we saw that employment affects CESD depression score. What if we think that the effect (slope) of age on CESD may be different depending on their employment? That is, is the effect of age on depression different for those that are employed versus retired? 
+Continuing with the depression example, we saw that employment affects CESD depression score. What if we think that the effect (slope) of age on CESD may be different depending on their employment? That is, is the effect of age on depression different for those that are employed versus retired? 
 
 ```{r}
 emp.dep.intx <- lm(cesd ~ age + chronill + employ + age*employ, data=depress_clean)
@@ -257,7 +261,7 @@ Let's revisit our list of beta coefficients:
 * $\beta_{3} \ldots \beta_{7}$: Effects of different levels of employment (Houseperson to Unemployed)
 * $\beta_{8} \ldots \beta_{12}$: Multiplicative effect that levels of employment have on the slope of age. 
 
-To see if the interaction term `age*employ` is significant, we run an F test via `aov()` and interpret the p-value for the interaction term `age:employ`. Here the pvalue is very large, so there is no reason to believe that employment moderates the relationship between age and CESD score. This is a two way relationship. There is also no reason to believe that age moderates the relationship between employment and CESD score. 
+To see if the interaction term `age*employ` is significant, we run an F test via `aov()` and interpret the p-value for the interaction term `age:employ`. Here the p-value is very large, so there is no reason to believe that employment moderates the relationship between age and CESD score. This is a two way relationship. There is also no reason to believe that age moderates the relationship between employment and CESD score. 
 
 ```{r}
 aov(emp.dep.intx) |> summary()
@@ -288,14 +292,15 @@ performance::check_collinearity(big.pen.model) |> plot()
 ```
 
 * Solution: use variable selection to delete some X variables.
-* Alternatively, use dimension reduction techniques such as Principal Components (Chapter \@ref(pca)).
+* Alternatively, use dimension reduction techniques such as Principal Components (@sec-pca).
 
 
 ## Variable Selection Process
 
-```{block2,  type='rmdnote'}
-Corresponding PMA6 Ch 9
-```
+::: {.callout-tip icon=false}
+## Corresponding text
+PMA6 Ch 9
+:::
 
 Variable selection methods such as the ones described in this section, are most often used when performing an _Exploratory_ analysis, where many independent variables have been measured, but a final model to explain the variability of a dependent variable has not yet been determined. 
 
@@ -322,29 +327,32 @@ How variables are chosen for inclusion into a model is heavily driven by the pur
 
 ### Automated selection procedures (PMA6 9.6)
 
-> This example uses the penguins data to model the body mass
+::: {.callout-tip}
+## Example
+This example uses the penguins data to model the body mass
+:::
 
-```{block2,  type='rmdcaution'}
+::: {.callout-caution appearance=simple}
 The model fitting must apply the models to the same dataset. This may be a problem if there are missing values. We suggest you remove the missing values first. (From the R help file)
-```
+:::
 
 ```{r}
 pen.nomiss <- pen %>% na.omit()
 ```
 
-#### Forward selection: Variables are added one at a time until optimal model reached. 
+**Forward selection: Variables are added one at a time until optimal model reached.** 
 
 1. Choose the variable with the highest absolute correlation $\mid r \mid$ with the outcome.
 2. Choose the next variable that maximizes the model adjusted $R^{2}$. 
 3. Repeat until adding additional variables does not improve the model fit significantly. 
 
-#### Backward elimination: Variables are removed one at a time until optimal model reached
+**Backward elimination: Variables are removed one at a time until optimal model reached**
 
 1. Put all variables into the model. 
 2. Remove the least useful variable in the model. This can be done by choosing the variable with the largest $p$-value. 
 3. Repeat until removing additional variables reduces the model fit significantly. 
 
-#### Stepwise selection: Combination of forward and backward. 
+**Stepwise selection: Combination of forward and backward.** 
 
 0. Start with no variables (just $\bar{Y}$)
 1. Add the variable that results in the greatest improvement in model fit. 
@@ -365,7 +373,9 @@ null.model <- lm(body_mass_g ~ 1, data=pen.nomiss)
 full.model <- lm(body_mass_g ~ ., data=pen.nomiss)
 ```
 
-**Forward selection**
+::: {.panel-tabset}
+
+## Forward selection
 
 ```{r}
 step(null.model, 
@@ -373,28 +383,36 @@ step(null.model,
      direction='forward', trace=1) |> summary()
 ```
 
-**Backward selection**
+## Backward selection
 ```{r}
 step(full.model, direction='backward', trace=1) |> summary()
 ```
 
-**Stepwise** 
+## Stepwise
 ```{r}
 step(null.model, 
      scope=list(lower=null.model, upper=full.model),
      direction='both', trace=1) |> summary()
 ```
 
+:::
 
-Warnings: 
+::: {.callout-caution}
+## Warnings 
 
 * Stopping criteria and algorithm can be different for different software programs. 
 * Can reject perfectly plausible models from later consideration
 * Hides relationships between variables (X3 is added and now X1 is no longer significant. X1 vs X3 should be looked at)
 
-**Other references** Stats 191 at Stanford. This one uses cross-validation on the **stepwise procedures**, and demonstrates the dangers of trusting models that come out of blind use of variable selection methods. https://web.stanford.edu/class/stats191/notebooks/Selection.html
+:::
 
-#### Best Subsets
+::: {.callout-tip}
+## Other references 
+[Stats 191](https://web.stanford.edu/class/stats191/markdown/Chapter12/Model_selection.html) at Stanford. This one uses cross-validation on the **stepwise procedures**, and demonstrates the dangers of trusting models that come out of blind use of variable selection methods.
+
+:::
+
+**Best Subsets**
 
 * Select one X with highest simple $r$ with Y
 * Select two X’s with highest multiple $r$ with Y
@@ -414,10 +432,18 @@ plot(oc.ht, scale='adjr2');plot(oc.ht, scale='bic');plot(oc.ht, scale='Cp')
 
 In this example variables that show up as improving model fit include `species`, `sex`, `flipper_length_mm`, `bill_length`, and possibly `year`. For sure island is out.  
 
+::: {.callout-caution}
+## Notable problems 
 
-**Other references** from STDHA: http://www.sthda.com/english/articles/37-model-selection-essentials-in-r/155-best-subsets-regression-essentials-in-r/
+* If categorical variables are not treated as a group - that is, they are not "all in" or "all out". 
+* If at least one level is frequently chosen as improving model fit, add the entire categorical variable to the model.  
 
-**Notable problems:** categorical variables are not treated as a group. that is, they are not "all in" or "all out". If at least one level is frequently chosen as improving model fit, add the entire categorical variable to the model.  
+:::
+
+::: {.callout-tip}
+## Other references 
+[STHDA](http://www.sthda.com/english/articles/37-model-selection-essentials-in-r/155-best-subsets-regression-essentials-in-r/) resource on best subsets regression.
+:::
 
 ### LASSO Regression (PMA6 9.7)
 
@@ -438,16 +464,14 @@ where $\lambda$ is a model complexity penalty parameter.
 
 The lasso fits many regression models and selects those variables that show the strongest association with the response variable using the data at hand. This is also described as a method of _selective inference_  (Taylor and Tibshirani, 2015) and is an example of exploratory research, where the data may influence what type and how many analyses are performed.
 
-
-#### Example
-```{block2,  type='rmdnote'}
+::: {.callout-tip}
+## Example
 This section uses functions `glmnet` package, and the `Chemical` data set from PMA6. Also it uses the `model.matrix` function from the `stats` package (automatically loaded). This function takes a set of input predictors and turns them into the variables that are used directly in the model. For example, categorical variables will be converted into multiple binary indicators. This typically happens in the background. 
-```
+:::
 
 The `glmnet` function works best when the outcome `y` and predictors `x` are not contained within a data frame. The `alpha` argument is the tuning parameter, where a value of 1 specifies the lasso. 
 
 ```{r}
-library(glmnet)
 chem <- read.table("data/Chemical.txt", header = TRUE)
 y <- chem$PE
 x <- model.matrix(PE~., chem)[,-1] # the -1 drops the intercept
@@ -472,9 +496,9 @@ coef(chem.lasso)[,56:60]
 
 Comparing the plot to the coefficient model output above, we see that the variables that show up being shrunk last are `DE` and `PAYOUTR1`. 
 
-**Using Cross validation to find minimum lambda**
+**Using Cross-validation to find minimum lambda**
 
-Cross-validation is a resampling method that uses different portions of the data to test and train a model on different iterations [Wikipedia](https://en.wikipedia.org/wiki/Cross-validation_(statistics)). 
+Cross-validation is a resampling method that uses different portions of the data to test and train a model on different iterations ([Wikipedia](https://en.wikipedia.org/wiki/Cross-validation_(statistics))). 
 
 By applying a cross-validation technique, we can identify the specific value for $\lambda$ that 
 results in the lowest cross-validated Mean Squared Error (MSE) ($\lambda_{min}$). To ensure
@@ -505,7 +529,7 @@ In this case we would keep variables: DE, SALESGR5, NPM1 and PAYOUTR1. Estimates
 lm(PE ~ DE + SALESGR5 + NPM1 + PAYOUTR1, data = chem) |> tbl_regression()
 ```
 
-#### Ridge Regression (PMA6 10.6)
+### Ridge Regression (PMA6 10.6)
 
 Often compared to LASSO, Ridge regression also minimizes the RSS, but the penalty function is different: 
 $$
@@ -523,14 +547,15 @@ This means Ridge regression is **not** a method of variable selection.
 
 The goal: Find the subset of independent variables that optimizes (either minimize or maximize) a certain criteria. In other words, the goal is to find the optimal model. 
 
-![q](images/q.png) How do we measure "optimal"? 
-
+::: {.callout-tip appearance=simple}
+**How do we measure "optimal"?** 
+:::
 
 First we need to look at two quantities: 
 
 ### RSS: Residual Sum of Squares
 
-Recall the method of least squares introduced in section \@ref(mlr) minimizes the residual sum of squares around the regression plane. This value is central to all following model comparison. How "far away" are the model estimates from the observed? 
+Recall the method of least squares introduced in @sec-mlr minimizes the residual sum of squares around the regression plane. This value is central to all following model comparison. How "far away" are the model estimates from the observed? 
 
 $$
 \sum(Y - \bar{Y})^{2}(1-R^{2})  
@@ -539,9 +564,11 @@ $$
 
 ### General F Test
 
-> See also Section \@ref(general-F).
+> See also @sec-general-F
 
-Two nested models are similar if the p-value for the General F-test is non-significant at a .15 level. _Nested_: The list of variables in one model is a subset of the list of variables from a bigger model. Similar to all other ANOVA models, you are essentially comparing the difference in RSS between nested models. 
+Two nested models are similar if the p-value for the General F-test is non-significant at a .15 level. 
+_Nested_: The list of variables in one model is a subset of the list of variables from a bigger model. 
+Similar to all other ANOVA models, you are essentially comparing the difference in RSS between nested models. 
 
 
 ```{r}
@@ -552,11 +579,14 @@ reduced.employ.model <- lm(cesd ~ age, data=depress_clean)
 anova(reduced.employ.model, full.employ.model)
 ```
 
-```{block2,  type='rmdcaution'}
-Caution: this uses `anova()` not `aov()`. 
-```
+::: {.callout-caution appearance=simple}
+This uses `anova()`, not `aov()`.
+:::
 
-Other references: https://online.stat.psu.edu/stat501/lesson/6/6.2
+::: {.callout-tip}
+## Other references 
+[Penn State](https://online.stat.psu.edu/stat501/lesson/6/6.2) resource on the general linear F-test.
+:::
 
 ### Likelihood function
 
@@ -645,7 +675,7 @@ $$ BIC = -2LL + ln(N)*(P+1)$$
 
 ## Model Diagnostics
 
-Recall from Section \@ref(mathematical-model) the assumptions for linear regression model are; 
+Recall from @sec-mathematical-model the assumptions for linear regression model are; 
 
 * **Linearity** The relationship between $x_j$ and $y$ is linear, for all $j$. 
 * **Normality, Homogeneity of variance** The residuals are identically distributed $\epsilon_{i} \sim N(0, \sigma^{2})$ 
