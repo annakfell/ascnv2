@@ -1,0 +1,3015 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.45">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Course notes for various Applied Statistics courses at CSU Chico">
+
+<title>11&nbsp; Generalized Linear Models – Applied Statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./appendix.html" rel="next">
+<link href="./model_building.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./reg_intro.html">Regression Modeling</a></li><li class="breadcrumb-item"><a href="./glm.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Applied Statistics</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/annakfell/ascnv2" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Preparing Data for Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dataprep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Workflow and Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Visualizing Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./select_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Selecting Appropriate Analyses</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Foundations for Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bivariate_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bivariate Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Regression Modeling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reg_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sl_reg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./moderation_stratification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Moderation and Stratification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mlr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./model_building.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Model Building</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./glm.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Appendix</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#fitting-glms" id="toc-fitting-glms" class="nav-link active" data-scroll-target="#fitting-glms"><span class="header-section-number">11.1</span> Fitting GLMs</a></li>
+  <li><a href="#sec-log-linear" id="toc-sec-log-linear" class="nav-link" data-scroll-target="#sec-log-linear"><span class="header-section-number">11.2</span> Log-linear models</a>
+  <ul>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">11.2.1</span> Example</a></li>
+  </ul></li>
+  <li><a href="#binary-outcome-data" id="toc-binary-outcome-data" class="nav-link" data-scroll-target="#binary-outcome-data"><span class="header-section-number">11.3</span> Binary outcome data</a></li>
+  <li><a href="#sec-logreg" id="toc-sec-logreg" class="nav-link" data-scroll-target="#sec-logreg"><span class="header-section-number">11.4</span> Logistic Regression</a>
+  <ul>
+  <li><a href="#interpreting-odds-ratios" id="toc-interpreting-odds-ratios" class="nav-link" data-scroll-target="#interpreting-odds-ratios"><span class="header-section-number">11.4.1</span> Interpreting Odds Ratios</a></li>
+  <li><a href="#sec-or-ci" id="toc-sec-or-ci" class="nav-link" data-scroll-target="#sec-or-ci"><span class="header-section-number">11.4.2</span> Confidence Intervals</a></li>
+  <li><a href="#sec-logreg-dep-ex" id="toc-sec-logreg-dep-ex" class="nav-link" data-scroll-target="#sec-logreg-dep-ex"><span class="header-section-number">11.4.3</span> Example: The effect of gender on Depression</a></li>
+  <li><a href="#sec-mlogreg" id="toc-sec-mlogreg" class="nav-link" data-scroll-target="#sec-mlogreg"><span class="header-section-number">11.4.4</span> Multiple Logistic Regression</a></li>
+  <li><a href="#effect-of-a-k-unit-change" id="toc-effect-of-a-k-unit-change" class="nav-link" data-scroll-target="#effect-of-a-k-unit-change"><span class="header-section-number">11.4.5</span> Effect of a k unit change</a></li>
+  <li><a href="#example-predictors-of-smoking-status" id="toc-example-predictors-of-smoking-status" class="nav-link" data-scroll-target="#example-predictors-of-smoking-status"><span class="header-section-number">11.4.6</span> Example: Predictors of smoking status</a></li>
+  <li><a href="#model-fit" id="toc-model-fit" class="nav-link" data-scroll-target="#model-fit"><span class="header-section-number">11.4.7</span> Model Fit</a></li>
+  </ul></li>
+  <li><a href="#poisson-reg" id="toc-poisson-reg" class="nav-link" data-scroll-target="#poisson-reg"><span class="header-section-number">11.5</span> Count outcome data</a>
+  <ul>
+  <li><a href="#sec-poisson-reg" id="toc-sec-poisson-reg" class="nav-link" data-scroll-target="#sec-poisson-reg"><span class="header-section-number">11.5.1</span> Poisson Regression</a></li>
+  <li><a href="#example-modeling-counts-from-the-add-health-wave-iv-dataset." id="toc-example-modeling-counts-from-the-add-health-wave-iv-dataset." class="nav-link" data-scroll-target="#example-modeling-counts-from-the-add-health-wave-iv-dataset."><span class="header-section-number">11.5.2</span> Example: Modeling counts from the Add Health Wave IV dataset.</a></li>
+  </ul></li>
+  <li><a href="#sec-multinomial-reg" id="toc-sec-multinomial-reg" class="nav-link" data-scroll-target="#sec-multinomial-reg"><span class="header-section-number">11.6</span> Categorical outcome data</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/glm.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./reg_intro.html">Regression Modeling</a></li><li class="breadcrumb-item"><a href="./glm.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-glm" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Packages Used
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This chapter uses the following packages: <a href="https://ggplot2.tidyverse.org">ggplot2</a>, <a href="https://www.danieldsjoberg.com/gtsummary/">gtsummary</a>, <a href="https://cran.r-project.org/web/packages/pander/vignettes/pander.html">pander</a>, <a href="https://cran.r-project.org/web/packages/MKmisc/vignettes/MKmisc.html">MKmisc</a>, <a href="http://r-survey.r-forge.r-project.org/survey/">survey</a>, the <a href="https://www.norcalbiostat.com/data/#AddHealth">AddHealth</a> and cleaned ‘depression’ data set.</p>
+</div>
+</div>
+<p>One of the primary assumptions with linear regression, is that the error terms have a specific distribution. Namely:</p>
+<p><span class="math display">\[ \epsilon_{i} \sim \mathcal{N}(0, \sigma^{2}) \qquad i=1, \ldots, n, \quad \mbox{and } \epsilon_{i} \perp \epsilon_{j}, i \neq j \]</span></p>
+<p>When your outcome variable <span class="math inline">\(y\)</span> is non-continuous/non-normal, the above assumption fails dramatically.</p>
+<p>Generalized Linear Models (GLM) allows for different data type outcomes by allowing the linear portion of the model (<span class="math inline">\(\mathbf{X}\beta\)</span>) to be related to the outcome variable <span class="math inline">\(y\)</span> using a <em>link</em> function, that allows the magnitude of the variance of the errors (<span class="math inline">\(\sigma\)</span>) to be related to the predicted values themselves.</p>
+<p>There are a few overarching types of non-continuous outcomes that can be modeled with GLM’s.</p>
+<ul>
+<li>Binary data: Logistic or Probit regression (<a href="#sec-logreg" class="quarto-xref"><span>Section 11.4</span></a>)</li>
+<li>Log-linear models (<a href="#sec-log-linear" class="quarto-xref"><span>Section 11.2</span></a>)</li>
+<li>Multinomial/categorical data: Multinomial or Ordinal Logistic regression. (<a href="#sec-multinomial-reg" class="quarto-xref"><span>Section 11.6</span></a>)</li>
+<li>Count data: Poisson regression (<a href="#sec-poisson-reg" class="quarto-xref"><span>Section 11.5.1</span></a>)</li>
+</ul>
+<section id="fitting-glms" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="fitting-glms"><span class="header-section-number">11.1</span> Fitting GLMs</h2>
+<p>All regression models aim to model the expected value of the response variable <span class="math inline">\(Y\)</span> given the observed data <span class="math inline">\(X\)</span>, through some link function <span class="math inline">\(C\)</span></p>
+<p><span class="math display">\[E(Y|X) = C(X)\]</span></p>
+<p>Depending on the data type of <span class="math inline">\(Y\)</span>, this link function takes different forms. Examples include:</p>
+<ul>
+<li>Linear regression: C = Identity function (no change)</li>
+<li>Logistic regression: C = logit function</li>
+<li>Poisson regression: C = log function</li>
+</ul>
+<p><strong>R</strong></p>
+<p>The general syntax is similar to <code>lm()</code>, with the additional required <code>family=</code> argument. See <code>?family</code> for a list of options. Example for Logistic regression would be:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3, <span class="at">data=</span>DATA, <span class="at">family=</span><span class="st">"binomial"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>SPSS</strong></p>
+<p>File menu: <code>Regression</code> –&gt; Binary Logistic.</p>
+<p>Syntax:</p>
+<pre><code>logistic regression Y with x1 x2 x3
+   /categorical = x2</code></pre>
+<p><a href="https://www.ibm.com/support/knowledgecenter/en/SSLVMB_26.0.0/statistics_reference_project_ddita/spss/regression/syn_logistic_regression_overview.html">IBM</a> - reference</p>
+<p><strong>Stata</strong></p>
+<p><code>logistic Y x1 x2</code></p>
+<p><a href="https://www.stata.com/features/overview/logistic-regression/">Stata</a> - reference</p>
+</section>
+<section id="sec-log-linear" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="sec-log-linear"><span class="header-section-number">11.2</span> Log-linear models</h2>
+<p>A <em>log-linear</em> model is when the log of the response variable is modeled using a linear combination of predictors.</p>
+<p><span class="math display">\[ln(Y) \sim XB +\epsilon\]</span></p>
+<p>Recall that in statistics, when we refer to the <em>log</em>, we mean the natural log <em>ln</em>.</p>
+<p>This type of model is often use to model count data using the Poisson distribution (<a href="#sec-poisson-reg" class="quarto-xref"><span>Section 11.5.1</span></a>).</p>
+<p>Why are we transforming the outcome? Typically to achieve normality when the response variable is highly skewed.</p>
+<p><strong>Interpreting results</strong></p>
+<p>Since we transformed our outcome before performing the regression, we have to back-transform the coefficient before interpretation. Similar to logistic regression, we need to <em>exponentiate</em> the regression coefficient before interpreting.</p>
+<p>When using log transformed outcomes, the effect on Y becomes <strong>multiplicative</strong> instead of additive.</p>
+<ul>
+<li><strong>Additive</strong> For every 1 unit increase in X, y increases by b1</li>
+<li><strong>Multiplicative</strong> For every 1 unit increase in X, y is multiplied by <span class="math inline">\(e^{b1}\)</span></li>
+</ul>
+<p>Example: Let <span class="math inline">\(b_{1} = 0.2\)</span>.</p>
+<ul>
+<li><strong>Additive</strong> For every 1 unit increase in X, y increases by 0.2 units.</li>
+<li><strong>Multiplicative</strong> For every 1 unit increase in X, y changes by <span class="math inline">\(e^{0.2} = 1.22\)</span> = 22%</li>
+</ul>
+<p>Thus we interpret the coefficient as a <strong>percentage</strong> change in <span class="math inline">\(Y\)</span> for a unit increase in <span class="math inline">\(x_{j}\)</span>.</p>
+<ul>
+<li><strong><span class="math inline">\(b_{j}&lt;0\)</span></strong> : Positive slope, positive association. The expected value of <span class="math inline">\(Y\)</span> for when <span class="math inline">\(x=0\)</span> is <span class="math inline">\(1 - e^{b_{j}}\)</span> percent <em>lower</em> than when <span class="math inline">\(x=1\)</span></li>
+<li><strong><span class="math inline">\(b_{j} \geq 0\)</span></strong> : Negative slope, negative association. The expected value of <span class="math inline">\(Y\)</span> for when <span class="math inline">\(x=0\)</span> is <span class="math inline">\(e^{b_{j}}\)</span> percent <em>higher</em> than when <span class="math inline">\(x=1\)</span></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learn more
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faqhow-do-i-interpret-a-regression-model-when-some-variables-are-log-transformed/">This</a> UCLA resource is my “go-to” reference on how to interpret the results when your response, predictor, or both variables are log transformed.</p>
+</div>
+</div>
+<section id="example" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="example"><span class="header-section-number">11.2.1</span> Example</h3>
+<p>We are going to analyze personal income from the AddHealth data set. First I need to clean up, and log transform the variable for personal earnings <code>H4EC2</code> by following the steps below <em>in order</em>.</p>
+<ol type="1">
+<li>Remove values above 999995 (structural missing).</li>
+<li>Create a new variable called <code>income</code>, that sets all values of personal income to be NA if below the federal poverty line.
+<ul>
+<li>First set <code>income= H4EC2</code></li>
+<li>Then set income to missing, if <code>H4EC2 &lt; 10210</code> (the federal poverty limit from 2008)</li>
+</ul></li>
+<li>Then create a new variable: <code>logincome</code> that is the natural log (<em>ln</em>) of income. e.g.&nbsp;<code>addhealth$logincome = log(addhealth$income)</code></li>
+</ol>
+<p>Why are we transforming income? To achieve normality.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(addhealth<span class="sc">$</span>income, <span class="at">probability =</span> <span class="cn">TRUE</span>); <span class="fu">lines</span>(<span class="fu">density</span>(addhealth<span class="sc">$</span>income, <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(addhealth<span class="sc">$</span>logincome, <span class="at">probability =</span> <span class="cn">TRUE</span>); <span class="fu">lines</span>(<span class="fu">density</span>(addhealth<span class="sc">$</span>logincome, <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(addhealth<span class="sc">$</span>income); <span class="fu">qqline</span>(addhealth<span class="sc">$</span>income, <span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(addhealth<span class="sc">$</span>logincome); <span class="fu">qqline</span>(addhealth<span class="sc">$</span>logincome, <span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="glm_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Identify variables</strong></p>
+<ul>
+<li>Quantitative outcome that has been log transformed: Income (variable <code>logincome</code>)</li>
+<li>Binary predictor: Ever smoked a cigarette (variable <code>eversmoke_c</code>)</li>
+<li>Binary confounder: Gender (variable <code>female_c</code>)</li>
+</ul>
+<p>The mathematical multivariable model looks like:</p>
+<p><span class="math display">\[ln(Y) \sim \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2}\]</span></p>
+<p><strong>Fit a linear regression model</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ln.mod<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(logincome<span class="sc">~</span>wakeup <span class="sc">+</span> female_c, <span class="at">data=</span>addhealth)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ln.mod<span class="fl">.2</span>) <span class="sc">%&gt;%</span> <span class="fu">pander</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 15%">
+<col style="width: 18%">
+<col style="width: 13%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">&nbsp;</th>
+<th style="text-align: center;">Estimate</th>
+<th style="text-align: center;">Std. Error</th>
+<th style="text-align: center;">t value</th>
+<th style="text-align: center;">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>(Intercept)</strong></td>
+<td style="text-align: center;">10.65</td>
+<td style="text-align: center;">0.026</td>
+<td style="text-align: center;">409.8</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>wakeup</strong></td>
+<td style="text-align: center;">-0.01491</td>
+<td style="text-align: center;">0.003218</td>
+<td style="text-align: center;">-4.633</td>
+<td style="text-align: center;">3.73e-06</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>female_cFemale</strong></td>
+<td style="text-align: center;">-0.1927</td>
+<td style="text-align: center;">0.017</td>
+<td style="text-align: center;">-11.34</td>
+<td style="text-align: center;">2.564e-29</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table table-sm table-striped small">
+<caption>Fitting linear model: logincome ~ wakeup + female_c</caption>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 30%">
+<col style="width: 13%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Observations</th>
+<th style="text-align: center;">Residual Std. Error</th>
+<th style="text-align: center;"><span class="math inline">\(R^2\)</span></th>
+<th style="text-align: center;">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">3813</td>
+<td style="text-align: center;">0.5233</td>
+<td style="text-align: center;">0.03611</td>
+<td style="text-align: center;">0.0356</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="fu">confint</span>(ln.mod<span class="fl">.2</span>)[<span class="sc">-</span><span class="dv">1</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    2.5 %      97.5 %
+wakeup         0.02099299 0.008561652
+female_cFemale 0.20231394 0.147326777</code></pre>
+</div>
+</div>
+<p><strong>Interpret the results</strong></p>
+<ul>
+<li>For every hour later one wakes up in the morning, one can expect to earn <code>1-exp(-0.015)</code> = 1.4% less income than someone who wakes up one hour earlier. This is after controlling for gender.</li>
+<li>Females have on average <code>1-exp(-0.19)</code> = 17% percent lower income than males, after controlling for the wake up time.</li>
+</ul>
+<p>Both gender and time one wakes up are significantly associated with the amount of personal earnings one makes. Waking up later in the morning is associated with 1.4% (95% CI 0.8%-2%, p&lt;.0001) percent lower income than someone who wakes up one hour earlier. Females have 17% (95% CI 15%-20%, p&lt;.0001) percent lower income than males.</p>
+</section>
+</section>
+<section id="binary-outcome-data" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="binary-outcome-data"><span class="header-section-number">11.3</span> Binary outcome data</h2>
+<p>Consider an outcome variable <span class="math inline">\(Y\)</span> with two levels: Y = 1 if event, = 0 if no event.</p>
+<p>Let <span class="math inline">\(p_{i} = P(y_{i}=1)\)</span>.</p>
+<p>Two goals:</p>
+<ul>
+<li>Assess the impact selected covariates have on the probability of an outcome occurring.</li>
+<li>Predict the probability of an event occurring given a certain covariate pattern. This is covered in <span class="quarto-unresolved-ref">?sec-binary-classification</span></li>
+</ul>
+<p>Binary data can be modeled using a <em>Logistic Model</em> or a <em>Probit Model</em>.</p>
+<p>The logistic model relates the probability of an event based on a linear combination of X’s.</p>
+<p><span class="math display">\[
+log\left(
+\frac{p_{i}}{1-p_{i}}
+\right) = \beta_{0} + \beta_{1}x_{1i} + \beta_{2}x_{2i} + \ldots + \beta_{p}x_{pi}
+\]</span></p>
+<p>Since the <em>odds</em> are defined as the probability an event occurs divided by the probability it does not occur: <span class="math inline">\((p/(1-p))\)</span>, the function <span class="math inline">\(log\left(\frac{p_{i}}{1-p_{i}}\right)\)</span> is also known as the <em>log odds</em>, or more commonly called the <strong><em>logit</em></strong>. This is the <em>link</em> function for the logistic regression model.</p>
+<p>This in essence takes a binary outcome 0/1 variable, turns it into a continuous probability (which only has a range from 0 to 1) Then the logit(p) has a continuous distribution ranging from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(\infty\)</span>, which is the same form as a Multiple Linear Regression (continuous outcome modeled on a set of covariates)</p>
+<p>The probit function uses the inverse CDF for the normal distribution as the link function. The effect of the transformation is very similar. For social science interpretation of the coefficients, we tend to choose the <em>logit</em> transformation and conduct a Logistic Regression. For classification purposes, often researchers will test out both transformations to see which one gives the best predictions.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="glm_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-logreg" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="sec-logreg"><span class="header-section-number">11.4</span> Logistic Regression</h2>
+<p>Since the link between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is no longer linear, a one unit increase in <span class="math inline">\(X_{p}\)</span> is no longer associated with a <span class="math inline">\(b_{p}\)</span> increase in <span class="math inline">\(Y\)</span>. The regression coefficients <span class="math inline">\(b_{p}\)</span> from a logistic regression must be <em>exponentiated</em> before interpretation.</p>
+<p><span class="math display">\[OR = e^{b}\]</span></p>
+<p>The Odds Ratio (OR) provides a directly understandable statistic for the relationship between <span class="math inline">\(y\)</span> and a specific <span class="math inline">\(x\)</span> given all other <span class="math inline">\(x\)</span>’s in the model are fixed. A later example in <a href="#sec-mlogreg" class="quarto-xref"><span>Section 11.4.4</span></a> provides a numeric example of how Odds Ratios are calculated.</p>
+<p>In testing for a relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, our hypothesis is that <span class="math inline">\(\beta_{p}=0\)</span>. Since <span class="math inline">\(e^{0}=1\)</span>, the reference value for the Odds Ratio that signifies no relationship, is 1, not 0.</p>
+<section id="interpreting-odds-ratios" class="level3" data-number="11.4.1">
+<h3 data-number="11.4.1" class="anchored" data-anchor-id="interpreting-odds-ratios"><span class="header-section-number">11.4.1</span> Interpreting Odds Ratios</h3>
+<p>Consider a binary outcome with values YES, coded as 1, and NO, coded as 0.</p>
+<ul>
+<li><strong>OR = 1</strong> = equal chance of response variable being YES given any explanatory variable value. You are not able to predict participants’ responses by knowing their explanatory variable value. This would be a non significant model when looking at the p-value for the explanatory variable in the parameter estimate table.</li>
+<li><strong>OR &gt; 1</strong> = as the explanatory variable value increases, the presence of a YES response is more likely. We can say that when a participant’s response to the explanatory variable is YES (1), they are more likely to have a response that is a YES (1).</li>
+<li><strong>OR &lt;1</strong> = as the explanatory variable value increases, the presence of a YES response is less likely. We can say that when a participant’s response to the explanatory variable is YES (1) they are less likely to have a response that is a YES (1).</li>
+</ul>
+<p>For a continuous variable X with slope coefficient <span class="math inline">\(\beta\)</span>, the quantity <span class="math inline">\(e^{b}\)</span> is interpreted as the ratio of the odds for a person with value (X+1) relative to the odds for a person with value X.</p>
+</section>
+<section id="sec-or-ci" class="level3" data-number="11.4.2">
+<h3 data-number="11.4.2" class="anchored" data-anchor-id="sec-or-ci"><span class="header-section-number">11.4.2</span> Confidence Intervals</h3>
+<p>Confidence intervals are a range for the population’s predicted odds ratio based on the sample data. We are 95% confident that any given population’s odds ratio would range between those two values.</p>
+<p>The OR is <strong>not</strong> a linear function of the <span class="math inline">\(x's\)</span>, but <span class="math inline">\(\beta\)</span> is. This means that a CI for the OR is created by calculating a CI for <span class="math inline">\(\beta\)</span>, and then exponentiating the endpoints. A 95% CI for the OR is calculated as:</p>
+<p><span id="eq-or-ci"><span class="math display">\[e^{\hat{\beta} \pm 1.96 SE_{\beta}}  \tag{11.1}\]</span></span></p>
+<p>This math holds for any <span class="math inline">\(k\)</span> unit change in x. The linearity of the confidence interval only applies at the untransformed level of the <span class="math inline">\(\beta\)</span>’s. NOT the odds ratio.</p>
+</section>
+<section id="sec-logreg-dep-ex" class="level3" data-number="11.4.3">
+<h3 data-number="11.4.3" class="anchored" data-anchor-id="sec-logreg-dep-ex"><span class="header-section-number">11.4.3</span> Example: The effect of gender on Depression</h3>
+<p>This uses a cleaned version of the depression data set from PMAS6.</p>
+<ul>
+<li>Binary outcome variable: Symptoms of Depression (<code>cases</code>)</li>
+<li>Binary predictor variable: Gender (<code>sex</code>) as an indicator of being female</li>
+</ul>
+<p>The outcome <span class="math inline">\(y\)</span> is a 0/1 Bernoulli random variable. The sum of a vector of Bernoulli’s (<span class="math inline">\(\sum_{i=1}^{n}y_{i}\)</span>) has a Binomial distribution. When we specify that <code>family = "binomial"</code> the <code>glm()</code> function auto-assigns “logit” link function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dep_sex_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(cases <span class="sc">~</span> sex, <span class="at">data=</span>depress_clean, <span class="at">family=</span><span class="st">"binomial"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dep_sex_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = cases ~ sex, family = "binomial", data = depress_clean)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  -3.3511     0.6867  -4.880 1.06e-06 ***
+sex           1.0386     0.3767   2.757  0.00583 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 268.12  on 293  degrees of freedom
+Residual deviance: 259.40  on 292  degrees of freedom
+AIC: 263.4
+
+Number of Fisher Scoring iterations: 5</code></pre>
+</div>
+</div>
+<p>We exponentiate the coefficients to back transform the <span class="math inline">\(\beta\)</span> estimates into Odds Ratios</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(dep_sex_model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)         sex 
+ 0.03504558  2.82517483 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(dep_sex_model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  2.5 %    97.5 %
+(Intercept) 0.008071827 0.1225716
+sex         1.399110558 6.2142384</code></pre>
+</div>
+</div>
+<p>Females have 2.8 (1.4, 6.2) times the odds of showing signs of depression compared to males.</p>
+</section>
+<section id="sec-mlogreg" class="level3" data-number="11.4.4">
+<h3 data-number="11.4.4" class="anchored" data-anchor-id="sec-mlogreg"><span class="header-section-number">11.4.4</span> Multiple Logistic Regression</h3>
+<p>Let’s continue with the depression model, but now also include age and income as potential predictors of symptoms of depression.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mvmodel <span class="ot">&lt;-</span> <span class="fu">glm</span>(cases <span class="sc">~</span> age <span class="sc">+</span> income <span class="sc">+</span> sex, <span class="at">data=</span>depress_clean, <span class="at">family=</span><span class="st">"binomial"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mvmodel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = cases ~ age + income + sex, family = "binomial", 
+    data = depress_clean)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)   
+(Intercept) -1.60590    0.84654  -1.897  0.05782 . 
+age         -0.02096    0.00904  -2.318  0.02043 * 
+income      -0.03656    0.01409  -2.595  0.00946 **
+sex          0.92945    0.38582   2.409  0.01600 * 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 268.12  on 293  degrees of freedom
+Residual deviance: 247.54  on 290  degrees of freedom
+AIC: 255.54
+
+Number of Fisher Scoring iterations: 5</code></pre>
+</div>
+</div>
+<ul>
+<li>The sign of the <span class="math inline">\(\beta\)</span> coefficients can be interpreted in the same manner as with linear regression as having a positive or negative relationship.<br>
+</li>
+<li>The odds of being depressed are less if the respondent has a higher income and is older, and higher if the respondent is female.</li>
+</ul>
+<blockquote class="blockquote">
+<p>The odds of a female being depressed are 2.53 times greater than the odds for Males after adjusting for the effects of age and income (p=.016).</p>
+</blockquote>
+<p><strong>Example calculation for <span class="math inline">\(OR = e^{\beta}\)</span></strong></p>
+<p>The full model is: <span class="math display">\[log(odds) = -0.676 - 0.02096*age - .03656*income + 0.92945*gender\]</span></p>
+<p>We want to calculate the Odds Ratio of depression for women compared to men. <span class="math display">\[ OR = \frac{Odds (Y=1|F)}{Odds (Y=1|M)} \]</span></p>
+<p>Write out the equations for men and women separately. <span class="math display">\[ = \frac{e^{-0.676 - 0.02096*age - .03656*income + 0.92945(1)}}
+          {e^{-0.676 - 0.02096*age - .03656*income + 0.92945(0)}}\]</span></p>
+<p>Applying rules of exponents to simplify. <span class="math display">\[ = \frac{e^{-0.676}e^{- 0.02096*age}e^{- .03656*income}e^{0.92945(1)}}
+          {e^{-0.676}e^{- 0.02096*age}e^{- .03656*income}e^{0.92945(0)}}\]</span></p>
+<p><span class="math display">\[ = \frac{e^{0.92945(1)}}
+          {e^{0.92945(0)}}\]</span></p>
+<p><span class="math display">\[ = e^{0.92945} \]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(.<span class="dv">92945</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.533116</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(mvmodel)[<span class="dv">4</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     sex 
+2.533112 </code></pre>
+</div>
+</div>
+</section>
+<section id="effect-of-a-k-unit-change" class="level3" data-number="11.4.5">
+<h3 data-number="11.4.5" class="anchored" data-anchor-id="effect-of-a-k-unit-change"><span class="header-section-number">11.4.5</span> Effect of a k unit change</h3>
+<ul>
+<li>Sometimes a 1 unit change in a continuous variable is not meaningful.</li>
+<li><span class="math inline">\(exp(kb)\)</span> is the incremental odds ratio corresponding to an increase of <span class="math inline">\(k\)</span> units in the variable X, assuming that the values of all other X variables remain unchanged.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_regression</span>(mvmodel, <span class="at">exponentiate=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="lyzzvcinij" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#lyzzvcinij table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#lyzzvcinij thead, #lyzzvcinij tbody, #lyzzvcinij tfoot, #lyzzvcinij tr, #lyzzvcinij td, #lyzzvcinij th {
+  border-style: none;
+}
+
+#lyzzvcinij p {
+  margin: 0;
+  padding: 0;
+}
+
+#lyzzvcinij .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#lyzzvcinij .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#lyzzvcinij .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#lyzzvcinij .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#lyzzvcinij .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#lyzzvcinij .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lyzzvcinij .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#lyzzvcinij .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#lyzzvcinij .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#lyzzvcinij .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#lyzzvcinij .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#lyzzvcinij .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#lyzzvcinij .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#lyzzvcinij .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#lyzzvcinij .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#lyzzvcinij .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#lyzzvcinij .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#lyzzvcinij .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#lyzzvcinij .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lyzzvcinij .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#lyzzvcinij .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#lyzzvcinij .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#lyzzvcinij .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lyzzvcinij .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#lyzzvcinij .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#lyzzvcinij .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lyzzvcinij .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lyzzvcinij .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#lyzzvcinij .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lyzzvcinij .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#lyzzvcinij .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lyzzvcinij .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#lyzzvcinij .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lyzzvcinij .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#lyzzvcinij .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lyzzvcinij .gt_left {
+  text-align: left;
+}
+
+#lyzzvcinij .gt_center {
+  text-align: center;
+}
+
+#lyzzvcinij .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#lyzzvcinij .gt_font_normal {
+  font-weight: normal;
+}
+
+#lyzzvcinij .gt_font_bold {
+  font-weight: bold;
+}
+
+#lyzzvcinij .gt_font_italic {
+  font-style: italic;
+}
+
+#lyzzvcinij .gt_super {
+  font-size: 65%;
+}
+
+#lyzzvcinij .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#lyzzvcinij .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#lyzzvcinij .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#lyzzvcinij .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#lyzzvcinij .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#lyzzvcinij .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#lyzzvcinij .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_col_headings">
+<th id="<strong>Characteristic</strong>" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Characteristic</strong></th>
+<th id="<strong>OR</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>OR</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+<th id="<strong>95% CI</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>95% CI</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+<th id="<strong>p-value</strong>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>p-value</strong></th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">age</td>
+<td class="gt_row gt_center" headers="estimate">0.98</td>
+<td class="gt_row gt_center" headers="ci">0.96, 1.00</td>
+<td class="gt_row gt_center" headers="p.value">0.020</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">income</td>
+<td class="gt_row gt_center" headers="estimate">0.96</td>
+<td class="gt_row gt_center" headers="ci">0.94, 0.99</td>
+<td class="gt_row gt_center" headers="p.value">0.009</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">sex</td>
+<td class="gt_row gt_center" headers="estimate">2.53</td>
+<td class="gt_row gt_center" headers="ci">1.23, 5.66</td>
+<td class="gt_row gt_center" headers="p.value">0.016</td>
+</tr>
+</tbody><tfoot class="gt_footnotes">
+<tr class="even">
+<td colspan="4" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> OR = Odds Ratio, CI = Confidence Interval</td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>The Adjusted odds ratio (AOR) for increase of 1 year of age is 0.98 (95%CI .96, 1.0)</li>
+<li>How about a 10 year increase in age? <span class="math inline">\(e^{10*\beta_{age}} = e^{-.21} = .81\)</span></li>
+</ul>
+<p>In generalized linear models, the assumptions on <span class="math inline">\(\beta\)</span> having a normal distribution.</p>
+<p>Refer back to <a href="#eq-or-ci" class="quarto-xref">Equation&nbsp;<span>11.1</span></a>, the linearity of the relationship is on the <span class="math inline">\(\beta\)</span> level, not the odds ratio. Do all transformations on the <span class="math inline">\(\beta\)</span>’s, then the last step is the non-linear transformation of exponentiation.</p>
+<p>So the mathematical order of operations is important! First use <code>coef</code> to extract the coefficients out of the model object (here named <code>mvmodel</code>), then pull the 2nd item out <code>coef(mvmodel)[2]</code>, then multiply it by 10, then lastly exponentiate this value.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="dv">10</span><span class="sc">*</span><span class="fu">coef</span>(mvmodel)[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      age 
+0.8109285 </code></pre>
+</div>
+</div>
+<p>Do the same to calculate the confidence interval for a 10 year time span.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">exp</span>(<span class="dv">10</span><span class="sc">*</span><span class="fu">confint</span>(mvmodel)[<span class="dv">2</span>,]),<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> 2.5 % 97.5 % 
+ 0.676  0.965 </code></pre>
+</div>
+</div>
+<p>Controlling for gender and income, an individual has 0.81 (95% CI 0.68, 0.97) times the odds of being depressed compared to someone who is 10 years younger than them.</p>
+</section>
+<section id="example-predictors-of-smoking-status" class="level3" data-number="11.4.6">
+<h3 data-number="11.4.6" class="anchored" data-anchor-id="example-predictors-of-smoking-status"><span class="header-section-number">11.4.6</span> Example: Predictors of smoking status</h3>
+<p>Consider a logistic model on smoking status (0= never smoked, 1=has smoked) using gender, income, and blood pressure class (<code>bp_class</code>) as predictors.</p>
+<p><span class="math display">\[
+logit(Y) = \beta_{0} + \beta_{1}\mbox{(female)} + \beta_{2}\mbox{(income)} + \beta_{3}\mbox{(Pre-HTN)}
++ \beta_{4}\mbox{(HTN-I)} + \beta_{5}\mbox{(HTN-II)}
+\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>bp.mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(smoke <span class="sc">~</span> female_c <span class="sc">+</span> income <span class="sc">+</span> bp_class, <span class="at">data=</span>addhealth, <span class="at">family=</span><span class="st">'binomial'</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_regression</span>(bp.mod, <span class="at">exponentiate=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="clvygbtzha" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#clvygbtzha table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#clvygbtzha thead, #clvygbtzha tbody, #clvygbtzha tfoot, #clvygbtzha tr, #clvygbtzha td, #clvygbtzha th {
+  border-style: none;
+}
+
+#clvygbtzha p {
+  margin: 0;
+  padding: 0;
+}
+
+#clvygbtzha .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#clvygbtzha .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#clvygbtzha .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#clvygbtzha .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#clvygbtzha .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#clvygbtzha .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#clvygbtzha .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#clvygbtzha .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#clvygbtzha .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#clvygbtzha .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#clvygbtzha .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#clvygbtzha .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#clvygbtzha .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#clvygbtzha .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#clvygbtzha .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#clvygbtzha .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#clvygbtzha .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#clvygbtzha .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#clvygbtzha .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#clvygbtzha .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#clvygbtzha .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#clvygbtzha .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#clvygbtzha .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#clvygbtzha .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#clvygbtzha .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#clvygbtzha .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#clvygbtzha .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#clvygbtzha .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#clvygbtzha .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#clvygbtzha .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#clvygbtzha .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#clvygbtzha .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#clvygbtzha .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#clvygbtzha .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#clvygbtzha .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#clvygbtzha .gt_left {
+  text-align: left;
+}
+
+#clvygbtzha .gt_center {
+  text-align: center;
+}
+
+#clvygbtzha .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#clvygbtzha .gt_font_normal {
+  font-weight: normal;
+}
+
+#clvygbtzha .gt_font_bold {
+  font-weight: bold;
+}
+
+#clvygbtzha .gt_font_italic {
+  font-style: italic;
+}
+
+#clvygbtzha .gt_super {
+  font-size: 65%;
+}
+
+#clvygbtzha .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#clvygbtzha .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#clvygbtzha .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#clvygbtzha .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#clvygbtzha .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#clvygbtzha .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#clvygbtzha .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header gt_col_headings">
+<th id="<strong>Characteristic</strong>" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Characteristic</strong></th>
+<th id="<strong>OR</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>OR</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+<th id="<strong>95% CI</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>95% CI</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+<th id="<strong>p-value</strong>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>p-value</strong></th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">female_c</td>
+<td class="gt_row gt_center" headers="estimate"><br>
+</td>
+<td class="gt_row gt_center" headers="ci"><br>
+</td>
+<td class="gt_row gt_center" headers="p.value"><br>
+</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Male</td>
+<td class="gt_row gt_center" headers="estimate">—</td>
+<td class="gt_row gt_center" headers="ci">—</td>
+<td class="gt_row gt_center" headers="p.value"><br>
+</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Female</td>
+<td class="gt_row gt_center" headers="estimate">0.54</td>
+<td class="gt_row gt_center" headers="ci">0.46, 0.63</td>
+<td class="gt_row gt_center" headers="p.value">&lt;0.001</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">income</td>
+<td class="gt_row gt_center" headers="estimate">1.00</td>
+<td class="gt_row gt_center" headers="ci">1.00, 1.00</td>
+<td class="gt_row gt_center" headers="p.value">0.005</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">bp_class</td>
+<td class="gt_row gt_center" headers="estimate"><br>
+</td>
+<td class="gt_row gt_center" headers="ci"><br>
+</td>
+<td class="gt_row gt_center" headers="p.value"><br>
+</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Normal</td>
+<td class="gt_row gt_center" headers="estimate">—</td>
+<td class="gt_row gt_center" headers="ci">—</td>
+<td class="gt_row gt_center" headers="p.value"><br>
+</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Pre-HTN</td>
+<td class="gt_row gt_center" headers="estimate">1.08</td>
+<td class="gt_row gt_center" headers="ci">0.92, 1.26</td>
+<td class="gt_row gt_center" headers="p.value">0.4</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;HTN-I</td>
+<td class="gt_row gt_center" headers="estimate">0.98</td>
+<td class="gt_row gt_center" headers="ci">0.79, 1.21</td>
+<td class="gt_row gt_center" headers="p.value">0.8</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;HTN-II</td>
+<td class="gt_row gt_center" headers="estimate">1.03</td>
+<td class="gt_row gt_center" headers="ci">0.71, 1.50</td>
+<td class="gt_row gt_center" headers="p.value">0.9</td>
+</tr>
+</tbody><tfoot class="gt_footnotes">
+<tr class="even">
+<td colspan="4" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> OR = Odds Ratio, CI = Confidence Interval</td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+</div>
+</div>
+<p>It is unlikely that blood pressure is associated with smoking status, all groups are not statistically significantly different from the reference group (all p-values are large). Let’s test that hypothesis formally using a Wald Test.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>survey<span class="sc">::</span><span class="fu">regTermTest</span>(bp.mod, <span class="st">"bp_class"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Wald test for bp_class
+ in glm(formula = smoke ~ female_c + income + bp_class, family = "binomial", 
+    data = addhealth)
+F =  0.428004  on  3  and  3723  df: p= 0.73294 </code></pre>
+</div>
+</div>
+<p>The Wald Test has a large p-value of 0.73, thus blood pressure classification is not associated with smoking status.</p>
+<ul>
+<li>This means blood pressure classification should not be included in a model to explain smoking status.</li>
+</ul>
+</section>
+<section id="model-fit" class="level3" data-number="11.4.7">
+<h3 data-number="11.4.7" class="anchored" data-anchor-id="model-fit"><span class="header-section-number">11.4.7</span> Model Fit</h3>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>See PMA6 12.8</p>
+</div>
+</div>
+</div>
+<p><strong>Pseudo <span class="math inline">\(R^{2}\)</span></strong></p>
+<p>Recall in linear regression, the coefficient of determination <span class="math inline">\(R^{2}\)</span> could be used as a measure of model fit, as it represents the proportion of variance in the outcome explained by the model. This statistic can’t be calculated for Logistic regression, but several versions of a <em>Pseudo <span class="math inline">\(R^{2}\)</span></em> have been proposed, and are printed as part of the output for many statistical packages such as Stata.</p>
+<p><strong>Goodness of Fit</strong></p>
+<p>Another way to assess model fit for the entire model is to perform a <em>goodness-of-fit</em> test. The one developed by Hosmer and Lemeshow (1980) is the most commonly used GoF test. In this approach,</p>
+<ol type="1">
+<li>the predicted probability of belonging to the event group (y=1) is calculated for every observation.</li>
+<li>these probabilities are sorted in ascending order, then divided into <span class="math inline">\(j\)</span> equal sized subgroups, typically deciles to create 10 ‘bins’.</li>
+<li>For each ‘bin’, or range of probabilities, count the observed number of individuals with the event (y=1) (<span class="math inline">\(O_{j}\)</span>).</li>
+<li>For each ‘bin’, calculate the expected number of events by adding the predicted probabilities in that bin. (<span class="math inline">\(E_{j}\)</span>)</li>
+</ol>
+<p>The goodness of fit statistic is then calculated as follows:</p>
+<p><span class="math display">\[ GoF \chi^{2} = \sum_{j} \frac{(O_{j}-E_{j})^2}{E_{j}} \]</span></p>
+<p>which approximately follows a <span class="math inline">\(\chi_{J-2}^{2}\)</span> distribution under relatively large sample sizes.</p>
+<blockquote class="blockquote">
+<p>A large GoF statistic (or small p-value) indicate that the fit may <em>NOT</em> be good</p>
+</blockquote>
+<p>R package: <code>MKmisc</code>, function <code>HLgof.test</code>.</p>
+<pre><code>Mkmisc::HLgof.test(fit=fitted(model), obs=model$y)</code></pre>
+<p><strong>Accurate predictions</strong></p>
+<p>Since the logistic regression is all about modeling the probability of an event occurring, we can use that model to create predicted probabilities. The next chapter discusses how to use a logistic regression model for prediction, and what measures of fit are used to assess how “accurate” the model is.</p>
+</section>
+</section>
+<section id="poisson-reg" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="poisson-reg"><span class="header-section-number">11.5</span> Count outcome data</h2>
+<p>Lets consider modeling the distribution of the number of of occurrences of a rare event in a specified period of time - e.g.&nbsp;Number of thunderstorms in a year</p>
+<ul>
+<li>If we assume:
+<ul>
+<li>Rate (<span class="math inline">\(\mu\)</span>) is fixed over time</li>
+<li>Successive occurrences independent of each other</li>
+</ul></li>
+</ul>
+<p>Then we can use the <strong>Poisson distribution</strong>.</p>
+<p><span class="math display">\[
+P(Y=y) = e^{-\mu}\frac{\mu^{y}}{y!}
+\]</span></p>
+<ul>
+<li>The Poisson distribution has a distinct feature where the mean of the distribution <span class="math inline">\(\mu\)</span>, is also the variance.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/poisson.png" class="img-fluid figure-img"></p>
+<figcaption>Plot of Histogram of a Poisson Distribution with a Mean of 5 and a Normal Curve</figcaption>
+</figure>
+</div>
+<section id="sec-poisson-reg" class="level3" data-number="11.5.1">
+<h3 data-number="11.5.1" class="anchored" data-anchor-id="sec-poisson-reg"><span class="header-section-number">11.5.1</span> Poisson Regression</h3>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>This section is still under development</p>
+</div>
+</div>
+</div>
+<p>Just another GLM - we use a <span class="math inline">\(ln\)</span> as the link function. This lets us model the log rates using a linear combination of covariates.</p>
+<p><span class="math display">\[
+  ln(\mu) = \mathbf{X}\beta
+\]</span></p>
+<p>Then the expected rate of events per unit of time is:</p>
+<p><span class="math display">\[
+  \mu = e^{\mathbf{X}\beta}
+\]</span></p>
+<p>This model assumes that the time of “exposure” for each record is identical.</p>
+<ul>
+<li>Number of cigarettes per month</li>
+<li>Number of epileptic seizures per week</li>
+<li>Number of people with lung cancer in four cities</li>
+</ul>
+<p>If this is not the case (often), then this model needs to include an <em>offset</em>.</p>
+<ul>
+<li>e.g.&nbsp;observing each patient for epileptic seizures for a different number of days</li>
+<li>accounting for different sizes or structures of populations of interest (e.g.&nbsp;different cities with lung cancer)</li>
+</ul>
+<p>What actually gets fit in <code>glm</code> is the model of expected <em>counts</em>, rather than rates, with an offset for the time period <span class="math inline">\(T\)</span>.</p>
+<ul>
+<li>If all time periods are the same, then T is constant, and a linear combination of the intercept, thus dropped from the model.</li>
+</ul>
+<p><span class="math display">\[
+  ln(\lambda) = \mathbf{X}\beta + ln(T)
+\]</span></p>
+<p>While this offset will be added to the regression model as if it were another variable, it’s not quite the same because the regression coefficient for the <span class="math inline">\(ln(T)\)</span> term is fixed at 1.</p>
+<p>The generic formula for fitting a poisson model using <code>glm</code> is:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> <span class="fu">offset</span>(<span class="fu">log</span>(T)), <span class="at">family=</span><span class="st">'poisson'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>or alternatively as an argument</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">offset =</span> <span class="fu">log</span>(T),  <span class="at">family=</span><span class="st">'poisson'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The interpretation of the <span class="math inline">\(\beta\)</span> regression coefficients are differences in the log rate (or the log rate-ratio). So, just like with a logistic regression often we back-transform the coefficients by exponentiating before interpreting. So <span class="math inline">\(e^{\beta}\)</span> is now the rate-ratio.</p>
+<ul>
+<li>The intercept term is not a ratio, but a baseline rate when all covariates are 0</li>
+<li>For other covariates, the coefficient is the relative change <em>per unit</em> change in the covariate.
+<ul>
+<li>one year older</li>
+<li>males vs females</li>
+</ul></li>
+</ul>
+<p>Also, similar to logistic regression, since the outcome was transformed, the standard errors are not useful or interpretable as is. To calculate confidence intervals for the rate ratios,</p>
+<ol type="1">
+<li>calculate the CI for <span class="math inline">\(\beta\)</span></li>
+<li>exponentiate each end point.</li>
+</ol>
+</section>
+<section id="example-modeling-counts-from-the-add-health-wave-iv-dataset." class="level3" data-number="11.5.2">
+<h3 data-number="11.5.2" class="anchored" data-anchor-id="example-modeling-counts-from-the-add-health-wave-iv-dataset."><span class="header-section-number">11.5.2</span> Example: Modeling counts from the Add Health Wave IV dataset.</h3>
+<p>Let’s model the number of siblings someone has, based off their age at Wave 1 (2008).</p>
+<p>Visualize</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(addhealth, <span class="fu">aes</span>(<span class="at">x=</span>nsib)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span> </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Number of siblings"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="glm_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>nsib.model <span class="ot">&lt;-</span> <span class="fu">glm</span>(nsib <span class="sc">~</span> agew1 <span class="sc">+</span> female, <span class="at">data=</span>addhealth, <span class="at">family=</span><span class="st">"poisson"</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_regression</span>(nsib.model, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="tzvgyaitze" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#tzvgyaitze table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#tzvgyaitze thead, #tzvgyaitze tbody, #tzvgyaitze tfoot, #tzvgyaitze tr, #tzvgyaitze td, #tzvgyaitze th {
+  border-style: none;
+}
+
+#tzvgyaitze p {
+  margin: 0;
+  padding: 0;
+}
+
+#tzvgyaitze .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#tzvgyaitze .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#tzvgyaitze .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#tzvgyaitze .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#tzvgyaitze .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#tzvgyaitze .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tzvgyaitze .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#tzvgyaitze .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#tzvgyaitze .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#tzvgyaitze .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#tzvgyaitze .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#tzvgyaitze .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#tzvgyaitze .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#tzvgyaitze .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#tzvgyaitze .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#tzvgyaitze .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#tzvgyaitze .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#tzvgyaitze .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#tzvgyaitze .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tzvgyaitze .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#tzvgyaitze .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#tzvgyaitze .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#tzvgyaitze .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tzvgyaitze .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#tzvgyaitze .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#tzvgyaitze .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tzvgyaitze .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tzvgyaitze .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#tzvgyaitze .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tzvgyaitze .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#tzvgyaitze .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tzvgyaitze .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#tzvgyaitze .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tzvgyaitze .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#tzvgyaitze .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tzvgyaitze .gt_left {
+  text-align: left;
+}
+
+#tzvgyaitze .gt_center {
+  text-align: center;
+}
+
+#tzvgyaitze .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#tzvgyaitze .gt_font_normal {
+  font-weight: normal;
+}
+
+#tzvgyaitze .gt_font_bold {
+  font-weight: bold;
+}
+
+#tzvgyaitze .gt_font_italic {
+  font-style: italic;
+}
+
+#tzvgyaitze .gt_super {
+  font-size: 65%;
+}
+
+#tzvgyaitze .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#tzvgyaitze .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#tzvgyaitze .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#tzvgyaitze .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#tzvgyaitze .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#tzvgyaitze .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#tzvgyaitze .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_col_headings">
+<th id="<strong>Characteristic</strong>" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Characteristic</strong></th>
+<th id="<strong>IRR</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>IRR</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+<th id="<strong>95% CI</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>95% CI</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+<th id="<strong>p-value</strong>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>p-value</strong></th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">agew1</td>
+<td class="gt_row gt_center" headers="estimate">1.05</td>
+<td class="gt_row gt_center" headers="ci">1.03, 1.06</td>
+<td class="gt_row gt_center" headers="p.value">&lt;0.001</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">female</td>
+<td class="gt_row gt_center" headers="estimate">1.10</td>
+<td class="gt_row gt_center" headers="ci">1.06, 1.14</td>
+<td class="gt_row gt_center" headers="p.value">&lt;0.001</td>
+</tr>
+</tbody><tfoot class="gt_footnotes">
+<tr class="odd">
+<td colspan="4" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> IRR = Incidence Rate Ratio, CI = Confidence Interval</td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-multinomial-reg" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="sec-multinomial-reg"><span class="header-section-number">11.6</span> Categorical outcome data</h2>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>This section is still under development</p>
+</div>
+</div>
+</div>
+<p>If you want to keep the response variable as a categorical variable with more than two levels, the following regression model types are available:</p>
+<ul>
+<li><a href="https://stats.oarc.ucla.edu/r/dae/ordinal-logistic-regression/">Ordinal Logistic Regression</a></li>
+<li><a href="https://stats.oarc.ucla.edu/r/dae/multinomial-logistic-regression/">Multinomial Regression</a></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/annakfell\.github\.io\/ascnv2\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./model_building.html" class="pagination-link" aria-label="Model Building">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Model Building</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./appendix.html" class="pagination-link" aria-label="Appendix">
+        <span class="nav-page-text">Appendix</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/glm.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

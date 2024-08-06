@@ -35,6 +35,7 @@ book:
         - moderation_stratification.qmd
         - mlr.qmd
         - model_building.qmd
+        - glm.qmd
     - appendix.qmd
 
 format:

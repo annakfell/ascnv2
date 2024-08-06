@@ -157,7 +157,7 @@ by(pen, pen$species, function(x){
 
 There is a strong, positive, linear relationship (r=.87) between the flipper length and body mass of penguins when ignoring the species. This association is attenuated however within each species. _Gentoo_ and _Chinstrap_ still have strong correlations between flipper length and body mass, $r$=.70 and .64 respectively. However _Adelie_ species penguins only have a moderate correlation with $r=.45$. 
 
-So does Species moderate the relationship between flipper length and body mass? Visually we see a difference, but it is likely not statistically significant. More on how to determine that in section \@ref(general-F).
+So does Species moderate the relationship between flipper length and body mass? Visually we see a difference, but it is likely not statistically significant. More on how to determine that in @sec-general-F.
  
 ## Ex: Regression
 
