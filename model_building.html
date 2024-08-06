@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./appendix.html" rel="next">
+<link href="./glm.html" rel="next">
 <link href="./mlr.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -276,6 +276,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./model_building.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Model Building</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -1012,7 +1018,7 @@ F-statistic:  1478 on 4 and 145 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="example-3" class="level3" data-number="10.1.4">
 <h3 data-number="10.1.4" class="anchored" data-anchor-id="example-3"><span class="header-section-number">10.1.4</span> Example 3</h3>
-<p>Let’s explore the relationship between income, employment status and depression. This example follows a logistic regression example from section <span class="quarto-unresolved-ref">?sec-mlogreg</span>.</p>
+<p>Let’s explore the relationship between income, employment status and depression. This example follows a logistic regression example from section <a href="glm.html#sec-mlogreg" class="quarto-xref"><span>Section 11.4.4</span></a>.</p>
 <p>Here I create the binary indicators of <code>lowincome</code> (annual income &lt;$10k/year) and underemployed (part time or unemployed).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>depress_clean<span class="sc">$</span>lowincome <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(depress_clean<span class="sc">$</span>income <span class="sc">&lt;</span> <span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
@@ -3289,8 +3295,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./appendix.html" class="pagination-link" aria-label="Appendix">
-        <span class="nav-page-text">Appendix</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./glm.html" class="pagination-link" aria-label="Generalized Linear Models">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
