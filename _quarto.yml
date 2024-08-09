@@ -37,6 +37,9 @@ book:
         - model_building.qmd
         - glm.qmd
         - classification.qmd
+    - part: "Multivariate Analysis"
+      chapters: 
+        - multivariate_intro.qmd
     - appendix.qmd
 
 format:

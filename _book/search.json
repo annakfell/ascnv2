@@ -877,6 +877,17 @@
     ]
   },
   {
+    "objectID": "multivariate_intro.html",
+    "href": "multivariate_intro.html",
+    "title": "13  Introduction",
+    "section": "",
+    "text": "There is an important distinction between multivariable and multivariate models.\n\nmultivariable : Multiple predictor variables (\\(\\mathbf{x}\\)).\nmultivariate: Multiple response variables (\\(\\mathbf{Y}\\)).\n\nOften analysts will misuse multivariate when they really mean multivariable.\nMultivariate techniques are\n\nPrimarily used as an exploratory technique\nRestructure interrelated variables\nSimplify description\nReduce dimensionality\nAvoid multicollinearity problems in regression\n\nWe will discuss two different, but related techniques: Principal Component Analysis and Factor Analysis.",
+    "crumbs": [
+      "Multivariate Analysis",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
     "objectID": "appendix.html",
     "href": "appendix.html",
     "title": "Appendix",
