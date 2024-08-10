@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.56">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Course notes for various Applied Statistics courses at CSU Chico">
+
+<title>14&nbsp; Principal Component Analysis – Applied Statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./appendix.html" rel="next">
+<link href="./multivariate_intro.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./multivariate_intro.html">Multivariate Analysis</a></li><li class="breadcrumb-item"><a href="./PCA.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Principal Component Analysis</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Applied Statistics</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/annakfell/ascnv2" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Preparing Data for Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dataprep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Workflow and Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Visualizing Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./select_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Selecting Appropriate Analyses</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Foundations for Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bivariate_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bivariate Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Regression Modeling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reg_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sl_reg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./moderation_stratification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Moderation and Stratification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mlr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./model_building.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Model Building</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Classification of Binary outcomes</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Multivariate Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multivariate_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PCA.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Principal Component Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Appendix</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#when-is-principal-components-analysis-pca-used" id="toc-when-is-principal-components-analysis-pca-used" class="nav-link active" data-scroll-target="#when-is-principal-components-analysis-pca-used"><span class="header-section-number">14.1</span> When is Principal Components Analysis (PCA) used?</a></li>
+  <li><a href="#basic-idea" id="toc-basic-idea" class="nav-link" data-scroll-target="#basic-idea"><span class="header-section-number">14.2</span> Basic Idea - change of coordinates</a></li>
+  <li><a href="#more-generally" id="toc-more-generally" class="nav-link" data-scroll-target="#more-generally"><span class="header-section-number">14.3</span> More Generally</a></li>
+  <li><a href="#r-commands" id="toc-r-commands" class="nav-link" data-scroll-target="#r-commands"><span class="header-section-number">14.4</span> R commands</a>
+  <ul>
+  <li><a href="#generating-pcs" id="toc-generating-pcs" class="nav-link" data-scroll-target="#generating-pcs"><span class="header-section-number">14.4.1</span> Generating PC’s</a></li>
+  <li><a href="#viewing-the-amount-of-variance-contained-by-each-pc" id="toc-viewing-the-amount-of-variance-contained-by-each-pc" class="nav-link" data-scroll-target="#viewing-the-amount-of-variance-contained-by-each-pc"><span class="header-section-number">14.4.2</span> Viewing the amount of variance contained by each PC</a></li>
+  <li><a href="#visualize-loadings" id="toc-visualize-loadings" class="nav-link" data-scroll-target="#visualize-loadings"><span class="header-section-number">14.4.3</span> Visualize Loadings</a></li>
+  </ul></li>
+  <li><a href="#data-reduction" id="toc-data-reduction" class="nav-link" data-scroll-target="#data-reduction"><span class="header-section-number">14.5</span> Data Reduction</a>
+  <ul>
+  <li><a href="#choosing-m" id="toc-choosing-m" class="nav-link" data-scroll-target="#choosing-m"><span class="header-section-number">14.5.1</span> Choosing <span class="math inline">\(m\)</span></a></li>
+  </ul></li>
+  <li><a href="#standardizing" id="toc-standardizing" class="nav-link" data-scroll-target="#standardizing"><span class="header-section-number">14.6</span> Standardizing</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">14.7</span> Example</a></li>
+  <li><a href="#use-in-multiple-regression" id="toc-use-in-multiple-regression" class="nav-link" data-scroll-target="#use-in-multiple-regression"><span class="header-section-number">14.8</span> Use in Multiple Regression</a>
+  <ul>
+  <li><a href="#example-modeling-acute-illness" id="toc-example-modeling-acute-illness" class="nav-link" data-scroll-target="#example-modeling-acute-illness"><span class="header-section-number">14.8.1</span> Example: Modeling acute illness</a></li>
+  </ul></li>
+  <li><a href="#things-to-watch-out-for" id="toc-things-to-watch-out-for" class="nav-link" data-scroll-target="#things-to-watch-out-for"><span class="header-section-number">14.9</span> Things to watch out for</a></li>
+  <li><a href="#additional-references" id="toc-additional-references" class="nav-link" data-scroll-target="#additional-references"><span class="header-section-number">14.10</span> Additional References</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/PCA.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./multivariate_intro.html">Multivariate Analysis</a></li><li class="breadcrumb-item"><a href="./PCA.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Principal Component Analysis</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-pca" class="quarto-section-identifier"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Principal Component Analysis</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Packages Used
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This chapter uses the following packages: <a href="https://rpkgs.datanovia.com/factoextra/">factoextra</a></p>
+</div>
+</div>
+<p>More nomenclature tidbits: It’s <strong>“Principal”</strong> Components (adjective), not <strong>“Principle”</strong> Components (noun)</p>
+<p>From <a href="http://grammarist.com/spelling/principle-principal/">Grammarist</a>:</p>
+<blockquote class="blockquote">
+<p>As a noun, principal refers to (1) one who holds a presiding position or rank, and (2) capital or property before interest, and it’s also an adjective meaning (3) first or most important in rank</p>
+<p>Principle is only a noun. In its primary sense, it refers to a basic truth, law, assumption, or rule.</p>
+</blockquote>
+<p>This third definition (3) is the context in which we will be using this term.</p>
+<section id="when-is-principal-components-analysis-pca-used" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="when-is-principal-components-analysis-pca-used"><span class="header-section-number">14.1</span> When is Principal Components Analysis (PCA) used?</h2>
+<ul>
+<li>simplify the description of a set of interrelated variables.</li>
+<li>transform a set of correlated variables, to a new set of uncorrelated variables</li>
+<li>dimension reduction: collapse many variables into a few number of variables while maintaining the same amount of variation present in the data.
+<ul>
+<li>Statistical modeling is all about explaining variance in an outcome based on the variance in predictors.</li>
+<li>The new variables are called principal components, and they are ordered by the amount of variance they contain.</li>
+<li>So the first few principal components, may contain the same amount of variance (information) contained in a much larger set of original variables.</li>
+</ul></li>
+<li>multivariable outlier detection
+<ul>
+<li>individual records that have high values on the principal components variables are candidates for outliers or blunders on multiple variables.</li>
+</ul></li>
+<li>as a solution for multicollinearity
+<ul>
+<li>often is it useful to obtain the first few principal components corresponding to a set of highly correlated X variables, and then conduct regression analysis on the selected components.</li>
+</ul></li>
+<li>as a step towards factor analysis (next section)</li>
+<li>as an exploratory technique that may be used in gaining a better understanding of the relationships between measures.</li>
+</ul>
+<p><strong><em>Not</em> variable selection</strong></p>
+<p>Principal Components Analysis (PCA) differs from variable selection in two ways:</p>
+<ol type="1">
+<li>No dependent variable exists</li>
+<li>Variables are not eliminated but rather summary variables, i.e., principal components, are computed from all of the original variables.</li>
+</ol>
+<p>We are trying to understand a phenomenon by collecting a series of component measurements, but the underlying mechanics is complex and not easily understood by simply looking at each component individually. The data could be redundant and high levels of multicolinearity may be present.</p>
+</section>
+<section id="basic-idea" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="basic-idea"><span class="header-section-number">14.2</span> Basic Idea - change of coordinates</h2>
+<p>Let’s simulate a data set that consists of 100 random pairs of observations <span class="math inline">\(X_{1}\)</span> and <span class="math inline">\(X_{2}\)</span> that are correlated. Let <span class="math inline">\(X_{1} \sim \mathcal{N}(100, 100)\)</span>, <span class="math inline">\(X_{2} \sim \mathcal{N}(50, 50)\)</span>, with <span class="math inline">\(\rho\)</span> the correlation between <span class="math inline">\(X_{1}\)</span> and <span class="math inline">\(X_{12}\)</span> set to $.</p>
+<p>In matrix notation this is written as: <span class="math inline">\(\mathbf{X} \sim \mathcal{N}\left(\mathbf{\mu}, \mathbf{\Sigma}\right)\)</span> where <span class="math display">\[\mathbf{\mu} =
+  \left(\begin{array}
+  {r}
+  \mu_{1} \\
+  \mu_{2}
+  \end{array}\right),
+  \mathbf{\Sigma} =
+  \left(\begin{array}
+  {cc}
+  \sigma_{1}^{2} &amp; \rho\sigma_{1}\sigma_{2} \\
+  \rho\sigma_{1}\sigma_{2} &amp; \sigma_{2}^{2}
+  \end{array}\right)
+\]</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PCA_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Goal: Create two new variables <span class="math inline">\(C_{1}\)</span> and <span class="math inline">\(C_{2}\)</span> as linear combinations of <span class="math inline">\(\mathbf{x_{1}}\)</span> and <span class="math inline">\(\mathbf{x_{2}}\)</span></p>
+<p><span class="math display">\[ \mathbf{C_{1}} = a_{11}\mathbf{x_{1}} + a_{12}\mathbf{x_{2}} \]</span> <span class="math display">\[ \mathbf{C_{2}} = a_{21}\mathbf{x_{1}} + a_{22}\mathbf{x_{2}} \]</span></p>
+<p>or more simply <span class="math inline">\(\mathbf{C = aX}\)</span>, where</p>
+<ul>
+<li>The <span class="math inline">\(\mathbf{x}\)</span>’s have been centered by subtracting their mean (<span class="math inline">\(\mathbf{x_{1}} = x_{1}-\bar{x_{1}}\)</span>)</li>
+<li><span class="math inline">\(Var(C_{1})\)</span> is as large as possible</li>
+</ul>
+<p>Graphically we’re creating two new axes, where now <span class="math inline">\(C_{1}\)</span> and <span class="math inline">\(C_{2}\)</span> are uncorrelated.</p>
+<blockquote class="blockquote">
+<p>PCA is mathematically defined as an orthogonal linear transformation that transforms the data to a new coordinate system such that the greatest variance by some projection of the data comes to lie on the first coordinate (called the first principal component), the second greatest variance on the second coordinate, and so on. <a href="https://en.wikipedia.org/wiki/Principal_component_analysis">Wikipedia</a></p>
+</blockquote>
+<p><img src="images/pca_coord_rotate.png" class="img-fluid"></p>
+<p>In Linear Algebra terms, this is a <a href="https://en.wikipedia.org/wiki/Change_of_basis">change of basis</a>. We are changing from a coordinate system of <span class="math inline">\((x_{1},x_{2})\)</span> to <span class="math inline">\((c_{1}, c_{2})\)</span>. If you want to see more about this concept, here is a good <a href="https://www.youtube.com/watch?v=P2LTAUO1TdA&amp;list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&amp;index=13">YouTube Video</a>.</p>
+</section>
+<section id="more-generally" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="more-generally"><span class="header-section-number">14.3</span> More Generally</h2>
+<p>We want</p>
+<ul>
+<li>From <span class="math inline">\(P\)</span> original variables <span class="math inline">\(X_{1}, \ldots , X_{P}\)</span> get <span class="math inline">\(P\)</span> principal components <span class="math inline">\(C_{1}, \ldots , C_{P}\)</span></li>
+<li>Where each <span class="math inline">\(C_{j}\)</span> is a linear combination of the <span class="math inline">\(X_{i}\)</span>’s: <span class="math inline">\(C_{j} = a_{j1}X_{1} + a_{j2}X_{2} + \ldots + a_{jP}X_{P}\)</span></li>
+<li>The coefficients are chosen such that <span class="math inline">\(Var(C_{1}) \geq Var(C_{2}) \geq \ldots \geq Var(C_{P})\)</span>
+<ul>
+<li>Variance is a measure of information. Consider modeling prostate cancer.
+<ul>
+<li>Gender has 0 variance. No information.</li>
+<li>Size of tumor: the variance is &gt; 0, it provides useful information.</li>
+</ul></li>
+</ul></li>
+<li>Any two PC’s are uncorrelated: <span class="math inline">\(Cov(C_{i}, C_{j})=0, \quad \forall i \neq j\)</span></li>
+</ul>
+<p>We have</p>
+<p><span class="math display">\[
+  \left[
+    \begin{array}{r}
+      C_{1} \\
+      C_{2} \\
+      \vdots \\
+      C_{P}
+    \end{array}
+  \right]
+  =
+  \left[
+    \begin{array}{cccc}
+      a_{11} &amp; a_{12} &amp; \ldots &amp; a_{1P} \\
+      a_{21} &amp; a_{22} &amp; \ldots &amp; a_{2P} \\
+      \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+      a_{P1} &amp; a_{P2} &amp; \ldots &amp; a_{PP}
+    \end{array}
+  \right]
+  \left[
+    \begin{array}{r}
+      X_{1} \\
+      X_{2} \\
+      \vdots \\
+      X_{P}
+  \end{array}
+  \right]
+\]</span></p>
+<ul>
+<li>Hotelling (1933) showed that the columns of the matrix <span class="math inline">\(a_{ij}\)</span> are solutions to <span class="math inline">\((\mathbf{\Sigma} -\lambda\mathbf{I})\mathbf{a}=\mathbf{0}\)</span>.
+<ul>
+<li><span class="math inline">\(\mathbf{\Sigma}\)</span> is the variance-covariance matrix of the <span class="math inline">\(\mathbf{X}\)</span> variables.<br>
+</li>
+</ul></li>
+<li>This means <span class="math inline">\(\lambda\)</span> is an eigenvalue and <span class="math inline">\(\mathbf{a}\)</span> an eigenvector of the covariance matrix <span class="math inline">\(\mathbf{\Sigma}\)</span>.
+<ul>
+<li>(Optional) Learn more about eigenvalues <a href="https://www.youtube.com/watch?v=PFDu9oVAE-g&amp;list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&amp;index=14">[in this video]</a>.</li>
+</ul></li>
+<li>Problem: There are infinite number of possible <span class="math inline">\(\mathbf{a}\)</span>’s</li>
+<li>Solution: Choose <span class="math inline">\(a_{ij}\)</span>’s such that the sum of the squares of the coefficients for any one eigenvector is = 1.
+<ul>
+<li><span class="math inline">\(P\)</span> unique eigenvalues and <span class="math inline">\(P\)</span> corresponding eigenvectors.</li>
+</ul></li>
+</ul>
+<p>Which gives us</p>
+<ul>
+<li>Variances of the <span class="math inline">\(C_{j}\)</span>’s add up to the sum of the variances of the original variables (total variance).</li>
+<li>Can be thought of as variance decomposition into orthogonal (independet) vectors (variables).</li>
+<li>With <span class="math inline">\(Var(C_{1}) \geq Var(C_{2}) \geq \ldots \geq Var(C_{P})\)</span>.</li>
+</ul>
+</section>
+<section id="r-commands" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="r-commands"><span class="header-section-number">14.4</span> R commands</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Corresponding reading
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PMA6 Ch 14.3-14.4</p>
+</div>
+</div>
+<p>Calculating the principal components in R can be done using the function <code>prcomp()</code>, <code>princomp()</code> and functions from the <code>factoextra</code> package. This section of notes uses <code>princomp()</code> to generate the PCAs and helper functions from <code>factoextra</code> package. <a href="http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/118-principal-component-analysis-in-r-prcomp-vs-princomp/">STHDA</a> is a great reference for these functions.</p>
+<section id="generating-pcs" class="level3" data-number="14.4.1">
+<h3 data-number="14.4.1" class="anchored" data-anchor-id="generating-pcs"><span class="header-section-number">14.4.1</span> Generating PC’s</h3>
+<p>The matrix that is used in <code>princomp</code> must be fully numeric.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pr <span class="ot">&lt;-</span> <span class="fu">princomp</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="viewing-the-amount-of-variance-contained-by-each-pc" class="level3" data-number="14.4.2">
+<h3 data-number="14.4.2" class="anchored" data-anchor-id="viewing-the-amount-of-variance-contained-by-each-pc"><span class="header-section-number">14.4.2</span> Viewing the amount of variance contained by each PC</h3>
+<p>Use <code>summary</code> or <code>get_eigenvalue</code> to see the variance breakdown.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Importance of components:
+                           Comp.1    Comp.2
+Standard deviation     11.4019265 4.2236767
+Proportion of Variance  0.8793355 0.1206645
+Cumulative Proportion   0.8793355 1.0000000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>factoextra<span class="sc">::</span><span class="fu">get_eigenvalue</span>(pr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      eigenvalue variance.percent cumulative.variance.percent
+Dim.1  130.00393         87.93355                    87.93355
+Dim.2   17.83944         12.06645                   100.00000</code></pre>
+</div>
+</div>
+<p>The first PC (<code>Comp.1</code>) will always explain the highest proportion of variance (by mathematical design).</p>
+</section>
+<section id="visualize-loadings" class="level3" data-number="14.4.3">
+<h3 data-number="14.4.3" class="anchored" data-anchor-id="visualize-loadings"><span class="header-section-number">14.4.3</span> Visualize Loadings</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Matrix</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Vector plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Heatmap</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">Strength of representation</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false">Correlation circle</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<ul>
+<li>The values for the matrix <span class="math inline">\(\mathbf{A}\)</span> is contained in <code>pr$loadings</code>. Alternatively the <code>loadings</code> function will extract this matrix.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pr<span class="sc">$</span>loadings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Loadings:
+   Comp.1 Comp.2
+X1  0.854  0.519
+X2  0.519 -0.854
+
+               Comp.1 Comp.2
+SS loadings       1.0    1.0
+Proportion Var    0.5    0.5
+Cumulative Var    0.5    1.0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loadings</span>(pr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Loadings:
+   Comp.1 Comp.2
+X1  0.854  0.519
+X2  0.519 -0.854
+
+               Comp.1 Comp.2
+SS loadings       1.0    1.0
+Proportion Var    0.5    0.5
+Cumulative Var    0.5    1.0</code></pre>
+</div>
+</div>
+<p><span class="math display">\[
+C_{1} = 0.854x_1 + 0.519X_2 \\
+C_{2} =  0.519x_1 - 0.854X_2
+\]</span></p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>To visualize how these two new PC’s create new axes these new axes, we plot the centered data.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> pr<span class="sc">$</span>loadings</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">with</span>(data, X1 <span class="sc">-</span> <span class="fu">mean</span>(X1))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">with</span>(data, X2 <span class="sc">-</span> <span class="fu">mean</span>(X2))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">40</span>, <span class="dv">40</span>), <span class="fu">c</span>(<span class="sc">-</span><span class="dv">20</span>, <span class="dv">20</span>), <span class="at">type=</span><span class="st">"n"</span>,<span class="at">xlab=</span><span class="st">"x1"</span>, <span class="at">ylab=</span><span class="st">"x2"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">x=</span>x1, <span class="at">y=</span>x2, <span class="at">pch=</span><span class="dv">16</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, a[<span class="dv">2</span>,<span class="dv">1</span>]<span class="sc">/</span>a[<span class="dv">1</span>,<span class="dv">1</span>]); <span class="fu">text</span>(<span class="dv">30</span>, <span class="dv">10</span>, <span class="fu">expression</span>(C[<span class="dv">1</span>]))</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, a[<span class="dv">2</span>,<span class="dv">2</span>]<span class="sc">/</span>a[<span class="dv">1</span>,<span class="dv">2</span>]); <span class="fu">text</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">20</span>, <span class="fu">expression</span>(C[<span class="dv">2</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="PCA_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Another useful plot is called a <strong>biplot</strong>. Here the PC’s are on the dominant axes, and the red vectors show you the magnitude and direction of the original variables on this new axis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">biplot</span>(pr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PCA_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(pr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PCA_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>X1 is positively correlated with both PC1 and PC2</li>
+<li>X2 is positively correlated with PC1 but negatively correlated with PC2.</li>
+</ul>
+<p>This information was also seen in the loading values.</p>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<ul>
+<li>Often in high dimensional studies, the loadings are visualized using a heatmap.</li>
+<li>Here we use the <code>heatmap.2()</code> in the <code>gplots</code> package. I encourage you to play with the options such as <code>dendogram</code> and <code>trace</code> to see what they remove/add, and review the <code>?heatmap.2</code> help file.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gplots)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap.2</span>(pr<span class="sc">$</span>loadings, <span class="at">dendrogram=</span><span class="st">"none"</span>, <span class="at">trace=</span><span class="st">"none"</span>, <span class="at">density.info=</span><span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PCA_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<p>Contribution of rows/columns to the PC’s. For a given dimension, any row/column with a contribution above the reference line could be considered as important in contributing to the dimension.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_contrib</span>(pr, <span class="at">choice =</span> <span class="st">"var"</span>, <span class="at">axes =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PCA_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>X1 contributes more than half of the amount of information to PC1 compared to X2</p>
+</div>
+<div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
+<p>With only 2 PC’s this isn’t that informative. The later example and the vignette are likely more helpful.</p>
+<p>See <a href="http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/112-pca-principal-component-analysis-essentials#graph-of-variables">STDHA correlation circle</a> for detailed information.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(pr, <span class="at">col.var =</span> <span class="st">"contrib"</span>, <span class="at">axes=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>, <span class="st">"#FC4E07"</span>), </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">repel =</span> <span class="cn">TRUE</span> <span class="co"># Avoid text overlapping</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>             )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PCA_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="data-reduction" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="data-reduction"><span class="header-section-number">14.5</span> Data Reduction</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Corresponding reading
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PMA6 Ch 14.5</p>
+</div>
+</div>
+<ul>
+<li>Keep first <span class="math inline">\(m\)</span> principal components as representatives of original P variables</li>
+<li>Keep enough to explain a large percentage of original total variance.</li>
+<li>Ideally you want a small number of PC’s that explain a large percentage of the total variance.</li>
+</ul>
+<section id="choosing-m" class="level3" data-number="14.5.1">
+<h3 data-number="14.5.1" class="anchored" data-anchor-id="choosing-m"><span class="header-section-number">14.5.1</span> Choosing <span class="math inline">\(m\)</span></h3>
+<ul>
+<li>Rely on existing theory</li>
+<li>Explain a given % of variance (cumulative percentage plot)</li>
+<li>All eigenvalues &gt; 1 (Scree plot)</li>
+<li>Elbow rule (Scree Plot)</li>
+</ul>
+<p>A <em>Scree plot</em> is created by plotting the eigenvalue against the PC number.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_eig</span>(pr, <span class="at">addlabels =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PCA_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>These are best understood using an example containing more than two PC’s, but there is one more thing to consider first and that is how the data is prepared before calculating the principal components.</p>
+</section>
+</section>
+<section id="standardizing" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="standardizing"><span class="header-section-number">14.6</span> Standardizing</h2>
+<p>Often researchers will standardize the <span class="math inline">\(x\)</span> variables before conducting a PCA.</p>
+<ul>
+<li><p>Standardizing: Take <span class="math inline">\(X\)</span> and divide each element by <span class="math inline">\(\sigma_{x}\)</span>.</p>
+<p><span class="math display">\[\frac{X}{\sigma_{X}}\]</span></p></li>
+<li><p>Normalizing: Centering and standardizing.</p>
+<p><span class="math display">\[Z = \frac{(X-\bar{X})}{\sigma_{X}}\]</span></p></li>
+<li><p>Equivalent to analyzing the correlation matrix (<span class="math inline">\(\mathbf{R}\)</span>) instead of covariance matrix (<span class="math inline">\(\mathbf{\Sigma}\)</span>).</p></li>
+</ul>
+<div class="cell" type="rmdwarning">
+
+<div class="rmdwarning">
+Using correlation matrix vs covariance matrix will generate different PC’s
+</div>
+</div>
+<p>This makes sense given the difference in matricies:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(data) <span class="co">#Covariance Matrix</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          X1       X2
+X1 100.74146 50.29187
+X2  50.29187 48.59528</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(data) <span class="co">#Correlation Matrix</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          X1        X2
+X1 1.0000000 0.7187811
+X2 0.7187811 1.0000000</code></pre>
+</div>
+</div>
+<p>Standardizing your data prior to analysis (using <span class="math inline">\(\mathbf{R}\)</span> instead of <span class="math inline">\(\mathbf{\Sigma}\)</span>) aids the interpretation of the PC’s in a few ways</p>
+<ol type="1">
+<li>The total variance is the number of variables <span class="math inline">\(P\)</span></li>
+<li>The proportion explained by each PC is the corresponding eigenvalue / <span class="math inline">\(P\)</span></li>
+<li>The correlation between <span class="math inline">\(C_{i}\)</span> and standardized variable <span class="math inline">\(x_{j}\)</span> can be written as <span class="math inline">\(r_{ij} = a_{ij}SD(C_{i})\)</span></li>
+</ol>
+<p>This last point means that for any given <span class="math inline">\(C_{i}\)</span> we can quantify the relative degree of dependence of the PC on each of the standardized variables. This is a.k.a. the <strong>factor loading</strong> (we will return to this key term later).</p>
+<p>To calculate the principal components using the correlation matrix using <code>princomp</code>, set the <code>cor</code> argument to <code>TRUE</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pr_corr <span class="ot">&lt;-</span> <span class="fu">princomp</span>(data, <span class="at">cor=</span><span class="cn">TRUE</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pr_corr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Importance of components:
+                          Comp.1    Comp.2
+Standard deviation     1.3110229 0.5303008
+Proportion of Variance 0.8593906 0.1406094
+Cumulative Proportion  0.8593906 1.0000000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>pr_corr<span class="sc">$</span>loadings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Loadings:
+   Comp.1 Comp.2
+X1  0.707  0.707
+X2  0.707 -0.707
+
+               Comp.1 Comp.2
+SS loadings       1.0    1.0
+Proportion Var    0.5    0.5
+Cumulative Var    0.5    1.0</code></pre>
+</div>
+</div>
+<ul>
+<li>If we use the covariance matrix and change the scale of a variable (i.e.&nbsp;in to cm) that will change the results of the PC’s</li>
+<li>Many researchers prefer to use the correlation matrix
+<ul>
+<li>It compensates for the units of measurements for the different variables.</li>
+<li>Interpretations are made in terms of the standardized variables.</li>
+</ul></li>
+</ul>
+<p><span class="math display">\[
+C_{1} = 0.707x_1 + 0.707X_2 \\
+C_{2} = 0.707x_1 - 0.707X_2
+\]</span></p>
+<p>I want to compare them side by side in a nice table.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">PC1.cov =</span> <span class="fu">loadings</span>(pr)[,<span class="dv">1</span>],</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">PC2.cov =</span> <span class="fu">loadings</span>(pr)[,<span class="dv">2</span>],</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">PC1.cor =</span> <span class="fu">loadings</span>(pr_corr)[,<span class="dv">1</span>],</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">PC2.cor =</span> <span class="fu">loadings</span>(pr_corr)[,<span class="dv">2</span>]) <span class="sc">|&gt;</span> <span class="fu">kable</span>(<span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">PC1.cov</th>
+<th style="text-align: right;">PC2.cov</th>
+<th style="text-align: right;">PC1.cor</th>
+<th style="text-align: right;">PC2.cor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">X1</td>
+<td style="text-align: right;">0.85</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: right;">0.71</td>
+<td style="text-align: right;">0.71</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X2</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: right;">-0.85</td>
+<td style="text-align: right;">0.71</td>
+<td style="text-align: right;">-0.71</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="example" class="level2" data-number="14.7">
+<h2 data-number="14.7" class="anchored" data-anchor-id="example"><span class="header-section-number">14.7</span> Example</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Data
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This example follows <em>Analysis of depression data set</em> section in PMA6 Section 14.5. This survey asks 20 questions on emotional states that relate to depression. The data is recorded as numeric, but are categorical in nature where 0 - “rarely or none of the time”, 1 - “some or a little of the time” and so forth.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>depress <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">"https://www.norcalbiostat.com/data/Depress.txt"</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(depress<span class="sc">$</span>c1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt; table of extent 0 &gt;</code></pre>
+</div>
+</div>
+<p>These questions are typical of what is asked in survey research, and often are thought of, or treated as <em>pseudo-continuous</em>. They are ordinal categorical variables, but they are not truly interval measures since the “distance” between 0 and 1 (rarely and some of the time), would not be considered the same as the distance between 2 (moderately) and 3 (most or all of the time). And “moderately” wouldn’t be necessarily considered as “twice” the amount of “rarely”.</p>
+<p>Our options to use these ordinal variables in a model come down to three options.</p>
+<ul>
+<li>convert to a factor and include it as a categorical (series of indicators) variable.
+<ul>
+<li>This can be even more problematic when there are 20 categorical variables. You run out of degrees of freedom very fast with that many predictors.</li>
+</ul></li>
+<li>leave it as numeric and treat it as pseudo-continuous ordinal measure. Where you can interpret as “as x increases y changes by…”, but</li>
+<li>aggregate across multiple likert-type-ordinal variables and create a new calculated scale variable that can be treated as continuous.
+<ul>
+<li>This is what PCA does by creating new variables <span class="math inline">\(C_{1}\)</span> that are linear combinations of the original <span class="math inline">\(x's\)</span>.</li>
+</ul></li>
+</ul>
+<p>In this example I use PCA to reduce these 20 correlated variables down to a few uncorrelated variables that explain the most variance.</p>
+<p><strong>1. Read in the data and run <code>princomp</code> on the <code>C1:C20</code> variables.</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>pc_dep  <span class="ot">&lt;-</span> <span class="fu">princomp</span>(depress[,<span class="dv">9</span><span class="sc">:</span><span class="dv">28</span>], <span class="at">cor=</span><span class="cn">TRUE</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pc_dep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Importance of components:
+                          Comp.1     Comp.2     Comp.3     Comp.4     Comp.5
+Standard deviation     2.6562036 1.21883931 1.10973409 1.03232021 1.00629648
+Proportion of Variance 0.3527709 0.07427846 0.06157549 0.05328425 0.05063163
+Cumulative Proportion  0.3527709 0.42704935 0.48862483 0.54190909 0.59254072
+                           Comp.6     Comp.7     Comp.8     Comp.9    Comp.10
+Standard deviation     0.98359581 0.97304489 0.87706188 0.83344885 0.81248191
+Proportion of Variance 0.04837304 0.04734082 0.03846188 0.03473185 0.03300634
+Cumulative Proportion  0.64091375 0.68825457 0.72671645 0.76144830 0.79445464
+                          Comp.11    Comp.12    Comp.13    Comp.14    Comp.15
+Standard deviation     0.77950975 0.74117295 0.73255278 0.71324438 0.67149280
+Proportion of Variance 0.03038177 0.02746687 0.02683168 0.02543588 0.02254513
+Cumulative Proportion  0.82483641 0.85230328 0.87913496 0.90457083 0.92711596
+                          Comp.16    Comp.17    Comp.18    Comp.19     Comp.20
+Standard deviation     0.61252016 0.56673129 0.54273638 0.51804873 0.445396635
+Proportion of Variance 0.01875905 0.01605922 0.01472814 0.01341872 0.009918908
+Cumulative Proportion  0.94587501 0.96193423 0.97666237 0.99008109 1.000000000</code></pre>
+</div>
+</div>
+<p><strong>2. Pick a subset of PC’s to work with</strong></p>
+<p>In the cumulative percentage plot below, I drew a reference line at 80%. So the first 10 PC’s can explain around 80% of the variance in the data.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>(create.cumvar.plot <span class="ot">&lt;-</span> <span class="fu">get_eigenvalue</span>(pc_dep) <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PC =</span> <span class="fu">paste0</span>(<span class="st">"PC"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>), <span class="co"># create a new variable containing the PC name</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">PC =</span> forcats<span class="sc">::</span><span class="fu">fct_reorder</span>(PC, cumulative.variance.percent))  <span class="co"># reorder this by the value of the cumulative variance</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a> ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       eigenvalue variance.percent cumulative.variance.percent   PC
+Dim.1   7.0554177       35.2770884                    35.27709  PC1
+Dim.2   1.4855693        7.4278463                    42.70493  PC2
+Dim.3   1.2315098        6.1575488                    48.86248  PC3
+Dim.4   1.0656850        5.3284251                    54.19091  PC4
+Dim.5   1.0126326        5.0631630                    59.25407  PC5
+Dim.6   0.9674607        4.8373036                    64.09138  PC6
+Dim.7   0.9468164        4.7340818                    68.82546  PC7
+Dim.8   0.7692375        3.8461877                    72.67164  PC8
+Dim.9   0.6946370        3.4731850                    76.14483  PC9
+Dim.10  0.6601269        3.3006343                    79.44546 PC10
+Dim.11  0.6076355        3.0381773                    82.48364 PC11
+Dim.12  0.5493373        2.7466867                    85.23033 PC12
+Dim.13  0.5366336        2.6831679                    87.91350 PC13
+Dim.14  0.5087176        2.5435878                    90.45708 PC14
+Dim.15  0.4509026        2.2545129                    92.71160 PC15
+Dim.16  0.3751809        1.8759047                    94.58750 PC16
+Dim.17  0.3211844        1.6059218                    96.19342 PC17
+Dim.18  0.2945628        1.4728139                    97.66624 PC18
+Dim.19  0.2683745        1.3418724                    99.00811 PC19
+Dim.20  0.1983782        0.9918908                   100.00000 PC20</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(create.cumvar.plot, </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> PC, </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> cumulative.variance.percent)) <span class="sc">+</span> </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">4</span>) <span class="sc">+</span> </span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">80</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="PCA_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>3. Create a <em>Scree plot</em> by plotting the eigenvalue or the proportion of variance from that eigenvalue against the PC number.</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fviz_eig</span>(pc_dep, <span class="at">choice =</span> <span class="st">"eigenvalue"</span>, <span class="at">addlabels =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fviz_screeplot</span>(pc_dep, <span class="at">addlabels =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PCA_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>Option 1</strong>: Take all eigenvalues &gt; 1 (<span class="math inline">\(m=5\)</span>)<br>
+</li>
+<li><strong>Option 2</strong>: Use a cutoff point where the lines joining consecutive points are steep to the left of the cutoff point and flat right of the cutoff point. Point where the two slopes meet is the elbow. (<span class="math inline">\(m=2\)</span>).</li>
+</ul>
+<p><strong>4. Examine the loadings</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>pc_dep<span class="sc">$</span>loadings[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Comp.1      Comp.2     Comp.3       Comp.4      Comp.5
+C1 0.2774384  0.14497938 0.05770239  0.002723687  0.08826773
+C2 0.3131829 -0.02713557 0.03162990 -0.247811083  0.02439748
+C3 0.2677985  0.15471968 0.03459037 -0.247246879 -0.21830547</code></pre>
+</div>
+</div>
+<p>Here</p>
+<ul>
+<li><span class="math inline">\(X_{1}\)</span> = <em>“I felt that I could not shake…”</em></li>
+<li><span class="math inline">\(X_{2}\)</span> = <em>“I felt depressed…”</em></li>
+</ul>
+<p>So the PC’s are calculated as</p>
+<p><span class="math display">\[
+C_{1} = 0.277x_{1} + 0.313x_{2} + \ldots \\
+C_{2} = -0.1449x_{1} + 0.0271x_{2} + \ldots
+\]</span></p>
+<p>etc…</p>
+<div class="cell" type="rmdnote">
+
+<div class="rmdnote">
+The full question text for the depression data used here can be found on Table 14.2 in the PMA6 textbook.
+</div>
+</div>
+<p><strong>5. Interpret the PC’s</strong></p>
+<ul>
+<li>Visualize the loadings using <code>heatmap.2()</code> in the <code>gplots</code> package.
+<ul>
+<li>I reversed the colors so that red was high positive correlation and yellow/white is low.</li>
+<li>half the options I use below come from <a href="https://stackoverflow.com/questions/11713563/heatmap-color-key-with-five-different-colors">this SO post</a>. I had no idea what they did, so I took what the solution showed, and played with it (added/changed some to see what they did), and reviewed <code>?heatmap.2</code> to see what options were available.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap.2</span>(pc_dep<span class="sc">$</span>loadings[,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">scale=</span><span class="st">"none"</span>, <span class="at">Rowv=</span><span class="cn">NA</span>, <span class="at">Colv=</span><span class="cn">NA</span>, <span class="at">density.info=</span><span class="st">"none"</span>,</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">dendrogram=</span><span class="st">"none"</span>, <span class="at">trace=</span><span class="st">"none"</span>, <span class="at">col=</span><span class="fu">rev</span>(<span class="fu">heat.colors</span>(<span class="dv">256</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PCA_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Loadings over 0.5 (red) help us interpret what these components could “mean”
+<ul>
+<li>Must know exact wording of component questions</li>
+</ul></li>
+<li><span class="math inline">\(C_{1}\)</span>: a weighted average of most items. High value indicates the respondent had many symptoms of depression. Note sign of loadings are all positive and all roughly the same color.
+<ul>
+<li>Recall</li>
+</ul></li>
+<li><span class="math inline">\(C_{2}\)</span>: lethargy (high energetic). High loading on c14, 16, 17, low on 4, 8, 20</li>
+<li><span class="math inline">\(C_{3}\)</span>: friendliness of others. Large negative loading on c19, c9</li>
+</ul>
+<p>etc.</p>
+<p><strong>Contributions</strong>*</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_contrib</span>(pc_dep, <span class="at">choice =</span> <span class="st">"var"</span>, <span class="at">axes =</span> <span class="dv">1</span>, <span class="at">top=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PCA_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_contrib</span>(pc_dep, <span class="at">choice =</span> <span class="st">"var"</span>, <span class="at">axes =</span> <span class="dv">2</span>, <span class="at">top=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PCA_files/figure-html/unnamed-chunk-23-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(pc_dep, <span class="at">col.var =</span> <span class="st">"contrib"</span>, <span class="at">axes=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>, <span class="st">"#FC4E07"</span>), </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">repel =</span> <span class="cn">TRUE</span> <span class="co"># Avoid text overlapping</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>             )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PCA_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(pc_dep, <span class="at">col.var =</span> <span class="st">"contrib"</span>, <span class="at">axes=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>),</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>, <span class="st">"#FC4E07"</span>), </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">repel =</span> <span class="cn">TRUE</span> <span class="co"># Avoid text overlapping</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>             )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="PCA_files/figure-html/unnamed-chunk-24-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="use-in-multiple-regression" class="level2" data-number="14.8">
+<h2 data-number="14.8" class="anchored" data-anchor-id="use-in-multiple-regression"><span class="header-section-number">14.8</span> Use in Multiple Regression</h2>
+<ul>
+<li>Choose a handful of few principal components to use as predictors in a regression model
+<ul>
+<li>Leads to more stable regression estimates.</li>
+</ul></li>
+<li>Alternative to variable selection
+<ul>
+<li>Ex: several measures of behavior.</li>
+<li>Use PC<span class="math inline">\(_{1}\)</span> or PC<span class="math inline">\(_{1}\)</span> and PC<span class="math inline">\(_{2}\)</span> as summary measures of all.</li>
+</ul></li>
+</ul>
+<section id="example-modeling-acute-illness" class="level3" data-number="14.8.1">
+<h3 data-number="14.8.1" class="anchored" data-anchor-id="example-modeling-acute-illness"><span class="header-section-number">14.8.1</span> Example: Modeling acute illness</h3>
+<p>The 20 depression questions <code>C1:C20</code> were designed to be added together to create the CESD scale directly. While this is a validate measure, what if some components (e.g.&nbsp;had crying spells) contributes more to someones level of depression than another measure (e.g.&nbsp;people were unfriendly). Since the PC’s are linear combinations of the <span class="math inline">\(x\)</span>’s, the coefficients <span class="math inline">\(a\)</span>, or the loadings, aren’t all equal as we’ve seen. So let’s see if the first two PC’s (since that’s what was chosen from the scree plot) can predict chronic illness better than the straight summative score of <code>cesd</code>.</p>
+<p><strong>1. Extract PC scores and attach them to the data. </strong></p>
+<p>The scores for each PC for each observation is stored in the <code>scores</code> list object in the <code>pc_dep</code> object.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(pc_dep<span class="sc">$</span>scores); <span class="fu">kable</span>(pc_dep<span class="sc">$</span>scores[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 294  20</code></pre>
+</div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Comp.1</th>
+<th style="text-align: right;">Comp.2</th>
+<th style="text-align: right;">Comp.3</th>
+<th style="text-align: right;">Comp.4</th>
+<th style="text-align: right;">Comp.5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">-2.446342</td>
+<td style="text-align: right;">0.6236068</td>
+<td style="text-align: right;">0.1288289</td>
+<td style="text-align: right;">-0.2546597</td>
+<td style="text-align: right;">-0.1624772</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">-1.452116</td>
+<td style="text-align: right;">-0.1763085</td>
+<td style="text-align: right;">0.5861563</td>
+<td style="text-align: right;">-0.6781969</td>
+<td style="text-align: right;">-0.3225529</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">-1.468211</td>
+<td style="text-align: right;">-0.4350019</td>
+<td style="text-align: right;">0.2893955</td>
+<td style="text-align: right;">-0.3243790</td>
+<td style="text-align: right;">-0.2513590</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">-1.324852</td>
+<td style="text-align: right;">1.7766419</td>
+<td style="text-align: right;">1.0833599</td>
+<td style="text-align: right;">1.2651869</td>
+<td style="text-align: right;">-1.1339350</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">-1.449606</td>
+<td style="text-align: right;">2.3576522</td>
+<td style="text-align: right;">-0.7489288</td>
+<td style="text-align: right;">1.9464680</td>
+<td style="text-align: right;">1.2229057</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>depress<span class="sc">$</span>pc1 <span class="ot">&lt;-</span> pc_dep<span class="sc">$</span>scores[,<span class="dv">1</span>]</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>depress<span class="sc">$</span>pc2 <span class="ot">&lt;-</span> pc_dep<span class="sc">$</span>scores[,<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>2. Fit a model using those PC scores as covariates</strong></p>
+<p>Along with any other covariates chosen by other methods.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(ACUTEILL<span class="sc">~</span>pc1<span class="sc">+</span>pc2, <span class="at">data=</span>depress, <span class="at">family=</span><span class="st">'binomial'</span>) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = ACUTEILL ~ pc1 + pc2, family = "binomial", data = depress)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -0.87695    0.12901  -6.798 1.06e-11 ***
+pc1          0.07921    0.04608   1.719   0.0856 .  
+pc2          0.10321    0.10409   0.992   0.3214    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 357.13  on 293  degrees of freedom
+Residual deviance: 353.09  on 291  degrees of freedom
+AIC: 359.09
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(ACUTEILL<span class="sc">~</span>CESD, <span class="at">data=</span>depress, <span class="at">family=</span><span class="st">'binomial'</span>) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = ACUTEILL ~ CESD, family = "binomial", data = depress)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -1.09721    0.18479  -5.938 2.89e-09 ***
+CESD         0.02494    0.01392   1.792   0.0731 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 357.13  on 293  degrees of freedom
+Residual deviance: 353.97  on 292  degrees of freedom
+AIC: 357.97
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<p>In this example, the model using the PC’s and the model using <code>cesd</code> were very similar. However, this is an example where an aggregate measure such as <code>cesd</code> has already been figured out scientifically and validated. This is not often the case, expecially in exploratory data analysis when you are not sure -how- the measures are correlated.</p>
+</section>
+</section>
+<section id="things-to-watch-out-for" class="level2" data-number="14.9">
+<h2 data-number="14.9" class="anchored" data-anchor-id="things-to-watch-out-for"><span class="header-section-number">14.9</span> Things to watch out for</h2>
+<ul>
+<li>Eigenvalues are estimated variances of the PC’s and so are subject to large sample variations.</li>
+<li>The size of variance of last few principal components can be useful as indicator of multicollinearity among original variables</li>
+<li>Principal components derived from standardized variables differ from those derived from original variables</li>
+<li>Important that measurements are accurate, especially for detection of collinearity</li>
+</ul>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Arbitrary cutoff points should not be taken too seriously.</p>
+</div>
+</div>
+</section>
+<section id="additional-references" class="level2" data-number="14.10">
+<h2 data-number="14.10" class="anchored" data-anchor-id="additional-references"><span class="header-section-number">14.10</span> Additional References</h2>
+<p>A collection of other tools and websites that do a good job of explaining PCA.</p>
+<ul>
+<li>Principal Component Analysis Essentials in R tutorial by <a href="http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/112-pca-principal-component-analysis-essentials/">STHDA</a></li>
+<li><a href="https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues">Stack Overflow</a> This has animations, and walks through the explanation using wine and “how you would explain it to your grandma”.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/annakfell\.github\.io\/ascnv2\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./multivariate_intro.html" class="pagination-link" aria-label="Introduction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./appendix.html" class="pagination-link" aria-label="Appendix">
+        <span class="nav-page-text">Appendix</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/PCA.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
