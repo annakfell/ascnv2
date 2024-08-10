@@ -40,6 +40,7 @@ book:
     - part: "Multivariate Analysis"
       chapters: 
         - multivariate_intro.qmd
+        - PCA.qmd
     - appendix.qmd
 
 format:
