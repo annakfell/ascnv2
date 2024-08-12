@@ -8,7 +8,7 @@
 
 <meta name="description" content="Course notes for various Applied Statistics courses at CSU Chico">
 
-<title>7&nbsp; Simple Linear Regression – Applied Statistics</title>
+<title>16&nbsp; Introduction – Applied Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -65,8 +31,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./moderation_stratification.html" rel="next">
-<link href="./reg_intro.html" rel="prev">
+<link href="./appendix.html" rel="next">
+<link href="./FA.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -147,7 +113,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./reg_intro.html">Regression Modeling</a></li><li class="breadcrumb-item"><a href="./sl_reg.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./MLM_intro.html">Multi-level Modeling</a></li><li class="breadcrumb-item"><a href="./MLM_intro.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -256,7 +222,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sl_reg.html" class="sidebar-item-text sidebar-link active">
+  <a href="./sl_reg.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
   </div>
 </li>
@@ -332,7 +298,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./MLM_intro.html" class="sidebar-item-text sidebar-link">
+  <a href="./MLM_intro.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
@@ -354,17 +320,17 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-slr-fev" id="toc-sec-slr-fev" class="nav-link active" data-scroll-target="#sec-slr-fev"><span class="header-section-number">7.1</span> Example</a></li>
-  <li><a href="#sec-mathematical-model" id="toc-sec-mathematical-model" class="nav-link" data-scroll-target="#sec-mathematical-model"><span class="header-section-number">7.2</span> Mathematical Model</a></li>
+  <li><a href="#example-school-data" id="toc-example-school-data" class="nav-link active" data-scroll-target="#example-school-data"><span class="header-section-number">16.1</span> Example School Data</a></li>
+  <li><a href="#multi-level-models" id="toc-multi-level-models" class="nav-link" data-scroll-target="#multi-level-models"><span class="header-section-number">16.2</span> Multi-level models</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/sl_reg.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/MLM_intro.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./reg_intro.html">Regression Modeling</a></li><li class="breadcrumb-item"><a href="./sl_reg.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./MLM_intro.html">Multi-level Modeling</a></li><li class="breadcrumb-item"><a href="./MLM_intro.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-sl-reg" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></h1>
+<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Introduction</span></h1>
 </div>
 
 
@@ -381,104 +347,124 @@ window.Quarto = {
 </header>
 
 
+<p>When outcome data are expected to be more similar within subgroups than across subgroups the data are typically called <strong>Clustered outcomes</strong>. There are many ways data can be correlated:</p>
+<ul>
+<li>Sampling students within schools. (Within school correlation)</li>
+<li>Repeatedly measuring the same tree in different places. (Within-subject correlation)</li>
+<li>Repeatedly measuring the same tree over time. (Temporal correlation)</li>
+<li>Poverty measurements from different, but neighboring, counties. (Spatial correlation)</li>
+</ul>
+<p>In these cases, the assumption of independence between observations is often violated <span class="math inline">\(Cor(\epsilon_i, \epsilon_j)\neq 0, \forall i\neq j\)</span>.</p>
+<p>Analyses should take into account such correlation or else conclusions might not be valid.</p>
+<p>Correlation is not limited to one level of subgroup; i.e.&nbsp;repeated measurements on students within schools.</p>
+<p>Models that account for multiple levels of clustering are often called multi-level models.</p>
+<blockquote class="blockquote">
+<p>Multi-level modeling can also be referred to as Hierarchical modeling</p>
+</blockquote>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Packages Used
+Terminology
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This chapter uses the following packages: <a href="https://ggplot2.tidyverse.org">ggplot2</a>, <a href="https://mjskay.github.io/ggdist/index.html">ggdist</a>, <a href="https://strengejacke.github.io/sjPlot/">sjPlot</a>, <a href="https://cran.r-project.org/web/packages/gridExtra/index.html">gridExtra</a>, <a href="https://broom.tidymodels.org">broom</a>, <a href="https://easystats.github.io/performance/">performance</a>, and the <a href="https://www.norcalbiostat.com/data/#Lung_Function">Lung function</a> dataset.</p>
-</div>
-</div>
-<p>The goal of linear regression is to describe the relationship between an independent variable X and a continuous dependent variable <span class="math inline">\(Y\)</span> as a straight line.</p>
-<p>Data for this type of model can arise in two ways;</p>
 <ul>
-<li>Fixed-<span class="math inline">\(X\)</span>: values of <span class="math inline">\(X\)</span> are preselected by investigator</li>
-<li>Variable-<span class="math inline">\(X\)</span>: have random sample of <span class="math inline">\((X,Y)\)</span> values</li>
-</ul>
-<p>Both Regression and Correlation can be used for two main purposes:</p>
+<li><strong>Fixed Effects</strong>: The variable is thought to have it’s own specific effect on the outcome relative to some reference group. The factors are fixed by nature, there are only the levels observed in the data.
 <ul>
-<li><strong>Descriptive</strong>: Draw inferences regarding the relationship</li>
-<li><strong>Predictive</strong>: Predict value of <span class="math inline">\(Y\)</span> for a given value of <span class="math inline">\(X\)</span></li>
-</ul>
-<p>Simple Linear Regression is an example of a Bivariate analysis since there is only one covariate (explanatory variable) under consideration.</p>
-<section id="sec-slr-fev" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="sec-slr-fev"><span class="header-section-number">7.1</span> Example</h2>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Lung function data were obtained from an epidemiological study of households living in four areas with different amounts and types of air pollution. The data set used in this book is a subset of the total data. In this chapter we use only the data taken on the fathers, all of whom are nonsmokers (see PMA6 Appendix A for more details).</p>
-</div>
-</div>
-</div>
-<p>One of the major early indicators of reduced respiratory function is FEV1 or forced expiratory volume in the first second (amount of air exhaled in 1 second). Since it is known that taller males tend to have higher FEV1, we wish to determine the relationship between height and FEV1. We can use regression analysis for both a descriptive and predictive purpose.</p>
+<li>The 23 schools in the data make up the entire universe of schools, and we are interested in how one particular school fares.</li>
+</ul></li>
+<li><strong>Random Effects</strong>: The variable was chosen at random, and the levels observed in the data are thought of as representative of all possible levels that could be sampled. We are interested in the distribution of the effects rather than the effect of any one specific level.
 <ul>
-<li><strong>Descriptive</strong>: Describing the relationship between FEV1 and height</li>
-<li><strong>Predictive</strong>: Use the equation to determine expected or normal FEV1 for a given height</li>
+<li>The 23 schools in the data set is a sample of a larger population of schools and we are interested in the overall distribution of how school can affect the math score, not any one specific school.</li>
+</ul></li>
 </ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fev, <span class="fu">aes</span>(<span class="at">y=</span>FFEV1, <span class="at">x=</span>FHEIGHT)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">xlab</span>(<span class="st">"Height"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"FEV1"</span>) <span class="sc">+</span> </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ggtitle</span>(<span class="st">"Scatterplot and Regression line of FEV1 Versus Height for Males."</span>) <span class="sc">+</span> </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">col=</span><span class="st">"blue"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="sl_reg_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
 </div>
 </div>
-</div>
-<p>In this graph, height is given on the horizontal axis since it is the independent or predictor variable and FEV1 is given on the vertical axis since it is the dependent or outcome variable.</p>
-<p><strong>Interpretation</strong>: There does appear to be a tendency for taller men to have higher FEV1. The <strong>regression line</strong> is also added to the graph. The line is tilted upwards, indicating that we expect larger values of FEV1 with larger values of height.</p>
-<p>Specifically the equation of the regression line is <span class="math display">\[
-Y = -4.087 + 0.118 X
-\]</span></p>
-<p>The quantity 0.118 in front of <span class="math inline">\(X\)</span> is greater than zero, indicating that as we increase <span class="math inline">\(X, Y\)</span> will increase. For example, we would expect a father who is 70 inches tall to have an FEV1 value of</p>
-<p><span class="math display">\[\mbox{FEV1} = -4.087 + (0.118) (70) = 4.173\]</span></p>
-<p>If the height was 66 inches then we would expect an FEV1 value of only 3.70.</p>
+<section id="example-school-data" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="example-school-data"><span class="header-section-number">16.1</span> Example School Data</h2>
+<p>The data used in this first example comes from a publicly available data set called the National Education Longitudinal Study of 1988 (yes it’s a bit old data, but sufficient for our purposes here). In this data set math scores are recorded for 519 students from 23 schools.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Caution on out of range predictions
+Think about it
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>To take an extreme example, suppose a father was 2 feet tall. Then the equation would predict a negative value of FEV1 (<span class="math inline">\(-1.255\)</span>).</p>
-<p>A safe policy is to restrict the use of the equation to the range of the <span class="math inline">\(X\)</span> observed in the sample.</p>
+<p>List a few characteristics that you think are associated with math performance, and at what level they are measured.</p>
 </div>
 </div>
+<p><img src="images/multilevel.png" class="img-fluid"></p>
+<p>The <code>School23</code> data set contains the following variables:</p>
+<ul>
+<li><strong>School (macro) level variables</strong>
+<ul>
+<li>School type</li>
+<li>class structure</li>
+<li>school size</li>
+<li>urbanity</li>
+<li>geographic region</li>
+<li>percent minority</li>
+<li>student-teacher ratio</li>
+</ul></li>
+<li><strong>Student (micro) level variables</strong>
+<ul>
+<li>Gender</li>
+<li>Race</li>
+<li>Time spent on math homework</li>
+<li>SES</li>
+<li>parental education</li>
+<li>math score</li>
+</ul></li>
+</ul>
+<p>Imagine a model of math score based on school type (<span class="math inline">\(X_{1}\)</span> 1 for public, 0 for private) and SES (<span class="math inline">\(X_{2}\)</span>).</p>
+<p><span class="math inline">\(Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i} + \epsilon_{i}, \qquad i = 1, \ldots, n=519\)</span></p>
+<p>This model does not take into the account the hierarchical nature of the data in that students are nested within schools. School type is a macro level variable, SES is a micro level variable. We could consider adding indicator variables for each of the 23 schools to create a <strong>Fixed Effects</strong> model,</p>
+<p><span class="math inline">\(Y_{i} = \beta_{0} + \beta_{1}(SchoolType)_{1i} + \beta_{2}(SES)_{2i} + \beta_{3}(School2)_{i} + \ldots + \beta_{24}(School23)_{i} + \epsilon_{i}\)</span></p>
+<p>but we already are well aware of fitting models with that many parameters, and when some school only have a few students in them. So we need a different model.</p>
 </section>
-<section id="sec-mathematical-model" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="sec-mathematical-model"><span class="header-section-number">7.2</span> Mathematical Model</h2>
-<p>The mathematical model that we use for regression has three features.</p>
-<ol type="1">
-<li><span class="math inline">\(Y\)</span> values are normally distributed at any given <span class="math inline">\(X\)</span></li>
-<li>The mean of <span class="math inline">\(Y\)</span> values at any given <span class="math inline">\(X\)</span> follows a straight line <span class="math inline">\(Y = \beta_{0} + \beta_{1} X\)</span>.</li>
-<li>The variance of <span class="math inline">\(Y\)</span> values at any <span class="math inline">\(X\)</span> is <span class="math inline">\(\sigma^2\)</span> (same for all X). This is known as <em>homoscedasticity</em>, or <em>homogeneity of variance</em>.</li>
-</ol>
-<p>Mathematically this is written as:</p>
-<p><span class="math display">\[
-Y|X \sim N(\mu_{Y|X}, \sigma^{2}) \\
-\mu_{Y|X} = \beta_{0} + \beta_{1} X \\
-Var(Y|X) = \sigma^{2}
-\]</span></p>
-<p>and can be visualized as:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/slr_graph.png" class="img-fluid figure-img"></p>
-<figcaption>Figure 6.2</figcaption>
-</figure>
+<section id="multi-level-models" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="multi-level-models"><span class="header-section-number">16.2</span> Multi-level models</h2>
+<p>Here we specify separate models for the the fixed micro level effect of SES and the random macro level school effect.</p>
+<p><span class="math display">\[\begin{equation*}
+  \begin{aligned}
+  MathScore_{ij} &amp; = \beta_{0j} + \beta_{1}SES_{ij} + \epsilon_{ij}, &amp; \qquad i = 1, \ldots, n_{j}\\
+  \beta_{0j} &amp; = \gamma_{00} + U_{0j}, &amp; \qquad j=1, \ldots, 23
+  \end{aligned}
+\end{equation*}\]</span></p>
+<p>where</p>
+<ul>
+<li><span class="math inline">\(\gamma_{00}\)</span> is the average intercept across all schools</li>
+<li><span class="math inline">\(U_{0j}\)</span> is the difference between the intercept for school <span class="math inline">\(j\)</span> and the average intercept across all schools (random effect of school)</li>
+</ul>
+<p>If we substitute the intercept <span class="math inline">\(\beta_{0j}\)</span> in the first model with the information from the second model,</p>
+<p><span class="math inline">\(MathScore_{ij} = \overbrace{\gamma_{00} + \beta_{1}SES_{ij}}^{^{\mbox{fixed part}}} + \overbrace{U_{0j} + \epsilon_{ij}}^{\mbox{random part}}\)</span></p>
+<p>Instead of assuming that there is an overall average of math scores (<span class="math inline">\(\beta_0\)</span>) from which each school deviates by a fixed amount, the above model assumes that the adjusted average school math scores are normally distributed and are centered at <span class="math inline">\(\gamma_{00}\)</span>.</p>
+<p>Because we assume that there is a <em>distribution of intercepts</em>, this model is also called a <strong>Random intercept model</strong>.</p>
+<p>We’ll look at this type of model more closely in the next section using a different example, and using the concept of <em>pooling</em> information.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learn more
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>More complex models are possible. That’s a constant theme in all of statistical modeling. Just remember that</p>
+<ul>
+<li>the underlying complex effects being modeled must be strong enough that a simpler model that doesn’t account for these effects will be invalid</li>
+<li>you have to have enough data to estimate any additional parameters</li>
+<li>you have to be able to explain the model and results to an audience</li>
+</ul>
+<p>We are not going to cover models that have <a href="https://www.bristol.ac.uk/cmm/learning/videos/random-slopes.html">random slopes</a>, or interactions between fixed and random effects in this notebook.</p>
+</div>
 </div>
 
 
@@ -1051,13 +1037,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./reg_intro.html" class="pagination-link" aria-label="Introduction to Regression">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to Regression</span></span>
+      <a href="./FA.html" class="pagination-link" aria-label="Factor Analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Factor Analysis</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./moderation_stratification.html" class="pagination-link" aria-label="Moderation and Stratification">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Moderation and Stratification</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./appendix.html" class="pagination-link" aria-label="Appendix">
+        <span class="nav-page-text">Appendix</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1069,7 +1055,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/sl_reg.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/MLM_intro.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a></p>
 </div>

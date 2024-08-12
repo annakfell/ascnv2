@@ -42,6 +42,9 @@ book:
         - multivariate_intro.qmd
         - PCA.qmd
         - FA.qmd
+    - part: "Multi-level Modeling"
+      chapters: 
+        - MLM_intro.qmd
     - appendix.qmd
 
 format:
