@@ -1108,6 +1108,39 @@
     ]
   },
   {
+    "objectID": "MLM_intro.html",
+    "href": "MLM_intro.html",
+    "title": "16  Introduction",
+    "section": "",
+    "text": "16.1 Example School Data\nThe data used in this first example comes from a publicly available data set called the National Education Longitudinal Study of 1988 (yes it’s a bit old data, but sufficient for our purposes here). In this data set math scores are recorded for 519 students from 23 schools.\nThe School23 data set contains the following variables:\nImagine a model of math score based on school type (\\(X_{1}\\) 1 for public, 0 for private) and SES (\\(X_{2}\\)).\n\\(Y_{i} = \\beta_{0} + \\beta_{1}X_{1i} + \\beta_{2}X_{2i} + \\epsilon_{i}, \\qquad i = 1, \\ldots, n=519\\)\nThis model does not take into the account the hierarchical nature of the data in that students are nested within schools. School type is a macro level variable, SES is a micro level variable. We could consider adding indicator variables for each of the 23 schools to create a Fixed Effects model,\n\\(Y_{i} = \\beta_{0} + \\beta_{1}(SchoolType)_{1i} + \\beta_{2}(SES)_{2i} + \\beta_{3}(School2)_{i} + \\ldots + \\beta_{24}(School23)_{i} + \\epsilon_{i}\\)\nbut we already are well aware of fitting models with that many parameters, and when some school only have a few students in them. So we need a different model.",
+    "crumbs": [
+      "Multi-level Modeling",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "MLM_intro.html#example-school-data",
+    "href": "MLM_intro.html#example-school-data",
+    "title": "16  Introduction",
+    "section": "",
+    "text": "Think about it\n\n\n\nList a few characteristics that you think are associated with math performance, and at what level they are measured.\n\n\n\n\n\nSchool (macro) level variables\n\nSchool type\nclass structure\nschool size\nurbanity\ngeographic region\npercent minority\nstudent-teacher ratio\n\nStudent (micro) level variables\n\nGender\nRace\nTime spent on math homework\nSES\nparental education\nmath score",
+    "crumbs": [
+      "Multi-level Modeling",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "MLM_intro.html#multi-level-models",
+    "href": "MLM_intro.html#multi-level-models",
+    "title": "16  Introduction",
+    "section": "16.2 Multi-level models",
+    "text": "16.2 Multi-level models\nHere we specify separate models for the the fixed micro level effect of SES and the random macro level school effect.\n\\[\\begin{equation*}\n  \\begin{aligned}\n  MathScore_{ij} & = \\beta_{0j} + \\beta_{1}SES_{ij} + \\epsilon_{ij}, & \\qquad i = 1, \\ldots, n_{j}\\\\\n  \\beta_{0j} & = \\gamma_{00} + U_{0j}, & \\qquad j=1, \\ldots, 23\n  \\end{aligned}\n\\end{equation*}\\]\nwhere\n\n\\(\\gamma_{00}\\) is the average intercept across all schools\n\\(U_{0j}\\) is the difference between the intercept for school \\(j\\) and the average intercept across all schools (random effect of school)\n\nIf we substitute the intercept \\(\\beta_{0j}\\) in the first model with the information from the second model,\n\\(MathScore_{ij} = \\overbrace{\\gamma_{00} + \\beta_{1}SES_{ij}}^{^{\\mbox{fixed part}}} + \\overbrace{U_{0j} + \\epsilon_{ij}}^{\\mbox{random part}}\\)\nInstead of assuming that there is an overall average of math scores (\\(\\beta_0\\)) from which each school deviates by a fixed amount, the above model assumes that the adjusted average school math scores are normally distributed and are centered at \\(\\gamma_{00}\\).\nBecause we assume that there is a distribution of intercepts, this model is also called a Random intercept model.\nWe’ll look at this type of model more closely in the next section using a different example, and using the concept of pooling information.\n\n\n\n\n\n\nLearn more\n\n\n\nMore complex models are possible. That’s a constant theme in all of statistical modeling. Just remember that\n\nthe underlying complex effects being modeled must be strong enough that a simpler model that doesn’t account for these effects will be invalid\nyou have to have enough data to estimate any additional parameters\nyou have to be able to explain the model and results to an audience\n\nWe are not going to cover models that have random slopes, or interactions between fixed and random effects in this notebook.",
+    "crumbs": [
+      "Multi-level Modeling",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
     "objectID": "appendix.html",
     "href": "appendix.html",
     "title": "Appendix",
