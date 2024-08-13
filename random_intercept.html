@@ -362,7 +362,7 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#pooling" id="toc-pooling" class="nav-link active" data-scroll-target="#pooling"><span class="header-section-number">17.1</span> Pooling</a></li>
+  <li><a href="#sec-pool" id="toc-sec-pool" class="nav-link active" data-scroll-target="#sec-pool"><span class="header-section-number">17.1</span> Pooling</a></li>
   <li><a href="#sec-mathri" id="toc-sec-mathri" class="nav-link" data-scroll-target="#sec-mathri"><span class="header-section-number">17.2</span> Mathematical Models</a>
   <ul>
   <li><a href="#complete-pooling" id="toc-complete-pooling" class="nav-link" data-scroll-target="#complete-pooling"><span class="header-section-number">17.2.1</span> Complete Pooling</a></li>
@@ -397,7 +397,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./MLM_intro.html">Multi-level Modeling</a></li><li class="breadcrumb-item"><a href="./random_intercept.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Random Intercept Models</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="RI" class="quarto-section-identifier"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Random Intercept Models</span></span></h1>
+<h1 class="title"><span id="sec-RI" class="quarto-section-identifier"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Random Intercept Models</span></span></h1>
 </div>
 
 
@@ -453,8 +453,8 @@ Example Data
 6     0  ANOKA 0.95551145  -0.8473129</code></pre>
 </div>
 </div>
-<section id="pooling" class="level2" data-number="17.1">
-<h2 data-number="17.1" class="anchored" data-anchor-id="pooling"><span class="header-section-number">17.1</span> Pooling</h2>
+<section id="sec-pool" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="sec-pool"><span class="header-section-number">17.1</span> Pooling</h2>
 <p>To highlight the benefits of random intercepts models we will compare three linear regression models:</p>
 <ul>
 <li>complete pooling</li>
@@ -834,7 +834,7 @@ Fixed effects:
 <h3 data-number="17.4.1" class="anchored" data-anchor-id="comparison-of-estimates"><span class="header-section-number">17.4.1</span> Comparison of estimates</h3>
 <ul>
 <li>By allowing individuals within counties to be correlated, and at the same time let counties be correlated, we allow for some information to be shared across counties.</li>
-<li>Thus we come back to that idea of shrinkage. Below is a numeric table version of the plot in <span class="quarto-unresolved-ref">?sec-pool</span>.</li>
+<li>Thus we come back to that idea of shrinkage. Below is a numeric table version of the plot in <a href="#sec-pool" class="quarto-xref"><span>Section 17.1</span></a>.</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cmpr.est <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Mean_Model       =</span> <span class="fu">coef</span>(fit_completepool), </span>
@@ -1247,7 +1247,6 @@ Section In Progress
 
 
 
-
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -1257,7 +1256,6 @@ model_lme_cs <- lme(log_radon ~ floor,
                      cor=corCompSymm(value=0.159,form=~1|county),data = radon)
 ```
 :::
-
 
 
 
