@@ -169,7 +169,7 @@ Let $p_{i} = P(y_{i}=1)$.
 Two goals: 
 
 * Assess the impact selected covariates have on the probability of an outcome occurring. 
-* Predict the probability of an event occurring given a certain covariate pattern. This is covered in @sec-binary-classification
+* Predict the probability of an event occurring given a certain covariate pattern. This is covered in @sec-classification
 
 Binary data can be modeled using a _Logistic Model_ or a _Probit Model_. 
 

@@ -1,4 +1,4 @@
-# Random Intercept Models {#RI}
+# Random Intercept Models {#sec-RI}
 
 ::: callout-note
 #### Packages Used
@@ -27,7 +27,7 @@ data(radon, package="rstanarm")
 head(radon)
 ```
 
-## Pooling  {#pooling}
+## Pooling  {#sec-pool}
 
 To highlight the benefits of random intercepts models we will compare three linear regression models: 
 

@@ -1,4 +1,4 @@
-# Classification of Binary outcomes {#sec-binary-classification}
+# Classification of Binary outcomes {#sec-classification}
 
 :::{.callout-note}
 #### Packages Used

@@ -72,7 +72,7 @@ The coefficient $b_{3}$ for the interaction term is significant, confirming that
 The main effects ($b_{1}$, $b_{2}$) cannot be interpreted by themselves when there is an interaction in the model.
 ```
 
-### Categorical Interaction variables  {#interactions-catvars}
+### Categorical Interaction variables  {#sec-interactions-catvars}
 
 Let's up the game now and look at the full interaction model with a categorical version of species. 
 Recall $x_{1}$ is Sepal Length, $x_{2}$ is the indicator for _versicolor_, and $x_{3}$ the indicator for _virginica_ . Refer to @sec-cat-predictors for information on how to interpret categorical predictors as main effects. 
@@ -152,7 +152,7 @@ summary(me_intx_model)
 ```
 
 
-## Simultaneous test of multiple variables (PMA6 9.5) {#general-F}
+## Simultaneous test of multiple variables (PMA6 9.5) {#sec-general-F}
 
 The General-F test is used for simultaneous tests of $Q$ variables in a model. This is used primarily in two situations: 
 
