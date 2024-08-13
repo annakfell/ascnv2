@@ -1,0 +1,1911 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.56">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Course notes for various Applied Statistics courses at CSU Chico">
+
+<title>17&nbsp; Random Intercept Models – Applied Statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./appendix.html" rel="next">
+<link href="./MLM_intro.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./MLM_intro.html">Multi-level Modeling</a></li><li class="breadcrumb-item"><a href="./random_intercept.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Random Intercept Models</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Applied Statistics</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/annakfell/ascnv2" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Preparing Data for Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dataprep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Workflow and Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Visualizing Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./select_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Selecting Appropriate Analyses</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Foundations for Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bivariate_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bivariate Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Regression Modeling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reg_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sl_reg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./moderation_stratification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Moderation and Stratification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mlr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./model_building.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Model Building</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Classification of Binary outcomes</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Multivariate Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multivariate_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PCA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Principal Component Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./FA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Factor Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Multi-level Modeling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./MLM_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./random_intercept.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Random Intercept Models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Appendix</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#pooling" id="toc-pooling" class="nav-link active" data-scroll-target="#pooling"><span class="header-section-number">17.1</span> Pooling</a></li>
+  <li><a href="#sec-mathri" id="toc-sec-mathri" class="nav-link" data-scroll-target="#sec-mathri"><span class="header-section-number">17.2</span> Mathematical Models</a>
+  <ul>
+  <li><a href="#complete-pooling" id="toc-complete-pooling" class="nav-link" data-scroll-target="#complete-pooling"><span class="header-section-number">17.2.1</span> Complete Pooling</a></li>
+  <li><a href="#no-pooling" id="toc-no-pooling" class="nav-link" data-scroll-target="#no-pooling"><span class="header-section-number">17.2.2</span> No Pooling</a></li>
+  <li><a href="#partial-pooling-ri" id="toc-partial-pooling-ri" class="nav-link" data-scroll-target="#partial-pooling-ri"><span class="header-section-number">17.2.3</span> Partial Pooling (RI)</a></li>
+  </ul></li>
+  <li><a href="#components-of-variance" id="toc-components-of-variance" class="nav-link" data-scroll-target="#components-of-variance"><span class="header-section-number">17.3</span> Components of Variance</a></li>
+  <li><a href="#fitri" id="toc-fitri" class="nav-link" data-scroll-target="#fitri"><span class="header-section-number">17.4</span> Fitting models in R</a>
+  <ul>
+  <li><a href="#comparison-of-estimates" id="toc-comparison-of-estimates" class="nav-link" data-scroll-target="#comparison-of-estimates"><span class="header-section-number">17.4.1</span> Comparison of estimates</a></li>
+  </ul></li>
+  <li><a href="#estimation-methods" id="toc-estimation-methods" class="nav-link" data-scroll-target="#estimation-methods"><span class="header-section-number">17.5</span> Estimation Methods</a></li>
+  <li><a href="#including-covariates" id="toc-including-covariates" class="nav-link" data-scroll-target="#including-covariates"><span class="header-section-number">17.6</span> Including Covariates</a></li>
+  <li><a href="#more-random-effects" id="toc-more-random-effects" class="nav-link" data-scroll-target="#more-random-effects"><span class="header-section-number">17.7</span> More Random Effects</a></li>
+  <li><a href="#centering-terms" id="toc-centering-terms" class="nav-link" data-scroll-target="#centering-terms"><span class="header-section-number">17.8</span> Centering terms</a>
+  <ul>
+  <li><a href="#a-generic-dplyr-approach-to-centering." id="toc-a-generic-dplyr-approach-to-centering." class="nav-link" data-scroll-target="#a-generic-dplyr-approach-to-centering."><span class="header-section-number">17.8.1</span> A generic <code>dplyr</code> approach to centering.</a></li>
+  </ul></li>
+  <li><a href="#specifying-correlation-structures" id="toc-specifying-correlation-structures" class="nav-link" data-scroll-target="#specifying-correlation-structures"><span class="header-section-number">17.9</span> Specifying Correlation Structures</a>
+  <ul>
+  <li><a href="#changing-covariance-structures-in-r" id="toc-changing-covariance-structures-in-r" class="nav-link" data-scroll-target="#changing-covariance-structures-in-r"><span class="header-section-number">17.9.1</span> Changing covariance structures in R</a></li>
+  </ul></li>
+  <li><a href="#additional-references" id="toc-additional-references" class="nav-link" data-scroll-target="#additional-references"><span class="header-section-number">17.10</span> Additional References</a>
+  <ul>
+  <li><a href="#lecture-notes-from-other-classes-found-on-the-interwebs" id="toc-lecture-notes-from-other-classes-found-on-the-interwebs" class="nav-link" data-scroll-target="#lecture-notes-from-other-classes-found-on-the-interwebs"><span class="header-section-number">17.10.1</span> Lecture notes from other classes found on the interwebs</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/random_intercept.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./MLM_intro.html">Multi-level Modeling</a></li><li class="breadcrumb-item"><a href="./random_intercept.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Random Intercept Models</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="RI" class="quarto-section-identifier"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Random Intercept Models</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Packages Used
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This chapter uses the following packages: <a href="https://strengejacke.github.io/sjPlot/">sjPlot</a>, <a href="https://github.com/lme4/lme4">lme4</a>, <a href="https://cran.r-project.org/web/packages/nlme/index.html">nlme</a>, <a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html">knitr and kableExtra</a></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example Data
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Radon is a radioactive gas that naturally occurs in soils around the U.S. As radon decays it releases other radioactive elements, which stick to, among other things, dust particles commonly found in homes. The EPA believes <a href="https://www.epa.gov/radon">radon exposure</a> is one of the leading causes of cancer in the United States.</p>
+<p>This example uses a dataset named <code>radon</code> from the <a href="https://mc-stan.org/rstanarm/"><code>rstanarm</code></a> package. The dataset contains <span class="math inline">\(N=919\)</span> observations, each measurement taken within a home that is located within one of the <span class="math inline">\(J=85\)</span> sampled counties in Minnesota. The first six rows of the dataframe show us that the county Aitkin has variable levels of <span class="math inline">\(log(radon)\)</span>. Our goal is to build a model to predict <span class="math inline">\(log(radon)\)</span>.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(radon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  floor county  log_radon log_uranium
+1     1 AITKIN 0.83290912  -0.6890476
+2     0 AITKIN 0.83290912  -0.6890476
+3     0 AITKIN 1.09861229  -0.6890476
+4     0 AITKIN 0.09531018  -0.6890476
+5     0  ANOKA 1.16315081  -0.8473129
+6     0  ANOKA 0.95551145  -0.8473129</code></pre>
+</div>
+</div>
+<section id="pooling" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="pooling"><span class="header-section-number">17.1</span> Pooling</h2>
+<p>To highlight the benefits of random intercepts models we will compare three linear regression models:</p>
+<ul>
+<li>complete pooling</li>
+<li>no pooling</li>
+<li>partial pooling (the random intercept model)</li>
+</ul>
+<p><strong>Complete Pooling</strong></p>
+<p>The complete pooling model pools all counties together to give one single estimate of the <span class="math inline">\(log(radon)\)</span> level.</p>
+<p><strong>No Pooling</strong></p>
+<p>No pooling refers to the fact that no information is shared among the counties. Each county is independent of the next.</p>
+<p><strong>Partial Pooling</strong></p>
+<p>The partial pooling model, partially shares information among the counties.</p>
+<p>Each county should get a <em>unique intercept</em> such that the collection of county intercepts are randomly sampled from a normal distribution with mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(\sigma^2_{\alpha}\)</span>.</p>
+<p>Because all county intercepts are randomly sampled from the same theoretical population, <span class="math inline">\(N(0, \sigma^2_{\alpha})\)</span>, information is shared among the counties. This sharing of information is generally referred to as <strong>shrinkage</strong>, and should be thought of as a means to reduce variation in estimates among the counties. When a county has little information to offer, it’s estimated intercept will be shrunk towards to overall mean of all counties.</p>
+<p>The plot below displays the overall mean as the complete pooling estimate (solid, horizontal line), the no pooling and partial pooling estimates for 8 randomly selected counties contained in the radon data. The amount of shrinkage from the partial pooling fit is determined by a data dependent compromise between the county level sample size, the variation among the counties, and the variation within the counties.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="random_intercept_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Generally, we can see that counties with smaller sample sizes are shrunk more towards the overall mean, while counties with larger sample sizes are shrunk less.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The fitted values corresponding to different observations within each county of the no-pooling model are jittered to help the eye determine approximate sample size within each county.</p>
+<p>Estimates of variation within each county should not be determined from this arbitrary jittering of points.</p>
+</div>
+</div>
+</section>
+<section id="sec-mathri" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="sec-mathri"><span class="header-section-number">17.2</span> Mathematical Models</h2>
+<p>The three models considered set <span class="math inline">\(y_n=log(radon)\)</span>, and <span class="math inline">\(x_n\)</span> records floor (0=basement, 1=first floor) for homes <span class="math inline">\(n=1, \ldots, N\)</span>.</p>
+<section id="complete-pooling" class="level3" data-number="17.2.1">
+<h3 data-number="17.2.1" class="anchored" data-anchor-id="complete-pooling"><span class="header-section-number">17.2.1</span> Complete Pooling</h3>
+<p>The complete pooling model pools all counties together to give them one single estimate of the <span class="math inline">\(log(radon)\)</span> level, <span class="math inline">\(\hat{\alpha}\)</span>.</p>
+<ul>
+<li>The error term <span class="math inline">\(\epsilon_n\)</span> may represent variation due to measurement error, within-house variation, and/or within-county variation.<br>
+</li>
+<li>Fans of the random intercept model think that <span class="math inline">\(\epsilon_n\)</span>, here, captures too many sources of error into one term, and think that this is a fault of the completely pooled model.</li>
+</ul>
+<p><span class="math display">\[\begin{equation*}
+\begin{split}
+
+        y_n = \alpha &amp; + \epsilon_n \\
+            &amp; \epsilon_n \sim N(0, \sigma_{\epsilon}^{2})
+
+\end{split}
+\end{equation*}\]</span></p>
+</section>
+<section id="no-pooling" class="level3" data-number="17.2.2">
+<h3 data-number="17.2.2" class="anchored" data-anchor-id="no-pooling"><span class="header-section-number">17.2.2</span> No Pooling</h3>
+<ul>
+<li>The no pooling model gives each county an independent estimate of <span class="math inline">\(log(radon\)</span>), <span class="math inline">\(\hat{\alpha}_{j[n]}\)</span>.<br>
+</li>
+<li>Read the subscript <span class="math inline">\(j[n]\)</span> as home <span class="math inline">\(n\)</span> is nested within county <span class="math inline">\(j\)</span>. Hence, all homes in each county get their own independent estimate of <span class="math inline">\(log(radon)\)</span>.<br>
+</li>
+<li>This is equivalent to the fixed effects model</li>
+<li>Here again, one might argue that the error term captures too much noise.</li>
+</ul>
+<p><span class="math display">\[\begin{equation*}
+\begin{split}
+
+        y_n = \alpha_{j[n]} &amp; + \epsilon_n \\
+            \epsilon_n &amp; \sim N(0, \sigma_{\epsilon}^{2})
+
+\end{split}
+\end{equation*}\]</span></p>
+</section>
+<section id="partial-pooling-ri" class="level3" data-number="17.2.3">
+<h3 data-number="17.2.3" class="anchored" data-anchor-id="partial-pooling-ri"><span class="header-section-number">17.2.3</span> Partial Pooling (RI)</h3>
+<ul>
+<li>The random intercept model, better known as the partial pooling model, gives each county an intercept term <span class="math inline">\(\alpha_j[n]\)</span> that varies according to its own error term, <span class="math inline">\(\sigma_{\alpha}^2\)</span>.<br>
+</li>
+<li>This error term measures within-county variation
+<ul>
+<li>Separating measurement error (<span class="math inline">\(\sigma_{\epsilon}^{2}\)</span>) from county level error (<span class="math inline">\(\sigma_{\alpha}^{2}\)</span>) .</li>
+</ul></li>
+<li>This multi-level modeling shares information among the counties to the effect that the estimates <span class="math inline">\(\alpha_{j[n]}\)</span> are a compromise between the completely pooled and not pooled estimates.<br>
+</li>
+<li>When a county has a relatively smaller sample size and/or the variance <span class="math inline">\(\sigma^{2}_{\epsilon}\)</span> is larger than the variance <span class="math inline">\(\sigma^2_{\alpha}\)</span>, estimates are shrunk more from the not pooled estimates towards to completely pooled estimate.</li>
+</ul>
+<p><span class="math display">\[\begin{equation*}
+\begin{split}
+
+        y_n = \alpha_{j[n]} &amp; + \epsilon_n \\
+            \epsilon_n &amp; \sim N(0, \sigma_{\epsilon}^{2}) \\
+            \alpha_j[n] &amp; \sim N(\mu_{\alpha}, \sigma_{\alpha}^2)
+
+\end{split}
+\end{equation*}\]</span></p>
+</section>
+</section>
+<section id="components-of-variance" class="level2" data-number="17.3">
+<h2 data-number="17.3" class="anchored" data-anchor-id="components-of-variance"><span class="header-section-number">17.3</span> Components of Variance</h2>
+<p>Statistics can be thought of as the study of uncertainty, and variance is a measure of uncertainty (and information). So yet again we see that we’re partitioning the variance. Recall that</p>
+<ul>
+<li>Measurement error: <span class="math inline">\(\sigma^{2}_{\epsilon}\)</span></li>
+<li>County level error: <span class="math inline">\(\sigma^{2}_{\alpha}\)</span></li>
+</ul>
+<p>The <strong>intraclass correlation</strong> (ICC, <span class="math inline">\(\rho\)</span>) is interpreted as</p>
+<ul>
+<li>the proportion of total variance that is explained by the clusters.<br>
+</li>
+<li>the expected correlation between two individuals who are drawn from the same cluster.</li>
+</ul>
+<p><span class="math display">\[
+\rho = \frac{\sigma^{2}_{\alpha}}{\sigma^{2}_{\alpha} + \sigma^{2}_{\epsilon}}
+\]</span></p>
+<ul>
+<li>When <span class="math inline">\(\rho\)</span> is large, a lot of the variance is at the macro level
+<ul>
+<li>units within each group are very similar</li>
+</ul></li>
+<li>If <span class="math inline">\(\rho\)</span> is small enough, one may ask if fitting a multi-level model is worth the complexity.</li>
+<li>No hard and fast rule to say “is it large enough?”
+<ul>
+<li>rules of thumb include
+<ul>
+<li>under 10% (0.1) then a single level analysis may still be appropriate,</li>
+<li>over 10% (0.1) then a multilevel model can be justified.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="fitri" class="level2" data-number="17.4">
+<h2 data-number="17.4" class="anchored" data-anchor-id="fitri"><span class="header-section-number">17.4</span> Fitting models in R</h2>
+<p><strong>Complete Pooling</strong></p>
+<p>The complete pooling model is fit with the function <code>lm</code>, and is only modeled by <code>1</code> and no covariates. This is the simple mean model, and is equivelant to estimating the mean.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fit_completepool <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_radon <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>radon)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>fit_completepool</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log_radon ~ 1, data = radon)
+
+Coefficients:
+(Intercept)  
+      1.265  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(radon<span class="sc">$</span>log_radon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.264779</code></pre>
+</div>
+</div>
+<p><strong>No Pooling</strong></p>
+<p>The no pooling model is also fit with the function <code>lm</code>, but gives each county a unique intercept in the model.</p>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fit_nopool <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_radon <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> county, <span class="at">data=</span>radon)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>fit_nopool.withint <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_radon <span class="sc">~</span> county, <span class="at">data=</span>radon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table style="text-align:center">
+<tbody><tr>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="2">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="2">
+log_radon
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+</tr>
+<tr>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+</td>
+<td>
+0.715<sup>*</sup> (0.383)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+countyAITKIN
+</td>
+<td>
+0.715<sup>*</sup> (0.383)
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+countyANOKA
+</td>
+<td>
+0.891<sup>***</sup> (0.106)
+</td>
+<td>
+0.176 (0.398)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+countyBECKER
+</td>
+<td>
+1.090<sup>**</sup> (0.443)
+</td>
+<td>
+0.375 (0.585)
+</td>
+</tr>
+<tr>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="2" style="text-align:right">
+<sup><em></em></sup><em>p&lt;0.1; <sup><strong></strong></sup><strong>p&lt;0.05; <sup></sup></strong></em>p&lt;0.01
+</td>
+</tr>
+</tbody></table>
+<ul>
+<li>The first model (<code>fit_nopool</code>) is coded as <code>lm(log_radon ~ -1 + county, data=radon)</code>, and so does not have the global intercept (that’s what the <code>-1</code> does). Each <span class="math inline">\(\beta\)</span> coefficient is the estimate of the mean <code>log_radon</code> for that county.</li>
+<li>The second model (<code>fit_nopool.withint</code>) is coded as <code>lm(log_radon ~ county, data=radon)</code> and is what we are typically used to fitting.
+<ul>
+<li>Each estimate is the difference in log(radon) for that county <em>compared to a reference county</em>.</li>
+<li>Because county is alphabetical, the reference group is AITKIN.</li>
+<li>Aitkin’s mean level of log(radon) shows up as the intercept or <em>Constant</em> term.</li>
+</ul></li>
+<li>For display purposes only, only the first 3 county estimates are being shown.</li>
+</ul>
+<p><strong>Partial Pooling</strong></p>
+<ul>
+<li>The partial pooling model is fit with the function <code>lmer()</code>, which is part of the <strong><a href="https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf"><code>lme4</code></a></strong> package.</li>
+<li>The extra notation around the input variable <code>(1|county)</code> dictates that each county should get its own unique intercept <span class="math inline">\(\alpha_{j[n]}\)</span>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fit_partpool <span class="ot">&lt;-</span> <span class="fu">lmer</span>(log_radon <span class="sc">~</span> (<span class="dv">1</span> <span class="sc">|</span>county), <span class="at">data=</span>radon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The fixed effects portion of the model output of <code>lmer</code> is similar to output from <code>lm</code>, except no p-values are displayed. The fact that no p-values are displayed is a much discussed topic. The author of the library <code>lme4</code>, Douglas Bates, believes that there is no “obviously correct” solution to calculating p-values for models with randomly varying intercepts (or slopes); see <strong><a href="https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html">here</a></strong> for a general discussion.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_partpool)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML ['lmerMod']
+Formula: log_radon ~ (1 | county)
+   Data: radon
+
+REML criterion at convergence: 2184.9
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.6880 -0.5884  0.0323  0.6444  3.4186 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ county   (Intercept) 0.08861  0.2977  
+ Residual             0.58686  0.7661  
+Number of obs: 919, groups:  county, 85
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)    1.350      0.047   28.72</code></pre>
+</div>
+</div>
+<ul>
+<li>The random effects portion of the <code>lmer</code> output provides a point estimate of the variance of component <span class="math inline">\(\sigma^2_{\alpha} = 0.09\)</span> and the model’s residual variance, <span class="math inline">\(\sigma_\epsilon = 0.57\)</span>.</li>
+<li>The fixed effect here is interpreted in the same way that we would in a normal fixed effects mean model, as the global predicted value of the outcome of <code>log_radon</code>.</li>
+<li>The random intercepts aren’t automatically shown in this output. We can visualize these using a forestplot. We use the <code>plot_model()</code> function from the <code>sjPlot</code> package, on the <code>fit_partpool</code> model, we want to see the random effects (<code>type="re"</code>), and we want to sort on the name of the random variable, here it’s <code>"(Intercept)"</code>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sjPlot<span class="sc">::</span><span class="fu">plot_model</span>(fit_partpool, <span class="at">type=</span><span class="st">"re"</span>, <span class="at">sort.est =</span> <span class="st">"(Intercept)"</span>, <span class="at">y.offset =</span> .<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="random_intercept_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Notice that these effects are centered around 0. Refering back @ref(mathri), the intercept <span class="math inline">\(\beta_{0j}\)</span> was modeled equal to some average intercept across all groups <span class="math inline">\(\gamma_{00}\)</span>, plus some difference. What is plotted above is listed in a table below, showing that if you add that random effect to the fixed effect of the intercept, you get the value of the random intercept for each county.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>showri <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Random_Effect   =</span> <span class="fu">unlist</span>(<span class="fu">ranef</span>(fit_partpool)), </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Fixed_Intercept =</span> <span class="fu">fixef</span>(fit_partpool), </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">RandomIntercept =</span> <span class="fu">unlist</span>(<span class="fu">ranef</span>(fit_partpool))<span class="sc">+</span><span class="fu">fixef</span>(fit_partpool))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(showri) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(<span class="fu">coef</span>(fit_partpool)<span class="sc">$</span>county)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(showri))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Random_Effect</th>
+<th style="text-align: right;">Fixed_Intercept</th>
+<th style="text-align: right;">RandomIntercept</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">AITKIN</td>
+<td style="text-align: right;">-0.2390574</td>
+<td style="text-align: right;">1.34983</td>
+<td style="text-align: right;">1.1107728</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ANOKA</td>
+<td style="text-align: right;">-0.4071256</td>
+<td style="text-align: right;">1.34983</td>
+<td style="text-align: right;">0.9427047</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BECKER</td>
+<td style="text-align: right;">-0.0809977</td>
+<td style="text-align: right;">1.34983</td>
+<td style="text-align: right;">1.2688325</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BELTRAMI</td>
+<td style="text-align: right;">-0.0804277</td>
+<td style="text-align: right;">1.34983</td>
+<td style="text-align: right;">1.2694025</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BENTON</td>
+<td style="text-align: right;">-0.0254506</td>
+<td style="text-align: right;">1.34983</td>
+<td style="text-align: right;">1.3243796</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BIGSTONE</td>
+<td style="text-align: right;">0.0582831</td>
+<td style="text-align: right;">1.34983</td>
+<td style="text-align: right;">1.4081133</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="comparison-of-estimates" class="level3" data-number="17.4.1">
+<h3 data-number="17.4.1" class="anchored" data-anchor-id="comparison-of-estimates"><span class="header-section-number">17.4.1</span> Comparison of estimates</h3>
+<ul>
+<li>By allowing individuals within counties to be correlated, and at the same time let counties be correlated, we allow for some information to be shared across counties.</li>
+<li>Thus we come back to that idea of shrinkage. Below is a numeric table version of the plot in <span class="quarto-unresolved-ref">?sec-pool</span>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cmpr.est <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Mean_Model       =</span> <span class="fu">coef</span>(fit_completepool), </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Random_Intercept =</span> <span class="fu">unlist</span>(<span class="fu">ranef</span>(fit_partpool))<span class="sc">+</span><span class="fu">fixef</span>(fit_partpool), </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Fixed_Effects    =</span> <span class="fu">coef</span>(fit_nopool))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(cmpr.est) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(<span class="fu">coef</span>(fit_partpool)<span class="sc">$</span>county)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(cmpr.est))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Mean_Model</th>
+<th style="text-align: right;">Random_Intercept</th>
+<th style="text-align: right;">Fixed_Effects</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">AITKIN</td>
+<td style="text-align: right;">1.264779</td>
+<td style="text-align: right;">1.1107728</td>
+<td style="text-align: right;">0.7149352</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ANOKA</td>
+<td style="text-align: right;">1.264779</td>
+<td style="text-align: right;">0.9427047</td>
+<td style="text-align: right;">0.8908486</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BECKER</td>
+<td style="text-align: right;">1.264779</td>
+<td style="text-align: right;">1.2688325</td>
+<td style="text-align: right;">1.0900084</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BELTRAMI</td>
+<td style="text-align: right;">1.264779</td>
+<td style="text-align: right;">1.2694025</td>
+<td style="text-align: right;">1.1933029</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BENTON</td>
+<td style="text-align: right;">1.264779</td>
+<td style="text-align: right;">1.3243796</td>
+<td style="text-align: right;">1.2822379</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BIGSTONE</td>
+<td style="text-align: right;">1.264779</td>
+<td style="text-align: right;">1.4081133</td>
+<td style="text-align: right;">1.5367889</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="estimation-methods" class="level2" data-number="17.5">
+<h2 data-number="17.5" class="anchored" data-anchor-id="estimation-methods"><span class="header-section-number">17.5</span> Estimation Methods</h2>
+<ul>
+<li>Similar to logistic regression, estimates from multi-level models typically aren’t estimated directly using maximum likelihood (ML) methods.</li>
+<li>Iterative methods like <strong>Restricted (residual) Maximum Likelihood (REML)</strong> are used to get approximations.</li>
+<li>REML is typically the default estimation method for most packages.</li>
+</ul>
+<p>Details of REML are beyond the scope of this class, but knowing the estimation method is important for two reasons</p>
+<ol type="1">
+<li>Some type of testing procedures that use the likelihood ratio may not be valid.
+<ul>
+<li>Comparing models with different fixed effects using a likelihood ratio test is not valid. (Must use Wald Test instead)</li>
+<li>Can still use AIC/BIC as guidance (not as formal tests)</li>
+</ul></li>
+<li>Iterative procedures are procedures that perform estimation steps over and over until the change in estimates from one step to the next is smaller than some tolerance.
+<ul>
+<li>Sometimes this convergence to an answer never happens.</li>
+<li>You will get some error message about the algorithm not converging.</li>
+<li>The more complex the model, the higher chance this can happen</li>
+<li>scaling, centering, and avoiding collinearity can alleviate these problems with convergence.</li>
+</ul></li>
+</ol>
+<p>You can change the fitting algorithm to use the Log Likelihood anyhow, it may be slightly slower but for simple models the estimates are going to be very close to the REML estimate. Below is a table showing the estimates for the random intercepts,</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">REML</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">MLE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">AITKIN</td>
+<td style="text-align: right;">1.1107728</td>
+<td style="text-align: right;">1.1143654</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ANOKA</td>
+<td style="text-align: right;">0.9427047</td>
+<td style="text-align: right;">0.9438526</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BECKER</td>
+<td style="text-align: right;">1.2688325</td>
+<td style="text-align: right;">1.2700351</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BELTRAMI</td>
+<td style="text-align: right;">1.2694025</td>
+<td style="text-align: right;">1.2702493</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BENTON</td>
+<td style="text-align: right;">1.3243796</td>
+<td style="text-align: right;">1.3245917</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BIGSTONE</td>
+<td style="text-align: right;">1.4081133</td>
+<td style="text-align: right;">1.4068866</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>and the same estimates for the variance terms.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(fit_partpool)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Groups   Name        Std.Dev.
+ county   (Intercept) 0.29767 
+ Residual             0.76607 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(fit_partpool_MLE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Groups   Name        Std.Dev.
+ county   (Intercept) 0.29390 
+ Residual             0.76607 </code></pre>
+</div>
+</div>
+<p>So does it matter? Yes and no. In general you want to fit the models using REML, but if you really want to use a Likelihood Ratio <strong>test</strong> to compare models then you need to fit the models using ML.</p>
+</section>
+<section id="including-covariates" class="level2" data-number="17.6">
+<h2 data-number="17.6" class="anchored" data-anchor-id="including-covariates"><span class="header-section-number">17.6</span> Including Covariates</h2>
+<p>A similar sort of shrinkage effect is seen with covariates included in the model.</p>
+<p>Consider the covariate <span class="math inline">\(floor\)</span>, which takes on the value <span class="math inline">\(1\)</span> when the radon measurement was read within the first floor of the house and <span class="math inline">\(0\)</span> when the measurement was taken in the basement. In this case, county means are shrunk towards the mean of the response, <span class="math inline">\(log(radon)\)</span>, within each level of the covariate.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="random_intercept_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Covariates are fit using standard <code>+</code> notation outside the random effects specification, i.e.&nbsp;<code>(1|county)</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ri.with.x <span class="ot">&lt;-</span> <span class="fu">lmer</span>(log_radon <span class="sc">~</span> floor <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>county), <span class="at">data=</span>radon)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(ri.with.x, <span class="at">show.r2=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table style="border-collapse:collapse; border:none;">
+<tbody><tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">log radon</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">1.49</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">1.40&nbsp;–&nbsp;1.59</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">floor [first floor]</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.66</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.80&nbsp;–&nbsp;-0.53</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">Random Effects</td>
+</tr>
+
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">σ<sup>2</sup></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.53</td>
+</tr>
+
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">τ<sub>00</sub> <sub>county</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.10</td>
+
+</tr><tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">ICC</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.16</td>
+
+</tr><tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">N <sub>county</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">85</td>
+</tr><tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">919</td>
+</tr>
+
+</tbody></table>
+
+</div>
+</div>
+<p>Note that in this table format, <span class="math inline">\(\tau_{00} = \sigma^{2}_{\alpha}\)</span> and <span class="math inline">\(\sigma^{2} = \sigma^{2}_{\epsilon}\)</span>. The estimated random effects can also be easily visualized using functions from the <a href="http://www.strengejacke.de/sjPlot/">sjPlot</a> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(ri.with.x, <span class="at">type=</span><span class="st">"re"</span>, <span class="at">sort.est =</span> <span class="st">"(Intercept)"</span>, <span class="at">y.offset =</span> .<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="random_intercept_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Function enhancements –</p>
+<ul>
+<li>Display the fixed effects by changing <code>type="est"</code>.</li>
+<li>Plot the slope of the fixed effect for each level of the random effect <code>sjp.lmer(ri.with.x, type="ri.slope")</code> – this is being depreciated in the future but works for now. Eventually I’ll figure out how to get this plot out of <code>plot_model()</code>.</li>
+</ul>
+</section>
+<section id="more-random-effects" class="level2" data-number="17.7">
+<h2 data-number="17.7" class="anchored" data-anchor-id="more-random-effects"><span class="header-section-number">17.7</span> More Random Effects</h2>
+<div class="callout callout-style-simple callout-caution">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>This section has not been built yet. Reference <a href="https://m-clark.github.io/mixed-models-with-R/random_slopes.html">this</a> set of notes in the meantime.</p>
+</div>
+</div>
+</div>
+<p>What if you think the slope along some <span class="math inline">\(x\)</span> should vary (such as over time)?</p>
+</section>
+<section id="centering-terms" class="level2" data-number="17.8">
+<h2 data-number="17.8" class="anchored" data-anchor-id="centering-terms"><span class="header-section-number">17.8</span> Centering terms</h2>
+<ul>
+<li>Sometimes it might be better to measure the effect of a specific level relative to the average within cluster, rather than overall average.</li>
+<li>The “frog pond” effect
+<ul>
+<li>A student with an average IQ may be more confident and excel in a group of students with less than average IQ</li>
+<li>But they may be discouraged and not perform to their potential in a group of students with higher than average IQ.</li>
+</ul></li>
+<li>If the effect of a specific level of a factor is dependent on where the level is in reference to <em>other cluster members</em>, more so than where the level is in reference to <em>all other participants</em>, the model should be adjusted for as follows:</li>
+<li>Instead of using the actual value in the regression model you would…
+<ul>
+<li>calculate the cluster specific average</li>
+<li>calculate the difference between individual and specific cluster average</li>
+<li>both cluster average (macro) and difference (micro) are included in the model.</li>
+</ul></li>
+</ul>
+<section id="a-generic-dplyr-approach-to-centering." class="level3" data-number="17.8.1">
+<h3 data-number="17.8.1" class="anchored" data-anchor-id="a-generic-dplyr-approach-to-centering."><span class="header-section-number">17.8.1</span> A generic <code>dplyr</code> approach to centering.</h3>
+<pre><code>group.means &lt;- data %&gt;% group_by(cluster) %&gt;% summarise(c.ave=mean(variable))
+newdata &lt;- data %&gt;% left_join(group.means) %&gt;% mutate(diff = variable - c.ave)</code></pre>
+<ol type="1">
+<li>Create a new data set that I call <code>group.means</code> that
+<ul>
+<li>takes the original <code>data</code> set and then (<code>%&gt;%</code>)…</li>
+<li>groups it by the clustering variable so that all subsequent actions are done on each group</li>
+<li>makes a new variable that I call <code>c.ave</code> that is the average of the <code>variable</code> of interest</li>
+</ul></li>
+<li>I then take the original <code>data</code> set, and then
+<ul>
+<li>merge onto <code>data</code>, this <code>group.means</code> data set that only contains the clustering variable, and the cluster average variable <code>c.ave</code>.</li>
+<li>I also toss in a <code>mutate</code> to create a new variable that is the <code>diff</code>erence between the <code>variable</code> of interest and the group averages.</li>
+<li>and assign all of this to a <code>newdata</code> set</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="specifying-correlation-structures" class="level2" data-number="17.9">
+<h2 data-number="17.9" class="anchored" data-anchor-id="specifying-correlation-structures"><span class="header-section-number">17.9</span> Specifying Correlation Structures</h2>
+<ul>
+<li><p><strong>Independence:</strong> In standard linear models, the assumption on the residuals <span class="math inline">\(\epsilon_{i} \sim \mathcal{N}(0, \sigma_{\epsilon}^{2})\)</span> means that</p></li>
+<li><p>The variance of each observation is <span class="math inline">\(\sigma_{\epsilon}^{2}\)</span></p></li>
+<li><p>The covariance between two different observations <span class="math inline">\(0\)</span></p></li>
+</ul>
+<p>Consider <span class="math inline">\(n=4\)</span> observations, <span class="math inline">\(y_{1}, \ldots , y_{4}\)</span>. Visually the covariance matrix between these four observations would look like this:</p>
+<p><span class="math display">\[
+\begin{array}{c|cccc}
+  &amp; y_{1} &amp; y_{2} &amp; y_{3} &amp; y_{4}\\
+  \hline
+  y_{1} &amp; \sigma_{\epsilon}^{2} &amp; 0 &amp; 0 &amp; 0\\
+  y_{2} &amp; 0 &amp; \sigma_{\epsilon}^{2} &amp; 0 &amp; 0\\
+  y_{3} &amp; 0 &amp; 0 &amp; \sigma_{\epsilon}^{2} &amp; 0\\
+  y_{4} &amp; 0&amp; 0 &amp; 0 &amp; \sigma_{\epsilon}^{2}
+\end{array}
+\]</span></p>
+<p>We can also write the covariance matrix as <span class="math inline">\(\sigma_{\epsilon}^{2}\)</span> times the correlation matrix.</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+  \sigma_{\epsilon}^{2} &amp; 0 &amp; 0 &amp; 0\\
+  0 &amp; \sigma_{\epsilon}^{2} &amp; 0 &amp; 0\\
+  0 &amp; 0 &amp; \sigma_{\epsilon}^{2} &amp; 0\\
+  0&amp; 0 &amp; 0 &amp; \sigma_{\epsilon}^{2}
+\end{bmatrix}
+=
+\sigma_{\epsilon}^2
+\begin{bmatrix}
+1 &amp; 0 &amp; 0 &amp; 0 \\
+&amp; 1 &amp; 0 &amp; 0 \\
+&amp; &amp; 1 &amp; 0 \\
+&amp; &amp; &amp; 1
+\end{bmatrix}
+\]</span></p>
+<ul>
+<li><strong>Compound Symmetry</strong> or <strong>Exchangeable:</strong> The simplest covariance structure that includes correlated errors is compound symmetry (CS). Here we see correlated errors between individuals, and note that these correlations are presumed to be the same for each pair of responses, namely <span class="math inline">\(\rho\)</span>.</li>
+</ul>
+<p><span class="math display">\[
+\sigma_{\epsilon}^{2}
+\begin{bmatrix}
+1 &amp; \rho &amp; \rho &amp; \rho \\
+&amp; 1 &amp; \rho &amp; \rho \\
+&amp; &amp; 1 &amp; \rho \\
+&amp; &amp; &amp; 1
+\end{bmatrix}
+\]</span></p>
+<ul>
+<li><strong>Autoregressive:</strong> Imagine that <span class="math inline">\(y_{1}, \ldots , y_{4}\)</span> were 4 different time points on the same person. The autoregressive (Lag 1) structure considers correlations to be highest for time adjacent times, and a systematically decreasing correlation with increasing distance between time points. This structure is only applicable for evenly spaced time intervals for the repeated measure.</li>
+</ul>
+<p><span class="math display">\[
+\sigma_{\epsilon}^{2}
+\begin{bmatrix}
+1 &amp; \rho &amp; \rho^{2} &amp; \rho^{3} \\
+&amp; 1 &amp; \rho &amp; \rho^{2} \\
+&amp; &amp; 1 &amp; \rho \\
+&amp; &amp; &amp; 1
+\end{bmatrix}
+\]</span></p>
+<ul>
+<li><strong>Unstructured:</strong> The Unstructured covariance structure (UN) is the most complex because it is estimating unique correlations for each pair of observations. It is not uncommon to find out that you are not able to use this structure simply because there are too many parameters to estimate.</li>
+</ul>
+<p><span class="math display">\[
+\begin{bmatrix}
+\sigma_{1}^{2} &amp; \rho_{12} &amp; \rho_{13} &amp; \rho_{14} \\
+&amp; \sigma_{2}^{2} &amp; \rho_{23} &amp; \rho_{24} \\
+&amp; &amp; \sigma_{3}^{2} &amp; \rho_{34} \\
+&amp; &amp; &amp; \sigma_{4}^{2}
+\end{bmatrix}
+\]</span></p>
+<ul>
+<li>Random Intercept Model</li>
+</ul>
+<p>Let <span class="math inline">\(y_{1}\)</span> and <span class="math inline">\(y_{2}\)</span> be from group 1, and <span class="math inline">\(y_{3}\)</span> and <span class="math inline">\(y_{4}\)</span> be from group 2.</p>
+<ul>
+<li>error terms between groups are uncorrelated (groups are independent)</li>
+<li>two different observations from the same group have covariance <span class="math inline">\(\sigma_{\alpha}^{2}\)</span></li>
+<li>individuals now have the error associated with their own observation but also due to the group <span class="math inline">\(\sigma_{\epsilon}^{2} + \sigma_{\alpha}^{2}\)</span></li>
+</ul>
+<p><span class="math display">\[
+\left[
+\begin{array}{cc|cc}
+  \sigma_{\epsilon}^{2} + \sigma_{\alpha}^{2} &amp; \sigma_{\alpha}^{2} &amp; 0 &amp; 0\\
+\sigma_{\alpha}^{2} &amp; \sigma_{\epsilon}^{2} + \sigma_{\alpha}^{2} &amp; 0 &amp; 0\\
+\hline
+  0 &amp; 0 &amp; \sigma_{\epsilon}^{2} + \sigma_{\alpha}^{2} &amp; \sigma_{\alpha}^{2}\\
+  0 &amp; 0 &amp; \sigma_{\alpha}^{2} &amp; \sigma_{\epsilon}^{2} + \sigma_{\alpha}^{2}
+\end{array}
+\right]
+\]</span></p>
+<section id="changing-covariance-structures-in-r" class="level3" data-number="17.9.1">
+<h3 data-number="17.9.1" class="anchored" data-anchor-id="changing-covariance-structures-in-r"><span class="header-section-number">17.9.1</span> Changing covariance structures in R</h3>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is very hard to do as the model becomes more complex. These types of models is where Bayesian statistics has a much easier time fitting models.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Section In Progress
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This section has been commented out of the notes until figured out in a cleaner manner.</p>
+</div>
+</div>
+<!---
+
+* Very hard (read - don't bother) to do this using `lmer()` from package `lme4`
+* Can do this using `lme()` from package `nlme`. Syntax is similar. 
+* The standard classes of correlation structures available in the `nlme` package can be found in [[this help file]](https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/corClasses.html)
+
+
+
+
+
+::: {.cell}
+
+```{.r .cell-code}
+library(nlme)
+model_lme_cs <- lme(log_radon ~ floor,
+                     random = ~ 1 | county, 
+                     cor=corCompSymm(value=0.159,form=~1|county),data = radon)
+```
+:::
+
+
+
+
+
+Using a different covariance structure can have a large effect on the results. 
+
+* `lmer` using Identity: $\sigma^{2}_{\alpha} = 0.10, \sigma^{2}_{\epsilon} = 0.53$  
+* `nlme` using Identity: $\sigma^{2}_{\alpha} = 0.32^2 = 0.10, \sigma^{2}_{\epsilon} = 0.73^2 = 0.53$  
+* `nlme` using CS: $\sigma^{2}_{\alpha} = 0.14^2 = 0.02, \sigma^{2}_{\epsilon} = 0.78^2 = 0.61$
+
+::: {.cell type='rmdcaution'}
+\BeginKnitrBlock{rmdcaution}<div class="rmdcaution">Mis-specifying the covariance structure can also have a large effect on the results. </div>\EndKnitrBlock{rmdcaution}
+:::
+
+#### Autoregressive 
+
+
+The AR1 structure specifies that the correlations between the repeated measurements of each subject decrease with the time lag, i.e., the distance in time between the measurements. The data is assumed to be in sort order, where $y_{it}$ and $y_{i(t+1)}$ are in sequential rows. To sort by time within id in dplyr looks like: `arrange(id, time)`. 
+
+
+* **Equally spaced items**
+`lme(..., correlation = corAR1())` which is equivelant to `lme(..., correlation = corAR1(form = ~ 1 | id))` 
+
+* **Not equally spaced items**
+`lme(..., correlation = corAR1(form = ~ time | id))`, the `time` variable is used to determine how far apart the measurements are (the time lag). 
+
+* **Discrete vs continuous time**
+corAR1() works with discrete time. There is also corCAR1() that works with continuous time.
+
+Ref: https://stats.stackexchange.com/questions/367957/autoregression-in-nlme-undestanding-how-to-specify-corar1
+
+
+--->
+</section>
+</section>
+<section id="additional-references" class="level2" data-number="17.10">
+<h2 data-number="17.10" class="anchored" data-anchor-id="additional-references"><span class="header-section-number">17.10</span> Additional References</h2>
+<ul>
+<li>Random effects ANOVA in SAS and R - <a href="http://stla.github.io/stlapblog/posts/AV1R_SASandR.html">STLA</a></li>
+<li>ICCs in mixed models - <a href="https://www.theanalysisfactor.com/the-intraclass-correlation-coefficient-in-mixed-models/">The Analysis Factor</a></li>
+<li>Very nice introduction to mixed models in R <a href="https://m-clark.github.io/mixed-models-with-R/introduction.html">Michael Clark</a></li>
+<li>Interesting blog by <a href="https://tjmahr.github.io/plotting-partial-pooling-in-mixed-effects-models/">Tristan Mahr</a> about pooling and shrinkage.</li>
+<li>Derivation of the covariance structures - <a href="http://www.bristol.ac.uk/cmm/learning/videos/correlation.html#matrix2">Video</a></li>
+<li>Mixed models with R - <a href="https://m-clark.github.io/mixed-models-with-R/">Michael Clark</a></li>
+</ul>
+<section id="lecture-notes-from-other-classes-found-on-the-interwebs" class="level3" data-number="17.10.1">
+<h3 data-number="17.10.1" class="anchored" data-anchor-id="lecture-notes-from-other-classes-found-on-the-interwebs"><span class="header-section-number">17.10.1</span> Lecture notes from other classes found on the interwebs</h3>
+<ul>
+<li><a href="https://fukamilab.github.io/BIO202/04-A-mixed-models.html">BIOL 202: Ecological Statistics from Stanford</a> This is a graduate level class.</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/annakfell\.github\.io\/ascnv2\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./MLM_intro.html" class="pagination-link" aria-label="Introduction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./appendix.html" class="pagination-link" aria-label="Appendix">
+        <span class="nav-page-text">Appendix</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/random_intercept.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
