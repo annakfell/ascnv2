@@ -8,7 +8,7 @@
 
 <meta name="description" content="Course notes for various Applied Statistics courses at CSU Chico">
 
-<title>Appendix – Applied Statistics</title>
+<title>19&nbsp; Common Error Messages – Applied Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,6 +31,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./setup_r.html" rel="next">
 <link href="./missing_data.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -112,7 +113,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appendix.html">Appendix</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./common_error.html">Appendix</a></li><li class="breadcrumb-item"><a href="./common_error.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Common Error Messages</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -326,12 +327,29 @@ window.Quarto = {
 </li>
       </ul>
   </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./appendix.html" class="sidebar-item-text sidebar-link active">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendix</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./common_error.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Common Error Messages</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./setup_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Setup R &amp; RStudio</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -342,24 +360,21 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#common-error-messages" id="toc-common-error-messages" class="nav-link active" data-scroll-target="#common-error-messages">Common error messages</a>
-  <ul>
-  <li><a href="#function-not-found" id="toc-function-not-found" class="nav-link" data-scroll-target="#function-not-found">Function not found</a></li>
-  <li><a href="#object-not-found" id="toc-object-not-found" class="nav-link" data-scroll-target="#object-not-found">Object not found</a></li>
-  <li><a href="#object-of-length-0" id="toc-object-of-length-0" class="nav-link" data-scroll-target="#object-of-length-0">Object of length 0</a></li>
-  <li><a href="#discrete-scale-applied-to-continuous-object" id="toc-discrete-scale-applied-to-continuous-object" class="nav-link" data-scroll-target="#discrete-scale-applied-to-continuous-object">Discrete scale applied to continuous object</a></li>
-  <li><a href="#package-inputenc-error-unicode-char-not-set-up-for-use-with" id="toc-package-inputenc-error-unicode-char-not-set-up-for-use-with" class="nav-link" data-scroll-target="#package-inputenc-error-unicode-char-not-set-up-for-use-with">Package inputenc error: Unicode char not set up for use with </a></li>
-  <li><a href="#continuous-x-aesthetic-did-you-forget-aesgroup" id="toc-continuous-x-aesthetic-did-you-forget-aesgroup" class="nav-link" data-scroll-target="#continuous-x-aesthetic-did-you-forget-aesgroup">Continuous x aesthetic – did you forget aes(group=…)?</a></li>
-  </ul></li>
+  <li><a href="#function-not-found" id="toc-function-not-found" class="nav-link active" data-scroll-target="#function-not-found"><span class="header-section-number">19.0.1</span> Function not found</a></li>
+  <li><a href="#object-not-found" id="toc-object-not-found" class="nav-link" data-scroll-target="#object-not-found"><span class="header-section-number">19.0.2</span> Object not found</a></li>
+  <li><a href="#object-of-length-0" id="toc-object-of-length-0" class="nav-link" data-scroll-target="#object-of-length-0"><span class="header-section-number">19.0.3</span> Object of length 0</a></li>
+  <li><a href="#discrete-scale-applied-to-continuous-object" id="toc-discrete-scale-applied-to-continuous-object" class="nav-link" data-scroll-target="#discrete-scale-applied-to-continuous-object"><span class="header-section-number">19.0.4</span> Discrete scale applied to continuous object</a></li>
+  <li><a href="#package-inputenc-error-unicode-char-not-set-up-for-use-with" id="toc-package-inputenc-error-unicode-char-not-set-up-for-use-with" class="nav-link" data-scroll-target="#package-inputenc-error-unicode-char-not-set-up-for-use-with"><span class="header-section-number">19.0.5</span> Package inputenc error: Unicode char not set up for use with </a></li>
+  <li><a href="#continuous-x-aesthetic-did-you-forget-aesgroup" id="toc-continuous-x-aesthetic-did-you-forget-aesgroup" class="nav-link" data-scroll-target="#continuous-x-aesthetic-did-you-forget-aesgroup"><span class="header-section-number">19.0.6</span> Continuous x aesthetic – did you forget aes(group=…)?</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/appendix.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/common_error.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./common_error.html">Appendix</a></li><li class="breadcrumb-item"><a href="./common_error.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Common Error Messages</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Appendix</h1>
+<h1 class="title"><span id="sec-error" class="quarto-section-identifier"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Common Error Messages</span></span></h1>
 </div>
 
 
@@ -376,18 +391,16 @@ window.Quarto = {
 </header>
 
 
-<section id="common-error-messages" class="level2">
-<h2 class="anchored" data-anchor-id="common-error-messages">Common error messages</h2>
 <p><img src="images/monster_debugging.png" class="img-fluid"></p>
-<section id="function-not-found" class="level3">
-<h3 class="anchored" data-anchor-id="function-not-found">Function not found</h3>
+<section id="function-not-found" class="level3" data-number="19.0.1">
+<h3 data-number="19.0.1" class="anchored" data-anchor-id="function-not-found"><span class="header-section-number">19.0.1</span> Function not found</h3>
 <ul>
 <li>Check the spelling and capitalization.</li>
 <li>Did you load the package in your first code chunk?</li>
 </ul>
 </section>
-<section id="object-not-found" class="level3">
-<h3 class="anchored" data-anchor-id="object-not-found">Object not found</h3>
+<section id="object-not-found" class="level3" data-number="19.0.2">
+<h3 data-number="19.0.2" class="anchored" data-anchor-id="object-not-found"><span class="header-section-number">19.0.2</span> Object not found</h3>
 <p>R can’t find the object you are referring to. Here are some debugging steps:</p>
 <ul>
 <li>Check the spelling and capitalization.</li>
@@ -399,20 +412,20 @@ window.Quarto = {
 </ul>
 <p><img src="images/monster_abort.png" class="img-fluid"></p>
 </section>
-<section id="object-of-length-0" class="level3">
-<h3 class="anchored" data-anchor-id="object-of-length-0">Object of length 0</h3>
+<section id="object-of-length-0" class="level3" data-number="19.0.3">
+<h3 data-number="19.0.3" class="anchored" data-anchor-id="object-of-length-0"><span class="header-section-number">19.0.3</span> Object of length 0</h3>
 <p>This object does not exist, or is empty. Check how you created this object initially.</p>
 </section>
-<section id="discrete-scale-applied-to-continuous-object" class="level3">
-<h3 class="anchored" data-anchor-id="discrete-scale-applied-to-continuous-object">Discrete scale applied to continuous object</h3>
+<section id="discrete-scale-applied-to-continuous-object" class="level3" data-number="19.0.4">
+<h3 data-number="19.0.4" class="anchored" data-anchor-id="discrete-scale-applied-to-continuous-object"><span class="header-section-number">19.0.4</span> Discrete scale applied to continuous object</h3>
 <p>Read that error message carefully. It explains exactly what the problem is. It is up to you to problem solve to figure out which variable you are trying to apply a scale to (like color or fill), what it’s data type is.</p>
 </section>
-<section id="package-inputenc-error-unicode-char-not-set-up-for-use-with" class="level3">
-<h3 class="anchored" data-anchor-id="package-inputenc-error-unicode-char-not-set-up-for-use-with">Package inputenc error: Unicode char not set up for use with </h3>
+<section id="package-inputenc-error-unicode-char-not-set-up-for-use-with" class="level3" data-number="19.0.5">
+<h3 data-number="19.0.5" class="anchored" data-anchor-id="package-inputenc-error-unicode-char-not-set-up-for-use-with"><span class="header-section-number">19.0.5</span> Package inputenc error: Unicode char not set up for use with </h3>
 <p>When you want to use certain symbols in math notation, such as Greek letters or the tilde (<span class="math inline">\(\sim\)</span>), it is important that you type in the commands for them (e.g., to write <span class="math inline">\(\sim\)</span>, type or for the Greek letter <span class="math inline">\(\mu\)</span>, type ). If you get this error message, there are a couple of possibilities. Either you omitted a around the notation, or you copied and pasted symbols straight from the course notes. In the latter case, find the symbol and replace it with its command (these are usually pretty self-explanatory but when in doubt, Google it).</p>
 </section>
-<section id="continuous-x-aesthetic-did-you-forget-aesgroup" class="level3">
-<h3 class="anchored" data-anchor-id="continuous-x-aesthetic-did-you-forget-aesgroup">Continuous x aesthetic – did you forget aes(group=…)?</h3>
+<section id="continuous-x-aesthetic-did-you-forget-aesgroup" class="level3" data-number="19.0.6">
+<h3 data-number="19.0.6" class="anchored" data-anchor-id="continuous-x-aesthetic-did-you-forget-aesgroup"><span class="header-section-number">19.0.6</span> Continuous x aesthetic – did you forget aes(group=…)?</h3>
 <p>This <code>ggplot2</code> error message will show up when the aesthetics of a plot don’t map to the geometry of your data. Try either of these solutions depending on your variable type:</p>
 <ul>
 <li>Change your x variable to a discrete data type, such as a factor.</li>
@@ -420,7 +433,6 @@ window.Quarto = {
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -995,6 +1007,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./setup_r.html" class="pagination-link" aria-label="Setup R &amp; RStudio">
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Setup R &amp; RStudio</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
@@ -1005,7 +1020,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/appendix.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/common_error.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a></p>
 </div>
