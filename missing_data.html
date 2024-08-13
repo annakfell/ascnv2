@@ -1,0 +1,3147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.56">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Course notes for various Applied Statistics courses at CSU Chico">
+
+<title>18&nbsp; Missing Data – Applied Statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./appendix.html" rel="next">
+<link href="./random_intercept.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./missing_data.html">Other Topics</a></li><li class="breadcrumb-item"><a href="./missing_data.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Missing Data</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Applied Statistics</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/annakfell/ascnv2" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Preparing Data for Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dataprep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Workflow and Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Visualizing Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./select_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Selecting Appropriate Analyses</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Foundations for Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bivariate_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bivariate Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Regression Modeling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reg_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sl_reg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simple Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./moderation_stratification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Moderation and Stratification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mlr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./model_building.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Model Building</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Classification of Binary outcomes</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Multivariate Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multivariate_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PCA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Principal Component Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./FA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Factor Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Multi-level Modeling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./MLM_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./random_intercept.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Random Intercept Models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Other Topics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./missing_data.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Missing Data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Appendix</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#identifying-missing-data" id="toc-identifying-missing-data" class="nav-link active" data-scroll-target="#identifying-missing-data"><span class="header-section-number">18.1</span> Identifying missing data</a>
+  <ul>
+  <li><a href="#visualize-missing-patterns" id="toc-visualize-missing-patterns" class="nav-link" data-scroll-target="#visualize-missing-patterns"><span class="header-section-number">18.1.1</span> Visualize missing patterns</a></li>
+  <li><a href="#example-parental-hiv" id="toc-example-parental-hiv" class="nav-link" data-scroll-target="#example-parental-hiv"><span class="header-section-number">18.1.2</span> Example: Parental HIV</a></li>
+  </ul></li>
+  <li><a href="#effects-of-nonresponse" id="toc-effects-of-nonresponse" class="nav-link" data-scroll-target="#effects-of-nonresponse"><span class="header-section-number">18.2</span> Effects of Nonresponse</a></li>
+  <li><a href="#missing-data-mechanisms" id="toc-missing-data-mechanisms" class="nav-link" data-scroll-target="#missing-data-mechanisms"><span class="header-section-number">18.3</span> Missing Data Mechanisms</a>
+  <ul>
+  <li><a href="#demonstration-via-simulation" id="toc-demonstration-via-simulation" class="nav-link" data-scroll-target="#demonstration-via-simulation"><span class="header-section-number">18.3.1</span> Demonstration via Simulation</a></li>
+  </ul></li>
+  <li><a href="#general-strategies" id="toc-general-strategies" class="nav-link" data-scroll-target="#general-strategies"><span class="header-section-number">18.4</span> General strategies</a>
+  <ul>
+  <li><a href="#complete-cases-analysis" id="toc-complete-cases-analysis" class="nav-link" data-scroll-target="#complete-cases-analysis"><span class="header-section-number">18.4.1</span> Complete cases analysis</a></li>
+  <li><a href="#available-case-analysis" id="toc-available-case-analysis" class="nav-link" data-scroll-target="#available-case-analysis"><span class="header-section-number">18.4.2</span> Available-case analysis</a></li>
+  <li><a href="#imputation" id="toc-imputation" class="nav-link" data-scroll-target="#imputation"><span class="header-section-number">18.4.3</span> Imputation</a></li>
+  </ul></li>
+  <li><a href="#imputation-methods" id="toc-imputation-methods" class="nav-link" data-scroll-target="#imputation-methods"><span class="header-section-number">18.5</span> Imputation Methods</a>
+  <ul>
+  <li><a href="#unconditional-mean-substitution." id="toc-unconditional-mean-substitution." class="nav-link" data-scroll-target="#unconditional-mean-substitution."><span class="header-section-number">18.5.1</span> Unconditional mean substitution.</a></li>
+  <li><a href="#hot-deck-imputation" id="toc-hot-deck-imputation" class="nav-link" data-scroll-target="#hot-deck-imputation"><span class="header-section-number">18.5.2</span> Hot deck imputation</a></li>
+  <li><a href="#model-based-imputation" id="toc-model-based-imputation" class="nav-link" data-scroll-target="#model-based-imputation"><span class="header-section-number">18.5.3</span> Model based imputation</a></li>
+  <li><a href="#adding-a-residual" id="toc-adding-a-residual" class="nav-link" data-scroll-target="#adding-a-residual"><span class="header-section-number">18.5.4</span> Adding a residual</a></li>
+  <li><a href="#comparison-of-estimates" id="toc-comparison-of-estimates" class="nav-link" data-scroll-target="#comparison-of-estimates"><span class="header-section-number">18.5.5</span> Comparison of Estimates</a></li>
+  </ul></li>
+  <li><a href="#multiple-imputation-mi" id="toc-multiple-imputation-mi" class="nav-link" data-scroll-target="#multiple-imputation-mi"><span class="header-section-number">18.6</span> Multiple Imputation (MI)</a>
+  <ul>
+  <li><a href="#goals" id="toc-goals" class="nav-link" data-scroll-target="#goals"><span class="header-section-number">18.6.1</span> Goals</a></li>
+  <li><a href="#technique" id="toc-technique" class="nav-link" data-scroll-target="#technique"><span class="header-section-number">18.6.2</span> Technique</a></li>
+  <li><a href="#mi-as-a-paradigm" id="toc-mi-as-a-paradigm" class="nav-link" data-scroll-target="#mi-as-a-paradigm"><span class="header-section-number">18.6.3</span> MI as a paradigm</a></li>
+  <li><a href="#inference-on-mi-pooling-estimates" id="toc-inference-on-mi-pooling-estimates" class="nav-link" data-scroll-target="#inference-on-mi-pooling-estimates"><span class="header-section-number">18.6.4</span> Inference on MI (Pooling estimates)</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">18.6.5</span> Example</a></li>
+  </ul></li>
+  <li><a href="#multiple-imputation-using-chained-equations-mice" id="toc-multiple-imputation-using-chained-equations-mice" class="nav-link" data-scroll-target="#multiple-imputation-using-chained-equations-mice"><span class="header-section-number">18.7</span> Multiple Imputation using Chained Equations (MICE)</a>
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview"><span class="header-section-number">18.7.1</span> Overview</a></li>
+  <li><a href="#process-algorithm" id="toc-process-algorithm" class="nav-link" data-scroll-target="#process-algorithm"><span class="header-section-number">18.7.2</span> Process / Algorithm</a></li>
+  <li><a href="#convergence" id="toc-convergence" class="nav-link" data-scroll-target="#convergence"><span class="header-section-number">18.7.3</span> Convergence</a></li>
+  <li><a href="#imputation-methods-1" id="toc-imputation-methods-1" class="nav-link" data-scroll-target="#imputation-methods-1"><span class="header-section-number">18.7.4</span> Imputation Methods</a></li>
+  </ul></li>
+  <li><a href="#diagnostics" id="toc-diagnostics" class="nav-link" data-scroll-target="#diagnostics"><span class="header-section-number">18.8</span> Diagnostics</a></li>
+  <li><a href="#example-prescribed-amount-of-missing." id="toc-example-prescribed-amount-of-missing." class="nav-link" data-scroll-target="#example-prescribed-amount-of-missing."><span class="header-section-number">18.9</span> Example: Prescribed amount of missing.</a>
+  <ul>
+  <li><a href="#multiply-impute-the-missing-data-using-mice" id="toc-multiply-impute-the-missing-data-using-mice" class="nav-link" data-scroll-target="#multiply-impute-the-missing-data-using-mice"><span class="header-section-number">18.9.1</span> Multiply impute the missing data using <code>mice()</code></a></li>
+  <li><a href="#check-the-imputation-method-used-on-each-variable." id="toc-check-the-imputation-method-used-on-each-variable." class="nav-link" data-scroll-target="#check-the-imputation-method-used-on-each-variable."><span class="header-section-number">18.9.2</span> Check the imputation method used on each variable.</a></li>
+  <li><a href="#check-convergence" id="toc-check-convergence" class="nav-link" data-scroll-target="#check-convergence"><span class="header-section-number">18.9.3</span> Check Convergence</a></li>
+  <li><a href="#look-at-the-values-generated-for-imputation" id="toc-look-at-the-values-generated-for-imputation" class="nav-link" data-scroll-target="#look-at-the-values-generated-for-imputation"><span class="header-section-number">18.9.4</span> Look at the values generated for imputation</a></li>
+  <li><a href="#create-a-complete-data-set-by-filling-in-the-missing-data-using-the-imputations" id="toc-create-a-complete-data-set-by-filling-in-the-missing-data-using-the-imputations" class="nav-link" data-scroll-target="#create-a-complete-data-set-by-filling-in-the-missing-data-using-the-imputations"><span class="header-section-number">18.9.5</span> Create a complete data set by filling in the missing data using the imputations</a></li>
+  <li><a href="#visualize-imputations" id="toc-visualize-imputations" class="nav-link" data-scroll-target="#visualize-imputations"><span class="header-section-number">18.9.6</span> Visualize Imputations</a></li>
+  <li><a href="#calculating-bias" id="toc-calculating-bias" class="nav-link" data-scroll-target="#calculating-bias"><span class="header-section-number">18.9.7</span> Calculating bias</a></li>
+  </ul></li>
+  <li><a href="#post-mice-data-management" id="toc-post-mice-data-management" class="nav-link" data-scroll-target="#post-mice-data-management"><span class="header-section-number">18.10</span> Post MICE data management</a></li>
+  <li><a href="#final-thoughts" id="toc-final-thoughts" class="nav-link" data-scroll-target="#final-thoughts"><span class="header-section-number">18.11</span> Final thoughts</a></li>
+  <li><a href="#additional-references" id="toc-additional-references" class="nav-link" data-scroll-target="#additional-references"><span class="header-section-number">18.12</span> Additional References</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/missing_data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./missing_data.html">Other Topics</a></li><li class="breadcrumb-item"><a href="./missing_data.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Missing Data</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-mda" class="quarto-section-identifier"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Missing Data</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Packages Used
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This chapter uses the following packages: <a href="https://amices.org/mice/">mice</a>, <a href="https://www.stats.ox.ac.uk/pub/MASS4/">MASS</a>, <a href="http://statistikat.github.io/VIM/">VIM</a>, <a href="https://cran.r-project.org/web/packages/forestplot/vignettes/forestplot.html">forestplot</a>. Some examples use a modified version of the Parental HIV data set <a href="https://www.norcalbiostat.com/data/ParhivCodebook.txt">(Codebook)</a> that has had some missing data created for demonstration purposes.</p>
+</div>
+</div>
+<p>Missing Data happens. Not always</p>
+<ul>
+<li>General: Item non-response. Individual pieces of data are missing.<br>
+</li>
+<li>Unit non-response: Records have some background data on all units, but some units don’t respond to any question.</li>
+<li>Monotonone missing data: Variables can be ordered such that one block of variables more observed than the next.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Read more
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is a very brief, and very rough overview of identification and treatment of missing data. For more details (enough for an entire class) see <a href="https://stefvanbuuren.name/fimd/">Flexible Imputation of Missing Data, 2nd Ed</a> by Stef van Buuren:</p>
+</div>
+</div>
+<section id="identifying-missing-data" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="identifying-missing-data"><span class="header-section-number">18.1</span> Identifying missing data</h2>
+<ul>
+<li>Missing data in <code>R</code> is denoted as <code>NA</code></li>
+<li>Arithmetic functions on missing data will return missing</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>survey <span class="ot">&lt;-</span> MASS<span class="sc">::</span>survey <span class="co"># to avoid loading the MASS library which will conflict with dplyr</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(survey<span class="sc">$</span>Pulse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  92 104  87  NA  35  64</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(survey<span class="sc">$</span>Pulse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+</div>
+<p>The <code>summary()</code> function will always show missing.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(survey<span class="sc">$</span>Pulse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  35.00   66.00   72.50   74.15   80.00  104.00      45 </code></pre>
+</div>
+</div>
+<p>The <code>is.na()</code> function is helpful to identify rows with missing data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">is.na</span>(survey<span class="sc">$</span>Pulse))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+FALSE  TRUE 
+  192    45 </code></pre>
+</div>
+</div>
+<p>The function <code>table()</code> will not show NA by default.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(survey<span class="sc">$</span>M.I)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Imperial   Metric 
+      68      141 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(survey<span class="sc">$</span>M.I, <span class="at">useNA=</span><span class="st">"always"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Imperial   Metric     &lt;NA&gt; 
+      68      141       28 </code></pre>
+</div>
+</div>
+<ul>
+<li>What percent of the data set is missing?</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(<span class="fu">is.na</span>(survey)))<span class="sc">*</span><span class="dv">100</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+FALSE  TRUE 
+ 96.2   3.8 </code></pre>
+</div>
+</div>
+<p>4% of the data points are missing.</p>
+<ul>
+<li>How much missing is there per variable?</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>prop.miss <span class="ot">&lt;-</span> <span class="fu">apply</span>(survey, <span class="dv">2</span>, <span class="cf">function</span>(x) <span class="fu">round</span>(<span class="fu">sum</span>(<span class="fu">is.na</span>(x))<span class="sc">/</span><span class="fu">NROW</span>(x),<span class="dv">4</span>))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>prop.miss</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Sex Wr.Hnd NW.Hnd  W.Hnd   Fold  Pulse   Clap   Exer  Smoke Height    M.I 
+0.0042 0.0042 0.0042 0.0042 0.0000 0.1899 0.0042 0.0000 0.0042 0.1181 0.1181 
+   Age 
+0.0000 </code></pre>
+</div>
+</div>
+<p>The amount of missing data per variable varies from 0 to 19%.</p>
+<section id="visualize-missing-patterns" class="level3" data-number="18.1.1">
+<h3 data-number="18.1.1" class="anchored" data-anchor-id="visualize-missing-patterns"><span class="header-section-number">18.1.1</span> Visualize missing patterns</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">ggplot2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">mice</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">VIM</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pmpv <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">variable =</span> <span class="fu">names</span>(survey), <span class="at">pct.miss =</span>prop.miss)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pmpv, <span class="fu">aes</span>(<span class="at">x=</span>variable, <span class="at">y=</span>pct.miss)) <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Percent"</span>) <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span>percent, <span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>pmpv, <span class="fu">aes</span>(<span class="at">label=</span><span class="fu">paste0</span>(<span class="fu">round</span>(pct.miss<span class="sc">*</span><span class="dv">100</span>,<span class="dv">1</span>),<span class="st">"%"</span>), <span class="at">y=</span>pct.miss<span class="fl">+.025</span>), <span class="at">size=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mice)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">md.pattern</span>(survey)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Fold Exer Age Sex Wr.Hnd NW.Hnd W.Hnd Clap Smoke Height M.I Pulse    
+168    1    1   1   1      1      1     1    1     1      1   1     1   0
+38     1    1   1   1      1      1     1    1     1      1   1     0   1
+20     1    1   1   1      1      1     1    1     1      0   0     1   2
+7      1    1   1   1      1      1     1    1     1      0   0     0   3
+1      1    1   1   1      1      1     1    1     0      0   0     1   3
+1      1    1   1   1      1      1     0    1     1      1   1     1   1
+1      1    1   1   1      0      0     1    0     1      1   1     1   3
+1      1    1   1   0      1      1     1    1     1      1   1     1   1
+       0    0   0   1      1      1     1    1     1     28  28    45 107</code></pre>
+</div>
+</div>
+<p>This somewhat ugly output tells us that 168 records have no missing data, 38 records are missing only <code>Pulse</code> and 20 are missing both <code>Height</code> and <code>M.I</code>.</p>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VIM)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">aggr</span>(survey, <span class="at">col=</span><span class="fu">c</span>(<span class="st">'chartreuse3'</span>,<span class="st">'mediumvioletred'</span>),</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">numbers=</span><span class="cn">TRUE</span>, <span class="at">sortVars=</span><span class="cn">TRUE</span>,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">labels=</span><span class="fu">names</span>(survey), <span class="at">cex.axis=</span>.<span class="dv">7</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">gap=</span><span class="dv">3</span>, <span class="at">ylab=</span><span class="fu">c</span>(<span class="st">"Missing data"</span>,<span class="st">"Pattern"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The plot on the left is a simplified, and ordered version of the ggplot from above, except the bars appear to be inflated because the y-axis goes up to 15% instead of 100%.</p>
+<p>The plot on the right shows the missing data patterns, and indicate that 71% of the records has complete cases, and that everyone who is missing <code>M.I.</code> is also missing Height.</p>
+<p>Another plot that can be helpful to identify patterns of missing data is a <code>marginplot</code> (also from <code>VIM</code>).</p>
+<ul>
+<li>Two continuous variables are plotted against each other.<br>
+</li>
+<li>Blue bivariate scatterplot and univariate boxplots are for the observations where values on both variables are observed.</li>
+<li>Red univariate dotplots and boxplots are drawn for the data that is only observed on one of the two variables in question.<br>
+</li>
+<li>The darkred text indicates how many records are missing on both.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">marginplot</span>(survey[,<span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">10</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This shows us that the observations missing pulse have the same median height, but those missing height have a higher median pulse rate.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="example-parental-hiv" class="level3" data-number="18.1.2">
+<h3 data-number="18.1.2" class="anchored" data-anchor-id="example-parental-hiv"><span class="header-section-number">18.1.2</span> Example: Parental HIV</h3>
+<p><strong>Identify missing</strong></p>
+<p>Entire data set:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">is.na</span>(hiv)) <span class="sc">|&gt;</span> <span class="fu">prop.table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+     FALSE       TRUE 
+0.96330127 0.03669873 </code></pre>
+</div>
+</div>
+<p>Only 3.7% of all values in the data set are missing.</p>
+<p><strong>Examine missing data patterns of scale variables.</strong></p>
+<p>The parental bonding and BSI scale variables are aggregated variables, meaning they are sums or means of a handful of component variables. That means if any one component variable is missing, the entire scale is missing. <em>E.g. if y = x1+x2+x3, then y is missing if any of x1, x2 or x3 are missing. </em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>scale.vars <span class="ot">&lt;-</span> hiv <span class="sc">%&gt;%</span> <span class="fu">select</span>(parent_care<span class="sc">:</span>bsi_psycho, gender, siblings, age)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">aggr</span>(scale.vars, <span class="at">sortVars=</span><span class="cn">TRUE</span>, <span class="at">combined=</span><span class="cn">TRUE</span>, <span class="at">numbers=</span><span class="cn">TRUE</span>, <span class="at">cex.axis=</span>.<span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Variables sorted by number of missings: 
+              Variable Count
+           bsi_overall    93
+           bsi_depress    93
+ parent_overprotection    44
+            bsi_psycho     2
+           parent_care     1
+             bsi_somat     1
+            bsi_obcomp     1
+            bsi_interp     1
+           bsi_anxiety     1
+              siblings     1
+            bsi_hostil     0
+            bsi_phobic     0
+          bsi_paranoid     0
+                gender     0
+                   age     0</code></pre>
+</div>
+</div>
+<p>34.7% of records are missing both <code>bsi_overall</code> and <code>bsi_depress</code>. This makes sense since <code>bsi_depress</code> is a subscale containing 9 component variables and the <code>bsi_overall</code> is an average of all 52.</p>
+<p>Another 15.5% of records are missing <code>parental_overprotection</code>.</p>
+<p>Is there a bivariate pattern between missing and observed values of <code>bsi_depress</code> and <code>parent_overprotection</code>?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">marginplot</span>(hiv[,<span class="fu">c</span>(<span class="st">'bsi_depress'</span>, <span class="st">'parent_overprotection'</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When someone is missing <code>parent_overprotection</code>, they have a lower <code>bsi_depress</code> score. Those missing <code>bsi_depress</code> have a slightly lower <code>parental_overprotection</code> score. Only 4 individuals are missing both values.</p>
+</section>
+</section>
+<section id="effects-of-nonresponse" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="effects-of-nonresponse"><span class="header-section-number">18.2</span> Effects of Nonresponse</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Textbook example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Example reported in W.G. Cochran, Sampling Techniques, 3rd edition, 1977, ch.&nbsp;13:</p>
+<p>Consider data that come form an experimental sampling of fruit orcharts in North Carolina in 1946. Three successive mailings of the same questionnaire were sent to growers. For one of the questions the number of fruit trees, complete data were available for the population…</p>
+</div>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 35%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Ave. # trees</th>
+<th># of growers</th>
+<th>% of pop’n</th>
+<th>Ave # trees/grower</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1st mailing responders</td>
+<td>300</td>
+<td>10</td>
+<td>456</td>
+</tr>
+<tr class="even">
+<td>2nd mailing responders</td>
+<td>543</td>
+<td>17</td>
+<td>382</td>
+</tr>
+<tr class="odd">
+<td>3rd mailing responders</td>
+<td>434</td>
+<td>14</td>
+<td>340</td>
+</tr>
+<tr class="even">
+<td>Nonresponders</td>
+<td>1839</td>
+<td>59</td>
+<td>290</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>——–</td>
+<td>——–</td>
+<td>——–</td>
+</tr>
+<tr class="even">
+<td>Total population</td>
+<td>3116</td>
+<td>100</td>
+<td>329</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The overall response rate was very low.</li>
+<li>The rate of non response is clearly related to the average number of trees per grower.</li>
+<li>The estimate of the average trees per grower can be calculated as a weighted average from responders <span class="math inline">\(\bar{Y_{1}}\)</span> and non responders <span class="math inline">\(\bar{Y_{2}}\)</span>.</li>
+</ul>
+<p><strong>Bias</strong>: The difference between the observed estimate <span class="math inline">\(\bar{y}_{1}\)</span> and the true parameter <span class="math inline">\(\mu\)</span>.</p>
+<p><span class="math display">\[
+  \begin{aligned}
+  E(\bar{y}_{1}) - \mu &amp; = \bar{Y_{1}} - \bar{Y} \\
+  &amp; = \bar{Y}_{1} - \left[(1-w)\bar{Y}_{1} - w\bar{Y}_{2}\right] \\
+  &amp; = w(\bar{Y}_{1} - \bar{Y}_{2})
+  \end{aligned}
+\]</span></p>
+<p>Where <span class="math inline">\(w\)</span> is the proportion of non-response.</p>
+<ul>
+<li>The amount of bias is the product of the proportion of non-response and the difference in the means between the responders and the non-responders.</li>
+<li>The sample provides no information about <span class="math inline">\(\bar{Y_{2}}\)</span>, the size of the bias is generally unknown without information gained from external data.</li>
+</ul>
+</section>
+<section id="missing-data-mechanisms" class="level2" data-number="18.3">
+<h2 data-number="18.3" class="anchored" data-anchor-id="missing-data-mechanisms"><span class="header-section-number">18.3</span> Missing Data Mechanisms</h2>
+<p>Process by which some units observed, some units not observed</p>
+<ul>
+<li><strong>Missing Completely at Random (MCAR)</strong>: The probability that a data point is missing is completely unrelated (independent) of any observed and unobserved data or parameters.
+<ul>
+<li>P(Y missing| X, Y) = P(Y missing)</li>
+<li>Ex: Miscoding or forgetting to log in answer</li>
+</ul></li>
+<li><strong>Missing at Random (MAR)</strong>: The probability that a data point is missing is independent can be explained or modeled by other observed variables.
+<ul>
+<li>P(Y missing|x, Y) = P(Y missing | X)</li>
+<li>Ex: Y = age, X = sex<br>
+- Pr (Y miss| X = male) = 0.2<br>
+- Pr (Y miss| X = female) = 0.3<br>
+- Males people are less likely to fill out an income survey<br>
+- The missing data on income is related to gender<br>
+- After accounting for gender the missing data is unrelated to income.<br>
+</li>
+</ul></li>
+<li><strong>Not missing at Random (NMAR)</strong>: The probability that a data point is missing depends on the value of the variable in question.
+<ul>
+<li>P(Y missing | X, Y) = P (Y missing|X, Y)<br>
+</li>
+<li>Ex: Y = income, X = immigration status
+<ul>
+<li>Richer person may be less willing to disclose income<br>
+</li>
+<li>Undocumented immigrant may be less willing to disclose income</li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Think about it
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Write down an example of each.</p>
+</div>
+</div>
+<p>Does it matter to inferences? <span style="color:red"><strong>Yes!</strong></span></p>
+<section id="demonstration-via-simulation" class="level3" data-number="18.3.1">
+<h3 data-number="18.3.1" class="anchored" data-anchor-id="demonstration-via-simulation"><span class="header-section-number">18.3.1</span> Demonstration via Simulation</h3>
+<p>What follows is just <em>one</em> method of approaching this problem via code. Simulation is a frequently used technique to understand the behavior of a process over time or over repeated samples.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">MCAR</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">NMAR: Missing related to data</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">NMAR: Pure Censoring</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<ol type="1">
+<li>Draw a random sample of size 100 from a standard Normal distribution (Z) and calculate the mean.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">456</span>) <span class="co"># setting a seed ensures the same numbers will be drawn each time</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>mean.z <span class="ot">&lt;-</span> <span class="fu">mean</span>(z)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>mean.z</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1205748</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Delete data at a rate of <span class="math inline">\(p\)</span> and calculate the complete case (available) mean.</li>
+</ol>
+<p>Sample 100 random Bernoulli (0/1) variables with probability <span class="math inline">\(p\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">100</span>, <span class="dv">1</span>, <span class="at">p=</span>.<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Find out which elements are are 1’s</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>delete.these <span class="ot">&lt;-</span> <span class="fu">which</span>(x<span class="sc">==</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Set those elements in <code>z</code> to <code>NA</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>z[delete.these] <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Calculate the complete case mean</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(z, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1377305</code></pre>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Calculate the bias as the sample mean minus the true mean (<span class="math inline">\(E(\hat\theta) - \theta\)</span>).</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(z, <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">-</span> mean.z</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.01715565</code></pre>
+</div>
+</div>
+<p>How does the bias change as a function of the proportion of missing? Let <span class="math inline">\(p\)</span> range from 0% to 99% and plot the bias as a function of <span class="math inline">\(p\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>calc.bias <span class="ot">&lt;-</span> <span class="cf">function</span>(p){ <span class="co"># create a function to handle the repeated calculations</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(<span class="fu">ifelse</span>(<span class="fu">rbinom</span>(<span class="dv">100</span>, <span class="dv">1</span>, p)<span class="sc">==</span><span class="dv">1</span>, <span class="cn">NA</span>, z), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">-</span> mean.z</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,.<span class="dv">99</span>,<span class="at">by=</span>.<span class="dv">01</span>)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">type=</span><span class="st">"n"</span>, <span class="at">ylab=</span><span class="st">"Bias"</span>, <span class="at">xlab=</span><span class="st">"Proportion of missing"</span>)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">points</span>(p, <span class="fu">sapply</span>(p, calc.bias), <span class="at">pch=</span><span class="dv">16</span>)</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Think about it
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What is the behavior of the bias as <span class="math inline">\(p\)</span> increases? Look specifically at the position/location of the bias, and the variance/variability of the bias.</p>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>What if the rate of missing is related to the value of the outcome? Again, let’s setup a simulation to see how this works.</p>
+<ol type="1">
+<li>Randomly draw 100 random data points from a Standard Normal distribution to serve as our population, and 100 uniform random values between 0 and 1 to serve as probabilities of the data being missing (<span class="math inline">\(p=P(miss)\)</span>)</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Z <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
+<li>Sort both in ascending order, shove into a data frame and confirm that <span class="math inline">\(p(miss)\)</span> increases along with <span class="math inline">\(z\)</span>.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>dta <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Z=</span><span class="fu">sort</span>(Z), <span class="at">p=</span><span class="fu">sort</span>(p))</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          Z           p
+1 -2.898122 0.003673455
+2 -2.185058 0.013886146
+3 -2.076032 0.035447986
+4 -1.938288 0.039780643
+5 -1.930809 0.051362816
+6 -1.905331 0.054639596</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dta, <span class="fu">aes</span>(<span class="at">x=</span>p, <span class="at">y=</span>Z)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"P(missing)"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Z~Normal(0,1)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Set <span class="math inline">\(Z\)</span> missing with probability equal to the <span class="math inline">\(p\)</span> for that row. Create a new vector <code>dta$z.miss</code> that is either 0, or the value of <code>dta$Z</code> with probability <code>1-dta$p</code>. Then change all the 0’s to <code>NA</code>.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>dta<span class="sc">$</span>Z.miss <span class="ot">&lt;-</span> dta<span class="sc">$</span>Z <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span><span class="fu">rbinom</span>(<span class="fu">NROW</span>(dta), <span class="dv">1</span>, dta<span class="sc">$</span>p))</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dta) <span class="co"># see structure of data to understand what is going on</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          Z           p    Z.miss
+1 -2.898122 0.003673455 -2.898122
+2 -2.185058 0.013886146 -2.185058
+3 -2.076032 0.035447986 -2.076032
+4 -1.938288 0.039780643 -1.938288
+5 -1.930809 0.051362816 -1.930809
+6 -1.905331 0.054639596 -1.905331</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>dta<span class="sc">$</span>Z.miss[dta<span class="sc">$</span>Z.miss<span class="sc">==</span><span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="5" type="1">
+<li>Calculate the complete case mean and the bias</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(dta<span class="sc">$</span>Z.miss, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.7777319</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(dta<span class="sc">$</span>Z) <span class="sc">-</span> <span class="fu">mean</span>(dta<span class="sc">$</span>Z.miss, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6830372</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Think about it
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Did the complete case estimate over- or under-estimate the true mean? Is the bias positive or negative?</p>
+</div>
+</div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<p>Consider a hypothetical blood test to measure a hormone that is normally distributed in the blood with mean 10<span class="math inline">\(\mu g\)</span> and variance 1. However the test to detect the compound only can detect levels above 10.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="dv">10</span>, <span class="dv">1</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> z</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>y[y<span class="sc">&lt;</span><span class="dv">10</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(z) <span class="sc">-</span> <span class="fu">mean</span>(y, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.6850601</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Think about it
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Did the complete case estimate over- or under-estimate the true mean?</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>When the data is not missing at random, the bias can be much greater.</li>
+<li>Usually, you don’t know the missing data mechanism.</li>
+</ul>
+</div>
+</div>
+<p><strong>Degrees of difficulty</strong></p>
+<ul>
+<li>MCAR: is easiest to deal with.</li>
+<li>MAR: we can live with it.</li>
+<li>NMAR: most difficult to handle.</li>
+</ul>
+<p><strong>Evidence?</strong></p>
+<p>What can we learn from evidence in the data set at hand?</p>
+<ul>
+<li>May be evidence in the data rule out MCAR - test responders vs.&nbsp;nonresponders.
+<ul>
+<li>Example: Responders tend to have higher/lower average education than nonresponders by t-test</li>
+<li>Example: Response more likely in one geographic area than another by chi-square test</li>
+</ul></li>
+<li>No evidence in data set to rule out MAR (although there may be evidence from an external data source)</li>
+</ul>
+<p><strong>What is plausible?</strong></p>
+<ul>
+<li>Cochran example: when human behavior is involved, MCAR must be viewed as an extremely special case that would often be violated in practice</li>
+<li>Missing data may be introduced by design (e.g., measure some variables, don’t measure others for reasons of cost, response burden), in which case MCAR would apply</li>
+<li>MAR is much more common than MCAR</li>
+<li>We cannot be too cavalier about assuming MAR, but anecdotal evidence shows that it often is plausible when conditioning on enough information</li>
+</ul>
+<p><strong>Ignorable Missing</strong></p>
+<ul>
+<li>If missing-data mechanism is MCAR or MAR then nonresponse is said to be “ignorable”.</li>
+<li>Origin of name: in likelihood-based inference, both the data model and missing-data mechanism are important but with MCAR or MAR, inference can be based solely on the data model, thus making inference much simpler<br>
+</li>
+<li>“<em>Ignorability</em>” is a relative assumption: missingness on income may be NMAR given only gender, but may be MAR given gender, age, occupation, region of the country</li>
+</ul>
+</section>
+</section>
+<section id="general-strategies" class="level2" data-number="18.4">
+<h2 data-number="18.4" class="anchored" data-anchor-id="general-strategies"><span class="header-section-number">18.4</span> General strategies</h2>
+<p>Strategies for handling missing data include:</p>
+<ul>
+<li>Complete-case/available-case analysis: drop cases that make analysis inconvenient.</li>
+<li>If variables are known to contribute to the missing values, then appropriate modeling can often account for the missingness.</li>
+<li>Imputation procedures: fill in missing values, then analyze completed data sets using complete-date methods</li>
+<li>Weighting procedures: modify “design weights” (i.e., inverse probabilities of selection from sampling plan) to account for probability of response<br>
+</li>
+<li>Model-based approaches: develop model for partially missing data, base inferences on likelihood under that model</li>
+</ul>
+<section id="complete-cases-analysis" class="level3" data-number="18.4.1">
+<h3 data-number="18.4.1" class="anchored" data-anchor-id="complete-cases-analysis"><span class="header-section-number">18.4.1</span> Complete cases analysis</h3>
+<p>If not all variables observed, delete case from analysis</p>
+<ul>
+<li>Advantages:
+<ul>
+<li>Simplicity</li>
+<li>Common sample for all estimates</li>
+</ul></li>
+<li>Disadvantages:
+<ul>
+<li>Loss of valid information</li>
+<li>Bias due to violation of MCAR</li>
+</ul></li>
+</ul>
+</section>
+<section id="available-case-analysis" class="level3" data-number="18.4.2">
+<h3 data-number="18.4.2" class="anchored" data-anchor-id="available-case-analysis"><span class="header-section-number">18.4.2</span> Available-case analysis</h3>
+<ul>
+<li>Use all cases where the variable of interest is present
+<ul>
+<li>Potentially different sets of cases for means of X and Y</li>
+<li>and complete pairs for <span class="math inline">\(r_{XY}\)</span><br>
+</li>
+</ul></li>
+<li>Tempting to think that available-case analysis will be superior to complete-case analysis<br>
+</li>
+<li>But it can distort relationships between variables by not using a common base of observations for all quantities being estimated.</li>
+</ul>
+</section>
+<section id="imputation" class="level3" data-number="18.4.3">
+<h3 data-number="18.4.3" class="anchored" data-anchor-id="imputation"><span class="header-section-number">18.4.3</span> Imputation</h3>
+<p>Fill in missing values, analyze completed data set</p>
+<ul>
+<li>Advantage:
+<ul>
+<li>Rectangular data set easier to analyze</li>
+<li>Analysis data set <span class="math inline">\(n\)</span> matches summary table <span class="math inline">\(n\)</span></li>
+</ul></li>
+<li>Disadvantage:
+<ul>
+<li>“Both seductive and dangerous” (Little and Rubin)</li>
+<li>Can understate uncertainty due to missing values.</li>
+<li>Can induce bias if imputing under the wrong model.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="imputation-methods" class="level2" data-number="18.5">
+<h2 data-number="18.5" class="anchored" data-anchor-id="imputation-methods"><span class="header-section-number">18.5</span> Imputation Methods</h2>
+<p>This section demonstrates each imputation method on the <code>bsi_depress</code> scale variable from the parental HIV example. To recap, 37% of the data on this variable is missing.</p>
+<p>Create an index of row numbers containing missing values. This will be used to fill in those missing values with a data value.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>miss.dep.idx<span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">is.na</span>(hiv<span class="sc">$</span>bsi_depress))</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(miss.dep.idx) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  2  4  5  9 13 14</code></pre>
+</div>
+</div>
+<p>For demonstration purposes I will also create a copy of the <code>bsi_depress</code> variable so that the original is not overwritten for each example.</p>
+<section id="unconditional-mean-substitution." class="level3" data-number="18.5.1">
+<h3 data-number="18.5.1" class="anchored" data-anchor-id="unconditional-mean-substitution."><span class="header-section-number">18.5.1</span> Unconditional mean substitution.</h3>
+<ul>
+<li>Impute all missing data using the mean of observed cases</li>
+<li><span style="color:red">Artificially decreases the variance</span></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>bsi_depress.ums <span class="ot">&lt;-</span> hiv<span class="sc">$</span>bsi_depress <span class="co"># copy</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>complete.case.mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(hiv<span class="sc">$</span>bsi_depress, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>bsi_depress.ums[miss.dep.idx] <span class="ot">&lt;-</span> complete.case.mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Only a single value was used to impute missing data.</p>
+</section>
+<section id="hot-deck-imputation" class="level3" data-number="18.5.2">
+<h3 data-number="18.5.2" class="anchored" data-anchor-id="hot-deck-imputation"><span class="header-section-number">18.5.2</span> Hot deck imputation</h3>
+<ul>
+<li>Impute values by randomly sampling values from observed data.<br>
+</li>
+<li>Good for categorical data</li>
+<li>Reasonable for MCAR and MAR</li>
+<li><code>hotdeck</code> function in <code>VIM</code> available</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>bsi_depress.hotdeck<span class="ot">&lt;-</span> hiv<span class="sc">$</span>bsi_depress <span class="co"># copy</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>hot.deck <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">na.omit</span>(hiv<span class="sc">$</span>bsi_depress), <span class="at">size =</span> <span class="fu">length</span>(miss.dep.idx))</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>bsi_depress.hotdeck[miss.dep.idx] <span class="ot">&lt;-</span> hot.deck</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The distribution of imputed values better matches the distribution of observed data, but the distribution (Q1, Q3) is shifted lower a little bit.</p>
+</section>
+<section id="model-based-imputation" class="level3" data-number="18.5.3">
+<h3 data-number="18.5.3" class="anchored" data-anchor-id="model-based-imputation"><span class="header-section-number">18.5.3</span> Model based imputation</h3>
+<ul>
+<li>Conditional Mean imputation: Use regression on observed variables to estimate missing values
+<ul>
+<li>Predictions only available for cases with no missing covariates</li>
+<li>Imputed value is the model predicted mean <span class="math inline">\(\hat{\mu}_{Y|X}\)</span></li>
+<li>Could use <code>VIM::regressionImp()</code> function</li>
+</ul></li>
+<li>Predictive Mean Matching: Fills in a value randomly by sampling observed values whose regression-predicted values are closest to the regression-predicted value for the missing point.
+<ul>
+<li>Cross between hot-deck and conditional mean</li>
+<li>Categorical data can be imputed using classification models</li>
+<li>Less biased than mean substitution</li>
+<li>but SE’s could be inflated</li>
+<li>Typically used in multivariate imputation (so not shown here)</li>
+</ul></li>
+</ul>
+<p>Model <code>bsi_depress</code> using gender, siblings and age as predictors using linear regression.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>reg.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(bsi_depress <span class="sc">~</span> gender <span class="sc">+</span> siblings <span class="sc">+</span> age, hiv) </span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>need.imp  <span class="ot">&lt;-</span> hiv[miss.dep.idx, <span class="fu">c</span>(<span class="st">"gender"</span>, <span class="st">"siblings"</span>, <span class="st">"age"</span>)]</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>reg.imp.vals <span class="ot">&lt;-</span> <span class="fu">predict</span>(reg.model, <span class="at">newdata =</span> need.imp)</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>bsi_depress.lm <span class="ot">&lt;-</span> hiv<span class="sc">$</span>bsi_depress <span class="co"># copy</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>bsi_depress.lm[miss.dep.idx] <span class="ot">&lt;-</span> reg.imp.vals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It seems like only values around 0.5 and 0.8 were imputed values for <code>bsi_depress</code>. The imputed values don’t quite match the distribution of observed values. Regression imputation and PMM seem to perform extremely similarily.</p>
+</section>
+<section id="adding-a-residual" class="level3" data-number="18.5.4">
+<h3 data-number="18.5.4" class="anchored" data-anchor-id="adding-a-residual"><span class="header-section-number">18.5.4</span> Adding a residual</h3>
+<ul>
+<li>Impute regression value <span class="math inline">\(\pm\)</span> a randomly selected residual based on estimated residual variance</li>
+<li>Over the long-term, we can reduce bias, on the average</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1337</span>)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">summary</span>(reg.model)<span class="sc">$</span>sigma)</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>eps <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(miss.dep.idx), <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span>rmse)</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>bsi_depress.lm.resid <span class="ot">&lt;-</span> hiv<span class="sc">$</span>bsi_depress <span class="co"># copy</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>bsi_depress.lm.resid[miss.dep.idx] <span class="ot">&lt;-</span> reg.imp.vals <span class="sc">+</span> eps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Well, the distribution of imputed values is spread out a bit more, but the imputations do not respect the truncation at 0 this <code>bsi_depress</code> value has.</p>
+</section>
+<section id="comparison-of-estimates" class="level3" data-number="18.5.5">
+<h3 data-number="18.5.5" class="anchored" data-anchor-id="comparison-of-estimates"><span class="header-section-number">18.5.5</span> Comparison of Estimates</h3>
+<p>Create a table and plot that compares the point estimates and intervals for the average bsi depression scale.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>single.imp <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">value =</span> <span class="fu">na.omit</span>(hiv<span class="sc">$</span>bsi_depress),  <span class="at">method =</span> <span class="st">"Observed"</span>),</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">value =</span> bsi_depress.ums, <span class="at">method =</span> <span class="st">"Mean Sub"</span>), </span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">value =</span> bsi_depress.hotdeck, <span class="at">method =</span> <span class="st">"Hot Deck"</span>), </span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">value =</span> bsi_depress.lm, <span class="at">method =</span> <span class="st">"Regression"</span>), </span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">value =</span> bsi_depress.lm.resid, <span class="at">method =</span> <span class="st">"Reg + eps"</span>))</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>single.imp<span class="sc">$</span>method <span class="ot">&lt;-</span> forcats<span class="sc">::</span><span class="fu">fct_relevel</span>(single.imp<span class="sc">$</span>method , </span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"Observed"</span>, <span class="st">"Mean Sub"</span>, <span class="st">"Hot Deck"</span>, <span class="st">"Regression"</span>, <span class="st">"Reg + eps"</span>))</span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>si.ss <span class="ot">&lt;-</span> single.imp <span class="sc">%&gt;%</span></span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(method) <span class="sc">%&gt;%</span></span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(value), </span>
+<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">sd</span>(value), </span>
+<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">se =</span> sd<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">n</span>()), </span>
+<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">cil =</span> mean<span class="fl">-1.96</span><span class="sc">*</span>se, </span>
+<span id="cb56-17"><a href="#cb56-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">ciu =</span> mean<span class="fl">+1.96</span><span class="sc">*</span>se)</span>
+<span id="cb56-18"><a href="#cb56-18" aria-hidden="true" tabindex="-1"></a>si.ss</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 6
+  method      mean    sd     se   cil   ciu
+  &lt;fct&gt;      &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 Observed   0.723 0.782 0.0622 0.601 0.844
+2 Mean Sub   0.723 0.620 0.0391 0.646 0.799
+3 Hot Deck   0.738 0.783 0.0494 0.641 0.835
+4 Regression 0.682 0.631 0.0399 0.604 0.760
+5 Reg + eps  0.753 0.848 0.0536 0.648 0.858</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggviolin</span>(single.imp, <span class="at">y =</span> <span class="st">"value"</span>, </span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill =</span> <span class="st">"method"</span>, <span class="at">x =</span> <span class="st">"method"</span>, </span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">add =</span> <span class="st">"boxplot"</span>, </span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha =</span> .<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(si.ss, <span class="fu">aes</span>(<span class="at">x=</span>mean, <span class="at">y =</span> method, <span class="at">col=</span>method)) <span class="sc">+</span> </span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">xmin=</span>cil, <span class="at">xmax=</span>ciu), <span class="at">width=</span><span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits=</span><span class="fu">c</span>(.<span class="dv">5</span>, <span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Average BSI Depression score"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-37-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>…but we can do better.</p>
+</section>
+</section>
+<section id="multiple-imputation-mi" class="level2" data-number="18.6">
+<h2 data-number="18.6" class="anchored" data-anchor-id="multiple-imputation-mi"><span class="header-section-number">18.6</span> Multiple Imputation (MI)</h2>
+<section id="goals" class="level3" data-number="18.6.1">
+<h3 data-number="18.6.1" class="anchored" data-anchor-id="goals"><span class="header-section-number">18.6.1</span> Goals</h3>
+<ul>
+<li>Accurately reflect available information</li>
+<li>Avoid bias in estimates of quantities of interest</li>
+<li>Estimation could involve explicit or implicit model</li>
+<li>Accurately reflect uncertainty due to missingness</li>
+</ul>
+</section>
+<section id="technique" class="level3" data-number="18.6.2">
+<h3 data-number="18.6.2" class="anchored" data-anchor-id="technique"><span class="header-section-number">18.6.2</span> Technique</h3>
+<ol type="1">
+<li>For each missing value, impute <span class="math inline">\(m\)</span> estimates (usually <span class="math inline">\(m\)</span> = 5)
+<ul>
+<li>Imputation method must include a random component</li>
+</ul></li>
+<li>Create <span class="math inline">\(m\)</span> complete data sets</li>
+<li>Perform desired analysis on each of the <span class="math inline">\(m\)</span> complete data sets</li>
+<li><strong>Pool</strong> final estimates in a manner that accounts for the between, and within imputation variance.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://stefvanbuuren.name/fimd/fig/ch01-miflow-1.png" class="img-fluid figure-img"></p>
+<figcaption>Diagram of Multiple Imputation process. <a href="https://stefvanbuuren.name/fimd/sec-nutshell.html">Credit</a></figcaption>
+</figure>
+</div>
+</section>
+<section id="mi-as-a-paradigm" class="level3" data-number="18.6.3">
+<h3 data-number="18.6.3" class="anchored" data-anchor-id="mi-as-a-paradigm"><span class="header-section-number">18.6.3</span> MI as a paradigm</h3>
+<ul>
+<li>Logic: “Average over” uncertainty, don’t assume most likely scenario (single imputation) covers all plausible scenarios</li>
+<li>Principle: Want nominal 95% intervals to cover targets of estimation 95% of the time</li>
+<li>Simulation studies show that, when MAR assumption holds:
+<ul>
+<li>Proper imputations will yield close to nominal coverage (Rubin 87)</li>
+<li>Improvement over single imputation is meaningful</li>
+<li>Number of imputations can be modest - even 2 adequate for many purposes, so 5 is plenty</li>
+</ul></li>
+</ul>
+<p>(Rubin, <em>Multiple Imputation for Nonresponse in Surveys, Wiley</em>, 1987)</p>
+</section>
+<section id="inference-on-mi-pooling-estimates" class="level3" data-number="18.6.4">
+<h3 data-number="18.6.4" class="anchored" data-anchor-id="inference-on-mi-pooling-estimates"><span class="header-section-number">18.6.4</span> Inference on MI (Pooling estimates)</h3>
+<p>Consider <span class="math inline">\(m\)</span> imputed data sets. For some quantity of interest <span class="math inline">\(Q\)</span> with squared <span class="math inline">\(SE = U\)</span>, calculate <span class="math inline">\(Q_{1}, Q_{2}, \ldots, Q_{m}\)</span> and <span class="math inline">\(U_{1}, U_{2}, \ldots, U_{m}\)</span> (e.g., carry out <span class="math inline">\(m\)</span> regression analyses, obtain point estimates and SE from each).</p>
+<p>Then calculate the average estimate <span class="math inline">\(\bar{Q}\)</span>, the average variance <span class="math inline">\(\bar{U}\)</span>, and the variance of the averages <span class="math inline">\(B\)</span>.</p>
+<p><span class="math display">\[
+  \begin{aligned}
+  \bar{Q} &amp; = \sum^{m}_{i=1}Q_{i}/m \\
+  \bar{U} &amp; = \sum^{m}_{i=1}U_{i}/m \\
+  B &amp; = \frac{1}{m-1}\sum^{m}_{i=1}(Q_{i}-\bar{Q})^2
+  \end{aligned}
+\]</span></p>
+<p>Then <span class="math inline">\(T = \bar{U} + \frac{m+1}{m}B\)</span> is the estimated total variance of <span class="math inline">\(\bar{Q}\)</span>.</p>
+<p>Significance tests and interval estimates can be based on</p>
+<p><span class="math display">\[\frac{\bar{Q}-Q}{\sqrt{T}} \sim t_{df}, \mbox{ where } df = (m-1)(1+\frac{1}{m+1}\frac{\bar{U}}{B})^2\]</span></p>
+<ul>
+<li>df are similar to those for comparison of normal means with unequal variances, i.e., using Satterthwaite approximation.</li>
+<li>Ratio of (B = between-imputation variance) to (T = between + within-imputation variance) is known as the fraction of missing information (FMI).
+<ul>
+<li>The FMI has been proposed as a way to monitor ongoing data collection and estimate the potential bias resulting from survey non-responders (<a href="https://academic.oup.com/poq/article-abstract/74/2/223/1936466?redirectedFrom=fulltext">Wagner, 2018</a>)</li>
+</ul></li>
+</ul>
+</section>
+<section id="example" class="level3" data-number="18.6.5">
+<h3 data-number="18.6.5" class="anchored" data-anchor-id="example"><span class="header-section-number">18.6.5</span> Example</h3>
+<ol type="1">
+<li>Create <span class="math inline">\(m\)</span> imputed datasets using linear regression plus a small amount of random noise so all the imputed values are not identical</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1061</span>)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>dep.imp1 <span class="ot">&lt;-</span> dep.imp2 <span class="ot">&lt;-</span> dep.imp3 <span class="ot">&lt;-</span> <span class="fu">regressionImp</span>(bsi_depress <span class="sc">~</span> gender <span class="sc">+</span> siblings <span class="sc">+</span> age, hiv) </span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>dep.imp1<span class="sc">$</span>bsi_depress[miss.dep.idx] <span class="ot">&lt;-</span> dep.imp1<span class="sc">$</span>bsi_depress[miss.dep.idx] <span class="sc">+</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(<span class="fu">length</span>(miss.dep.idx), <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span>rmse<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>dep.imp2<span class="sc">$</span>bsi_depress[miss.dep.idx] <span class="ot">&lt;-</span> dep.imp2<span class="sc">$</span>bsi_depress[miss.dep.idx] <span class="sc">+</span> </span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(<span class="fu">length</span>(miss.dep.idx), <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span>rmse<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>dep.imp3<span class="sc">$</span>bsi_depress[miss.dep.idx] <span class="ot">&lt;-</span> dep.imp3<span class="sc">$</span>bsi_depress[miss.dep.idx] <span class="sc">+</span> </span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(<span class="fu">length</span>(miss.dep.idx), <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span>rmse<span class="sc">/</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Visualize the distributions of observed and imputed</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>dep.mi <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">value =</span> dep.imp1<span class="sc">$</span>bsi_depress, <span class="at">imputed =</span> dep.imp1<span class="sc">$</span>bsi_depress_imp, </span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">imp =</span> <span class="st">"dep.imp1"</span>), </span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">value =</span> dep.imp2<span class="sc">$</span>bsi_depress, <span class="at">imputed =</span> dep.imp2<span class="sc">$</span>bsi_depress_imp, </span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">imp =</span><span class="st">"dep.imp2"</span>), </span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">value =</span> dep.imp3<span class="sc">$</span>bsi_depress, <span class="at">imputed =</span> dep.imp3<span class="sc">$</span>bsi_depress_imp, </span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">imp =</span><span class="st">"dep.imp3"</span>))</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdensity</span>(dep.mi, <span class="at">x =</span> <span class="st">"value"</span>, <span class="at">color =</span> <span class="st">"imputed"</span>, <span class="at">fill =</span> <span class="st">"imputed"</span>, </span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">add =</span> <span class="st">"mean"</span>, <span class="at">rug=</span><span class="cn">TRUE</span>, <span class="at">palette =</span> <span class="st">"jco"</span>) <span class="sc">+</span> </span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>imp, <span class="at">ncol=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Calculate the point estimate <span class="math inline">\(Q\)</span> and the variance <span class="math inline">\(U\)</span> from each imputation.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>(Q <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">mean</span>(dep.imp1<span class="sc">$</span>bsi_depress), </span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mean</span>(dep.imp2<span class="sc">$</span>bsi_depress), </span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mean</span>(dep.imp3<span class="sc">$</span>bsi_depress)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6700139 0.6808710 0.6694280</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>n.d <span class="ot">&lt;-</span> <span class="fu">length</span>(dep.imp1<span class="sc">$</span>bsi_depress)</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>(U <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">sd</span>(dep.imp1<span class="sc">$</span>bsi_depress)<span class="sc">/</span><span class="fu">sqrt</span>(n.d), </span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sd</span>(dep.imp2<span class="sc">$</span>bsi_depress)<span class="sc">/</span><span class="fu">sqrt</span>(n.d), </span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sd</span>(dep.imp3<span class="sc">$</span>bsi_depress)<span class="sc">/</span><span class="fu">sqrt</span>(n.d)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.04443704 0.04324317 0.04365866</code></pre>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Pool estimates and calculate a 95% CI</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>Q.bar <span class="ot">&lt;-</span> <span class="fu">mean</span>(Q)          <span class="co"># average estimate</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>U.bar <span class="ot">&lt;-</span> <span class="fu">mean</span>(U)           <span class="co"># average variance</span></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">sd</span>(Q)                 <span class="co"># variance of averages</span></span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>Tv <span class="ot">&lt;-</span> U.bar <span class="sc">+</span> ((<span class="dv">3</span><span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span>B  <span class="co"># Total variance of estimate</span></span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">+</span>(U.bar<span class="sc">/</span>(<span class="dv">4</span><span class="sc">*</span>B))<span class="sc">^</span><span class="dv">2</span>) <span class="co"># degress of freedom</span></span>
+<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a>t95 <span class="ot">&lt;-</span> <span class="fu">qt</span>(.<span class="dv">975</span>, df) <span class="co"># critical value for 95% CI</span></span>
+<span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a>mi.ss <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb66-10"><a href="#cb66-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"MI Reg"</span>, </span>
+<span id="cb66-11"><a href="#cb66-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean =</span> Q.bar, </span>
+<span id="cb66-12"><a href="#cb66-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">se =</span> <span class="fu">sqrt</span>(Tv), </span>
+<span id="cb66-13"><a href="#cb66-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">cil =</span> Q.bar <span class="sc">-</span> t95<span class="sc">*</span><span class="fu">sqrt</span>(Tv),</span>
+<span id="cb66-14"><a href="#cb66-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">ciu =</span> Q.bar <span class="sc">+</span> t95<span class="sc">*</span><span class="fu">sqrt</span>(Tv))</span>
+<span id="cb66-15"><a href="#cb66-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-16"><a href="#cb66-16" aria-hidden="true" tabindex="-1"></a>(imp.ss <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(si.ss, mi.ss))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  method      mean     sd     se   cil   ciu
+  &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 Observed   0.723  0.782 0.0622 0.601 0.844
+2 Mean Sub   0.723  0.620 0.0391 0.646 0.799
+3 Hot Deck   0.738  0.783 0.0494 0.641 0.835
+4 Regression 0.682  0.631 0.0399 0.604 0.760
+5 Reg + eps  0.753  0.848 0.0536 0.648 0.858
+6 MI Reg     0.673 NA     0.229  0.143 1.20 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(imp.ss, <span class="fu">aes</span>(<span class="at">x=</span>mean, <span class="at">y =</span> method, <span class="at">col=</span>method)) <span class="sc">+</span> </span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">xmin=</span>cil, <span class="at">xmax=</span>ciu), <span class="at">width=</span><span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">3</span>, <span class="dv">2</span>)) <span class="sc">+</span> </span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Average BSI Depression score"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="multiple-imputation-using-chained-equations-mice" class="level2" data-number="18.7">
+<h2 data-number="18.7" class="anchored" data-anchor-id="multiple-imputation-using-chained-equations-mice"><span class="header-section-number">18.7</span> Multiple Imputation using Chained Equations (MICE)</h2>
+<p><img src="images/mice.jpg" class="img-fluid"></p>
+<section id="overview" class="level3" data-number="18.7.1">
+<h3 data-number="18.7.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">18.7.1</span> Overview</h3>
+<ul>
+<li>Generates multiple imputations for incomplete multivariate data by Gibbs sampling.</li>
+<li>Missing data can occur anywhere in the data.</li>
+<li>Impute an incomplete column by generating ‘plausible’ synthetic values given other columns in the data.</li>
+<li>For predictors that are incomplete themselves, the most recently generated imputations are used to complete the predictors prior to imputation of the target column.</li>
+<li>A separate univariate imputation model can be specified for each column.</li>
+<li>The default imputation method depends on the measurement level of the target column.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learn more
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Your best reference guide to this section of the notes is the bookdown version of <a href="https://stefvanbuuren.name/fimd/ch-multivariate.html">Flexible Imputation of Missing Data</a>, by Stef van Buuren</p>
+<p>For a more technical details about how the <code>mice</code> function works in R, see <a href="https://www.jstatsoft.org/article/view/v045i03"><em>Journal of Statistical Software</em></a></p>
+</div>
+</div>
+</section>
+<section id="process-algorithm" class="level3" data-number="18.7.2">
+<h3 data-number="18.7.2" class="anchored" data-anchor-id="process-algorithm"><span class="header-section-number">18.7.2</span> Process / Algorithm</h3>
+<p>Consider a data matrix with 3 variables <span class="math inline">\(y_{1}\)</span>, <span class="math inline">\(y_{2}\)</span>, <span class="math inline">\(y_{3}\)</span>, each with missing values. At iteration <span class="math inline">\((\ell)\)</span>:</p>
+<ol type="1">
+<li>Fit a model on <span class="math inline">\(y_{1}^{(\ell-1)}\)</span> using current values of <span class="math inline">\(y_{2}^{(\ell-1)}, y_{3}^{(\ell-1)}\)</span></li>
+<li>Impute missing <span class="math inline">\(y_{1}\)</span>, generating <span class="math inline">\(y_{1}^{(\ell)}\)</span></li>
+<li>Fit a model on <span class="math inline">\(y_{2}^{(\ell-1)}\)</span> using current versions of <span class="math inline">\(y_{1}^{(\ell)}, y_{3}^{(\ell-1)}\)</span></li>
+<li>Impute missing <span class="math inline">\(y_{2}\)</span>, generating <span class="math inline">\(y_{2}^{(\ell)}\)</span></li>
+<li>Fit a model on <span class="math inline">\(y_{3}\)</span> using current versions of <span class="math inline">\(y_{1}^{(\ell)}, y_{2}^{(\ell)}\)</span></li>
+<li>Impute missing <span class="math inline">\(y_{3}\)</span>, generating <span class="math inline">\(y_{3}^{(\ell)}\)</span></li>
+<li>Start next cycle using updated values <span class="math inline">\(y_{1}^{(\ell)}, y_{2}^{(\ell)}, y_{3}^{(\ell)}\)</span></li>
+</ol>
+<p>where <span class="math inline">\((\ell)\)</span> cycles from 1 to <span class="math inline">\(L\)</span>, before an imputed value is drawn.</p>
+</section>
+<section id="convergence" class="level3" data-number="18.7.3">
+<h3 data-number="18.7.3" class="anchored" data-anchor-id="convergence"><span class="header-section-number">18.7.3</span> Convergence</h3>
+<p>How many imputations (<span class="math inline">\(m\)</span>) should we create and how many iterations (<span class="math inline">\(L\)</span>) should I run between imputations?</p>
+<ul>
+<li>Original research from Rubin states that small amount of imputations (<span class="math inline">\(m=5\)</span>) would be sufficient.</li>
+<li>Advances in computation have resulted in very efficient programs such as <code>mice</code> - so generating a larger number of imputations (say <span class="math inline">\(m=40\)</span>) are more common (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4934387/">Pan, 2016</a>)</li>
+<li>You want the number of iterations between draws to be long enough that the Gibbs sampler has converged.</li>
+<li>There is no test or direct method for determing convergence.
+<ul>
+<li>Plot parameter against iteration number, one line per chain.</li>
+<li>These lines should be intertwined together, without showing trends.</li>
+<li>Convergence can be identified when the variance between lines is smaller (or at least no larger) than the variance within the lines.</li>
+</ul></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Mandatory Reading
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Read 6.5.2: Convergence from <a href="https://stefvanbuuren.name/fimd/sec-algoptions.html">Flexible Imputation of Missing Data</a></strong></p>
+</div>
+</div>
+</section>
+<section id="imputation-methods-1" class="level3" data-number="18.7.4">
+<h3 data-number="18.7.4" class="anchored" data-anchor-id="imputation-methods-1"><span class="header-section-number">18.7.4</span> Imputation Methods</h3>
+<p>Some built-in imputation methods in the <code>mice</code> package are:</p>
+<ul>
+<li><em>pmm</em>: Predictive mean matching (any) <strong>DEFAULT FOR NUMERIC</strong></li>
+<li><em>norm.predict</em>: Linear regression, predicted values (numeric)</li>
+<li><em>mean</em>: Unconditional mean imputation (numeric)</li>
+<li><em>logreg</em>: Logistic regression (factor, 2 levels) <strong>DEFAULT</strong></li>
+<li><em>logreg.boot</em>: Logistic regression with bootstrap</li>
+<li><em>polyreg</em>: Polytomous logistic regression (factor, &gt;= 2 levels) <strong>DEFAULT</strong></li>
+<li><em>lda</em>: Linear discriminant analysis (factor, &gt;= 2 categories)</li>
+<li><em>cart</em>: Classification and regression trees (any)</li>
+<li><em>rf</em>: Random forest imputations (any)</li>
+</ul>
+</section>
+</section>
+<section id="diagnostics" class="level2" data-number="18.8">
+<h2 data-number="18.8" class="anchored" data-anchor-id="diagnostics"><span class="header-section-number">18.8</span> Diagnostics</h2>
+<p>Q: How do I know if the imputed values are plausible?<br>
+A: Create diagnostic graphics that plot the observed and imputed values together.</p>
+<p>Refer to <a href="https://stefvanbuuren.name/fimd/sec-diagnostics.html">6.6 Diagnostics</a> of Flexible Imputation of Missing Data.</p>
+</section>
+<section id="example-prescribed-amount-of-missing." class="level2" data-number="18.9">
+<h2 data-number="18.9" class="anchored" data-anchor-id="example-prescribed-amount-of-missing."><span class="header-section-number">18.9</span> Example: Prescribed amount of missing.</h2>
+<p>We will demonstrate using the Palmer Penguins dataset where we can artificially create a prespecified percent of the data missing, (after dropping the 11 rows missing sex) This allows us to be able to estimate the bias incurred by using these imputation methods.</p>
+<p>For the <code>penguin</code> data ) out we set a seed and use the <code>prodNA()</code> function from the <code>missForest</code> package to create 10% missing values in this data set.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(missForest)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>) <span class="co"># Raspberry, I HATE raspberry!</span></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>pen.nomiss <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(pen)</span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>pen.miss <span class="ot">&lt;-</span> <span class="fu">prodNA</span>(pen.nomiss, <span class="at">noNA=</span><span class="fl">0.1</span>)</span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(<span class="fu">is.na</span>(pen.miss)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+     FALSE       TRUE 
+0.90015015 0.09984985 </code></pre>
+</div>
+</div>
+<p>Visualize missing data pattern.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggr</span>(pen.miss, <span class="at">col=</span><span class="fu">c</span>(<span class="st">'darkolivegreen3'</span>,<span class="st">'salmon'</span>),</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">numbers=</span><span class="cn">TRUE</span>, <span class="at">sortVars=</span><span class="cn">TRUE</span>,</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">labels=</span><span class="fu">names</span>(pen.miss), <span class="at">cex.axis=</span>.<span class="dv">7</span>,</span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">gap=</span><span class="dv">3</span>, <span class="at">ylab=</span><span class="fu">c</span>(<span class="st">"Missing data"</span>,<span class="st">"Pattern"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Variables sorted by number of missings: 
+          Variable      Count
+            island 0.11411411
+               sex 0.11111111
+       body_mass_g 0.10510511
+ flipper_length_mm 0.10210210
+    bill_length_mm 0.09909910
+           species 0.09009009
+     bill_depth_mm 0.09009009
+              year 0.08708709</code></pre>
+</div>
+</div>
+<p>Here’s another example of where only 10% of the data overall is missing, but it results in only 58% complete cases.</p>
+<section id="multiply-impute-the-missing-data-using-mice" class="level3" data-number="18.9.1">
+<h3 data-number="18.9.1" class="anchored" data-anchor-id="multiply-impute-the-missing-data-using-mice"><span class="header-section-number">18.9.1</span> Multiply impute the missing data using <code>mice()</code></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>imp_pen <span class="ot">&lt;-</span> <span class="fu">mice</span>(pen.miss, <span class="at">m=</span><span class="dv">10</span>, <span class="at">maxit=</span><span class="dv">25</span>, <span class="at">meth=</span><span class="st">"pmm"</span>, <span class="at">seed=</span><span class="dv">500</span>, <span class="at">printFlag=</span><span class="cn">FALSE</span>)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(imp_pen)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Class: mids
+Number of multiple imputations:  10 
+Imputation methods:
+          species            island    bill_length_mm     bill_depth_mm 
+            "pmm"             "pmm"             "pmm"             "pmm" 
+flipper_length_mm       body_mass_g               sex              year 
+            "pmm"             "pmm"             "pmm"             "pmm" 
+PredictorMatrix:
+                  species island bill_length_mm bill_depth_mm flipper_length_mm
+species                 0      1              1             1                 1
+island                  1      0              1             1                 1
+bill_length_mm          1      1              0             1                 1
+bill_depth_mm           1      1              1             0                 1
+flipper_length_mm       1      1              1             1                 0
+body_mass_g             1      1              1             1                 1
+                  body_mass_g sex year
+species                     1   1    1
+island                      1   1    1
+bill_length_mm              1   1    1
+bill_depth_mm               1   1    1
+flipper_length_mm           1   1    1
+body_mass_g                 0   1    1</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learn more
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="https://stats.stackexchange.com/questions/219013/how-do-the-number-of-imputations-the-maximum-iterations-affect-accuracy-in-mul/219049#219049">This</a> Stack Exchange post has a great explanation/description of what each of these arguments control. It is a <strong>very</strong> good idea to understand these controls.</p>
+</div>
+</div>
+</section>
+<section id="check-the-imputation-method-used-on-each-variable." class="level3" data-number="18.9.2">
+<h3 data-number="18.9.2" class="anchored" data-anchor-id="check-the-imputation-method-used-on-each-variable."><span class="header-section-number">18.9.2</span> Check the imputation method used on each variable.</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>imp_pen<span class="sc">$</span>meth</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          species            island    bill_length_mm     bill_depth_mm 
+            "pmm"             "pmm"             "pmm"             "pmm" 
+flipper_length_mm       body_mass_g               sex              year 
+            "pmm"             "pmm"             "pmm"             "pmm" </code></pre>
+</div>
+</div>
+<p>Predictive mean matching was used for all variables, even <code>species</code> and <code>island</code>. This is reasonable because PMM is a hot deck method of imputation.</p>
+</section>
+<section id="check-convergence" class="level3" data-number="18.9.3">
+<h3 data-number="18.9.3" class="anchored" data-anchor-id="check-convergence"><span class="header-section-number">18.9.3</span> Check Convergence</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(imp_pen, <span class="fu">c</span>(<span class="st">"bill_length_mm"</span>, <span class="st">"body_mass_g"</span>, <span class="st">"bill_depth_mm"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The variance across chains is no larger than the variance within chains.</p>
+</section>
+<section id="look-at-the-values-generated-for-imputation" class="level3" data-number="18.9.4">
+<h3 data-number="18.9.4" class="anchored" data-anchor-id="look-at-the-values-generated-for-imputation"><span class="header-section-number">18.9.4</span> Look at the values generated for imputation</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>imp_pen<span class="sc">$</span>imp<span class="sc">$</span>body_mass_g <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      1    2    3    4    5    6    7    8    9   10
+3  3800 3750 3550 3900 3550 3300 3400 3900 3450 3900
+8  3300 3150 3525 3150 3500 3150 3325 3200 3325 3300
+13 4300 4050 4500 4000 4675 4550 4050 3950 4575 4550
+35 3400 3900 4075 3600 3900 3700 3900 3425 4725 3250
+41 3600 4300 3900 3600 3950 3900 3500 3900 4150 4100
+45 2700 3100 3625 3700 3525 3800 3575 3100 3575 3525</code></pre>
+</div>
+</div>
+<p>This is just for us to see what this imputed data look like. Each column is an imputed value, each row is a row where an imputation for <code>body_mass_g</code> was needed. Notice only imputations are shown, no observed data is showing here.</p>
+</section>
+<section id="create-a-complete-data-set-by-filling-in-the-missing-data-using-the-imputations" class="level3" data-number="18.9.5">
+<h3 data-number="18.9.5" class="anchored" data-anchor-id="create-a-complete-data-set-by-filling-in-the-missing-data-using-the-imputations"><span class="header-section-number">18.9.5</span> Create a complete data set by filling in the missing data using the imputations</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>pen_1 <span class="ot">&lt;-</span> <span class="fu">complete</span>(imp_pen, <span class="at">action=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Action=1 returns the first completed data set, action=2 returns the second completed data set, and so on.</p>
+<p><strong>Alternative - Stack the imputed data sets in <em>long</em> format.</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>pen_long <span class="ot">&lt;-</span> <span class="fu">complete</span>(imp_pen, <span class="st">'long'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>By looking at the <code>names</code> of this new object we can confirm that there are indeed 10 complete data sets with <span class="math inline">\(n=333\)</span> in each.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pen_long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] ".imp"              ".id"               "species"          
+ [4] "island"            "bill_length_mm"    "bill_depth_mm"    
+ [7] "flipper_length_mm" "body_mass_g"       "sex"              
+[10] "year"             </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(pen_long<span class="sc">$</span>.imp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5   6   7   8   9  10 
+333 333 333 333 333 333 333 333 333 333 </code></pre>
+</div>
+</div>
+</section>
+<section id="visualize-imputations" class="level3" data-number="18.9.6">
+<h3 data-number="18.9.6" class="anchored" data-anchor-id="visualize-imputations"><span class="header-section-number">18.9.6</span> Visualize Imputations</h3>
+<p>Let’s compare the imputed values to the observed values to see if they are indeed “plausible”. We want to see that the distribution of of the magenta points (imputed) matches the distribution of the blue ones (observed).</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Univariately</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Multivariately</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">densityplot</span>(imp_pen)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(imp_pen, bill_length_mm <span class="sc">~</span> bill_depth_mm <span class="sc">+</span> flipper_length_mm  <span class="sc">|</span> species <span class="sc">+</span> island, <span class="at">cex=</span>.<span class="dv">8</span>, <span class="at">pch=</span><span class="dv">16</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-53-2.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Analyze and pool</strong> All of this imputation was done so we could actually perform an analysis!</p>
+<p>Let’s run a simple linear regression on <code>body_mass_g</code> as a function of <code>bill_length_mm</code>, <code>flipper_length_mm</code> and <code>species</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">with</span>(imp_pen, <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> bill_length_mm <span class="sc">+</span> flipper_length_mm <span class="sc">+</span> species))</span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">pool</span>(model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               term    estimate  std.error statistic        df      p.value
+1       (Intercept) -3758.87511 577.502100 -6.508851 205.80708 5.670334e-10
+2    bill_length_mm    51.61565   9.013278  5.726624  49.20373 6.081152e-07
+3 flipper_length_mm    28.67977   3.819019  7.509722  84.41687 5.618897e-11
+4  speciesChinstrap  -615.76862  97.112862 -6.340753  68.84331 2.051941e-08
+5     speciesGentoo   155.61083  92.618867  1.680120 298.97391 9.397845e-02</code></pre>
+</div>
+</div>
+<p>Pooled parameter estimates <span class="math inline">\(\bar{Q}\)</span> and their standard errors <span class="math inline">\(\sqrt{T}\)</span> are provided, along with a significance test (against <span class="math inline">\(\beta_p=0\)</span>). Note with this output that a 95% interval must be calculated manually.</p>
+<p>We can leverage the <code>gtsummary</code> package to tidy and print the results of a <code>mids</code> object, but the mice object has to be passed to <code>tbl_regression</code> BEFORE you pool (<a href="https://stackoverflow.com/questions/65314702/using-tbl-regression-with-imputed-data-pooled-regression-models">reference this SO post</a>). This function needs to access features of the original model first, then will do the appropriate pooling and tidying.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">tbl_regression</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="xwmupiytlv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xwmupiytlv table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#xwmupiytlv thead, #xwmupiytlv tbody, #xwmupiytlv tfoot, #xwmupiytlv tr, #xwmupiytlv td, #xwmupiytlv th {
+  border-style: none;
+}
+
+#xwmupiytlv p {
+  margin: 0;
+  padding: 0;
+}
+
+#xwmupiytlv .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#xwmupiytlv .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#xwmupiytlv .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#xwmupiytlv .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#xwmupiytlv .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xwmupiytlv .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xwmupiytlv .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xwmupiytlv .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#xwmupiytlv .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#xwmupiytlv .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#xwmupiytlv .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#xwmupiytlv .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#xwmupiytlv .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#xwmupiytlv .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#xwmupiytlv .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#xwmupiytlv .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#xwmupiytlv .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#xwmupiytlv .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#xwmupiytlv .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xwmupiytlv .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#xwmupiytlv .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#xwmupiytlv .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#xwmupiytlv .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xwmupiytlv .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#xwmupiytlv .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#xwmupiytlv .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xwmupiytlv .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xwmupiytlv .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#xwmupiytlv .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xwmupiytlv .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#xwmupiytlv .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xwmupiytlv .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xwmupiytlv .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xwmupiytlv .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xwmupiytlv .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xwmupiytlv .gt_left {
+  text-align: left;
+}
+
+#xwmupiytlv .gt_center {
+  text-align: center;
+}
+
+#xwmupiytlv .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#xwmupiytlv .gt_font_normal {
+  font-weight: normal;
+}
+
+#xwmupiytlv .gt_font_bold {
+  font-weight: bold;
+}
+
+#xwmupiytlv .gt_font_italic {
+  font-style: italic;
+}
+
+#xwmupiytlv .gt_super {
+  font-size: 65%;
+}
+
+#xwmupiytlv .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#xwmupiytlv .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#xwmupiytlv .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#xwmupiytlv .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#xwmupiytlv .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#xwmupiytlv .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#xwmupiytlv .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header gt_col_headings">
+<th id="<strong>Characteristic</strong>" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Characteristic</strong></th>
+<th id="<strong>Beta</strong>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>Beta</strong></th>
+<th id="<strong>95% CI</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>95% CI</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+<th id="<strong>p-value</strong>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>p-value</strong></th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">bill_length_mm</td>
+<td class="gt_row gt_center" headers="estimate">52</td>
+<td class="gt_row gt_center" headers="ci">34, 70</td>
+<td class="gt_row gt_center" headers="p.value">&lt;0.001</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">flipper_length_mm</td>
+<td class="gt_row gt_center" headers="estimate">29</td>
+<td class="gt_row gt_center" headers="ci">21, 36</td>
+<td class="gt_row gt_center" headers="p.value">&lt;0.001</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">species</td>
+<td class="gt_row gt_center" headers="estimate"><br>
+</td>
+<td class="gt_row gt_center" headers="ci"><br>
+</td>
+<td class="gt_row gt_center" headers="p.value"><br>
+</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Adelie</td>
+<td class="gt_row gt_center" headers="estimate">—</td>
+<td class="gt_row gt_center" headers="ci">—</td>
+<td class="gt_row gt_center" headers="p.value"><br>
+</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Chinstrap</td>
+<td class="gt_row gt_center" headers="estimate">-616</td>
+<td class="gt_row gt_center" headers="ci">-810, -422</td>
+<td class="gt_row gt_center" headers="p.value">&lt;0.001</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Gentoo</td>
+<td class="gt_row gt_center" headers="estimate">156</td>
+<td class="gt_row gt_center" headers="ci">-27, 338</td>
+<td class="gt_row gt_center" headers="p.value">0.094</td>
+</tr>
+</tbody><tfoot class="gt_footnotes">
+<tr class="odd">
+<td colspan="4" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> CI = Confidence Interval</td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+</div>
+</div>
+<p>Additionally digging deeper into the object created by <code>pool(model)</code>, specifically the <code>pooled</code> list, we can pull out additional information including the number of missing values, the <em>fraction of missing information</em> (<code>fmi</code>) as defined by Rubin (1987), and <code>lambda</code>, the proportion of total variance that is attributable to the missing data (<span class="math inline">\(\lambda = (B + B/m)/T)\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">pool</span>(model)<span class="sc">$</span>pooled[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">8</span><span class="sc">:</span><span class="dv">9</span>)], <span class="at">digits=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">m</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">ubar</th>
+<th style="text-align: right;">df</th>
+<th style="text-align: right;">riv</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">-3758.875</td>
+<td style="text-align: right;">296028.896</td>
+<td style="text-align: right;">205.807</td>
+<td style="text-align: right;">0.127</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">bill_length_mm</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">51.616</td>
+<td style="text-align: right;">50.961</td>
+<td style="text-align: right;">49.204</td>
+<td style="text-align: right;">0.594</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">flipper_length_mm</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">28.680</td>
+<td style="text-align: right;">10.749</td>
+<td style="text-align: right;">84.417</td>
+<td style="text-align: right;">0.357</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">speciesChinstrap</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">-615.769</td>
+<td style="text-align: right;">6583.091</td>
+<td style="text-align: right;">68.843</td>
+<td style="text-align: right;">0.433</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">speciesGentoo</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">155.611</td>
+<td style="text-align: right;">8255.317</td>
+<td style="text-align: right;">298.974</td>
+<td style="text-align: right;">0.039</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="calculating-bias" class="level3" data-number="18.9.7">
+<h3 data-number="18.9.7" class="anchored" data-anchor-id="calculating-bias"><span class="header-section-number">18.9.7</span> Calculating bias</h3>
+<p>The penguins data set used here had no missing data to begin with. So we can calculate the “true” parameter estimates…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>true.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> bill_length_mm <span class="sc">+</span> flipper_length_mm <span class="sc">+</span> species, <span class="at">data =</span> pen.nomiss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>and find the difference in coefficients.</p>
+<p>The variance of the multiply imputed estimates is larger because of the between-imputation variance.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>tm.est <span class="ot">&lt;-</span> true.model <span class="sc">|&gt;</span> <span class="fu">coef</span>() <span class="sc">|&gt;</span> broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">"True Model"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">est =</span> x)</span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>tm.est<span class="sc">$</span>cil <span class="ot">&lt;-</span> <span class="fu">confint</span>(true.model)[,<span class="dv">1</span>]</span>
+<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a>tm.est<span class="sc">$</span>ciu <span class="ot">&lt;-</span> <span class="fu">confint</span>(true.model)[,<span class="dv">2</span>]</span>
+<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a>tm.est <span class="ot">&lt;-</span> tm.est[<span class="sc">-</span><span class="dv">1</span>,] <span class="co"># drop intercept</span></span>
+<span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-7"><a href="#cb93-7" aria-hidden="true" tabindex="-1"></a>mi <span class="ot">&lt;-</span> <span class="fu">tbl_regression</span>(model)<span class="sc">$</span>table_body <span class="sc">|&gt;</span> </span>
+<span id="cb93-8"><a href="#cb93-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">names =</span> label, <span class="at">est =</span> estimate, <span class="at">cil=</span>conf.low, <span class="at">ciu=</span>conf.high) <span class="sc">|&gt;</span> </span>
+<span id="cb93-9"><a href="#cb93-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">"MI"</span>) <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(est))</span>
+<span id="cb93-10"><a href="#cb93-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-11"><a href="#cb93-11" aria-hidden="true" tabindex="-1"></a>pen.mi.compare <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(tm.est, mi)</span>
+<span id="cb93-12"><a href="#cb93-12" aria-hidden="true" tabindex="-1"></a>pen.mi.compare<span class="sc">$</span>names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"species"</span>, <span class="st">""</span>, pen.mi.compare<span class="sc">$</span>names)</span>
+<span id="cb93-13"><a href="#cb93-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-14"><a href="#cb93-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pen.mi.compare, <span class="fu">aes</span>(<span class="at">x=</span>est, <span class="at">y =</span> names, <span class="at">col=</span>model)) <span class="sc">+</span> </span>
+<span id="cb93-15"><a href="#cb93-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">xmin=</span>cil, <span class="at">xmax=</span>ciu), <span class="at">width=</span><span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb93-16"><a href="#cb93-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">names</th>
+<th style="text-align: right;">True Model</th>
+<th style="text-align: right;">MI</th>
+<th style="text-align: right;">bias</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">bill_length_mm</td>
+<td style="text-align: right;">60.11732</td>
+<td style="text-align: right;">51.61565</td>
+<td style="text-align: right;">-8.501672</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">flipper_length_mm</td>
+<td style="text-align: right;">27.54429</td>
+<td style="text-align: right;">28.67977</td>
+<td style="text-align: right;">1.135481</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Chinstrap</td>
+<td style="text-align: right;">-732.41667</td>
+<td style="text-align: right;">-615.76862</td>
+<td style="text-align: right;">116.648049</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gentoo</td>
+<td style="text-align: right;">113.25418</td>
+<td style="text-align: right;">155.61083</td>
+<td style="text-align: right;">42.356655</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>MI over estimates the difference in body mass between Chinstrap and Adelie, but underestiamtes that difference for Gentoo. There is also an underestimation of the relationship between bill length and body mass.</p>
+</section>
+</section>
+<section id="post-mice-data-management" class="level2" data-number="18.10">
+<h2 data-number="18.10" class="anchored" data-anchor-id="post-mice-data-management"><span class="header-section-number">18.10</span> Post MICE data management</h2>
+<p>Sometimes you’ll have a need to do additional data management after imputation has been completed. Creating binary indicators of an event, re-creating scale variables etc. The general approach is to transform the imputed data into long format using <code>complete</code> <strong>with the argument <code>include=TRUE</code></strong> , do the necessary data management, and then convert it back to a <code>mids</code> object type.</p>
+<p>Continuing with the penguin example, let’s create a new variable that is the ratio of bill length to depth.</p>
+<p>Recapping prior steps of imputing, and then creating the completed long data set.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="do">## imp_pen &lt;- mice(pen.miss, m=10, maxit=25, meth="pmm", seed=500, printFlag=FALSE)</span></span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>pen_long <span class="ot">&lt;-</span> <span class="fu">complete</span>(imp_pen, <span class="st">'long'</span>, <span class="at">include=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We create the new ratio variable on the long data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>pen_long<span class="sc">$</span>ratio <span class="ot">&lt;-</span> pen_long<span class="sc">$</span>bill_length_mm <span class="sc">/</span> pen_long<span class="sc">$</span>bill_depth_mm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s visualize this to see how different the distributions are across imputation. Notice imputation “0” still has missing data - this is a result of using <code>include = TRUE</code> and keeping the original data as part of the <code>pen_long</code> data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggboxplot</span>(pen_long, <span class="at">y=</span><span class="st">"ratio"</span>, <span class="at">x=</span><span class="st">"species"</span>, <span class="at">facet.by =</span> <span class="st">".imp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="missing_data_files/figure-html/unnamed-chunk-62-1.png" class="img-fluid figure-img" width="1056"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Then convert the data back to <code>mids</code> object, specifying the variable name that identifies the imputation number.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>imp_pen1 <span class="ot">&lt;-</span> <span class="fu">as.mids</span>(pen_long, <span class="at">.imp =</span> <span class="st">".imp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we can conduct analyses such as an ANOVA (in linear model form) to see if this ratio differs significantly across the species.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>nova.ratio <span class="ot">&lt;-</span> <span class="fu">with</span>(imp_pen1, <span class="fu">lm</span>(ratio <span class="sc">~</span> species))</span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pool</span>(nova.ratio) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              term  estimate  std.error statistic       df       p.value
+1      (Intercept) 2.1221949 0.01435687 147.81738 281.7994 4.610006e-269
+2 speciesChinstrap 0.5217842 0.02569344  20.30807 245.0315  1.958440e-54
+3    speciesGentoo 1.0643029 0.02165568  49.14659 254.5258 6.526634e-132</code></pre>
+</div>
+</div>
+</section>
+<section id="final-thoughts" class="level2" data-number="18.11">
+<h2 data-number="18.11" class="anchored" data-anchor-id="final-thoughts"><span class="header-section-number">18.11</span> Final thoughts</h2>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>“In our experience with real and artificial data…, the practical conclusion appears to be that multiple imputation, when carefully done, can be safely used with real problems even when the ultimate user may be applying models or analyses not contemplated by the imputer.” - Little &amp; Rubin (Book, p.&nbsp;218)</p>
+</div>
+</div>
+</div>
+<ul>
+<li>Don’t ignore missing data.</li>
+<li>Impute sensibly and multiple times.</li>
+<li>It’s typically desirable to include many predictors in an imputation model, both to
+<ul>
+<li>improve precision of imputed values</li>
+<li>make MAR assumption more plausible</li>
+</ul></li>
+<li>But the number of covariance parameters goes up as the square of the number of variables in the model,
+<ul>
+<li>implying practical limits on the number of variables for which parameters can be estimated well</li>
+</ul></li>
+<li>MI applies to subjects who have a general missingness pattern, i.e., they have measurements on some variables, but not on others.</li>
+<li>But, subjects can be lost to follow up due to death or other reasons (i.e., attrition).</li>
+<li>Here we have only baseline data, but not the outcome or other follow up data.</li>
+<li>If attrition subjects are eliminated from the sample, they can produce non-response or attrition bias.</li>
+<li>Use attrition weights.
+<ul>
+<li>Given a baseline profile, predict the probability that subject will stay and use the inverse probability as weight.</li>
+<li>e.g., if for a given profile all subjects stay, then the predicted probability is 1 and the attrition weight is 1. Such a subject “counts once”.</li>
+<li>For another profile, the probability may be 0.5, attrition weight is 1/.5 = 2 and that person “counts twice”.</li>
+</ul></li>
+<li>For differential drop-out, or self-selected treatment, you can consider using Propensity Scores.</li>
+</ul>
+</section>
+<section id="additional-references" class="level2" data-number="18.12">
+<h2 data-number="18.12" class="anchored" data-anchor-id="additional-references"><span class="header-section-number">18.12</span> Additional References</h2>
+<ul>
+<li>Little, R. and Rubin, D. Statistical Analysis with Missing Data, 2nd Ed., Wiley, 2002
+<ul>
+<li>Standard reference</li>
+<li>Requires some math</li>
+</ul></li>
+<li>Allison, P. Missing Data, Sage, 2001
+<ul>
+<li>Small and cheap</li>
+<li>Requires very little math</li>
+</ul></li>
+<li>Multiple Imputation - <a href="https://stefvanbuuren.name/fimd/ch-mi.html">Stef van Buuren</a></li>
+<li>Applied Missing Data Analysis with SPSS and (R) Studio <a href="https://bookdown.org/mwheymans/bookmi/">Heymans and Eekhout</a></li>
+<li>Tutorial on 5 Powerful R Packages used for imputing missing values - <a href="http://www.analyticsvidhya.com/blog/2016/03/tutorial-powerful-packages-imputing-missing-values/">Analytics Vidhya</a></li>
+<li>Imputing missing data with R; MICE package - <a href="http://www.r-bloggers.com/imputing-missing-data-with-r-mice-package/">R-bloggers</a></li>
+</ul>
+<p>Imputation methods for complex survey data and data not missing at random is an open research topic. Read more about this <a href="https://support.sas.com/documentation/cdl/en/statug/63033/HTML/default/viewer.htm#statug_mi_sect032.htm">here</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://shiring.github.io/netlify_images/mice_sketchnote_gxjsgc.jpg" class="img-fluid figure-img"></p>
+<figcaption><a href="https://github.com/ShirinG/ShirinG.github.io/blob/master/netlify_images/mice_sketchnote_gxjsgc.jpg">Source</a></figcaption>
+</figure>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/annakfell\.github\.io\/ascnv2\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./random_intercept.html" class="pagination-link" aria-label="Random Intercept Models">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Random Intercept Models</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./appendix.html" class="pagination-link" aria-label="Appendix">
+        <span class="nav-page-text">Appendix</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/annakfell/ascnv2/edit/main/missing_data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/annakfell/ascnv2/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

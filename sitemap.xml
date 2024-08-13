@@ -2,78 +2,82 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://annakfell.github.io/ascnv2/index.html</loc>
-    <lastmod>2024-08-13T00:32:15.053Z</lastmod>
+    <lastmod>2024-08-13T17:27:44.267Z</lastmod>
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/dataprep.html</loc>
-    <lastmod>2024-08-13T00:32:15.045Z</lastmod>
+    <lastmod>2024-08-13T17:27:44.259Z</lastmod>
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/data_viz.html</loc>
-    <lastmod>2024-08-13T00:32:15.045Z</lastmod>
+    <lastmod>2024-08-13T17:27:44.259Z</lastmod>
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/select_analysis.html</loc>
-    <lastmod>2024-08-13T00:32:15.085Z</lastmod>
+    <lastmod>2024-08-13T17:27:44.299Z</lastmod>
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/foundations.html</loc>
-    <lastmod>2024-08-13T00:32:15.045Z</lastmod>
+    <lastmod>2024-08-13T17:27:44.259Z</lastmod>
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/bivariate_analysis.html</loc>
-    <lastmod>2024-08-13T00:32:15.029Z</lastmod>
+    <lastmod>2024-08-13T17:27:44.243Z</lastmod>
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/reg_intro.html</loc>
-    <lastmod>2024-08-13T00:32:15.085Z</lastmod>
+    <lastmod>2024-08-13T17:27:44.299Z</lastmod>
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/sl_reg.html</loc>
-    <lastmod>2024-08-13T00:32:15.085Z</lastmod>
+    <lastmod>2024-08-13T17:27:44.299Z</lastmod>
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/moderation_stratification.html</loc>
-    <lastmod>2024-08-13T00:32:15.053Z</lastmod>
+    <lastmod>2024-08-13T17:27:44.267Z</lastmod>
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/mlr.html</loc>
-    <lastmod>2024-08-13T00:32:15.053Z</lastmod>
+    <lastmod>2024-08-13T17:27:44.267Z</lastmod>
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/model_building.html</loc>
-    <lastmod>2024-08-13T00:32:15.053Z</lastmod>
+    <lastmod>2024-08-13T17:27:44.267Z</lastmod>
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/glm.html</loc>
-    <lastmod>2024-08-13T00:32:15.045Z</lastmod>
+    <lastmod>2024-08-13T17:27:44.259Z</lastmod>
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/classification.html</loc>
-    <lastmod>2024-08-13T00:32:15.029Z</lastmod>
+    <lastmod>2024-08-13T17:27:44.247Z</lastmod>
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/multivariate_intro.html</loc>
-    <lastmod>2024-08-13T00:32:15.053Z</lastmod>
+    <lastmod>2024-08-13T17:27:44.267Z</lastmod>
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/PCA.html</loc>
-    <lastmod>2024-08-13T00:32:14.701Z</lastmod>
+    <lastmod>2024-08-13T17:27:43.835Z</lastmod>
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/FA.html</loc>
-    <lastmod>2024-08-13T00:32:14.701Z</lastmod>
+    <lastmod>2024-08-13T17:27:43.835Z</lastmod>
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/MLM_intro.html</loc>
-    <lastmod>2024-08-13T00:32:14.701Z</lastmod>
+    <lastmod>2024-08-13T17:27:43.835Z</lastmod>
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/random_intercept.html</loc>
-    <lastmod>2024-08-13T00:32:15.085Z</lastmod>
+    <lastmod>2024-08-13T17:27:44.299Z</lastmod>
+  </url>
+  <url>
+    <loc>https://annakfell.github.io/ascnv2/missing_data.html</loc>
+    <lastmod>2024-08-13T17:27:44.267Z</lastmod>
   </url>
   <url>
     <loc>https://annakfell.github.io/ascnv2/appendix.html</loc>
-    <lastmod>2024-08-13T00:32:15.025Z</lastmod>
+    <lastmod>2024-08-13T17:27:44.243Z</lastmod>
   </url>
 </urlset>
