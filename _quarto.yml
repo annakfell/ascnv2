@@ -45,6 +45,7 @@ book:
     - part: "Multi-level Modeling"
       chapters: 
         - MLM_intro.qmd
+        - random_intercept.qmd
     - appendix.qmd
 
 format:
