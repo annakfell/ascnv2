@@ -1,6 +1,4 @@
-# Appendix {.unnumbered}
-
-## Common error messages
+# Common Error Messages {#sec-error}
 
 ![](images/monster_debugging.png)
 

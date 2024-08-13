@@ -1405,23 +1405,146 @@
     ]
   },
   {
-    "objectID": "appendix.html",
-    "href": "appendix.html",
-    "title": "Appendix",
+    "objectID": "common_error.html",
+    "href": "common_error.html",
+    "title": "19  Common Error Messages",
     "section": "",
-    "text": "Common error messages",
+    "text": "19.0.1 Function not found\n\nCheck the spelling and capitalization.\nDid you load the package in your first code chunk?\n\n\n\n19.0.2 Object not found\nR can’t find the object you are referring to. Here are some debugging steps:\n\nCheck the spelling and capitalization.\nIf you are referring to a variable inside a data set, did you use $ notation?\nCan you find this variable in some other manner? (i.e. )\nIf this piece of code works when you are working interactively, but not when you knit, then check where you created this variable. Is it written either in this current code file or your data management file?\nDid you create this variable in your data management file, and then forget to run the entire code document (hence recreating the analysis data set with this new variable)\nShut down and restart R studio entirely.\n\n\n\n\n19.0.3 Object of length 0\nThis object does not exist, or is empty. Check how you created this object initially.\n\n\n19.0.4 Discrete scale applied to continuous object\nRead that error message carefully. It explains exactly what the problem is. It is up to you to problem solve to figure out which variable you are trying to apply a scale to (like color or fill), what it’s data type is.\n\n\n19.0.5 Package inputenc error: Unicode char not set up for use with \nWhen you want to use certain symbols in math notation, such as Greek letters or the tilde (\\(\\sim\\)), it is important that you type in the commands for them (e.g., to write \\(\\sim\\), type or for the Greek letter \\(\\mu\\), type ). If you get this error message, there are a couple of possibilities. Either you omitted a around the notation, or you copied and pasted symbols straight from the course notes. In the latter case, find the symbol and replace it with its command (these are usually pretty self-explanatory but when in doubt, Google it).\n\n\n19.0.6 Continuous x aesthetic – did you forget aes(group=…)?\nThis ggplot2 error message will show up when the aesthetics of a plot don’t map to the geometry of your data. Try either of these solutions depending on your variable type:\n\nChange your x variable to a discrete data type, such as a factor.\nAdd the argument group=1 to the aesthetics of the plot, aes().",
     "crumbs": [
-      "Appendix"
+      "Appendix",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Common Error Messages</span>"
     ]
   },
   {
-    "objectID": "appendix.html#common-error-messages",
-    "href": "appendix.html#common-error-messages",
-    "title": "Appendix",
+    "objectID": "setup_r.html",
+    "href": "setup_r.html",
+    "title": "20  Setup R & RStudio",
     "section": "",
-    "text": "Function not found\n\nCheck the spelling and capitalization.\nDid you load the package in your first code chunk?\n\n\n\nObject not found\nR can’t find the object you are referring to. Here are some debugging steps:\n\nCheck the spelling and capitalization.\nIf you are referring to a variable inside a data set, did you use $ notation?\nCan you find this variable in some other manner? (i.e. )\nIf this piece of code works when you are working interactively, but not when you knit, then check where you created this variable. Is it written either in this current code file or your data management file?\nDid you create this variable in your data management file, and then forget to run the entire code document (hence recreating the analysis data set with this new variable)\nShut down and restart R studio entirely.\n\n\n\n\nObject of length 0\nThis object does not exist, or is empty. Check how you created this object initially.\n\n\nDiscrete scale applied to continuous object\nRead that error message carefully. It explains exactly what the problem is. It is up to you to problem solve to figure out which variable you are trying to apply a scale to (like color or fill), what it’s data type is.\n\n\nPackage inputenc error: Unicode char not set up for use with \nWhen you want to use certain symbols in math notation, such as Greek letters or the tilde (\\(\\sim\\)), it is important that you type in the commands for them (e.g., to write \\(\\sim\\), type or for the Greek letter \\(\\mu\\), type ). If you get this error message, there are a couple of possibilities. Either you omitted a around the notation, or you copied and pasted symbols straight from the course notes. In the latter case, find the symbol and replace it with its command (these are usually pretty self-explanatory but when in doubt, Google it).\n\n\nContinuous x aesthetic – did you forget aes(group=…)?\nThis ggplot2 error message will show up when the aesthetics of a plot don’t map to the geometry of your data. Try either of these solutions depending on your variable type:\n\nChange your x variable to a discrete data type, such as a factor.\nAdd the argument group=1 to the aesthetics of the plot, aes().",
+    "text": "20.1 Before you begin\nIf you are using a tablet, Chromebook or otherwise do not have a computer that you can install programs on, Posit Cloud is a great option. Make an account at https://posit.cloud/, start a new project then go to  to learn how to navigate RStudio.\nAs of the time of this writing, the Cloud Free account allows for 25 project hours/month, which may not be enough for your class. If you run into time limits you can upgrade to the Cloud Plus plan which is $5/month.\nWhile the cloud is easier to initially setup, having your own installation on your computer is very beneficial because:",
     "crumbs": [
-      "Appendix"
+      "Appendix",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Setup R & RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "setup_r.html#before-you-begin",
+    "href": "setup_r.html#before-you-begin",
+    "title": "20  Setup R & RStudio",
+    "section": "",
+    "text": "you likely want to customize your programs\nyou will be able to put your files under version control\nyou always have access to your code even with unstable or no internet",
+    "crumbs": [
+      "Appendix",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Setup R & RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "setup_r.html#download-and-install-r",
+    "href": "setup_r.html#download-and-install-r",
+    "title": "20  Setup R & RStudio",
+    "section": "20.2 Download and install R",
+    "text": "20.2 Download and install R\n\nDownload R v 4.1+\n\nWindows 10 https://cran.r-project.org/bin/windows/base/\nMac OS X page - https://cran.r-project.org/bin/macosx/\n\nFirst link under “Latest Release” and looks like R-4.1.2.pkg.\nYou may later get a message about needing X11 or XQuartz. The download for that program is also on this page. (Mac only)\n\nChoose to save the file, do not open or run.\n\n\n\nInstall\n\nInstall R by double clicking on the downloaded file and following the prompts.\n\nDefault settings are OK.\nDelete any desktop shortcuts that was created (looks like the icon above.)\n\n\n\n\nVideo Tutorials for both R and R Studio.\n\nWindows\nMac",
+    "crumbs": [
+      "Appendix",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Setup R & RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "setup_r.html#download-and-install-r-studio",
+    "href": "setup_r.html#download-and-install-r-studio",
+    "title": "20  Setup R & RStudio",
+    "section": "20.3 Download and install R Studio",
+    "text": "20.3 Download and install R Studio\n\nDownload\n\nhttps://posit.co/download/rstudio-desktop/#download\nChoose the download link that corresponds to your operating system.\n\n\n\nInstall\n\nWindows: Double click on the downloaded file to run the installer program.\nMac: Double click on the downloaded file, then drag the R Studio Icon into your Applications folder.\n\nAfter you are done, eject the “Drive” that you downloaded by dragging the icon to your trash.",
+    "crumbs": [
+      "Appendix",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Setup R & RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "setup_r.html#nav-rstudio",
+    "href": "setup_r.html#nav-rstudio",
+    "title": "20  Setup R & RStudio",
+    "section": "20.4 Navigating RStudio",
+    "text": "20.4 Navigating RStudio\n\n\n\nThe major windows (or panes) of the RStudio environment:\n\n\n\nSource: This pane is where you will write/view R scripts. Some outputs (such as if you view a dataset using View()) will appear as a tab here.\nConsole/Terminal/Jobs: This is actually where you see the execution of commands. This is the same display you would see if you were using R at the command line without RStudio. You can work interactively (i.e. enter R commands here), but for the most part we will run a script (or lines in a script) in the source pane and watch their execution and output here. The “Terminal” tab give you access to the BASH terminal (the Linux operating system, unrelated to R). RStudio also allows you to run jobs (analyses) in the background. This is useful if some analysis will take a while to run. You can see the status of those jobs in the background.\nEnvironment/History: Here, RStudio will show you what datasets and objects (variables) you have created and which are defined in memory. You can also see some properties of objects/datasets such as their type and dimensions. The “History” tab contains a history of the R commands you’ve executed R.\nFiles/Plots/Packages/Help/Viewer: This multipurpose pane will show you the contents of directories on your computer. You can also use the “Files” tab to navigate and set the working directory. The “Plots” tab will show the output of any plots generated. In “Packages” you will see what packages are actively loaded, or you can attach installed packages. “Help” will display help files for R functions and packages. “Viewer” will allow you to view local web content (e.g. HTML outputs).\n\n\nthis page pulled directly from the Data Carpentry Genomics lesson",
+    "crumbs": [
+      "Appendix",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Setup R & RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "setup_r.html#setting-preferences",
+    "href": "setup_r.html#setting-preferences",
+    "title": "20  Setup R & RStudio",
+    "section": "20.5 Setting preferences",
+    "text": "20.5 Setting preferences\nRetain sanity while troubleshooting\n\nOpen R Studio and go to the file menu go to Tools then Global Options.\nUncheck “Restore .RData into workspace at startup”\nWhere it says “Save workspace to .RData on exit:” Select “Never””\nClick apply then ok to close that window.\n\nThis will ensure that when you restart R you do not “carry forward” objects such as data sets that you were working on in a prior assignment.\nRestarting R\nTo effectively restart R, go to the file menu and click Session , then “Restart R”, or “Restart R and clear output”.\nR Studio Color Themes\n\nOpen R Studio and go to the file menu go to Tools then Global Options.\nLeft side under Appearance you have options to change the program window itself, but the best options are down under the Editor themes.\n\nIf you choose a dark editor theme then choose the Modern program theme to get a fully dark themed program.\n\n\nShow Output Preview\nR Markdown and Quarto documents will default to showing your output (code and graphics) in the code editor window itself. The default is to minimize the console window when executing code, since the output is in the editor window.\nPro: You are only dealing with one main window where you can see your output directly under the code that created it\nCon: The output does not auto-regenerate or auto-update when your code or data changes. This can lead to mistakes because if you change code or data and don’t re-run code chunks that contain output or plots, you could be looking at old/incorrect plots and output.",
+    "crumbs": [
+      "Appendix",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Setup R & RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "setup_r.html#installing-packages",
+    "href": "setup_r.html#installing-packages",
+    "title": "20  Setup R & RStudio",
+    "section": "20.6 Installing packages",
+    "text": "20.6 Installing packages\n\nAll the fun functions are in packages\n\nR is considered an Open Source software program. That means many (thousands) of people contribute to the software. They do this by writing commands (called functions) to make a particular analysis easier, or to make a graphic prettier.\nWhen you download R, you get access to a lot of functions that we will use. However these other user-written packages add so much good stuff that it really is the backbone of the customizability and functionality that makes R so powerful of a language.\nFor example we will be creating graphics using functions like boxplot() and hist() that exist in base R. But you will quickly move on to creating graphics using functions contained in the ggplot2 package. We will be managing data using functions in dplyr and reading in Excel files using readxl. Installing packages will become your favorite past-time.\nStart by typing the following in the console to install the ggplot2 package.\ninstall.packages(\"ggplot2\")\nWhen the download and install is complete, you should see a message similar to:\nThe downloaded binary packages are in\n    C:\\Users\\Robin\\AppData\\Local\\Temp\\Rtmpi8NAym\\downloaded_packages\nR is case sensitive and spelling matters. If you get an error message like the following:\nWarning in install.packages :\n  package ‘ggplot’ is not available (for R version 3.5.1)\nThe correct package name is ggplot2, not ggplot.\n\nAlternative Method of installing Packages: Use the Package tab in the lower right pane in R Studio.\n\nKeep an eye on the messages that fly by in the console. You are looking for key words such as “error code” or “unable to remove…” to indicate installation problems.\nWhen you see a chevron &gt; in the console you know R is done installing and waiting for you.\n\n20.6.1 Common packages used in this notebook\n\nCheck with your instructor about which packages to install. You typically do NOT need all of these.\n\nData Import and Management\n\nhere\ntidyverse (an opinionated collection of packages that work well together\ntidyr\npalmerpenguins example data\n\nCommunication / pretty reporting\n\nrmarkdown literate data analysis and creating reports, presentations, websites.\npander\nkableExtra\nknitr\ngtsummary\n\nData Visualization\n\nggplot2 (also contained in tidyverse)\nggpubr\ncorrplot visualizing correlation matricies\nsjPlot\ngridExtra\nwaffle\ndotwhisker\n\nAnalysis\n\nrstanarm or lme4 multi-level modeling\nmice multiple imputation with chained equations\nVIM visualizing missing data patterns,\ncaret\nROCR\nfactoextra\nperformance\nbroom\nsurvey\nmarginaleffects",
+    "crumbs": [
+      "Appendix",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Setup R & RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "setup_r.html#organization-using-r-projects",
+    "href": "setup_r.html#organization-using-r-projects",
+    "title": "20  Setup R & RStudio",
+    "section": "20.7 Organization using R Projects",
+    "text": "20.7 Organization using R Projects\nIf you are using R for more than one thing (a class, thesis, multiple research projects) then I strongly recommend using R projects.\nR projects are a great way of keeping all files for one project all together, and makes importing data much easier by using relative paths instead of absolute ones. Plus this ensures reproducibility by others (because noone else has a path at C:\\users\\rdonatello\\myprojects\\math615)\n\nClick on the R cube icon in the top right corner of the RStudio program and select Crete new project.\nIf you already have a project folder created then choose an “Existing Directory”, otherwise choose a “New directory” and navigate to the folder where this work should belong.\nI recommend checking Open in new session for all projects. This allows you to have multiple Rstudio windows open for different projects and the files/data/objects don’t get cross-contaminated.\n\nUsing R Projects\n\nNavigate in your file explorer to the folder where you created your project.\nClick on the R cube icon to open the whole project.\nThen from your bottom left pane, in the files tab you can open the desired script files.\n\nOther helpful articles.\n\nPosit Support Introduction\nR Blogger post by Martin Chan",
+    "crumbs": [
+      "Appendix",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Setup R & RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "setup_r.html#literate-programming-with-quarto",
+    "href": "setup_r.html#literate-programming-with-quarto",
+    "title": "20  Setup R & RStudio",
+    "section": "20.8 Literate programming with Quarto",
+    "text": "20.8 Literate programming with Quarto\nGenerate dynamic output using Python, R, Julia, and Observable. Create reproducible documents that can be regenerated when underlying assumptions or data change.\nLearn more at https://quarto.org/\nFor any of Dr. D’s courses, this is how you’ll be completing and turning in your homework. Follow this tutorial to learn about Quarto and test it out.\nhttps://quarto.org/docs/get-started/hello/rstudio\n\n20.8.1 Creating PDF’s\nGreat! You rendered your first literate document to an HTML format. Great for viewing, not so great for printing or emailing. We need to do one more thing before we can render this document to a pdf. Install a typesetting program called (lah-tek or lay-tek).\nStep 1: Install the tinytex package:\n\ninstall.packages(\"tinytex\")\n\nStep 2: Install Tinytex\nOnce that is fully complete and you see the R console windows showing a &gt; waiting for you, copy the following code to have tinytex install for you.\n\ntinytex::install_tinytex()\n\nThis will take some time. Be patient, and wait for R to display a &gt; in the console.\nStep 3: Test your installation\nChange the output format of your quarto file to pdf in the YAML header (At the very top of your code file, line 2 or 3).\n---\nformat: pdf\n---\nNow click render and see if it creates a PDF.\nThe PDF should automatically pop up, otherwise check your folder in the same location as your script file is saved and see if a PDF is located there.",
+    "crumbs": [
+      "Appendix",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Setup R & RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "setup_r.html#seeking-help",
+    "href": "setup_r.html#seeking-help",
+    "title": "20  Setup R & RStudio",
+    "section": "20.9 Seeking Help",
+    "text": "20.9 Seeking Help\n\nSometimes a second pair of eyeballs is all you need.\n\n\n20.9.1 Advice on asking for help\nThe key to receiving help from someone is for them to rapidly grasp your problem. You should make it as easy as possible to pinpoint where the issue might be.\nTry to use the correct words to describe your problem. For instance, a package is not the same thing as a library. Most people will understand what you meant, but it can make things confusing for people trying to help you. Be as precise as possible when describing your problem.\nDon’t let not knowing exactly how to describe your problem prevent you from asking. Screenshots help tremendously!\nWhen asking someone for help try to 1. Explain what thing you are trying to do 2. Explain/show the code you wrote to try to do that thing 3. Explain/show your result, and if it’s not obvious explain why you feel it’s not the correct result. (E.g. you expected the answer to be 5, but instead it’s 10. )\nDon’t spend more than 20 minutes banging your head on the wall before you ask for help!\n\n\n20.9.2 Help from inside R Studio\nOne of the fastest ways to get help is to use the RStudio help interface. This panel by default can be found at the lower right hand panel of RStudio. As seen in the screenshot, by typing the word mean, RStudio tries to also give a number of suggestions that you might be interested in. The description is then shown in the display window.\nI know the name of the function I want to use, but I’m not sure how to use it\nIf you need help with a specific function, let’s say barplot(), you can type:\n\n?barplot\n\nIf you just need to remind yourself of the names of the arguments, you can use:\n\nargs(lm)\n\nI want to use a function that does X, there must be a function for it but I don’t know which one…\nIf you are looking for a function to do a particular task, you can use the help.search() function, which is called by the double question mark ??. However, this only looks through the installed packages for help pages with a match to your search request.\n\n??kruskal\n\nIf you can’t find what you are looking for, you can use the rdocumentation.org website that searches through the help files across all packages available.\nFinally, a generic Google or internet search “R &lt;task&gt;” will often either send you to the appropriate package documentation or a helpful forum where someone else has already asked your question.\nI get an error message that I don’t understand\nStart by googling the error message. However, this doesn’t always work very well because often, package developers rely on the error catching provided by R. You end up with general error messages that might not be very helpful to diagnose a problem (e.g. “subscript out of bounds”). If the message is very generic, you might also include the name of the function or package you’re using in your query.\nIf you check Stack Overflow, search using the [r] tag. Most questions have already been answered, but the challenge is to use the right words in the search to find the answers: http://stackoverflow.com/questions/tagged/r\nDevelopment of R moves pretty fast. When at all possible, use results from the past 1-2 years. Anything over 5 years old for packages such as ggplot, dplyr, and forcats are likely obsolete.\n\n\n20.9.3 Other Online\n\nIn RStudio go to Help –&gt; Cheatsheets\n\nPosit Cloud interactive lessons: https://rstudio.cloud/learn/primers\nStack Overflow: if your question hasn’t been answered before and is well crafted, chances are you will get an answer in less than 5 min. Remember to follow their guidelines on how to ask a good question.\nThe R-Studio Community: it is read by a lot of people and is more welcoming to new users than the R list-serv.\nIf your question is about a specific package, see if there is a mailing list for it. Usually it’s included in the DESCRIPTION file of the package that can be accessed using packageDescription(\"name-of-package\"). You may also want to try to email the author of the package directly, or open an issue on the code repository (e.g., GitHub).\n\n\n\n20.9.4 Written\nIf you’re a book kinda person, there is plenty of help available as well. Many have online versions or free PDF’s.\n\nR Markdown, the Definitive Guide: https://bookdown.org/yihui/rmarkdown/\nR for Data Science https://r4ds.had.co.nz/\nCookbook for R http://www.cookbook-r.com/\nR Graphics Cookbook (I use this all the time) – Chapter 8 in the above link\nThe Art of R Programming https://nostarch.com/artofr.htm\nR for… http://r4stats.com/\n\nExcel Users https://www.rforexcelusers.com/\nSAS and SPSS Users http://r4stats.com/books/r4sas-spss/\nSTATA Users http://r4stats.com/books/r4stata/",
+    "crumbs": [
+      "Appendix",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Setup R & RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "setup_r.html#saving-and-closing-your-work.",
+    "href": "setup_r.html#saving-and-closing-your-work.",
+    "title": "20  Setup R & RStudio",
+    "section": "20.10 Saving and closing your work.",
+    "text": "20.10 Saving and closing your work.\nUnless you’re returning to work in R Studio in a short while, you should make a habit to save all open tabs and completely shut down R studio when you are done working. This ensures your environment is cleared. This is a good thing.\n\n20.10.1 Restart R\nTo restart R without shutting the entire window down, go to the file menu bar in the top,\n\nSession –&gt; Restart R and Clear Output\n\nThis is good to do when switching between projects/classes.",
+    "crumbs": [
+      "Appendix",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Setup R & RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "setup_r.html#acknowledgements",
+    "href": "setup_r.html#acknowledgements",
+    "title": "20  Setup R & RStudio",
+    "section": "20.11 Acknowledgements",
+    "text": "20.11 Acknowledgements\nSome of this material is a derivation from work that is Copyright © Software Carpentry (http://software-carpentry.org/) which is under a CC BY 4.0 license which allows for adaptations and reuse of the work.",
+    "crumbs": [
+      "Appendix",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Setup R & RStudio</span>"
     ]
   }
 ]

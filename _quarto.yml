@@ -47,9 +47,12 @@ book:
         - MLM_intro.qmd
         - random_intercept.qmd
     - part: "Other Topics"
-      chapters: 
+      chapters:
         - missing_data.qmd
-    - appendix.qmd
+    - part: "Appendix"
+      chapters: 
+        - common_error.qmd
+        - setup_r.qmd
 
 format:
   html:
